@@ -1,0 +1,875 @@
+{
+  "sections": [
+    {
+      "id": "new-arrivals",
+      "title": "New Arrivals",
+      "titleAr": "وصل حديثاً",
+      "productIds": [
+        "new-arrivals-01",
+        "new-arrivals-02",
+        "new-arrivals-03",
+        "new-arrivals-04",
+        "new-arrivals-05"
+      ]
+    },
+    {
+      "id": "dresses",
+      "title": "Dress | Abaya",
+      "titleAr": "فساتين وعبايات",
+      "productIds": [
+        "dresses-01",
+        "dresses-02",
+        "dresses-03",
+        "dresses-04",
+        "dresses-05"
+      ]
+    },
+    {
+      "id": "everyday-wear",
+      "title": "Everyday Wear",
+      "titleAr": "ملابس يومية",
+      "productIds": [
+        "everyday-wear-01",
+        "everyday-wear-02",
+        "everyday-wear-03",
+        "everyday-wear-04",
+        "everyday-wear-05"
+      ]
+    },
+    {
+      "id": "denim",
+      "title": "Denim",
+      "titleAr": "دنيم",
+      "productIds": [
+        "denim-01",
+        "denim-02",
+        "denim-03",
+        "denim-04",
+        "denim-05"
+      ]
+    },
+    {
+      "id": "sale",
+      "title": "Sale",
+      "titleAr": "أوكازيون",
+      "productIds": [
+        "sale-01",
+        "sale-02",
+        "sale-03",
+        "sale-04",
+        "sale-05"
+      ]
+    },
+    {
+      "id": "scarves",
+      "title": "Scarves",
+      "titleAr": "إيشاربات",
+      "productIds": [
+        "scarves-01",
+        "scarves-02",
+        "scarves-03",
+        "scarves-04",
+        "scarves-05"
+      ]
+    },
+    {
+      "id": "inner-caps",
+      "title": "Inner Caps",
+      "titleAr": "إندر سكارف",
+      "productIds": [
+        "inner-caps-01",
+        "inner-caps-02",
+        "inner-caps-03",
+        "inner-caps-04",
+        "inner-caps-05"
+      ]
+    },
+    {
+      "id": "isdal",
+      "title": "Isdal",
+      "titleAr": "إسدال",
+      "productIds": [
+        "isdal-01",
+        "isdal-02",
+        "isdal-03",
+        "isdal-04",
+        "isdal-05"
+      ]
+    },
+    {
+      "id": "accessories",
+      "title": "Accessories",
+      "titleAr": "إكسسوارات",
+      "productIds": [
+        "accessories-01",
+        "accessories-02",
+        "accessories-03",
+        "accessories-04",
+        "accessories-05"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "new-arrivals-01",
+      "handle": "printed-silk-square-scarf",
+      "title": "Printed Silk Square Scarf",
+      "price": 380,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_5f55aa7f-0d23-4137-888d-5a3ad8e5bb2c.jpg?v=1790505519&width=1080",
+        "https://levoilestores.com/cdn/shop/files/14_a532cbcc-5eec-4e5e-bacd-928d090b0258.jpg?v=1790505753&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "new-arrivals",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/printed-silk-square-scarf"
+    },
+    {
+      "id": "new-arrivals-02",
+      "handle": "luxury-silk-square-scarf-1",
+      "title": "Luxury Silk Square Scarf",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_e1c7a40a-d05f-446e-aef1-7ef50a112619.jpg?v=1790510491&width=1080",
+        "https://levoilestores.com/cdn/shop/files/70_3be89121-65f8-4eb1-bee6-98ad38a41a6a.jpg?v=1790513514&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "new-arrivals",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/luxury-silk-square-scarf-1"
+    },
+    {
+      "id": "new-arrivals-03",
+      "handle": "marble-chiffon-scarf-1",
+      "title": "Plain Marble Chiffon Scarf",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/25_f54e8381-77ec-4745-a4f7-b4b2c0aaaf09.jpg?v=1790171340&width=1080",
+        "https://levoilestores.com/cdn/shop/files/26_2d995f9f-7896-401f-9ec7-6a6c01a4e187.jpg?v=1790171340&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "new-arrivals",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/marble-chiffon-scarf-1"
+    },
+    {
+      "id": "new-arrivals-04",
+      "handle": "disc-leather-belt-1",
+      "title": "Disc Leather Belt",
+      "price": 480,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_6c2dd9d8-76dc-4402-b9d7-f62820ae8cd7.jpg?v=1788272295&width=1080",
+        "https://levoilestores.com/cdn/shop/files/2_c4738c4b-3293-409c-9dd8-e1db730a2eb9.jpg?v=1788272317&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "new-arrivals",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/disc-leather-belt-1"
+    },
+    {
+      "id": "new-arrivals-05",
+      "handle": "cloudy-modal-scarf",
+      "title": "Cloudy Modal Scarf",
+      "price": 220,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/2_223e0585-7b04-49e4-9537-3c18e3188c88.jpg?v=1787558685&width=1080",
+        "https://levoilestores.com/cdn/shop/files/4_64f16692-964f-4ad9-9f45-4ffd42299bce.jpg?v=1787558685&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "new-arrivals",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/cloudy-modal-scarf"
+    },
+    {
+      "id": "dresses-01",
+      "handle": "breathable-dress-1",
+      "title": "Breathable Dress",
+      "price": 1100,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_1748431a-f64e-4895-b8fe-8cd663c141e1.jpg?v=1784199975&width=1080",
+        "https://levoilestores.com/cdn/shop/files/4_00447889-5e63-4f99-b7c3-47ab53150d8c.jpg?v=1784199975&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "dresses",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/dress/products/breathable-dress-1"
+    },
+    {
+      "id": "dresses-02",
+      "handle": "bliss-chiffon-dress",
+      "title": "Bliss Chiffon Dress",
+      "price": 1100,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/4_6c8ec2c4-cd8e-4e7d-bc13-43d7c8e75864.jpg?v=1781034216&width=1080",
+        "https://levoilestores.com/cdn/shop/files/6_7c96b8d2-d4ac-433c-a600-b3c801594aa1.jpg?v=1781034224&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "dresses",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/dress/products/bliss-chiffon-dress"
+    },
+    {
+      "id": "dresses-03",
+      "handle": "palma-dress",
+      "title": "Palma Dress",
+      "price": 1450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_8095ea5a-905e-4ba8-8a68-79755710d0f0.jpg?v=1780879205&width=1080",
+        "https://levoilestores.com/cdn/shop/files/8_49f635af-a5d8-4dbb-8c87-ee7f6bf3e4c8.jpg?v=1781527429&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "dresses",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/dress/products/palma-dress"
+    },
+    {
+      "id": "dresses-04",
+      "handle": "dayflow-abaya",
+      "title": "Dayflow Abaya",
+      "price": 1350,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/4_0d019598-7ec8-490b-ba8a-966836f2068e.jpg?v=1777905361&width=1080",
+        "https://levoilestores.com/cdn/shop/files/7_a66b85ab-58c5-44a5-a82a-c56fa596715a.jpg?v=1777905368&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "dresses",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/dress/products/dayflow-abaya"
+    },
+    {
+      "id": "dresses-05",
+      "handle": "classic-abaya",
+      "title": "Classic Abaya",
+      "price": 1250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_4dba4b80-f755-48fe-827f-8e6c9db5c84c.jpg?v=1769544956&width=1080",
+        "https://levoilestores.com/cdn/shop/files/2_ef5d83ab-f486-48dc-938f-716ba0686839.jpg?v=1769544957&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "dresses",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/dress/products/classic-abaya"
+    },
+    {
+      "id": "everyday-wear-01",
+      "handle": "half-sleeves-round-neck",
+      "title": "Half Sleeves Round Neck",
+      "price": 390,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/4_5b38760b-4fa4-439f-8596-b0084c3308b0.jpg?v=1784633240&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_6b47cc07-29ff-4065-b17a-4aca5c78a3cf.jpg?v=1784633241&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "everyday-wear",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/everyday-wear/products/half-sleeves-round-neck"
+    },
+    {
+      "id": "everyday-wear-02",
+      "handle": "new-easy-go-shirt",
+      "title": "New Easy Go Shirt",
+      "price": 680,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/5_61a8119f-78de-4f57-8d5a-a722c53fd5c6.jpg?v=1782033241&width=1080",
+        "https://levoilestores.com/cdn/shop/files/10_5840eb2b-bf26-4f6d-baef-63f8b9c86b60.jpg?v=1782315047&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "everyday-wear",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/everyday-wear/products/new-easy-go-shirt"
+    },
+    {
+      "id": "everyday-wear-03",
+      "handle": "new-comfy-shirt",
+      "title": "New Comfy Shirt",
+      "price": 700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/7_0b292d83-0008-4c33-95f0-ca47f1e63c3c.jpg?v=1781978582&width=1080",
+        "https://levoilestores.com/cdn/shop/files/reee_737a269a-24a3-4aa7-94b1-1d5d829c7505.jpg?v=1782315206&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "everyday-wear",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/everyday-wear/products/new-comfy-shirt"
+    },
+    {
+      "id": "everyday-wear-04",
+      "handle": "long-sleeves-top",
+      "title": "Long Sleeves Top",
+      "price": 550,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_7008c67b-c431-4a35-bc4e-eb35d4c9a817.jpg?v=1781087939&width=1080",
+        "https://levoilestores.com/cdn/shop/files/4_74e2b30f-c186-4d4a-b78c-7ac263f0643e.jpg?v=1781087942&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "everyday-wear",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/everyday-wear/products/long-sleeves-top"
+    },
+    {
+      "id": "everyday-wear-05",
+      "handle": "ribbed-top",
+      "title": "Ribbed Top",
+      "price": 580,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/2_37fec8f0-c4ee-4db8-b407-49b331a27bda.jpg?v=1780571721&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_2607e171-75e2-4de4-94d2-a02fa85689d5.jpg?v=1779021431&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "everyday-wear",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/everyday-wear/products/ribbed-top"
+    },
+    {
+      "id": "denim-01",
+      "handle": "ripped-denim-shirt",
+      "title": "Ripped Denim Shirt",
+      "price": 1500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/fj.jpg?v=1737469435&width=1080",
+        "https://levoilestores.com/cdn/shop/files/ffh.jpg?v=1737469435&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "denim",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/denim/products/ripped-denim-shirt"
+    },
+    {
+      "id": "denim-02",
+      "handle": "washed-denim-pants",
+      "title": "Washed Denim Pants",
+      "price": 960,
+      "compareAtPrice": 1200,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/4_ff4c0c5e-d82e-4d3b-8c6d-57ea0a163ef1.jpg?v=1760643969&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_99fe66a4-f7b0-42f2-88d4-5844ad3f5a4c.jpg?v=1760643969&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "denim",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/denim/products/washed-denim-pants"
+    },
+    {
+      "id": "denim-03",
+      "handle": "bling-denim-shirt",
+      "title": "Bling Denim Shirt",
+      "price": 980,
+      "compareAtPrice": 1400,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/3_70642fba-24d7-4326-968d-2e3165c6e614.jpg?v=1779023426&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_0c306bc3-bc8b-48e6-9904-f57b11c9606b.jpg?v=1779023428&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "denim",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/denim/products/bling-denim-shirt"
+    },
+    {
+      "id": "denim-04",
+      "handle": "split-denim-pants",
+      "title": "Split Denim Pants",
+      "price": 1300,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_5a247447-85c8-4144-9727-29eec65d0479.jpg?v=1757856625&width=1080",
+        "https://levoilestores.com/cdn/shop/files/4_332b136d-4e7e-4ffb-9076-35c01feaf23a.jpg?v=1757856625&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "denim",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/denim/products/split-denim-pants"
+    },
+    {
+      "id": "denim-05",
+      "handle": "pleated-wide-leg-denim-pants",
+      "title": "Pleated Wide Leg Denim Pants",
+      "price": 1500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/4_9cc572d9-235e-4db7-a2d5-8c2145f818ed.jpg?v=1783547704&width=1080",
+        "https://levoilestores.com/cdn/shop/files/1_a8074835-5a53-4c41-9794-ec52faa7f969.jpg?v=1783547707&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "denim",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/denim/products/pleated-wide-leg-denim-pants"
+    },
+    {
+      "id": "sale-01",
+      "handle": "everyday-linen-pants",
+      "title": "Everyday Linen Pants",
+      "price": 490,
+      "compareAtPrice": 700,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/11_43ec7857-d006-475f-99b5-d4732c3ebadb.jpg?v=1777988349&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "sale",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/sale-2/products/everyday-linen-pants"
+    },
+    {
+      "id": "sale-02",
+      "handle": "loose-fit-blouse",
+      "title": "Loose Fit Blouse",
+      "price": 612.5,
+      "compareAtPrice": 875,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/8_98f2b109-0f87-4cf1-9571-6bb71ec0c408.jpg?v=1779107240&width=1080",
+        "https://levoilestores.com/cdn/shop/files/11_c1c84342-33e5-4c95-a031-c8ed6451e6d5.jpg?v=1779107251&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "sale",
+      "modelOutfit": true,
+      "url": "https://levoilestores.com/collections/sale-2/products/loose-fit-blouse"
+    },
+    {
+      "id": "sale-03",
+      "handle": "printed-satin-pants",
+      "title": "Printed Satin Pants",
+      "price": 350,
+      "compareAtPrice": 700,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_678d4862-4d6f-424c-98da-7cbe0de16b47.jpg?v=1756106899&width=1080",
+        "https://levoilestores.com/cdn/shop/files/9_e61aeb63-7945-4d88-836e-3fd7bfd93642.jpg?v=1756106899&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "sale",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/sale-2/products/printed-satin-pants"
+    },
+    {
+      "id": "sale-04",
+      "handle": "wrap-skirt-pants",
+      "title": "Wrap Skirt Pants",
+      "price": 650,
+      "compareAtPrice": 1300,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_d37e498d-80cd-483d-ad4a-0e0edd15c325.jpg?v=1756107333&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_39160466-b61d-469d-b5c1-65d0271d3437.jpg?v=1756107333&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "sale",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/sale-2/products/wrap-skirt-pants"
+    },
+    {
+      "id": "sale-05",
+      "handle": "fleuri-crinkle-wrap-dress",
+      "title": "Fleuri Crinkle Wrap Dress",
+      "price": 1190,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/4_b14be400-0b30-4f72-8b60-bc0753d834c6.jpg?v=1779098032&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_d918c599-7844-4b1d-a592-c2f4422f24b1.jpg?v=1779098033&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "sale",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/sale-2/products/fleuri-crinkle-wrap-dress"
+    },
+    {
+      "id": "scarves-01",
+      "handle": "soft-tie-dye-cotton-scarf",
+      "title": "Soft Tie Dye Cotton Scarf",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/16_b9d80871-b851-49ac-887d-0ce2ce5e6651.jpg?v=1790167988&width=1080",
+        "https://levoilestores.com/cdn/shop/files/15_b9ff380c-0dc3-493e-b645-23f79c137f66.jpg?v=1790167988&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "scarves",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/printed-cotton/products/soft-tie-dye-cotton-scarf"
+    },
+    {
+      "id": "scarves-02",
+      "handle": "loomy-linen-scarf",
+      "title": "Loomy Linen Scarf",
+      "price": 180,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/11_668453ad-9dd2-4501-9c47-a93ef0222e7c.jpg?v=1790159711&width=1080",
+        "https://levoilestores.com/cdn/shop/files/12_5afdbf40-af35-493a-a67d-b678b3e1606b.jpg?v=1790159710&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "scarves",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/loomy-linen-scarf"
+    },
+    {
+      "id": "scarves-03",
+      "handle": "soft-stripe-linen-scarf",
+      "title": "Soft Stripe Linen Scarf",
+      "price": 180,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/7_6892cfd6-d077-4432-9fa2-09a1ad6dd4b4.jpg?v=1790083561&width=1080",
+        "https://levoilestores.com/cdn/shop/files/6_76192cdd-c1a2-488b-ac43-36c822724c20.jpg?v=1790083289&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "scarves",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/soft-stripe-linen-scarf"
+    },
+    {
+      "id": "scarves-04",
+      "handle": "fluffy-linen-marble-scarf",
+      "title": "Fluffy Linen Marble Scarf",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/11_deb7ad1a-c7c8-4d60-8d4e-51c8517a0811.jpg?v=1787563777&width=1080",
+        "https://levoilestores.com/cdn/shop/files/12_c3216bb6-ab4c-40f9-b5f1-f142e15a61c0.jpg?v=1787563777&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "scarves",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/new-arrivals/products/fluffy-linen-marble-scarf"
+    },
+    {
+      "id": "scarves-05",
+      "handle": "gradient-cotton-scarf",
+      "title": "Gradient Cotton Scarf",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/33_3720de0e-9379-4d68-ae62-097974966bb7.jpg?v=1788701473&width=1080",
+        "https://levoilestores.com/cdn/shop/files/34_864ee891-61ef-451f-a8cc-e98297156170.jpg?v=1788701474&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "scarves",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/printed-cotton/products/gradient-cotton-scarf"
+    },
+    {
+      "id": "inner-caps-01",
+      "handle": "normal-underscarf-1",
+      "title": "Normal Underscarf",
+      "price": 110,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/7_72e670fb-fffd-429a-ac25-09c02b872a1a.jpg?v=1747825679&width=1080",
+        "https://levoilestores.com/cdn/shop/files/23_535430a3-a117-4cdc-a0ef-65144850732b.jpg?v=1747825679&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "inner-caps",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/inner-caps/products/normal-underscarf-1"
+    },
+    {
+      "id": "inner-caps-02",
+      "handle": "full-neck-underscarf-1",
+      "title": "Full Neck Underscarf",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/7_05cb8776-3c71-4c0b-8f24-d0d3d468c43a.jpg?v=1747748831&width=1080",
+        "https://levoilestores.com/cdn/shop/files/20_244503ab-19b9-4961-980c-116e8ae5b37d.jpg?v=1747748831&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "inner-caps",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/inner-caps/products/full-neck-underscarf-1"
+    },
+    {
+      "id": "inner-caps-03",
+      "handle": "syrian-underscarf-close-end-1",
+      "title": "Syrian Underscarf Close End",
+      "price": 70,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/5_ed49d543-909a-4326-8c1a-754cdc2e7d66.jpg?v=1747745808&width=1080",
+        "https://levoilestores.com/cdn/shop/files/17_a345ead9-b6c9-4ff7-9d90-8b0942242f6f.jpg?v=1747745808&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "inner-caps",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/inner-caps/products/syrian-underscarf-close-end-1"
+    },
+    {
+      "id": "inner-caps-04",
+      "handle": "cotton-kuwaiti-underscarf-1",
+      "title": "Cotton Kuwaiti Underscarf",
+      "price": 85,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/8_07eba5c5-d63a-4771-9e6c-48afbcd0ac32.jpg?v=1747927417&width=1080",
+        "https://levoilestores.com/cdn/shop/files/19_5f23a83c-4a9c-4cfa-850f-375c505ce061.jpg?v=1749629913&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "inner-caps",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/inner-caps/products/cotton-kuwaiti-underscarf-1"
+    },
+    {
+      "id": "inner-caps-05",
+      "handle": "swim-sports-hijab",
+      "title": "Swim/Sports Hijab",
+      "price": 150,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_9043210a-1f2f-4b70-91a5-714c286102fa.jpg?v=1747177724&width=1080",
+        "https://levoilestores.com/cdn/shop/files/4_32b6ba83-22ea-42d0-9c33-a3337233f193.jpg?v=1747177724&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "inner-caps",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/inner-caps/products/swim-sports-hijab"
+    },
+    {
+      "id": "isdal-01",
+      "handle": "harmony-viscose-isdal",
+      "title": "Harmony Viscose Isdal",
+      "price": 850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/2_502a1cb4-ab16-435c-9e66-7a4576443b82.jpg?v=1771937413&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_420193c2-b55e-40ca-b16d-1059a4174070.jpg?v=1771937447&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "isdal",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/praying-isdal-1/products/harmony-viscose-isdal"
+    },
+    {
+      "id": "isdal-02",
+      "handle": "heartfelt-satin-isdal",
+      "title": "Heartfelt Satin Isdal",
+      "price": 950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_d8eb4980-0010-41f5-82a8-ddf2e7134199.jpg?v=1771936619&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "isdal",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/praying-isdal-1/products/heartfelt-satin-isdal"
+    },
+    {
+      "id": "isdal-03",
+      "handle": "royal-khemar-isdal",
+      "title": "Royal Khemar Isdal",
+      "price": 850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/19_2b5de676-45f3-4314-a43d-633deb20d9b4.jpg?v=1770035394&width=1080",
+        "https://levoilestores.com/cdn/shop/files/22_09c91759-19bc-453d-92ef-216b2a02e39c.jpg?v=1770035501&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "isdal",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/praying-isdal-1/products/royal-khemar-isdal"
+    },
+    {
+      "id": "isdal-04",
+      "handle": "flowery-satin-isdal",
+      "title": "Flowery Satin Isdal",
+      "price": 1200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/9_6aa13e66-a31d-4010-ac71-f9ff4eb12f3d.jpg?v=1769950500&width=1080",
+        "https://levoilestores.com/cdn/shop/files/10_62937da7-f301-424d-94aa-a09b62d3bccc.jpg?v=1769950500&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "isdal",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/praying-isdal-1/products/flowery-satin-isdal"
+    },
+    {
+      "id": "isdal-05",
+      "handle": "peony-viscose-kids-isdal",
+      "title": "Peony Viscose Kids Isdal",
+      "price": 500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/11_b0e44289-5acc-4541-b77c-bca229897299.jpg?v=1769957143&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "isdal",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/praying-isdal-1/products/peony-viscose-kids-isdal"
+    },
+    {
+      "id": "accessories-01",
+      "handle": "twist-brooch-1",
+      "title": "Twist Brooch",
+      "price": 300,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/Re_6fff447a-b158-42bc-a041-f447a0ad554b.jpg?v=1787748123&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "accessories",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/accessories/products/twist-brooch-1"
+    },
+    {
+      "id": "accessories-02",
+      "handle": "auburn-necklace",
+      "title": "Auburn Necklace",
+      "price": 580,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_a37cd927-7ee3-4d98-9836-6f6f532f1fc9.jpg?v=1785402717&width=1080",
+        "https://levoilestores.com/cdn/shop/files/2_78d6392a-f4f5-4474-ab9a-5928cf56111c.jpg?v=1785402717&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "accessories",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/accessories/products/auburn-necklace"
+    },
+    {
+      "id": "accessories-03",
+      "handle": "baggetto-bag-charm",
+      "title": "Baggetto Bag Charm",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/2_fcd74f3b-d360-4f4f-aa7a-912f9d456019.jpg?v=1784205662&width=1080",
+        "https://levoilestores.com/cdn/shop/files/3_8f6eefee-903c-4fa6-84a7-3a4c46950e1d.jpg?v=1784205662&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "accessories",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/accessories/products/baggetto-bag-charm"
+    },
+    {
+      "id": "accessories-04",
+      "handle": "cloud-portable-mat",
+      "title": "Cloud Portable Mat",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_dcd7e20e-a117-4764-a3fa-1a01b154e0a7.jpg?v=1784036302&width=1080",
+        "https://levoilestores.com/cdn/shop/files/2_996abee8-c9c0-468c-8e70-4c8b79783d42.jpg?v=1784036302&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "accessories",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/accessories/products/cloud-portable-mat"
+    },
+    {
+      "id": "accessories-05",
+      "handle": "plain-leather-belt",
+      "title": "Plain Leather Belt",
+      "price": 200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://levoilestores.com/cdn/shop/files/1_183292c1-3697-4fc3-98a9-f4cfa29a3243.jpg?v=1781917476&width=1080",
+        "https://levoilestores.com/cdn/shop/files/5_60c362fb-090a-4d6c-9129-a51f4ab6e736.jpg?v=1781917476&width=1080"
+      ],
+      "sizes": [],
+      "colors": [],
+      "section": "accessories",
+      "modelOutfit": false,
+      "url": "https://levoilestores.com/collections/accessories/products/plain-leather-belt"
+    }
+  ]
+}

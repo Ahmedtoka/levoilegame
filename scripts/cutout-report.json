@@ -1,0 +1,532 @@
+{
+  "model": "isnet-general-use",
+  "products": [
+    {
+      "id": "new-arrivals-01",
+      "size": [
+        845,
+        1024
+      ],
+      "coverage": 0.185,
+      "soft": 0.5217,
+      "edgeTouch": 0.0042,
+      "flags": [
+        "soft/uncertain mask (52.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "new-arrivals-02",
+      "size": [
+        868,
+        1024
+      ],
+      "coverage": 0.4293,
+      "soft": 0.146,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (14.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "new-arrivals-03",
+      "size": [
+        794,
+        603
+      ],
+      "coverage": 0.1451,
+      "soft": 0.0567,
+      "edgeTouch": 0.0042,
+      "flags": []
+    },
+    {
+      "id": "new-arrivals-04",
+      "size": [
+        846,
+        1024
+      ],
+      "coverage": 0.167,
+      "soft": 0.3473,
+      "edgeTouch": 0.018,
+      "flags": [
+        "soft/uncertain mask (34.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "new-arrivals-05",
+      "size": [
+        775,
+        1024
+      ],
+      "coverage": 0.4054,
+      "soft": 0.7301,
+      "edgeTouch": 0.1033,
+      "flags": [
+        "soft/uncertain mask (73.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dresses-01",
+      "size": [
+        440,
+        1024
+      ],
+      "coverage": 0.3064,
+      "soft": 0.0192,
+      "edgeTouch": 0.0006,
+      "flags": []
+    },
+    {
+      "id": "dresses-02",
+      "size": [
+        410,
+        1024
+      ],
+      "coverage": 0.2628,
+      "soft": 0.0157,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dresses-03",
+      "size": [
+        411,
+        1024
+      ],
+      "coverage": 0.2567,
+      "soft": 0.1317,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (13.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dresses-04",
+      "size": [
+        575,
+        1024
+      ],
+      "coverage": 0.4447,
+      "soft": 0.015,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dresses-05",
+      "size": [
+        464,
+        1024
+      ],
+      "coverage": 0.2854,
+      "soft": 0.0142,
+      "edgeTouch": 0.0038,
+      "flags": []
+    },
+    {
+      "id": "everyday-wear-01",
+      "size": [
+        1024,
+        1024
+      ],
+      "coverage": 0.5265,
+      "soft": 0.037,
+      "edgeTouch": 0.0025,
+      "flags": []
+    },
+    {
+      "id": "everyday-wear-02",
+      "size": [
+        841,
+        1024
+      ],
+      "coverage": 0.6323,
+      "soft": 0.0157,
+      "edgeTouch": 0.1515,
+      "flags": []
+    },
+    {
+      "id": "everyday-wear-03",
+      "size": [
+        860,
+        1024
+      ],
+      "coverage": 0.6367,
+      "soft": 0.018,
+      "edgeTouch": 0.1333,
+      "flags": []
+    },
+    {
+      "id": "everyday-wear-04",
+      "size": [
+        603,
+        1024
+      ],
+      "coverage": 0.4003,
+      "soft": 0.0725,
+      "edgeTouch": 0.109,
+      "flags": []
+    },
+    {
+      "id": "everyday-wear-05",
+      "size": [
+        1024,
+        994
+      ],
+      "coverage": 0.4867,
+      "soft": 0.1768,
+      "edgeTouch": 0.0025,
+      "flags": [
+        "soft/uncertain mask (17.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "denim-01",
+      "size": [
+        479,
+        1024
+      ],
+      "coverage": 0.2714,
+      "soft": 0.0157,
+      "edgeTouch": 0.0505,
+      "flags": []
+    },
+    {
+      "id": "denim-02",
+      "size": [
+        459,
+        1024
+      ],
+      "coverage": 0.2613,
+      "soft": 0.0326,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "denim-03",
+      "size": [
+        860,
+        1024
+      ],
+      "coverage": 0.6208,
+      "soft": 0.0139,
+      "edgeTouch": 0.1364,
+      "flags": []
+    },
+    {
+      "id": "denim-04",
+      "size": [
+        436,
+        1024
+      ],
+      "coverage": 0.2413,
+      "soft": 0.0303,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "denim-05",
+      "size": [
+        682,
+        1024
+      ],
+      "coverage": 0.4617,
+      "soft": 0.0275,
+      "edgeTouch": 0.0006,
+      "flags": []
+    },
+    {
+      "id": "sale-01",
+      "size": [
+        774,
+        1024
+      ],
+      "coverage": 0.5412,
+      "soft": 0.0468,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "sale-02",
+      "size": [
+        652,
+        1024
+      ],
+      "coverage": 0.4689,
+      "soft": 0.0247,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "sale-03",
+      "size": [
+        847,
+        1024
+      ],
+      "coverage": 0.4698,
+      "soft": 0.0786,
+      "edgeTouch": 0.0075,
+      "flags": []
+    },
+    {
+      "id": "sale-04",
+      "size": [
+        578,
+        1024
+      ],
+      "coverage": 0.3624,
+      "soft": 0.0476,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "sale-05",
+      "size": [
+        719,
+        1024
+      ],
+      "coverage": 0.449,
+      "soft": 0.0198,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "scarves-01",
+      "size": [
+        803,
+        1024
+      ],
+      "coverage": 0.127,
+      "soft": 0.8775,
+      "edgeTouch": 0.0019,
+      "flags": [
+        "soft/uncertain mask (87.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarves-02",
+      "size": [
+        682,
+        1024
+      ],
+      "coverage": 0.1296,
+      "soft": 0.0403,
+      "edgeTouch": 0.0021,
+      "flags": []
+    },
+    {
+      "id": "scarves-03",
+      "size": [
+        847,
+        1024
+      ],
+      "coverage": 0.4096,
+      "soft": 0.6636,
+      "edgeTouch": 0.1517,
+      "flags": [
+        "soft/uncertain mask (66.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarves-04",
+      "size": [
+        865,
+        516
+      ],
+      "coverage": 0.1636,
+      "soft": 0.0785,
+      "edgeTouch": 0.0231,
+      "flags": []
+    },
+    {
+      "id": "scarves-05",
+      "size": [
+        1024,
+        687
+      ],
+      "coverage": 0.1162,
+      "soft": 0.0425,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "inner-caps-01",
+      "size": [
+        895,
+        1024
+      ],
+      "coverage": 0.1098,
+      "soft": 0.6269,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (62.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "inner-caps-02",
+      "size": [
+        890,
+        1024
+      ],
+      "coverage": 0.4088,
+      "soft": 0.4809,
+      "edgeTouch": 0.1947,
+      "flags": [
+        "soft/uncertain mask (48.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "inner-caps-03",
+      "size": [
+        570,
+        663
+      ],
+      "coverage": 0.1422,
+      "soft": 0.0312,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "inner-caps-04",
+      "size": [
+        590,
+        687
+      ],
+      "coverage": 0.154,
+      "soft": 0.0323,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "inner-caps-05",
+      "size": [
+        680,
+        1024
+      ],
+      "coverage": 0.4463,
+      "soft": 0.0114,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "isdal-01",
+      "size": [
+        397,
+        1024
+      ],
+      "coverage": 0.2755,
+      "soft": 0.0802,
+      "edgeTouch": 0.044,
+      "flags": []
+    },
+    {
+      "id": "isdal-02",
+      "size": [
+        413,
+        1024
+      ],
+      "coverage": 0.2828,
+      "soft": 0.0555,
+      "edgeTouch": 0.0731,
+      "flags": []
+    },
+    {
+      "id": "isdal-03",
+      "size": [
+        430,
+        1024
+      ],
+      "coverage": 0.2455,
+      "soft": 0.0214,
+      "edgeTouch": 0.0486,
+      "flags": []
+    },
+    {
+      "id": "isdal-04",
+      "size": [
+        627,
+        1024
+      ],
+      "coverage": 0.252,
+      "soft": 0.0346,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "isdal-05",
+      "size": [
+        402,
+        1024
+      ],
+      "coverage": 0.2561,
+      "soft": 0.0265,
+      "edgeTouch": 0.0727,
+      "flags": []
+    },
+    {
+      "id": "accessories-01",
+      "size": [
+        878,
+        788
+      ],
+      "coverage": 0.1116,
+      "soft": 0.2851,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (28.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "accessories-02",
+      "size": [
+        473,
+        1024
+      ],
+      "coverage": 0.0753,
+      "soft": 0.2234,
+      "edgeTouch": 0.0034,
+      "flags": [
+        "low coverage (7.5%)",
+        "soft/uncertain mask (22.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "accessories-03",
+      "size": [
+        887,
+        1024
+      ],
+      "coverage": 0.172,
+      "soft": 0.1523,
+      "edgeTouch": 0.0046,
+      "flags": [
+        "soft/uncertain mask (15.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "accessories-04",
+      "size": [
+        592,
+        1024
+      ],
+      "coverage": 0.5198,
+      "soft": 0.3026,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (30.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "accessories-05",
+      "size": [
+        847,
+        1024
+      ],
+      "coverage": 0.5907,
+      "soft": 0.6431,
+      "edgeTouch": 0.1894,
+      "flags": [
+        "soft/uncertain mask (64.3% semi-transparent)"
+      ]
+    }
+  ],
+  "failures": []
+}
