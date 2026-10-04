@@ -103,8 +103,15 @@ function placeholderProducts(brand: BrandDef): Product[] {
   })
 }
 
+let levoileSections: Section[] = []
+/** Le Voile's own sections (dresses, scarves…) for the stations inside its store. */
+export function levoileSubsections(): Section[] {
+  return levoileSections
+}
+
 /** Turns the Le Voile catalogue into the 122 Mall catalogue (one section per open brand). */
 export function buildMallCatalog(levoile: Catalog): Catalog {
+  levoileSections = levoile.sections
   const products: Product[] = []
   const sections: Section[] = []
   for (const b of BRANDS) {

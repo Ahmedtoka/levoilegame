@@ -39,6 +39,10 @@ export interface ShopContext {
   textureMax: () => number
   /** Baked décor kit (null → procedural props). */
   kit?: Kit | null
+  /** Opens checkout (shops with their own cash desk). */
+  onCheckout?: () => void
+  /** Bespoke interiors by brand id (e.g. Le Voile's baked boutique). Returns false to fall back. */
+  bespoke?: Record<string, (ctx: ShopContext, f: BatchFrame, handles: ShopHandles, loaders: (() => Promise<unknown>)[]) => boolean>
 }
 
 /** Where a showcase model stands (world space), filled by the people builder. */
@@ -47,10 +51,14 @@ export interface ModelSpot {
   z: number
   yaw: number
   product: Product
+  /** Height of the base the model stands on (default 0.12). */
+  plinth?: number
 }
 
 export interface ShopHandles {
   layout: ShopLayout
+  /** Everything behind the storefront (culled with the shop). */
+  interior: Group
   modelSpots: ModelSpot[]
   staffSpot: { x: number; z: number; yaw: number } | null
   /** False when the player can't see inside (culls products, tags and characters). */
@@ -107,6 +115,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const r = shop.rect
   const handles: ShopHandles = {
     layout: shop,
+    interior,
     modelSpots: [],
     staffSpot: null,
     interiorVisible: true,
@@ -199,6 +208,9 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   })
 
   // --------------------------------------------------------------- interior
+  // Bespoke interiors (e.g. Le Voile's baked boutique) replace the generic furnishing.
+  if (shop.brand && ctx.bespoke?.[shop.brand.id]?.(ctx, f, handles, loaders)) return handles
+
   // Tinted back wall with a brass line, wainscot on the side walls.
   f.box(accent, 0, MALL.shopHeight / 2, -depth + 0.03, MALL.shopLen - 0.2, MALL.shopHeight, 0.04)
   f.box(MAT.brass, 0, 3.35, -depth + 0.06, MALL.shopLen - 0.2, 0.04, 0.03)
@@ -608,10 +620,8 @@ function furnishWithKit(
   loaders.push(async () => loadCards(cards))
 }
 
-/** Small counter where 122 Coins are swapped for this brand's discount. */
-function rewardsCounter(ctx: ShopContext, f: BatchFrame, interior: Group, brandId: string, color: string): void {
-  const x = -MALL.shopLen / 2 + 1.6
-  const z = -2.0
+/** Small counter where 122 Coins are swapped for this brand's discount (shop-local position). */
+export function rewardsCounter(ctx: ShopContext, f: BatchFrame, interior: Group, brandId: string, color: string, x = -MALL.shopLen / 2 + 1.6, z = -2.0): void {
   f.block(MAT.brass, x, 0, z, 1.1, 0.06, 0.55, { collide: true })
   f.block(tintMat(color, 1, 0.5), x, 0.06, z, 1.0, 0.98, 0.5)
   f.block(MAT.marbleTop, x, 1.04, z, 1.14, 0.05, 0.6)

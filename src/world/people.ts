@@ -96,7 +96,7 @@ export async function buildPeople(game: Game, shops: ShopHandles[], logo: Textur
     if (!section) continue
     const style = sectionStyle(section.id, shop.layout.index)
     shop.modelSpots.forEach((spot) => {
-      addProductModel(game, spot.product, style.outfit, spot, seed++, { plinth: 0.12, visibleIf: () => shop.interiorVisible })
+      addProductModel(game, spot.product, style.outfit, spot, seed++, { plinth: spot.plinth ?? 0.12, visibleIf: () => shop.interiorVisible })
     })
   }
   let staffN = 0

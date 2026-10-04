@@ -29,6 +29,7 @@ import { buildCashierPerson, buildPeople } from './world/people'
 import { boutiqueAvailable, boutiqueLayout, buildBoutique } from './world/boutique'
 import { Kit } from './world/kit'
 import { buildMallCatalog } from './data/mallCatalog'
+import { levoileInterior } from './world/bespoke/levoile'
 import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
@@ -156,7 +157,18 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   for (const shop of layout.shops) {
     shops.push(
       buildShop(
-        { root: engine.scene, batcher, colliders, interaction: game.interaction, catalog, textureMax: () => engine.quality.textureMax, kit },
+        {
+          root: engine.scene,
+          batcher,
+          colliders,
+          interaction: game.interaction,
+          catalog,
+          textureMax: () => engine.quality.textureMax,
+          kit,
+          onCheckout: () => game.openCheckout(),
+          // ?nobespoke: every shop uses the generic kit furnishing.
+          bespoke: new URLSearchParams(location.search).has('nobespoke') ? {} : { levoile: levoileInterior },
+        },
         shop,
       ),
     )

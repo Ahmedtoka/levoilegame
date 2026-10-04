@@ -19,6 +19,7 @@ import {
   SRGBColorSpace,
   Vector3,
   type DirectionalLight,
+  type Object3D,
   type Texture,
 } from 'three'
 import { BOUTIQUE } from '../config/boutique'
@@ -139,33 +140,7 @@ export async function buildBoutique(
     fetch(BOUTIQUE.anchorsUrl).then((r) => r.json() as Promise<Anchors>),
   ])
   draco.dispose()
-  const maxAniso = engine.renderer.capabilities.getMaxAnisotropy()
-  gltf.scene.traverse((o) => {
-    const m = o as Mesh
-    if (!m.isMesh) return
-    m.matrixAutoUpdate = false
-    m.updateMatrix()
-    const src = m.material as MeshStandardMaterial
-    if (m.name.startsWith('store_glass')) {
-      m.material = new MeshPhysicalMaterial({
-        color: '#dfeaec',
-        roughness: 0.04,
-        metalness: 0,
-        transparent: true,
-        opacity: 0.14,
-        side: DoubleSide,
-        depthWrite: false,
-      })
-      m.renderOrder = 2
-    } else if (m.name.startsWith('store_mirror')) {
-      m.material = new MeshStandardMaterial({ color: '#e7ecef', metalness: 1, roughness: 0.03, envMapIntensity: 1.4 })
-    } else if (src.map) {
-      // Baked Cycles lighting: show as-is (already tone mapped with the scene's AgX look).
-      src.map.colorSpace = SRGBColorSpace
-      src.map.anisotropy = Math.min(8, maxAniso)
-      m.material = new MeshBasicMaterial({ map: src.map, toneMapped: false })
-    }
-  })
+  prepareBakedStore(gltf.scene, engine.renderer.capabilities.getMaxAnisotropy())
   root.add(gltf.scene)
 
   // ------------------------------------------------------------ collisions
@@ -264,3 +239,32 @@ export async function buildBoutique(
   }
 }
 
+/** Baked store materials: unlit baked textures, live glass and mirror. */
+export function prepareBakedStore(scene: Object3D, maxAniso: number): void {
+  scene.traverse((o) => {
+    const m = o as Mesh
+    if (!m.isMesh) return
+    m.matrixAutoUpdate = false
+    m.updateMatrix()
+    const src = m.material as MeshStandardMaterial
+    if (m.name.startsWith('store_glass')) {
+      m.material = new MeshPhysicalMaterial({
+        color: '#dfeaec',
+        roughness: 0.04,
+        metalness: 0,
+        transparent: true,
+        opacity: 0.14,
+        side: DoubleSide,
+        depthWrite: false,
+      })
+      m.renderOrder = 2
+    } else if (m.name.startsWith('store_mirror')) {
+      m.material = new MeshStandardMaterial({ color: '#e7ecef', metalness: 1, roughness: 0.03, envMapIntensity: 1.4 })
+    } else if (src.map) {
+      // Baked Cycles lighting: show as-is (already tone mapped with the scene's AgX look).
+      src.map.colorSpace = SRGBColorSpace
+      src.map.anisotropy = Math.min(8, maxAniso)
+      m.material = new MeshBasicMaterial({ map: src.map, toneMapped: false })
+    }
+  })
+}
