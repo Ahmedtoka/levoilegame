@@ -5,11 +5,26 @@ A walkable 3D virtual store for **Le Voile** (levoilestores.com, an Egyptian mod
 ## Stack and key decisions
 
 - **Vite + TypeScript + plain Three.js** (no React/R3F: lighter on phones, and the HUD is simple panels). **Zustand vanilla** store (`src/state/store.ts`) drives the HTML/CSS HUD. It persists cart, language and settings.
-- **Everything 3D is procedural:** mall, props, canvas-drawn bilingual signage and characters. GLB slots exist (`public/models/...`) but are optional, and the app never blocks on them.
+- **Everything 3D is procedural:** mall, props, canvas-drawn bilingual signage and characters. The décor kit / boutique GLBs (`public/models/mall/`) are optional, and the app never blocks on them.
 - **Layout comes from config** (`src/config/layout.ts`): an atrium at the entrance (z = 0, the mall extends to −z), then a boulevard with shops alternating L/R. One shop per section; an odd count leaves a lounge. Shop interiors are built in a local frame (origin = centre of the opening, −Z into the shop).
 - **Per-section look** is in `src/config/sections.ts` (`display`: rack/shelf/gallery/boxes, `tint`, model `outfit`, size profile, Shopify `collection`). Unknown sections get defaults.
-- **Characters** (`src/actors/`): one procedural rig (Groups: hips, spine, head, arms, legs), with hijab or hair as cap (head) + drape (neck) meshes. Meshes are merged per bone with vertex colours (`bake.ts`, ~12 draw calls each). Outfit colours are sampled from the product cutout. Models only for products with `modelOutfit: true`; shops without models get a sales assistant (magenta vest + logo) who greets you. There's also a concierge and a cashier. The optional `base.glb` path is in `glbCharacter.ts`.
+- **Characters** (`src/actors/`): every character comes from `createCharacter(look, seed)`, one procedural cartoon rig (Groups: hips, spine, head, arms, legs). Hijab / hair meshes are added straight onto the head and spine bones. Meshes are merged per bone with vertex colours (`bake.ts`, ~10 draw calls each). Outfit colours are sampled from the product cutout. Models only for products with `modelOutfit: true`; every shop has a sales assistant (magenta vest + logo); there's also a concierge, a cashier and 3 stylists. Realistic / GLB human bodies were removed on purpose: don't bring them back.
+- **MODESTY RULE (mandatory, no exceptions):**
+  - No character may ever appear without clothes, not even for one frame.
+  - Clothing is always modest: abaya / long dress, or long sleeves with a long skirt or wide trousers.
+  - Only the face and hands are skin: legs use `bottomMat` for every outfit, the neck uses the top colour. Most characters wear hijab (models ~80%, staff/shoppers ~85%).
+  - `root.visible` stays false until the character is fully built and merged.
+  - Any new look, outfit or LOD must keep this.
 - **Interaction:** a raycast against registered interactables (product planes, character hitboxes, counter, doors), with wall occlusion and a distance limit (`src/interact/interaction.ts`).
+- **Live mall demo** (`src/social/`, `src/world/crowd.ts`, `src/world/liveMall.ts`, `src/ui/social.ts`), frontend-only:
+  - Interfaces in `social/types.ts`: `PresenceSource`, `StaffChatService`, `DealsService`, `IdentityService`. The `Mock*` classes get replaced by Laravel + Reverb later.
+  - Customers never chat with each other: chat is staff ↔ customer only.
+  - The crowd only renders what presence says. Full rigs are kept for the nearest on-screen few; the rest are one `BatchedMesh` LOD call plus an `InstancedMesh` for shadows.
+  - The Styling Studio lives in the `'lounge'` slot.
+  - Games (passport / treasure / wheel) and coupon claim (mock OTP, any 4 digits) are in `social/games.ts`.
+  - Cart pricing (flash sale / group deal / coupon / shipping) is in `social/pricing.ts`; `cartTotals()` uses it.
+  - Flags: `?crowd=N` (default High 50 / Medium 30 / Low 20) and `?nodemo` (no simulation).
+  - Dev: `lv.social`.
 - **Checkout** is behind `CheckoutService` (`src/services/CheckoutService.ts`). It is the mock today; `ShopifyCheckoutService` creates a Storefront Cart and redirects to `checkoutUrl`.
 - **Performance:**
   - Quality tiers come from `engine/quality.ts` (auto-detect plus FPS governor).
@@ -60,9 +75,27 @@ node scripts/fetch-assets.mjs              # validate + download images and logo
 - Portable Blender for the boutique scene goes in `tools/` (git-ignored).
 - The Draco decoder is copied into `public/draco/`.
 
-## Store scene (in progress)
+## Store décor (decided)
 
-`EL_REBAT_Render.blend` (project root, Blender 4.2, Cycles) is a **Le Voile boutique** design: warm palette (cream, oak, bronze, grey marble), 10 warm area lights, and signage "Le Voile", "NEW", "FITTING" and "THANK YOU". The decision is to use it as the real store: bake its lighting, export a Draco GLB to `public/models/mall/`, and place sections, products, people and the cashier inside it. The procedural mall remains the fallback.
+`EL_REBAT_Render.blend` (project root, Blender 4.2, Cycles) is the **Le Voile boutique** design: warm palette (cream, oak, bronze, grey marble), 10 warm area lights, and signage "Le Voile", "NEW", "FITTING" and "THANK YOU".
+
+**Decision (user):** keep the **mall** (atrium, boulevard, 9 section shops, atrium cashier, exit) as the experience, and give it the boutique's décor and quality.
+
+- **Pipeline:** `node scripts/bake-store.mjs` drives `scripts/blender/export_store.py` in stages: prep → bake (arch, ceiling, fixtures, soft, hardware) → export → kit. It uses portable Blender in `tools/` and writes working files to `tools/bake-work/`.
+  - Each bake group is joined into ONE object first. Baking many selected objects runs one Cycles pass per object, which is very slow.
+  - Transforms are applied after the join. The skewed inherited scale otherwise collapsed the smart_project UVs to zero area.
+  - Procedural texture coordinates are saved as `lv_orco`/`lv_objco` attributes so the join doesn't shift the noise patterns.
+  - Packing uses CONVEX/AABB (CONCAVE silently fails on 150k faces), followed by a uniform rescale into 0–1.
+  - CUDA is used, not OptiX (OptiX JIT-compiles kernels in every process).
+  - Cycles mesh sync has an intermittent `attr_create_uv_map` crash, so stages are retried with single-threaded `--safe`.
+  - Denoising is OIDN through the compositor; the 8-bit save applies the AgX look.
+- **`kit.glb` / `kit.json`:** 22 baked pieces cut by bounding boxes (shared atlases). Use them via `Kit.place()` (`src/world/kit.ts`). The material is unlit `MeshBasicMaterial` (baked).
+- **Furnishing:**
+  - Shops: `furnishWithKit` in `src/world/shop.ts`, by `SectionStyle.display`. Every shop gets a lookbook stand with its products (`src/world/displays.ts`).
+  - Atrium cashier: the kit counter, brand panel and plants (`src/world/cashier.ts`).
+  - Atrium and shop corners use the kit plant.
+- **Palette restyle:** cream walls, dark ceilings, bronze trims, the store's marble (`public/textures/marble.jpg`), and cream/bronze signage (`shopFascia`, `bladeSign`, directory).
+- **Alternatives:** `?boutique` walks the single baked store (`src/world/boutique.ts`, `src/config/boutique.ts`). `?nokit` uses procedural props.
 
 ## Conventions
 
@@ -70,5 +103,5 @@ node scripts/fetch-assets.mjs              # validate + download images and logo
 - New UI strings go in `src/i18n/i18n.ts` in both `ar` and `en`. Use natural Egyptian Arabic and keep brand terms in English.
 - Overlays render through `paint()` (`src/ui/dom.ts`) so re-renders don't replay entrance animations.
 - Boot yields must not rely on `requestAnimationFrame` alone, because background tabs throttle it.
-- Dev: `window.lv` exposes `{ game, store, engine, layout, catalog }`. Useful URL flags are `?fps`, `?nolock` and `?debug`.
+- Dev: `window.lv` exposes `{ game, store, engine, layout, catalog, social }`. Useful URL flags are `?fps`, `?nolock`, `?debug`, `?crowd=N` and `?nodemo`.
 - Don't commit `.venv/`, `node_modules/` or `tools/`.

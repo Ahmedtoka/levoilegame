@@ -13,24 +13,32 @@
 - Adopt its look across the procedural parts: warm palette (cream, oak, bronze, marble) and warm area lighting.
 - Convert product photos to WebP/AVIF at 1024 px (currently ~45 MB of JPEG/PNG) and generate KTX2 textures for the GLB.
 
-## 3. Better clothing on models
-- Replace procedural bodies with a CC0 rigged base character (slot already wired: `public/models/characters/base.glb`).
-- Outfit meshes per silhouette (abaya, wide-leg pants, maxi skirt, cardigan) skinned to the same rig, textured from the product photo (projected or AI-generated texture), instead of a flat tint.
-- Hijab variants as skinned meshes with light cloth wobble (vertex shader), plus hair cards for non-hijabi models.
-- Pose library and subtle idle loops (Mixamo-retargeted).
+## 3. Better clothing on models (stylised, modest)
+- Keep the friendly cartoon characters; realistic human bodies are out. The modesty rule is mandatory: never unclothed, abaya / long dress or long sleeves with a long skirt or wide trousers, only face and hands visible, most in hijab.
+- Outfit meshes per silhouette (abaya, wide-leg pants, maxi skirt, cardigan) on the same rig, textured from the product photo (projected or AI-generated texture), instead of a flat tint.
+- Hijab variants with light cloth wobble (vertex shader).
+- More poses and subtle idle loops.
 
-## 4. Voice / chat shopping assistant
-- A sales-assistant character opens a chat panel ("Ask Mariam"), reusing the existing Le Voile bot logic and tone in Egyptian Arabic and English.
+## 4. Live mall backend: Laravel + Reverb on Cloudways
+The live-mall demo (`src/social/`) is frontend-only today. Each mock gets a real implementation of the same interface:
+- `PresenceSource` → a Reverb presence channel per mall: real shoppers, what they're viewing, purchases (social-proof toasts and viewer counts from real data).
+- `StaffChatService` → realtime staff ↔ customer chat on private channels, with a staff dashboard (Laravel) to answer, send product cards and full looks. Customers never chat with each other.
+- `DealsService` → group deals, flash sales and coupons from the admin, broadcast as events.
+- `IdentityService` → Sanctum + SMS OTP; coupons stored server-side and redeemed as Shopify discount codes.
+- Hosting: Laravel app + Reverb websocket server on Cloudways; the static frontend stays on Cloudflare Pages.
+
+## 5. Voice / AI shopping assistant
+- Staff chat gets an AI first responder, reusing the existing Le Voile bot logic and tone in Egyptian Arabic and English, with hand-off to a human.
 - Tools: search the catalogue, "take me to…" (calls `game.teleport`), add to cart, size advice, current promos.
 - Voice input and output (Web Speech API, or a TTS service) with lip-flap animation on the assistant.
 
-## 5. Analytics
+## 6. Analytics
 - Events: section entered, product viewed (dwell time), add to cart, checkout started, order placed, exit (with or without purchase).
 - Heatmap of walked paths and gaze (crosshair targets) per section, to inform layout and merchandising.
 - Send to GA4 / Shopify Pixels; A/B test layouts and display types.
 
-## 6. Multiplayer / guided tours
-- Shared sessions (WebRTC or a small WebSocket relay): shop with friends and see each other's avatars.
+## 7. Multiplayer / guided tours
+- Real shoppers as crowd avatars via the Reverb presence channel (the crowd already renders `PresenceSource` members).
 - Guided tours: a stylist hosts a live session, with teleport-together, product spotlight and voice.
 - Events in the mall: launch days and collection reveals with timed scenes.
 
