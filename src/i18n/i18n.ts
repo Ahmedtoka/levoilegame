@@ -112,6 +112,8 @@ const STRINGS = {
   directory: { ar: 'دليل المول', en: 'Mall directory' },
   egp: { ar: 'ج.م', en: 'EGP' },
   // ---- live mall ----
+  screenOpen: { ar: 'شوفي العرض', en: 'See the offer' },
+  screenGoTo: { ar: 'روحي لـ', en: 'Go to' },
   coins: { ar: 'كوين', en: 'coins' },
   coinsHint: { ar: '122 Coins: العبي واكسبي كوينز، واستبدليها بخصومات في عداد المكافآت جوه أي محل', en: '122 Coins: play to earn, then swap them for discounts at any shop’s rewards counter' },
   rewardsCounter: { ar: 'عداد المكافآت', en: 'Rewards counter' },
