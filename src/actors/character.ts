@@ -18,7 +18,11 @@ import {
   type Texture,
   type Material,
   type Color,
+  Color as ThreeColor,
+  Matrix4,
+  type BufferGeometry,
 } from 'three'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { buildHair, buildHijab, fabric, type HairStyle, type HijabStyle } from './hijab'
 import { bakeVertexColors } from './bake'
 import type { OutfitStyle } from '../config/sections'
@@ -26,6 +30,18 @@ import { blobShadow } from '../world/props'
 import { imageMat } from '../world/materials'
 
 export type Pose = 'idle' | 'handOnHip' | 'model' | 'clasped' | 'relaxed'
+
+/** What the game needs from any character. */
+export interface Persona {
+  readonly root: Group
+  readonly hitbox: Object3D
+  lookTarget: Vector3 | null
+  walk: number
+  walkRate: number
+  update(dt: number, t: number): void
+  wave(): void
+  setOutfitColors(top: string | null, bottom: string | null): void
+}
 
 export interface Look {
   skin: string
@@ -91,12 +107,19 @@ const G = {
     Math.PI * 2 - 0.64,
   ),
   leg: new CapsuleGeometry(0.068, 0.72, 4, 10),
+  /** Wide-leg trousers: flared cylinder per leg. */
+  wideLeg: new CylinderGeometry(0.078, 0.112, 0.84, 12, 1),
   upperArm: new CapsuleGeometry(0.046, 0.22, 4, 8),
   foreArm: new CapsuleGeometry(0.04, 0.2, 4, 8),
   hand: new SphereGeometry(0.042, 10, 8),
   neck: new CylinderGeometry(0.045, 0.05, 0.12, 10),
   head: new SphereGeometry(0.105, 20, 16),
   eye: new SphereGeometry(0.0115, 8, 6),
+  glint: new SphereGeometry(0.0038, 6, 4),
+  brow: new CapsuleGeometry(0.0052, 0.026, 2, 6),
+  nose: new SphereGeometry(0.011, 8, 6),
+  lips: new SphereGeometry(0.016, 10, 6),
+  cheek: new SphereGeometry(0.017, 10, 6),
   shoe: new SphereGeometry(0.06, 10, 6),
   logo: new PlaneGeometry(0.1, 0.026),
 }
@@ -110,13 +133,39 @@ function skinMat(c: string): MeshStandardMaterial {
 const HITBOX = new CylinderGeometry(0.34, 0.34, 1.8, 8)
 const HIDDEN = new MeshBasicMaterial({ visible: false })
 const EYE_MAT = new MeshStandardMaterial({ color: '#2a1d22', roughness: 0.3 })
+const GLINT_MAT = new MeshStandardMaterial({ color: '#ffffff', roughness: 0.2 })
+const LIPS_MAT = new MeshStandardMaterial({ color: '#c4707a', roughness: 0.5 })
+
+/** Cached plain colour material (merged into the vertex-coloured mesh by bake.ts). */
+const tintCache = new Map<string, MeshStandardMaterial>()
+function tint(c: string): MeshStandardMaterial {
+  let m = tintCache.get(c)
+  if (!m) tintCache.set(c, (m = new MeshStandardMaterial({ color: c, roughness: 0.7 })))
+  return m
+}
+/** Skin shade mixed towards a colour (soft blush, nose shading). */
+function shade(skin: string, toward: string, k: number): string {
+  return `#${new ThreeColor(skin).lerp(new ThreeColor(toward), k).getHexString()}`
+}
 
 interface Arm {
   shoulder: Group
   elbow: Group
 }
 
-export class Character {
+/**
+ * The only character factory. Characters are procedural: clothing is part of the
+ * same merged mesh as the body, so a character can never render without clothes.
+ *
+ * MODESTY RULE (no exceptions): every character is fully and modestly dressed —
+ * abaya / long dress, or long sleeves with a long skirt or wide trousers. Only the
+ * face and hands are skin; legs and neck are always covered. Most wear hijab.
+ */
+export function createCharacter(look: Look, seed: number): Character {
+  return new Character(look, seed)
+}
+
+export class Character implements Persona {
   readonly root = new Group()
   readonly look: Look
   /** 0..1 blend of the walk cycle (avatar only). */
@@ -144,6 +193,8 @@ export class Character {
   constructor(look: Look, seed = Math.random() * 100) {
     this.look = look
     this.phase = seed
+    // Never render while being assembled; shown only once fully dressed and merged.
+    this.root.visible = false
     const s = look.height ?? 1
     this.root.scale.setScalar(s)
     this.topMat = new MeshStandardMaterial({ color: look.top, roughness: 0.88 })
@@ -155,12 +206,14 @@ export class Character {
     this.spine.position.y = 0.95
     this.body.add(this.hips, this.spine)
 
-    // Legs (always present so the avatar can walk; hidden under long hems).
+    // Legs (always present so the avatar can walk). Always clothed: wide trousers
+    // for 'pants', otherwise the bottoms colour under the long hem — never skin.
+    const wide = look.outfit === 'pants'
     for (const side of [1, -1]) {
       const pivot = new Group()
       pivot.position.set(0.085 * side, 0, 0)
-      const leg = new Mesh(G.leg, look.outfit === 'pants' ? this.bottomMat : skin)
-      leg.position.y = -0.43
+      const leg = new Mesh(wide ? G.wideLeg : G.leg, this.bottomMat)
+      leg.position.y = wide ? -0.46 : -0.43
       const shoe = new Mesh(G.shoe, fabric(look.shoes, 0.5))
       shoe.scale.set(0.9, 0.55, 1.5)
       shoe.position.set(0, -0.9, 0.035)
@@ -187,8 +240,8 @@ export class Character {
       }
     }
 
-    // Neck + head
-    const neck = new Mesh(G.neck, skin)
+    // Neck + head. The neck is a turtleneck in the top colour (hijab drapes cover it too).
+    const neck = new Mesh(G.neck, this.topMat)
     neck.position.y = 0.52
     this.spine.add(neck)
     this.head.position.y = 0.6
@@ -197,19 +250,20 @@ export class Character {
     headMesh.scale.set(0.92, 1.12, 1)
     headMesh.position.y = 0.04
     this.head.add(headMesh)
-    for (const sx of [-1, 1]) {
-      const eye = new Mesh(G.eye, EYE_MAT)
-      eye.position.set(0.036 * sx, 0.05, 0.094)
-      eye.scale.set(1, 0.75, 0.6)
-      this.head.add(eye)
-    }
+    this.face(skin.color.getHexString(), look.head.kind === 'hair' ? look.head.color : '#4a3428')
 
     const wear =
       look.head.kind === 'hijab' ? buildHijab(look.head.color, look.head.style, look.head.accent) : buildHair(look.head.color, look.head.style)
-    wear.cap.position.y = 0.04
-    this.head.add(wear.cap)
-    wear.drape.position.y = 0.46
-    this.spine.add(wear.drape)
+    // Headwear meshes go straight onto the head / spine bones so they merge into
+    // those bones' meshes (2 fewer draw calls per character).
+    for (const m of [...wear.cap.children]) {
+      m.position.y += 0.04
+      this.head.add(m)
+    }
+    for (const m of [...wear.drape.children]) {
+      m.position.y += 0.46
+      this.spine.add(m)
+    }
 
     // Arms (sleeves in the top colour, hands in skin)
     this.armL = this.arm(1, this.topMat, skin)
@@ -221,6 +275,30 @@ export class Character {
     this.root.traverse((o) => {
       o.matrixAutoUpdate = true
     })
+    // Fully built: clothing and body are one merged mesh per bone now.
+    this.root.visible = true
+  }
+
+  /** Friendly stylised face: big soft eyes with a glint, soft brows, small nose, lips and blush. */
+  private face(skinHex: string, browColor: string): void {
+    const skin = `#${skinHex}`
+    const add = (geo: SphereGeometry | CapsuleGeometry, mat: MeshStandardMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number, rz = 0) => {
+      const m = new Mesh(geo, mat)
+      m.position.set(x, y, z)
+      m.scale.set(sx, sy, sz)
+      m.rotation.z = rz
+      this.head.add(m)
+    }
+    const brow = tint(browColor)
+    const blush = tint(shade(skin, '#ec7f98', 0.42))
+    for (const sx of [-1, 1]) {
+      add(G.eye, EYE_MAT, 0.036 * sx, 0.048, 0.094, 1.05, 0.95, 0.6)
+      add(G.glint, GLINT_MAT, 0.036 * sx + 0.004, 0.053, 0.1, 1, 1, 0.6)
+      add(G.brow, brow, 0.037 * sx, 0.074, 0.095, 1, 1, 0.5, Math.PI / 2 - sx * 0.12)
+      add(G.cheek, blush, 0.057 * sx, 0.022, 0.081, 1, 0.66, 0.35)
+    }
+    add(G.nose, tint(shade(skin, '#8a5a48', 0.12)), 0, 0.03, 0.103, 0.75, 1, 0.6)
+    add(G.lips, LIPS_MAT, 0, 0.004, 0.097, 1.1, 0.42, 0.5)
   }
 
   private mesh(geo: LatheGeometry, mat: MeshStandardMaterial, zScale: number): Mesh {
@@ -299,6 +377,31 @@ export class Character {
         set('headZ', 0.04)
         break
     }
+  }
+
+  /** Attach a prop (e.g. a shopping bag) to the right hand. */
+  holdInRightHand(obj: Object3D): void {
+    obj.position.set(0, -0.32, 0)
+    this.armR.elbow.add(obj)
+  }
+
+  /**
+   * Single static mesh of the whole character in its rest pose (vertex colours),
+   * for distant crowd LOD: one geometry, drawn in one batched call.
+   */
+  lodGeometry(): BufferGeometry | null {
+    this.update(0, 0)
+    this.root.updateMatrixWorld(true)
+    const inv = new Matrix4().copy(this.root.matrixWorld).invert()
+    const geos: BufferGeometry[] = []
+    this.root.traverse((o) => {
+      const m = o as Mesh
+      if (!m.isMesh || o === this.hitbox) return
+      const mat = m.material as MeshStandardMaterial
+      if (!mat.vertexColors) return
+      geos.push(m.geometry.clone().applyMatrix4(new Matrix4().multiplyMatrices(inv, m.matrixWorld)))
+    })
+    return geos.length ? mergeGeometries(geos, false) : null
   }
 
   /** Recolour the outfit (e.g. to match the featured product). */

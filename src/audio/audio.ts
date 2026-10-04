@@ -232,6 +232,42 @@ export class AudioEngine {
     g.connect(this.sfxBus)
     src.start(t)
   }
+
+  /** Passport stamp: low thud + bright tick. */
+  stamp(): void {
+    if (!this.sfxReady) return
+    const t = this.ctx!.currentTime
+    this.bell(mtof(55), t, 0.16, this.sfxBus)
+    this.bell(mtof(86), t + 0.05, 0.08, this.sfxBus)
+  }
+
+  /** Treasure picked up: rising sparkle. */
+  coin(): void {
+    if (!this.sfxReady) return
+    const t = this.ctx!.currentTime
+    ;[84, 88, 91, 96].forEach((n, i) => this.bell(mtof(n), t + i * 0.06, 0.12, this.sfxBus))
+  }
+
+  /** Flash sale announcement: three-tone mall chime. */
+  chime(): void {
+    if (!this.sfxReady) return
+    const t = this.ctx!.currentTime
+    ;[79, 76, 72, 79].forEach((n, i) => this.bell(mtof(n), t + i * 0.32, 0.22, this.sfxBus))
+  }
+
+  /** Group deal unlocked / prize won. */
+  celebrate(): void {
+    if (!this.sfxReady) return
+    const t = this.ctx!.currentTime
+    ;[72, 76, 79, 84, 88, 91].forEach((n, i) => this.bell(mtof(n), t + i * 0.09, 0.16, this.sfxBus))
+  }
+
+  /** Incoming chat message. */
+  message(): void {
+    if (!this.sfxReady) return
+    const t = this.ctx!.currentTime
+    this.bell(mtof(88), t, 0.07, this.sfxBus)
+  }
 }
 
 export const audio = new AudioEngine()

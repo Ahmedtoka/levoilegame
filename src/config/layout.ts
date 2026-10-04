@@ -45,16 +45,31 @@ export interface ShopLayout {
   /** Group yaw so that local -Z points into the shop and local +X runs along its front. */
   yaw: number
   center: { x: number; z: number }
+  /** Where teleport puts you (defaults to just inside the entrance). */
+  arrival?: Pose
+}
+
+export interface Pose {
+  x: number
+  z: number
+  yaw: number
 }
 
 export interface MallLayout {
+  /** 'mall' = procedural mall; 'boutique' = baked store model. */
+  kind: 'mall' | 'boutique'
   bounds: Rect
+  /** Entrance hall (zone "atrium"). */
   atrium: Rect
   boulevard: Rect
   shops: ShopLayout[]
-  spawn: { x: number; z: number; yaw: number }
-  cashier: { x: number; z: number; zone: Rect }
-  exit: { x: number; z: number; zone: Rect }
+  /** Extra named areas (e.g. fitting rooms) checked after shops. */
+  zones?: { id: string; rect: Rect }[]
+  spawn: Pose
+  /** zone: shown on the minimap; approach: customer side that opens checkout; arrival: teleport pose. */
+  cashier: { x: number; z: number; zone: Rect; approach: Rect; arrival: Pose }
+  /** zone: stepping in leaves the store; doors: area where the doors slide open; arrival: teleport pose. */
+  exit: { x: number; z: number; zone: Rect; doors: Rect; arrival: Pose }
 }
 
 export function rectContains(r: Rect, x: number, z: number): boolean {
@@ -89,18 +104,36 @@ export function buildLayout(sections: Section[]): MallLayout {
   }
 
   return {
+    kind: 'mall',
     bounds: { x0: -W, z0: zEnd, x1: W, z1: 0 },
     atrium: { x0: -W, z0: -A, x1: W, z1: 0 },
     boulevard: { x0: -B, z0: zEnd, x1: B, z1: -A },
     shops,
     spawn: { x: 0, z: -3.2, yaw: 0 },
-    cashier: { x: 13, z: -9, zone: { x0: 9.5, z0: -11.5, x1: 16.5, z1: -5.4 } },
-    exit: { x: 0, z: 0, zone: { x0: -MALL.doorHalf, z0: -1.6, x1: MALL.doorHalf, z1: 0 } },
+    cashier: {
+      x: 13,
+      z: -9,
+      zone: { x0: 9.5, z0: -11.5, x1: 16.5, z1: -5.4 },
+      approach: { x0: 9.8, z0: -11.3, x1: 12.6, z1: -6.7 },
+      arrival: { x: 10.6, z: -9, yaw: -Math.PI / 2 },
+    },
+    exit: {
+      x: 0,
+      z: 0,
+      zone: { x0: -2.8, z0: -1.0, x1: 2.8, z1: 0.5 },
+      doors: { x0: -3.2, z0: -3.2, x1: 3.2, z1: 0.5 },
+      arrival: { x: 0, z: -4.5, yaw: Math.PI },
+    },
   }
 }
 
-/** Where to stand when teleporting to a shop: just inside, facing in. */
-export function shopArrival(s: ShopLayout): { x: number; z: number; yaw: number } {
+/**
+ * Where to stand when teleporting to a shop: on the threshold, facing in. Not
+ * deeper: the lookbook stand sits 2.4 m inside, and arriving right in front of
+ * it puts its header behind the HUD zone banner (reads as doubled text).
+ */
+export function shopArrival(s: ShopLayout): Pose {
+  if (s.arrival) return s.arrival
   const inward = s.side === 'L' ? -1 : 1
-  return { x: s.entrance.x + inward * 1.5, z: s.entrance.z, yaw: s.yaw }
+  return { x: s.entrance.x + inward * 0.3, z: s.entrance.z, yaw: s.yaw }
 }

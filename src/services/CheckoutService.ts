@@ -9,6 +9,8 @@ export interface CheckoutRequest {
   lines: CartLine[]
   customer: Customer
   method: PaymentMethod
+  /** Live-mall deals/coupon applied to this cart (social/pricing.ts). */
+  pricing?: { discount: number; shipping: number; coupon?: string; giftProductId?: string }
 }
 
 export type CheckoutResult =
@@ -41,7 +43,12 @@ export class MockCheckoutService implements CheckoutService {
   async placeOrder(req: CheckoutRequest): Promise<CheckoutResult> {
     await new Promise((r) => setTimeout(r, 1600 + Math.random() * 600))
     const lines = orderLines(req.lines, this.catalog)
-    const total = lines.reduce((a, l) => a + l.price * l.qty, 0)
+    const gift = req.pricing?.giftProductId ? this.catalog.byId.get(req.pricing.giftProductId) : null
+    if (gift) lines.push({ key: `gift|${gift.id}`, productId: gift.id, size: gift.sizes[0] ?? '', color: '', qty: 1, title: `${gift.title} (gift)`, price: 0 })
+    const subtotal = lines.reduce((a, l) => a + l.price * l.qty, 0)
+    const discount = req.pricing?.discount ?? 0
+    const shipping = req.pricing?.shipping ?? 0
+    const total = Math.max(0, subtotal - discount + shipping)
     const number = `LV-${Date.now().toString(36).toUpperCase().slice(-5)}${Math.floor(Math.random() * 90 + 10)}`
     return {
       status: 'success',
@@ -49,6 +56,9 @@ export class MockCheckoutService implements CheckoutService {
         number,
         lines,
         total,
+        discount,
+        shipping,
+        coupon: req.pricing?.coupon,
         currency: 'EGP',
         customer: req.customer,
         method: req.method,

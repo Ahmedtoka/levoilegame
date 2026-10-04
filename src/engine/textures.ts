@@ -5,6 +5,7 @@ import {
   RepeatWrapping,
   SRGBColorSpace,
   Texture,
+  TextureLoader,
   type WebGLRenderer,
 } from 'three'
 
@@ -41,6 +42,17 @@ export function rng(seed: number): () => number {
     s ^= s << 5
     return (s >>> 0) / 4294967296
   }
+}
+
+/** The boutique's grey marble (public/textures/marble.jpg), tiled. */
+export function storeTexture(url: string, repeat: [number, number], tint?: string): Texture {
+  const t = new TextureLoader().load(url)
+  t.colorSpace = SRGBColorSpace
+  t.wrapS = t.wrapT = RepeatWrapping
+  t.repeat.set(repeat[0], repeat[1])
+  t.anisotropy = maxAniso
+  void tint
+  return t
 }
 
 /** Large polished-stone tiles with soft veins. */

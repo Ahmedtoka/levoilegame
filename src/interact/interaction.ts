@@ -5,7 +5,7 @@ import { Raycaster, Vector2, Vector3, type Camera, type Object3D } from 'three'
 import type { CollisionWorld } from '../engine/colliders'
 import { store } from '../state/store'
 
-export type InteractKind = 'product' | 'model' | 'staff' | 'cashier' | 'exit'
+export type InteractKind = 'product' | 'model' | 'staff' | 'cashier' | 'exit' | 'customer' | 'treasure' | 'wheel' | 'deal'
 
 export interface Interactable {
   object: Object3D
@@ -15,6 +15,8 @@ export interface Interactable {
   onInteract: () => void
   highlight?: (on: boolean) => void
   maxDist?: number
+  /** When false the target is skipped (e.g. a shopper who isn't looking at anything). */
+  enabled?: () => boolean
 }
 
 const _center = new Vector2(0, 0)
@@ -42,7 +44,7 @@ export class Interaction {
     const hits = this.ray.intersectObjects(this.targets, false)
     for (const h of hits) {
       const it = this.map.get(h.object)
-      if (!it) continue
+      if (!it || (it.enabled && !it.enabled())) continue
       const dx = h.point.x - player.x
       const dz = h.point.z - player.z
       if (Math.hypot(dx, dz) > (it.maxDist ?? 3.4)) return null

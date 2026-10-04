@@ -19,13 +19,16 @@ import { MALL, type ShopLayout } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import { loadProductTexture } from '../engine/textures'
-import { discountPercent, displayImage, type Catalog, type Product } from '../data/types'
+import { discountPercent, displayImage, type Catalog, type Product, type Section } from '../data/types'
 import { formatPrice, t } from '../i18n/i18n'
 import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { imageMat, MAT, tintMat } from './materials'
 import { blobShadow, framedPlane, plant, slimPlant, v3 } from './props'
 import { bladeSign, logoTexture, priceTagTexture, shopFascia } from './signage'
+import type { Kit } from './kit'
+import type { DisplayKind } from '../config/sections'
+import { easelRow, loadCards, lookbookStand, registerCards } from './displays'
 
 export interface ShopContext {
   root: Object3D
@@ -34,6 +37,8 @@ export interface ShopContext {
   interaction: Interaction
   catalog: Catalog
   textureMax: () => number
+  /** Baked décor kit (null → procedural props). */
+  kit?: Kit | null
 }
 
 /** Where a showcase model stands (world space), filled by the people builder. */
@@ -109,7 +114,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
       if (!loaded && Math.hypot(px - shop.center.x, pz - shop.center.z) < 34) load()
       // Inside a shop you only see that shop; from the boulevard, shops near you.
       const inside = px >= r.x0 && px <= r.x1 && pz >= r.z0 && pz <= r.z1
-      const near = Math.hypot(px - shop.entrance.x, pz - shop.entrance.z) < 24
+      const near = Math.hypot(px - shop.entrance.x, pz - shop.entrance.z) < 19
       const v = inside || (!insideShop && near)
       if (v !== handles.interiorVisible) {
         handles.interiorVisible = v
@@ -123,15 +128,15 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const half = MALL.shopLen / 2
 
   if (shop.kind === 'lounge' || !shop.section || !shop.style) {
-    buildLounge(f, interior, loaders)
+    buildLounge(f, interior, loaders, ctx.kit ?? null, ctx.colliders)
     return handles
   }
 
   const section = shop.section
   const style = shop.style
   const tint = style.tint
-  const accent = tintMat(tint, 0.96, 0.9)
-  const accentDeep = tintMat(tint, 0.82, 0.8)
+  const accent = tintMat('#ece3d6', 1, 0.9)
+  const accentDeep = tintMat('#a57b52', 1, 0.6)
   const products = section.productIds.map((id) => ctx.catalog.byId.get(id)).filter((p): p is Product => !!p)
 
   // ---------------------------------------------------------- storefront
@@ -188,11 +193,14 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   inner.position.set(0, 3.85, -depth + 0.07)
   interior.add(inner)
 
-  slimPlant(f, -half + 0.6, -0.9, shop.index * 3 + 1)
-  slimPlant(f, half - 0.6, -0.9, shop.index * 3 + 2)
+  if (!ctx.kit?.place('plant', interior, -half + 0.7, -0.9, 0.6, ctx.colliders)) slimPlant(f, -half + 0.6, -0.9, shop.index * 3 + 1)
+  if (!ctx.kit?.place('plant', interior, half - 0.7, -0.9, -0.6, ctx.colliders)) slimPlant(f, half - 0.6, -0.9, shop.index * 3 + 2)
 
+  const kit = ctx.kit ?? null
   const display = new ProductDisplay(ctx, f, interior, loaders)
-  switch (style.display) {
+  if (kit) {
+    furnishWithKit(kit, ctx, f, interior, style.display, section, products, loaders)
+  } else switch (style.display) {
     case 'rack':
       rackDisplay(display, products, tint)
       break
@@ -212,7 +220,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   modelProducts.slice(0, 3).forEach((p, i) => {
     const n = Math.min(modelProducts.length, 3)
     const x = n === 1 ? 0 : -3.4 + (6.8 / (n - 1)) * i
-    const z = -6.6
+    const z = kit ? -5.2 : -6.6
     // Plinth
     f.cyl(MAT.brass, x, 0, z, 0.63, 0.03)
     f.cyl(MAT.plinth, x, 0.03, z, 0.6, 0.09)
@@ -224,9 +232,9 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
     display.standee(p, sx, z + 0.35, x <= 0 ? 0.35 : -0.35)
   })
 
-  // Sales assistant in shops without models.
-  if (!modelProducts.length) {
-    const w = f.toWorld(half - 1.6, 0, -4.2)
+  // A sales assistant in every shop (chat with her via E); beside the models where there are some.
+  {
+    const w = f.toWorld(modelProducts.length ? half - 1.3 : half - 1.6, 0, modelProducts.length ? -2.6 : -4.2)
     handles.staffSpot = { x: w.x, z: w.z, yaw: shop.yaw - 0.9 }
   }
 
@@ -468,7 +476,7 @@ function centreTable(f: BatchFrame, tint: string): void {
   }
 }
 
-function buildLounge(f: BatchFrame, group: Group, loaders: (() => Promise<unknown>)[]): void {
+function buildLounge(f: BatchFrame, group: Group, loaders: (() => Promise<unknown>)[], kit: Kit | null = null, colliders?: CollisionWorld): void {
   const depth = MALL.shopDepth
   // Sofas around a coffee table
   f.block(MAT.sofa, 0, 0, -depth + 1.0, 5, 0.45, 0.9, { collide: true })
@@ -477,10 +485,9 @@ function buildLounge(f: BatchFrame, group: Group, loaders: (() => Promise<unknow
   f.block(MAT.sofa, 3.2, 0, -8, 0.9, 0.45, 3.2, { collide: true })
   f.cyl(MAT.marbleTop, 0, 0, -8.5, 0.8, 0.42, { collide: true })
   f.cyl(MAT.brass, 0, 0.42, -8.5, 0.82, 0.02)
-  plant(f, -5, -depth + 1.2, 1.3, 31)
-  plant(f, 5, -depth + 1.2, 1.3, 32)
-  plant(f, -5, -2, 1.1, 33)
-  plant(f, 5, -2, 1.1, 34)
+  ;([[-5, -depth + 1.2], [5, -depth + 1.2], [-5, -2], [5, -2]] as const).forEach(([x, z], i) => {
+    if (!kit?.place('plant', group, x, z, i, colliders)) plant(f, x, z, 1.2, 31 + i)
+  })
   const poster = new Mesh(new PlaneGeometry(6, 1.5), PLACEHOLDER)
   poster.position.set(0, 2.8, -depth + 0.06)
   group.add(poster)
@@ -489,4 +496,87 @@ function buildLounge(f: BatchFrame, group: Group, loaders: (() => Promise<unknow
       poster.material = imageMat(tex)
     }),
   )
+}
+
+// ---------------------------------------------------------------------------
+// Baked décor kit furnishing (pieces cut from the Le Voile boutique scene).
+
+const WALL_X = MALL.shopLen / 2 - 0.15
+const BACK_Z = -MALL.shopDepth + 0.15
+const FACE_IN = 0 // front faces the entrance (+z local)
+const FACE_PX = Math.PI / 2
+const FACE_NX = -Math.PI / 2
+
+function furnishWithKit(
+  kit: Kit,
+  ctx: ShopContext,
+  f: BatchFrame,
+  interior: Group,
+  kind: DisplayKind,
+  section: Section,
+  products: Product[],
+  loaders: (() => Promise<unknown>)[],
+): void {
+  const put = (name: string, x: number, z: number, face: number, collide = true) =>
+    kit.place(name, interior, x, z, face, collide ? ctx.colliders : undefined)
+  const depthOf = (name: string) => kit.info[name]?.size[0] ?? 0.75
+  const backRow = (names: string[]) =>
+    names.forEach((n, i) => put(n, -3.95 + i * 2.62, BACK_Z + depthOf(n) / 2, FACE_IN))
+  const sideWall = (side: 1 | -1, names: string[], zs: number[]) =>
+    names.forEach((n, i) => put(n, side * (WALL_X - depthOf(n) / 2), zs[i], side < 0 ? FACE_PX : FACE_NX))
+
+  // Lookbook stand with all of the section's products, just inside the entrance.
+  const stand = new Group()
+  stand.position.set(0, 0, -2.4)
+  interior.add(stand)
+  stand.updateMatrix()
+  const standFrame = f.batcher.frame(f.base.clone().multiply(stand.matrix), ctx.colliders)
+  const cards = lookbookStand(standFrame, stand, section, products)
+
+  switch (kind) {
+    case 'rack':
+      backRow(['hangbay_1', 'hangbay_2', 'hangbay_3', 'hangbay_4'])
+      sideWall(-1, ['hangbay_2', 'hangbay_3'], [-9.0, -11.65])
+      sideWall(1, ['hangbay_4', 'hangbay_1'], [-9.0, -11.65])
+      put('rack_1', -2.45, -8.7, FACE_PX)
+      put('rack_4', 2.45, -8.7, FACE_PX)
+      break
+    case 'shelf':
+      sideWall(-1, ['scarfbay_1', 'scarfbay_2', 'scarfbay_3', 'scarfbay_4'], [-4.6, -7.15, -9.7, -12.25])
+      sideWall(1, ['scarfbay_5', 'scarfbay_3', 'scarfbay_2', 'scarfbay_1'], [-4.6, -7.15, -9.7, -12.25])
+      put('reardisplay', 0, BACK_Z + 0.55, FACE_IN)
+      put('plant', -2.6, BACK_Z + 0.5, FACE_IN)
+      put('plant', 2.6, BACK_Z + 0.5, FACE_IN)
+      put('table', 0, -8.4, FACE_IN)
+      break
+    case 'gallery':
+      backRow(['hangbay_3', 'hangbay_1', 'hangbay_4', 'hangbay_2'])
+      put('table', 0, -6.6, FACE_IN)
+      put('gondola', 0, -10.0, FACE_IN)
+      put('rack_2', -4.15, -9.3, FACE_PX)
+      put('rack_5', 4.15, -9.3, FACE_PX)
+      break
+    case 'boxes': {
+      sideWall(-1, ['scarfbay_2', 'scarfbay_4', 'scarfbay_1'], [-6.0, -8.55, -11.1])
+      sideWall(1, ['scarfbay_3', 'scarfbay_5', 'scarfbay_2'], [-6.0, -8.55, -11.1])
+      put('brandpanel', 0, BACK_Z + 0.16, FACE_IN, false)
+      put('plant', -2.4, BACK_Z + 0.5, FACE_IN)
+      put('plant', 2.4, BACK_Z + 0.5, FACE_IN)
+      put('table', 0, -10.4, FACE_IN)
+      // Two gondolas with product easels.
+      ;[-2.0, 2.0].forEach((x, gi) => {
+        put('gondola', x, -6.6, FACE_IN)
+        const row = new Group()
+        row.position.set(x - 0.5, 0, -6.6 + 0.5)
+        interior.add(row)
+        row.updateMatrix()
+        const rf = f.batcher.frame(f.base.clone().multiply(row.matrix), ctx.colliders)
+        const subset = gi === 0 ? products.slice(0, 3) : products.slice(3)
+        cards.push(...easelRow(rf, row, subset, 0.96, 0.5))
+      })
+      break
+    }
+  }
+  registerCards(ctx.interaction, cards)
+  loaders.push(async () => loadCards(cards))
 }

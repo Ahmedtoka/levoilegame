@@ -3,6 +3,18 @@ import { cartTotals, catalog, store, watch } from '../state/store'
 import { FREE_SIZE } from '../data/defaults'
 import { audio } from '../audio/audio'
 import { esc, el, ICONS, onAction, paint, type GameBridge } from './dom'
+import { autoDeal, couponLabel, priceCart } from '../social/pricing'
+import type { Lang } from '../i18n/i18n'
+import type { AppState } from '../state/store'
+
+/** Discount lines, shipping and total (shared with the checkout summary). */
+export function pricingRows(s: AppState, L: Lang): string {
+  const pc = priceCart(s.cart, s)
+  return `<div class="sum-row"><span>${esc(t('subtotal', L))}</span><span>${esc(formatPrice(pc.subtotal, L))}</span></div>
+    ${pc.discounts.map((d) => `<div class="sum-row disc"><span>${esc(d.label[L])}</span><span>${d.amount ? '−' + esc(formatPrice(d.amount, L)) : esc(t('free', L))}</span></div>`).join('')}
+    <div class="sum-row"><span>${esc(t('shipping', L))}</span><span>${pc.shipping ? esc(formatPrice(pc.shipping, L)) : esc(t('free', L))}</span></div>
+    <div class="sum-row grand"><span>${esc(t('total', L))}</span><span>${esc(formatPrice(pc.total, L))}</span></div>`
+}
 
 export function mountCart(root: HTMLElement, game: GameBridge): void {
   const veil = el('div', 'veil drawer-veil hidden')
@@ -15,7 +27,7 @@ export function mountCart(root: HTMLElement, game: GameBridge): void {
       return
     }
     const L = s.lang
-    const { count, total } = cartTotals(s.cart)
+    const { count } = cartTotals(s.cart)
     const lines = s.cart
       .map((l) => {
         const p = catalog().byId.get(l.productId)
@@ -32,7 +44,11 @@ export function mountCart(root: HTMLElement, game: GameBridge): void {
             </div>
           </div>
           <div class="end">
-            <span>${esc(formatPrice(p.price * l.qty, L))}</span>
+            ${
+              autoDeal(p.id, s)
+                ? `<span class="deal-price"><s>${esc(formatPrice(p.price * l.qty, L))}</s>${esc(formatPrice(Math.round(p.price * l.qty * (1 - autoDeal(p.id, s)!.percent / 100)), L))}</span>`
+                : `<span>${esc(formatPrice(p.price * l.qty, L))}</span>`
+            }
             <button class="rm" data-action="rm" data-key="${esc(l.key)}" aria-label="${esc(t('remove', L))}">${ICONS.trash}</button>
           </div>
         </div>`
@@ -50,7 +66,14 @@ export function mountCart(root: HTMLElement, game: GameBridge): void {
         ${
           count
             ? `<footer>
-            <div class="sum-row"><span>${esc(t('subtotal', L))}</span><span>${esc(formatPrice(total, L))}</span></div>
+            ${
+              s.coupons.length
+                ? `<div class="coupons"><span class="lbl">${esc(t('coupons', L))}</span>${s.coupons
+                    .map((c) => `<button class="chip ${c.code === s.appliedCoupon ? 'on' : ''}" data-action="coupon" data-code="${esc(c.code)}">${esc(couponLabel(c)[L])}${c.code === s.appliedCoupon ? ' ✓' : ''}</button>`)
+                    .join('')}</div>`
+                : ''
+            }
+            ${pricingRows(s, L)}
             <button class="btn block lg flip-rtl" data-action="cashier">${esc(t('goToCashier', L))} ${ICONS.arrow}</button>
           </footer>`
             : ''
@@ -70,6 +93,11 @@ export function mountCart(root: HTMLElement, game: GameBridge): void {
       store.getState().removeLine(b.dataset.key!)
       audio.click()
     },
+    coupon: (b) => {
+      const s = store.getState()
+      s.set({ appliedCoupon: s.appliedCoupon === b.dataset.code ? null : b.dataset.code! })
+      audio.click()
+    },
     cashier: () => {
       audio.click()
       game.teleport('cashier')
@@ -81,5 +109,9 @@ export function mountCart(root: HTMLElement, game: GameBridge): void {
 
   watch((s) => s.overlay, render)
   watch((s) => s.cart, render)
+  watch((s) => s.appliedCoupon, render)
+  watch((s) => s.coupons, render)
+  watch((s) => s.flash, render)
+  watch((s) => s.groupDeal, render)
   watch((s) => s.lang, render)
 }

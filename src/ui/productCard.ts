@@ -4,6 +4,33 @@ import { catalog, store, watch } from '../state/store'
 import { audio } from '../audio/audio'
 import { FREE_SIZE } from '../data/defaults'
 import { esc, el, ICONS, onAction, paint, type GameBridge } from './dom'
+import { autoDeal } from '../social/pricing'
+import { hasSocial, social } from '../social'
+import type { AppState } from '../state/store'
+
+const viewers = (id: string) => (hasSocial() ? (social().presence?.viewersOf(id) ?? 0) : 0)
+
+/** Social proof + live deals for a product (viewers, flash/group-deal price, join button). */
+function liveBlock(p: { id: string; price: number; currency: string }, s: AppState): string {
+  const L = s.lang
+  const n = viewers(p.id)
+  const deal = autoDeal(p.id, s)
+  const g = s.groupDeal && s.groupDeal.productId === p.id ? s.groupDeal : null
+  const left = g ? Math.max(0, Math.floor((g.endsAt - Date.now()) / 1000)) : 0
+  return `
+    <div class="viewers ${n >= 2 ? '' : 'hidden'}" data-viewers>👀 <b>${n}</b> ${esc(t('viewersNow', L))}</div>
+    ${deal ? `<div class="live-price"><span class="pill-off">${esc(deal.label[L])} −${deal.percent}%</span><b>${esc(formatPrice(Math.round(p.price * (1 - deal.percent / 100)), L, p.currency))}</b></div>` : ''}
+    ${
+      g
+        ? `<div class="group-deal ${g.unlocked ? 'won' : ''}">
+        <div class="gd-head">👥 ${esc(t('groupDeal', L))} · −${g.percent}%</div>
+        <div class="gd-bar"><i style="width:${(100 * Math.min(g.joined, g.target)) / g.target}%"></i></div>
+        <div class="gd-meta">${g.joined}/${g.target} ${esc(t('joined', L))}${g.unlocked ? '' : ` · ${esc(t('left', L))} ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`}</div>
+        ${g.unlocked ? `<div class="gd-ok">${esc(t('dealUnlocked', L))}</div>` : g.userJoined ? `<div class="gd-ok">${esc(t('youJoined', L))}</div>` : `<button class="btn sm" data-action="join">${esc(t('joinDeal', L))}</button>`}
+      </div>`
+        : ''
+    }`
+}
 
 export function mountProductCard(root: HTMLElement, game: GameBridge): void {
   const veil = el('div', 'veil sheet hidden')
@@ -60,6 +87,7 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
               <span class="price">${esc(formatPrice(p.price, L, p.currency))}</span>
               ${p.compareAtPrice && off ? `<span class="price-old">${esc(formatPrice(p.compareAtPrice, L, p.currency))}</span><span class="pill-off">${esc(t('sale', L))} ${off}%</span>` : ''}
             </div>
+            ${liveBlock(p, s)}
             <h3>${esc(t('size', L))}</h3>
             <div class="chips">${p.sizes
               .map((sz) => `<button class="chip ${sz === size ? 'on' : ''}" data-action="size" data-v="${esc(sz)}">${esc(sz === FREE_SIZE ? t('freeSize', L) : sz)}</button>`)
@@ -90,6 +118,10 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
   }
 
   onAction(veil, {
+    join: () => {
+      social().deals?.joinGroupDeal()
+      audio.addToCart()
+    },
     close: () => game.resume(),
     img: (b) => {
       imgIndex = Number(b.dataset.i)
@@ -134,6 +166,17 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
   watch((s) => s.overlay, render)
   watch((s) => s.productId, render)
   watch((s) => s.lang, render)
+  watch((s) => s.groupDeal, () => store.getState().overlay === 'product' && render(), false)
+  watch((s) => s.flash, () => store.getState().overlay === 'product' && render(), false)
+  // Live viewer count without re-rendering the card.
+  setInterval(() => {
+    const s = store.getState()
+    const v = veil.querySelector<HTMLElement>('[data-viewers]')
+    if (s.overlay !== 'product' || !s.productId || !v) return
+    const n = viewers(s.productId)
+    v.classList.toggle('hidden', n < 2)
+    v.querySelector('b')!.textContent = String(n)
+  }, 3000)
 }
 
 /** Thumbnail flies from the product image to the cart button. */

@@ -8,6 +8,9 @@ import type { CheckoutService } from '../services/CheckoutService'
 import { FREE_SIZE } from '../data/defaults'
 import { audio } from '../audio/audio'
 import { esc, el, ICONS, onAction, paint, type GameBridge } from './dom'
+import { confetti } from './fx'
+import { pricingRows } from './cart'
+import { priceCart } from '../social/pricing'
 
 const METHODS: { id: PaymentMethod; label: StringKey; note: StringKey; badge: string; color: string }[] = [
   { id: 'card', label: 'payCard', note: 'payCardNote', badge: 'VISA · MC', color: '#1a1f71' },
@@ -70,7 +73,7 @@ export function mountCheckout(root: HTMLElement, game: GameBridge, service: Chec
             <div class="eyebrow">${esc(t('cashier', L))}</div>
             <h2>${esc(t('orderSummary', L))}</h2>
             ${count ? lines : `<div class="empty">${esc(t('cartEmpty', L))}</div>`}
-            <div class="sum-row" style="margin-top:16px"><span>${esc(t('subtotal', L))}</span><span>${esc(formatPrice(total, L))}</span></div>
+            <div style="margin-top:16px">${pricingRows(s, L)}</div>
             <span class="demo-flag">${esc(t('demoNotice', L))}</span>
           </div>
           <form novalidate>
@@ -156,7 +159,10 @@ export function mountCheckout(root: HTMLElement, game: GameBridge, service: Chec
     busy = true
     failure = ''
     render()
+    const st = store.getState()
+    const pc = priceCart(st.cart, st)
     const result = await service.placeOrder({
+      pricing: { discount: pc.discount, shipping: pc.shipping, coupon: pc.coupon?.code, giftProductId: pc.gift?.id },
       lines: store.getState().cart,
       customer: { ...draft, phone: normalizePhone(draft.phone), wallet: draft.wallet ? normalizePhone(draft.wallet) : undefined },
       method,
@@ -164,7 +170,9 @@ export function mountCheckout(root: HTMLElement, game: GameBridge, service: Chec
     busy = false
     if (result.status === 'success') {
       audio.success()
-      store.getState().set({ lastOrder: result.order, cart: [], overlay: 'thankyou' })
+      // Coupons are single-use.
+      const used = result.order.coupon
+      store.getState().set({ lastOrder: result.order, cart: [], overlay: 'thankyou', coupons: store.getState().coupons.filter((c) => c.code !== used), appliedCoupon: used ? null : store.getState().appliedCoupon })
       confetti()
     } else if (result.status === 'redirect') {
       window.location.href = result.url
@@ -204,20 +212,4 @@ export function mountCheckout(root: HTMLElement, game: GameBridge, service: Chec
   watch((s) => s.overlay, render)
   watch((s) => s.lang, render)
   watch((s) => s.cart, () => store.getState().overlay === 'checkout' && !busy && render(), false)
-}
-
-function confetti(): void {
-  const box = el('div', 'confetti')
-  const colors = [BRAND.magenta, '#f4b6d9', '#c8a46e', '#ffffff', '#6f0f58']
-  for (let i = 0; i < 70; i++) {
-    const c = el('i')
-    c.style.left = `${Math.random() * 100}%`
-    c.style.background = colors[i % colors.length]
-    c.style.animationDuration = `${1.8 + Math.random() * 1.6}s`
-    c.style.animationDelay = `${Math.random() * 0.5}s`
-    c.style.transform = `rotate(${Math.random() * 360}deg)`
-    box.appendChild(c)
-  }
-  document.body.appendChild(box)
-  setTimeout(() => box.remove(), 4200)
 }

@@ -11,6 +11,7 @@ import { store } from '../state/store'
 import { imageMat, MAT } from './materials'
 import { labelSign, logoTexture } from './signage'
 import { plant } from './props'
+import type { Kit } from './kit'
 
 export function buildCashierDesk(
   root: Object3D,
@@ -19,12 +20,26 @@ export function buildCashierDesk(
   interaction: Interaction,
   layout: MallLayout,
   onCheckout: () => void,
+  kit: Kit | null = null,
 ): void {
   const { x, z } = layout.cashier
   // Local frame: +z faces the customers (world -x).
   const base = new Matrix4().makeRotationY(-Math.PI / 2).setPosition(x, 0, z)
   const f = batcher.frame(base, colliders)
 
+  const group = new Group()
+  group.matrixAutoUpdate = false
+  group.matrix.copy(base)
+  root.add(group)
+
+  // Baked Le Voile counter + brand panel when the décor kit is available.
+  const kitCounter = kit?.place('counter', group, 0, 0, 0, colliders)
+  if (kitCounter) {
+    f.block(MAT.wall, 0, 0, -2.0, 5.0, 3.4, 0.4, { collide: true })
+    kit!.place('brandpanel', group, 0, -1.78, 0, undefined)
+    kit!.place('plant', group, -2.9, -1.3, 0, colliders)
+    kit!.place('plant', group, 2.9, -1.3, 0, colliders)
+  } else {
   // Counter: wood body, magenta front, marble top
   f.block(MAT.woodDark, 0, 0, 0, 4.2, 1.02, 0.9, { collide: true })
   f.block(MAT.magenta, 0, 0.08, 0.46, 4.0, 0.86, 0.04)
@@ -41,27 +56,23 @@ export function buildCashierDesk(
   for (const y of [1.0, 1.6]) f.block(MAT.brass, 0, y, -1.8, 4.6, 0.03, 0.02)
   plant(f, -2.9, -1.4, 1.1, 44)
   plant(f, 2.9, -1.4, 1.1, 45)
-
-  const group = new Group()
-  group.matrixAutoUpdate = false
-  group.matrix.copy(base)
-  root.add(group)
+  }
 
   const logoMat = (bg: string | null, logo: string = BRAND.logoWhite) =>
     logoTexture(bg, 1024, 256, logo).then((tex) => imageMat(tex, { transparent: !bg }))
-  logoMat(null).then((m) => {
+  if (!kitCounter) logoMat(null).then((m) => {
     const front = new Mesh(new PlaneGeometry(2.4, 0.6), m)
     front.position.set(0, 0.55, 0.49)
     group.add(front)
   })
-  logoMat('#fdf7fa', BRAND.logo).then((m) => {
+  if (!kitCounter) logoMat('#fdf7fa', BRAND.logo).then((m) => {
     const back = new Mesh(new PlaneGeometry(4.6, 1.15), m)
     back.position.set(0, 3.0, -1.78)
     group.add(back)
   })
 
   // Hanging bilingual sign above the counter
-  const sign = new Mesh(new PlaneGeometry(2.6, 0.65), imageMat(labelSign('Cashier', 'الكاشير', { bg: BRAND.magenta, fg: '#ffffff' })))
+  const sign = new Mesh(new PlaneGeometry(2.6, 0.65), imageMat(labelSign('Cashier', 'الكاشير', { bg: '#8a6a46', fg: '#f4ede3' })))
   sign.position.set(0, 3.5, 0.2)
   group.add(sign)
   f.bar(MAT.brass, new Vector3(-1, 3.83, 0.2), new Vector3(-1, 5.5, 0.2), 0.012)

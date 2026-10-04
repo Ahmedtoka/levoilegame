@@ -42,7 +42,7 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
     s.fillStyle = shop.style?.tint ?? '#ece4e8'
     s.fillRect(px(r.x0) + 1, pz(r.z0) + 1, (r.x1 - r.x0) * scale - 2, (r.z1 - r.z0) * scale - 2)
     s.fillStyle = 'rgba(42,31,39,.55)'
-    s.font = `700 ${Math.max(7, Math.round(scale * 3.6))}px Cairo, sans-serif`
+    s.font = `700 ${Math.min(10, Math.max(7, Math.round(scale * 3.6)))}px Cairo, sans-serif`
     s.textAlign = 'center'
     s.textBaseline = 'middle'
     const label = shop.section ? shop.section.title.split(/[ |]/)[0] : '☕'
@@ -53,10 +53,11 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
   const c = L.cashier.zone
   s.fillRect(px(c.x0), pz(c.z0), (c.x1 - c.x0) * scale, (c.z1 - c.z0) * scale)
   s.fillStyle = '#fff'
-  s.font = `800 ${Math.max(8, 10 * (scale / 1.6))}px Cairo, sans-serif`
+  s.font = `800 ${Math.min(11, Math.max(8, Math.round(scale * 4)))}px Cairo, sans-serif`
   s.fillText('$', px((c.x0 + c.x1) / 2), pz((c.z0 + c.z1) / 2))
   s.fillStyle = BRAND.magenta
-  s.fillRect(px(-3), pz(0) - 3, 6 * scale, 3)
+  const ex = L.exit.zone
+  s.fillRect(px(ex.x0), pz(ex.z0), (ex.x1 - ex.x0) * scale, Math.max(3, (ex.z1 - ex.z0) * scale * 0.3))
   s.strokeStyle = 'rgba(42,31,39,.25)'
   s.lineWidth = 1
   s.strokeRect(0.5, 0.5, W - 1, H - 1)

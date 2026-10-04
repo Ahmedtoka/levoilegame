@@ -12,16 +12,16 @@ const std = (color: string, roughness = 0.8, metalness = 0, extra: Partial<MeshS
   Object.assign(new MeshStandardMaterial({ color, roughness, metalness }), extra)
 
 export const MAT = {
-  wall: std('#f2ebe8', 0.92),
-  wallWarm: std('#f3ebe7', 0.9),
-  ceiling: std('#f7f2f0', 0.95, 0, { emissive: new Color('#fbf6f4'), emissiveIntensity: 0.55 }),
-  trim: std('#fbf8f7', 0.5),
-  brass: std('#c8a46e', 0.32, 0.9),
+  wall: std('#ebe3d7', 0.92),
+  wallWarm: std('#e4d9c9', 0.9),
+  ceiling: std('#3a332d', 0.92, 0, { emissive: new Color('#1c1814'), emissiveIntensity: 0.6 }),
+  trim: std('#f1e9dd', 0.5),
+  brass: std('#b08a5c', 0.35, 0.75),
   chrome: std('#e6e6ea', 0.18, 1),
   black: std('#2b2528', 0.55, 0.1),
   magenta: std(BRAND.magenta, 0.45, 0.05),
   magentaDark: std(BRAND.magentaDark, 0.5),
-  blush: std('#f4dfe9', 0.85),
+  blush: std('#e9ddcc', 0.85),
   plinth: std('#fdfbfa', 0.5),
   marbleTop: std('#efe9e7', 0.25),
   wood: std('#d8c2a8', 0.65),
@@ -39,7 +39,7 @@ export const MAT = {
     depthWrite: false,
     side: DoubleSide,
   }),
-  lightPanel: new MeshBasicMaterial({ color: '#fffdf8' }),
+  lightPanel: new MeshBasicMaterial({ color: '#fff1d6' }),
   lightWarm: new MeshBasicMaterial({ color: '#fff3dc' }),
   neon: new MeshBasicMaterial({ color: '#ff8fd8' }),
 }

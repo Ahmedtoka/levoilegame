@@ -39,12 +39,15 @@ STAGE = arg("--stage", "prep")
 GROUP = arg("--group", "")
 RES = arg("--res", 4096)
 SAMPLES = arg("--samples", 256)
+SAFE = arg("--safe", 0)  # 1 = single-threaded sync (slow, avoids a Cycles sync race)
 OUT = os.path.abspath(arg("--out", "public/models/mall"))
-BAKE_DIR = os.path.join(OUT, "_bake")
+# Working files (work.blend, raw/denoised atlases) live outside public/ so they are never deployed.
+BAKE_DIR = os.path.abspath(arg("--work", "tools/bake-work"))
 WORK = os.path.join(BAKE_DIR, "work.blend")
 os.makedirs(BAKE_DIR, exist_ok=True)
 
-BAKE_GROUPS = ("arch", "fixtures", "soft", "hardware")
+BAKE_GROUPS = ("arch", "ceiling", "fixtures", "soft", "hardware")
+HALF_RES_GROUPS = {"ceiling", "hardware"}
 t0 = time.time()
 scene = bpy.context.scene
 vl = bpy.context.view_layer
@@ -92,7 +95,10 @@ CEILING = {"Dark_Ceiling", "Lighting_Track", "Ceiling_Spot_Housing", "Ceiling_Sp
 HARDWARE_PREFIX = ("Hanger", "Scarf_Rail", "Rack_Post", "Rack_Crossbar", "Hanging_Rail", "Right_Hanging_Rail",
                    "Rear_Hanging_Rail", "Curtain_Rod", "Right_Cabinet_Door_Handle", "Accessory_Drawer_Handle")
 SOFT_MATS = {f"Woven_Fabric_{i:02d}" for i in range(13)} - {"Woven_Fabric_05"}
-DROP = {"Shirt_Button", "Stitched_Collar", "Front_Placket_Seam"}
+DROP = {"Shirt_Button", "Stitched_Collar", "Front_Placket_Seam", "Foundation",
+        # window mannequins: the web app puts its own showcase models on the bases
+        "Torso", "Head", "Neck", "Leg", "Shoe", "Upper_Arm", "Forearm", "Hand",
+        "Long_Skirt", "Skirt_Pleat", "Wide_Leg_Jeans", "Jeans_Waist"}
 DECIMATE = {"Top": 0.22, "Long_Dress": 0.3, "Trousers": 0.35, "Folded_Scarf": 0.3, "Hanger_Hook": 0.2,
             "Hanger_Left": 0.5, "Hanger_Right": 0.5, "Hanger_Base": 0.5}
 
@@ -117,6 +123,8 @@ def group_of(o):
         return "glass"
     if b == "Mirror_Surface":
         return "mirror"
+    if b in CEILING:
+        return "ceiling"
     if b in ARCH:
         return "arch"
     if b.startswith(HARDWARE_PREFIX):
@@ -124,6 +132,54 @@ def group_of(o):
     if mats & SOFT_MATS:
         return "soft"
     return "fixtures"
+
+
+def save_texcoords(meshes):
+    """Store each object's Generated (bbox-normalised) and Object coordinates as attributes,
+    so procedural materials look the same after the group is joined into one object."""
+    import numpy as np
+
+    for o in meshes:
+        me = o.data
+        n = len(me.vertices)
+        if n == 0:
+            continue
+        co = np.empty(n * 3, dtype=np.float32)
+        me.vertices.foreach_get("co", co)
+        co = co.reshape(-1, 3)
+        mn = co.min(0)
+        size = np.maximum(co.max(0) - mn, 1e-4)
+        for name, values in (("lv_orco", (co - mn) / size), ("lv_objco", co)):
+            a = me.attributes.get(name) or me.attributes.new(name, "FLOAT_VECTOR", "POINT")
+            a.data.foreach_set("vector", values.astype(np.float32).ravel())
+
+
+PROCEDURAL = {"TEX_NOISE", "TEX_VORONOI", "TEX_WAVE", "TEX_GRADIENT", "TEX_MAGIC", "TEX_BRICK", "TEX_CHECKER", "TEX_WHITE_NOISE"}
+
+
+def patch_materials():
+    """Point procedural textures at the saved coordinates instead of implicit Generated/Object."""
+    for m in bpy.data.materials:
+        if not m.use_nodes or not m.node_tree:
+            continue
+        nt = m.node_tree
+        cache = {}
+
+        def attr(name):
+            if name not in cache:
+                n = nt.nodes.new("ShaderNodeAttribute")
+                n.attribute_type = "GEOMETRY"
+                n.attribute_name = name
+                cache[name] = n
+            return cache[name]
+
+        for node in list(nt.nodes):
+            if node.type in PROCEDURAL and "Vector" in node.inputs and not node.inputs["Vector"].is_linked:
+                nt.links.new(attr("lv_orco").outputs["Vector"], node.inputs["Vector"])
+            if node.type == "TEX_COORD" and getattr(node, "object", None) is None:
+                for out, name in (("Generated", "lv_orco"), ("Object", "lv_objco")):
+                    for link in list(node.outputs[out].links):
+                        nt.links.new(attr(name).outputs["Vector"], link.to_socket)
 
 
 def stage_prep():
@@ -181,6 +237,8 @@ def stage_prep():
         select_only(with_mods)
         bpy.ops.object.convert(target="MESH")
     meshes = [o for o in scene.objects if o.type == "MESH"]
+    save_texcoords(meshes)
+    patch_materials()
     tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in meshes)
     log("meshes", len(meshes), "triangles", tris)
 
@@ -203,16 +261,38 @@ def stage_prep():
 # =========================================================================
 # bake (one group per process)
 # =========================================================================
+def uv_bounds(layer):
+    import numpy as np
+
+    uv = np.empty(len(layer.data) * 2, dtype=np.float32)
+    layer.data.foreach_get("uv", uv)
+    return float(uv.min()), float(uv.max())
+
+
+def normalize_uvs(layer):
+    import numpy as np
+
+    uv = np.empty(len(layer.data) * 2, dtype=np.float32)
+    layer.data.foreach_get("uv", uv)
+    uv = uv.reshape(-1, 2)
+    lo = uv.min(0)
+    extent = float((uv.max(0) - lo).max())
+    uv = (uv - lo) / extent * 0.996 + 0.002
+    layer.data.foreach_set("uv", uv.astype(np.float32).ravel())
+
+
 def setup_cycles():
     scene.render.engine = "CYCLES"
     scene.cycles.samples = SAMPLES
     scene.cycles.use_denoising = False
     scene.cycles.max_bounces = 6
     scene.cycles.diffuse_bounces = 4
-    scene.render.threads_mode = "FIXED"
-    scene.render.threads = 1
+    scene.render.threads_mode = "FIXED" if SAFE else "AUTO"
+    if SAFE:
+        scene.render.threads = 1
     prefs = bpy.context.preferences.addons["cycles"].preferences
-    for backend in ("OPTIX", "CUDA", "HIP", "ONEAPI"):
+    # CUDA kernels ship precompiled; OptiX JIT-compiles kernels in every fresh process.
+    for backend in ("CUDA", "OPTIX", "HIP", "ONEAPI"):
         try:
             prefs.compute_device_type = backend
             prefs.get_devices()
@@ -228,8 +308,18 @@ def setup_cycles():
 
 def stage_bake():
     objs = [o for o in scene.objects if o.type == "MESH" and o.get("bake_group") == GROUP]
-    res = RES if GROUP != "hardware" else max(1024, RES // 2)
+    res = max(1024, RES // 2) if GROUP in HALF_RES_GROUPS else RES
     log(len(objs), "objects", res, "px, device", setup_cycles())
+    # One object = one bake pass (baking N selected objects runs N passes).
+    select_only(objs)
+    if len(objs) > 1:
+        bpy.ops.object.join()
+    joined = vl.objects.active
+    joined.name = f"store_{GROUP}"
+    # The join inherits the first object's (often skewed) scale, which collapses smart_project UVs.
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+    objs = [joined]
+    log("joined", len(joined.data.polygons), "faces")
 
     for o in objs:
         me = o.data
@@ -242,10 +332,30 @@ def stage_bake():
     bpy.ops.mesh.select_all(action="SELECT")
     bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.0, area_weight=0.0, correct_aspect=True, scale_to_bounds=False)
     bpy.ops.uv.select_all(action="SELECT")
-    bpy.ops.uv.pack_islands(rotate=True, margin_method="FRACTION", margin=6.0 / res)
-    bpy.ops.object.mode_set(mode="OBJECT")
-    # Drop edit-mode UV selection/pin sub-attributes (".vs.", ".es.", ".pn.") that trip Cycles' sync.
-    for o in objs:
+    # Uniform texel density across objects (smart_project normalizes each object on its own).
+    bpy.ops.uv.average_islands_scale()
+    # CONCAVE (the default) silently gives up on ~150k-face meshes; CONVEX/AABB are fast and reliable.
+    for shape in ("CONVEX", "AABB"):
+        bpy.ops.uv.pack_islands(rotate=True, shape_method=shape, margin_method="FRACTION", margin=6.0 / res)
+        bpy.ops.object.mode_set(mode="OBJECT")
+        lo, hi = uv_bounds(objs[0].data.uv_layers["Bake"])
+        if lo >= -0.01 and hi <= 1.01:
+            break
+        log(f"pack {shape} out of bounds ({lo:.2f}..{hi:.2f}), retrying")
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="SELECT")
+        bpy.ops.uv.select_all(action="SELECT")
+    else:
+        # The packer laid islands out without scaling them into 0..1 (happens on very large meshes):
+        # the layout is non-overlapping, so a uniform rescale is all that's needed.
+        bpy.ops.uv.pack_islands(rotate=True, shape_method="AABB", margin_method="FRACTION", margin=6.0 / res)
+        bpy.ops.object.mode_set(mode="OBJECT")
+        normalize_uvs(objs[0].data.uv_layers["Bake"])
+        lo, hi = uv_bounds(objs[0].data.uv_layers["Bake"])
+        log(f"normalized packed UVs to {lo:.3f}..{hi:.3f}")
+    # Drop edit-mode UV selection/pin sub-attributes (".vs.", ".es.", ".pn.") that trip Cycles' sync,
+    # on every mesh in the scene (they all get synced for the bake).
+    for o in [m for m in scene.objects if m.type == "MESH"]:
         me = o.data
         for name in [a.name for a in me.attributes if a.name.startswith((".vs.", ".es.", ".pn."))]:
             a = me.attributes.get(name)
@@ -286,17 +396,94 @@ def stage_bake():
     bpy.ops.object.bake(type="COMBINED", use_clear=True, margin=8)
     log("baked")
     path = os.path.join(BAKE_DIR, f"{GROUP}.png")
-    img.save_render(path, scene=scene)  # applies the AgX view transform + exposure
+    img.save_render(path.replace(".png", "_raw.png"), scene=scene)  # AgX look, not denoised (fallback)
     for m, n in added:
         m.node_tree.nodes.remove(n)
     scene[f"baked_{GROUP}"] = True
     bpy.ops.wm.save_as_mainfile(filepath=WORK, compress=False)
+    try:
+        denoise_and_save(img, path)
+        log("denoised", path)
+    except Exception as exc:  # keep the raw bake if OIDN/compositor is unavailable
+        import shutil
+        shutil.copyfile(path.replace(".png", "_raw.png"), path)
+        log("denoise failed, using raw bake:", exc)
     log("saved", path)
+
+
+def denoise_and_save(img, path):
+    """OpenImageDenoise via the compositor; the 8-bit save applies the scene's AgX look.
+    Runs after work.blend is saved, so the temporary scene changes are never persisted."""
+    sc = bpy.context.scene
+    sc.use_nodes = True
+    tree = sc.node_tree
+    tree.nodes.clear()
+    n_img = tree.nodes.new("CompositorNodeImage")
+    n_img.image = img
+    n_dn = tree.nodes.new("CompositorNodeDenoise")
+    n_dn.use_hdr = True
+    n_out = tree.nodes.new("CompositorNodeComposite")
+    tree.links.new(n_img.outputs["Image"], n_dn.inputs["Image"])
+    tree.links.new(n_dn.outputs["Image"], n_out.inputs["Image"])
+    cam = bpy.data.objects.new("tmp_cam", bpy.data.cameras.new("tmp_cam"))
+    sc.collection.objects.link(cam)
+    sc.camera = cam
+    for o in sc.objects:
+        o.hide_render = o is not cam
+    sc.render.engine = "BLENDER_WORKBENCH"
+    sc.render.resolution_x, sc.render.resolution_y = img.size
+    sc.render.resolution_percentage = 100
+    sc.render.use_compositing = True
+    sc.render.image_settings.file_format = "PNG"
+    sc.render.image_settings.color_mode = "RGB"
+    sc.render.image_settings.color_depth = "8"
+    sc.render.filepath = path
+    bpy.ops.render.render(write_still=True)
 
 
 # =========================================================================
 # export
 # =========================================================================
+_baked_mats = {}
+
+
+def baked_material(g, path):
+    if g in _baked_mats:
+        return _baked_mats[g]
+    tex = bpy.data.images.load(path, check_existing=True)
+    tex.name = f"store_{g}"
+    mat = bpy.data.materials.new(f"baked_{g}")
+    mat.use_nodes = True
+    nt = mat.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
+    tn = nt.nodes.new("ShaderNodeTexImage")
+    tn.image = tex
+    nt.links.new(tn.outputs["Color"], bsdf.inputs["Base Color"])
+    bsdf.inputs["Roughness"].default_value = 0.9
+    _baked_mats[g] = mat
+    return mat
+
+
+def prepare_group(g):
+    """Joined group object with only the Bake UV and the single baked material."""
+    objs = [o for o in scene.objects if o.type == "MESH" and o.get("bake_group") == g]
+    if not objs:
+        return None
+    select_only(objs)
+    if len(objs) > 1:
+        bpy.ops.object.join()
+    j = vl.objects.active
+    j.name = f"store_{g}"
+    me = j.data
+    for name in [uv.name for uv in me.uv_layers if uv.name != "Bake"]:
+        layer = me.uv_layers.get(name)
+        if layer is not None:
+            me.uv_layers.remove(layer)
+    me.uv_layers["Bake"].active = True
+    me.uv_layers["Bake"].active_render = True
+    me.materials.clear()
+    me.materials.append(baked_material(g, os.path.join(BAKE_DIR, f"{g}.png")))
+    return j
 def stage_export():
     out_objs = []
     for g in BAKE_GROUPS:
@@ -305,7 +492,8 @@ def stage_export():
             continue
         path = os.path.join(BAKE_DIR, f"{g}.png")
         select_only(objs)
-        bpy.ops.object.join()
+        if len(objs) > 1:
+            bpy.ops.object.join()
         j = vl.objects.active
         j.name = f"store_{g}"
         me = j.data
@@ -315,18 +503,8 @@ def stage_export():
                 me.uv_layers.remove(layer)
         me.uv_layers["Bake"].active = True
         me.uv_layers["Bake"].active_render = True
-        tex = bpy.data.images.load(path, check_existing=False)
-        tex.name = f"store_{g}"
-        mat = bpy.data.materials.new(f"baked_{g}")
-        mat.use_nodes = True
-        nt = mat.node_tree
-        bsdf = nt.nodes.get("Principled BSDF")
-        tn = nt.nodes.new("ShaderNodeTexImage")
-        tn.image = tex
-        nt.links.new(tn.outputs["Color"], bsdf.inputs["Base Color"])
-        bsdf.inputs["Roughness"].default_value = 0.9
         me.materials.clear()
-        me.materials.append(mat)
+        me.materials.append(baked_material(g, path))
         out_objs.append(j)
         log("joined", g, len(me.polygons), "faces")
 
@@ -367,5 +545,131 @@ def stage_export():
     log("exported", glb, f"{os.path.getsize(glb) / 1e6:.1f} MB")
 
 
-{"prep": stage_prep, "bake": stage_bake, "export": stage_export}[STAGE]()
+# =========================================================================
+# kit: cut the baked boutique into reusable fixture pieces (kit.glb)
+# =========================================================================
+def three_box_to_blender(b, pad=(0.0, 0.0), z=None):
+    """anchors use three.js coords (x, y, z) = blender (x, z, -y)."""
+    x0, y0 = b["min"][0] - pad[0], -b["max"][2] - pad[1]
+    x1, y1 = b["max"][0] + pad[0], -b["min"][2] + pad[1]
+    z0, z1 = z if z else (b["min"][1], b["max"][1])
+    return [x0, y0, z0, x1, y1, z1]
+
+
+def union(boxes):
+    return [min(b[0] for b in boxes), min(b[1] for b in boxes), min(b[2] for b in boxes),
+            max(b[3] for b in boxes), max(b[4] for b in boxes), max(b[5] for b in boxes)]
+
+
+def kit_pieces(anchors):
+    g = anchors["groups"]
+    pieces = []  # (name, [x0,y0,z0,x1,y1,z1] blender coords, front vector in blender coords)
+    for i, it in enumerate(sorted(g.get("Wood_Base", []), key=lambda it: it["name"])):
+        pieces.append((f"rack_{i + 1}", three_box_to_blender(it, (0.28, 0.2), (0.0, 2.45)), (1, 0, 0)))
+    for it in g.get("Tabletop", []):
+        pieces.append(("table", three_box_to_blender(it, (0.15, 0.15), (0.0, 1.4)), (0, -1, 0)))
+    for it in g.get("Gondola_Cabinet", []):
+        pieces.append(("gondola", three_box_to_blender(it, (0.12, 0.12), (0.0, 1.45)), (0, -1, 0)))
+    for i, it in enumerate(sorted(g.get("Lower_Cabinet", []), key=lambda it: it["center"][2])):
+        b = three_box_to_blender(it, (0.06, 0.06), (0.0, 3.12))
+        b[0], b[3] = -5.0, -4.28
+        pieces.append((f"scarfbay_{i + 1}", b, (1, 0, 0)))
+    for i, it in enumerate(sorted(g.get("Right_Lower_Cabinet", []), key=lambda it: it["center"][2])):
+        b = three_box_to_blender(it, (0.06, 0.08), (0.0, 3.12))
+        b[0], b[3] = 4.24, 5.0
+        pieces.append((f"hangbay_{i + 1}", b, (-1, 0, 0)))
+    rear = [three_box_to_blender(it) for k in ("Rear_Display_Back", "Rear_Display_Side", "Rear_Display_Header") for it in g.get(k, [])]
+    if rear:
+        b = union(rear)
+        pieces.append(("reardisplay", [b[0] - 0.05, b[1] - 0.15, 0.0, b[3] + 0.05, b[4] + 0.05, 3.12], (0, -1, 0)))
+    counter = [three_box_to_blender(it) for k in ("Checkout_Counter_Body", "Checkout_Worktop", "Payment_Terminal") for it in g.get(k, [])]
+    if counter:
+        b = union(counter)
+        pieces.append(("counter", [b[0] - 0.1, b[1] - 0.1, 0.0, b[3] + 0.1, b[4] + 0.1, 1.75], (0, -1, 0)))
+    pieces.append(("brandpanel", [-1.8, 7.2, 1.9, 1.3, 7.5, 2.9], (0, -1, 0)))
+    pieces.append(("plant", [-2.7, 6.3, 0.0, -1.6, 7.0, 1.75], (0, -1, 0)))
+    pieces.append(("pendant", [-2.25, 6.1, 2.6, -1.35, 6.9, 3.7], (0, -1, 0)))
+    pieces.append(("fitting", [1.35, 5.68, 0.0, 4.92, 7.5, 2.95], (0, -1, 0)))
+    return pieces
+
+
+def stage_kit():
+    import bmesh
+    import numpy as np
+    from mathutils import Matrix
+
+    anchors = json.load(open(os.path.join(OUT, "store-anchors.json"), encoding="utf8"))
+    groups = [prepare_group(g) for g in ("fixtures", "soft", "hardware")]
+    groups = [g for g in groups if g]
+    for g in groups:
+        g.data.transform(g.matrix_world)  # world-space vertices make the box tests trivial
+        g.matrix_world = Matrix.Identity(4)
+
+    centres = {}
+    for g in groups:
+        me = g.data
+        c = np.empty(len(me.polygons) * 3, dtype=np.float32)
+        me.polygons.foreach_get("center", c)
+        centres[g.name] = c.reshape(-1, 3)
+
+    index = {"units": "metres, three.js Y-up; origin = footprint centre at floor level", "pieces": {}}
+    kit_objs = []
+    for name, box, front in kit_pieces(anchors):
+        x0, y0, z0, x1, y1, z1 = box
+        origin = Vector(((x0 + x1) / 2, (y0 + y1) / 2, 0.0))
+        root = bpy.data.objects.new(f"kit_{name}", None)
+        scene.collection.objects.link(root)
+        root.location = origin
+        parts = 0
+        for g in groups:
+            c = centres[g.name]
+            inside = (c[:, 0] >= x0) & (c[:, 0] <= x1) & (c[:, 1] >= y0) & (c[:, 1] <= y1) & (c[:, 2] >= z0) & (c[:, 2] <= z1)
+            if not inside.any():
+                continue
+            bm = bmesh.new()
+            bm.from_mesh(g.data)
+            bm.faces.ensure_lookup_table()
+            drop = [f for f, keep in zip(bm.faces, inside) if not keep]
+            bmesh.ops.delete(bm, geom=drop, context="FACES")
+            me = bpy.data.meshes.new(f"kit_{name}_{g.name}")
+            bm.to_mesh(me)
+            bm.free()
+            for mat in g.data.materials:  # bmesh doesn't carry material slots over
+                me.materials.append(mat)
+            me.transform(Matrix.Translation(-origin))
+            part = bpy.data.objects.new(me.name, me)
+            scene.collection.objects.link(part)
+            part.parent = root
+            kit_objs.append(part)
+            parts += 1
+        if not parts:
+            bpy.data.objects.remove(root)
+            continue
+        kit_objs.append(root)
+        index["pieces"][name] = {
+            "size": [round(x1 - x0, 3), round(z1 - z0, 3), round(y1 - y0, 3)],
+            "front": [front[0], front[2], -front[1]],
+            "source": [round(origin.x, 3), 0, round(-origin.y, 3)],
+        }
+        log("piece", name, parts, "parts")
+
+    select_only(kit_objs)
+    glb = os.path.join(OUT, "kit.glb")
+    kw = dict(
+        filepath=glb, export_format="GLB", use_selection=True, export_apply=True, export_yup=True,
+        export_texcoords=True, export_normals=True, export_materials="EXPORT", export_cameras=False,
+        export_lights=False, export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6,
+        export_draco_position_quantization=14, export_draco_normal_quantization=10,
+        export_draco_texcoord_quantization=12, export_image_format="WEBP",
+    )
+    try:
+        bpy.ops.export_scene.gltf(**kw, export_image_quality=85)
+    except TypeError:
+        bpy.ops.export_scene.gltf(**kw)
+    with open(os.path.join(OUT, "kit.json"), "w", encoding="utf8") as f:
+        json.dump(index, f, indent=1)
+    log("kit exported", glb, f"{os.path.getsize(glb) / 1e6:.1f} MB", len(index["pieces"]), "pieces")
+
+
+{"prep": stage_prep, "bake": stage_bake, "export": stage_export, "kit": stage_kit}[STAGE]()
 log("STAGE_OK")

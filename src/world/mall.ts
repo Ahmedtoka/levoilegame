@@ -17,14 +17,15 @@ import { MALL, type MallLayout, type Rect } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import type { QualitySettings } from '../engine/quality'
-import { gradientTexture, marbleTexture, woodTexture } from '../engine/textures'
+import { gradientTexture, storeTexture } from '../engine/textures'
 import { BRAND } from '../config/brand'
 import { glowMat, imageMat, MAT, tintMat } from './materials'
 import { bench, column, plant } from './props'
+import type { Kit } from './kit'
 import { directoryTexture, labelSign, logoTexture } from './signage'
 
 export interface ShellHandles {
-  doors: SlidingDoors
+  doors: { target: number; update(dt: number): void }
   setQuality(q: QualitySettings): void
   /** Called each frame with the player position for LOD toggles. */
   update(px: number, pz: number): void
@@ -92,6 +93,7 @@ export async function buildShell(
   colliders: CollisionWorld,
   layout: MallLayout,
   quality: QualitySettings,
+  kit: Kit | null = null,
 ): Promise<ShellHandles> {
   const f = batcher.frame(new Matrix4(), colliders)
   const { halfWidth: W, atriumDepth: A, boulevardHalf: B, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
@@ -101,7 +103,7 @@ export async function buildShell(
   scene.add(root)
 
   // ---------------------------------------------------------------- floors
-  const marble = marbleTexture([1, 1])
+  const marble = storeTexture('/textures/marble.jpg', [1, 1])
   const atriumFloorMat = new MeshStandardMaterial({
     map: repeatTex(marble, (2 * W) / 4, A / 4),
     roughness: 0.18,
@@ -131,15 +133,15 @@ export async function buildShell(
   }
 
   // Runner down the boulevard and a medallion in the atrium.
-  const runner = new Mesh(new PlaneGeometry(2.6, -zEnd - A - 1), tintMat('#efd7e3', 1, 0.95))
+  const runner = new Mesh(new PlaneGeometry(2.6, -zEnd - A - 1), tintMat('#d8cbb8', 1, 0.6))
   runner.rotation.x = -Math.PI / 2
   runner.position.set(0, 0.004, (zEnd + -A) / 2)
   root.add(runner)
-  const ring = new Mesh(new RingGeometry(2.3, 2.6, 64), MAT.magenta)
+  const ring = new Mesh(new RingGeometry(2.3, 2.6, 64), MAT.brass)
   ring.rotation.x = -Math.PI / 2
   ring.position.set(0, 0.005, -12)
   root.add(ring)
-  const disc = new Mesh(new CircleGeometry(2.3, 64), tintMat('#f8eef3', 1, 0.4))
+  const disc = new Mesh(new CircleGeometry(2.3, 64), tintMat('#efe7dc', 1, 0.4))
   disc.rotation.x = -Math.PI / 2
   disc.position.set(0, 0.004, -12)
   root.add(disc)
@@ -253,18 +255,18 @@ export async function buildShell(
       }
     // Shop floor (wood tinted to the section colour)
     const tint = s.style?.tint ?? '#efd7e3'
-    const wood = woodTexture(tint, [(x1 - x0) / 3, (z1 - z0) / 3], s.index + 3)
-    root.add(floorPlane(s.rect, new MeshStandardMaterial({ map: wood, roughness: 0.55 }), 0.002))
+    void tint
+    const stone = storeTexture('/textures/marble.jpg', [(x1 - x0) / 4, (z1 - z0) / 4])
+    root.add(floorPlane(s.rect, new MeshStandardMaterial({ map: stone, color: '#f6efe4', roughness: 0.35 }), 0.002))
   }
 
   // ------------------------------------------------------- atrium features
   for (const [x, z] of [[-6.5, -7], [6.5, -7], [-6.5, -16.5], [6.5, -16.5]] as const) column(f, x, z, AH)
-  plant(f, -12, -15, 1.6, 11)
-  plant(f, -15.5, -19.5, 1.2, 12)
-  plant(f, 15.5, -19.5, 1.2, 13)
-  plant(f, -18.5, -2, 1.3, 14)
-  plant(f, 18.5, -2, 1.3, 15)
-  plant(f, 9.4, -19, 1.1, 16)
+  // The boutique's real (baked) plant when the décor kit is available.
+  const plants: [number, number, number][] = [[-12, -15, 1.6], [-15.5, -19.5, 1.2], [15.5, -19.5, 1.2], [-18.5, -2, 1.3], [18.5, -2, 1.3], [9.4, -19, 1.1]]
+  plants.forEach(([x, z, sc], i) => {
+    if (!kit?.place('plant', root, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
+  })
   bench(f, -12, -11.5, 2.4)
   bench(f, -12, -18.5, 2.4)
 
@@ -277,11 +279,11 @@ export async function buildShell(
     root.add(m)
   })
   // Welcome sign on the inner face of the entrance (seen when leaving).
-  const exitSign = new Mesh(new PlaneGeometry(2.4, 0.6), imageMat(labelSign('Exit', 'خروج', { bg: BRAND.magenta, fg: '#ffffff' })))
+  const exitSign = new Mesh(new PlaneGeometry(2.4, 0.6), imageMat(labelSign('Exit', 'خروج', { bg: '#8a6a46', fg: '#f4ede3' })))
   exitSign.position.set(0, 3.9, -0.08)
   exitSign.rotation.y = Math.PI
   root.add(exitSign)
-  const thanks = new Mesh(new PlaneGeometry(8, 1.6), imageMat(labelSign('Thank you for visiting', 'شكراً لزيارتك', { bg: '#fdf7fa', h: 256 })))
+  const thanks = new Mesh(new PlaneGeometry(8, 1.6), imageMat(labelSign('Thank you for visiting', 'شكراً لزيارتك', { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
   thanks.position.set(0, 6.5, -0.08)
   thanks.rotation.y = Math.PI
   root.add(thanks)

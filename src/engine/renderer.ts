@@ -38,8 +38,8 @@ export class Engine {
     setMaxAnisotropy(this.renderer, this.quality.anisotropy)
 
     this.camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.05, 140)
-    this.scene.background = new Color('#f6f1f3')
-    this.scene.fog = new Fog('#f6f1f3', 45, 120)
+    this.scene.background = new Color('#ebe4da')
+    this.scene.fog = new Fog('#ebe4da', 45, 120)
 
     // Soft studio-like image-based lighting gives the premium "showroom" look
     // for almost no cost; two real lights add direction.
@@ -48,8 +48,8 @@ export class Engine {
     this.scene.environmentIntensity = 0.42
     pmrem.dispose()
 
-    this.scene.add(new HemisphereLight('#fff6fa', '#c9b3bd', 0.62))
-    const sun = new DirectionalLight('#fff1e2', 1.35)
+    this.scene.add(new HemisphereLight('#fff3e6', '#b9a796', 0.75))
+    const sun = new DirectionalLight('#ffe9cf', 1.25)
     sun.position.set(-8, 30, -6)
     this.scene.add(sun)
 

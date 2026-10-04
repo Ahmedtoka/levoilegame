@@ -4,11 +4,20 @@ import { cartTotals, catalog, store, watch } from '../state/store'
 import { audio } from '../audio/audio'
 import { esc, el, ICONS, onAction, type GameBridge } from './dom'
 
+/** Per-mode renames, e.g. the boutique calls its "atrium" the entrance. */
+const aliases: Record<string, string> = {}
+export function setZoneAliases(map: Record<string, string>): void {
+  Object.assign(aliases, map)
+}
+
+const NAMED_ZONES = ['boulevard', 'lounge', 'cashier', 'atrium', 'entrance', 'fitting', 'store'] as const
+
 export function zoneTitles(zone: string): { en: string; ar: string } {
   const section = catalog().sections.find((s) => s.id === zone)
   if (section) return { en: section.title, ar: section.titleAr }
-  if (zone === 'boulevard' || zone === 'lounge' || zone === 'cashier' || zone === 'atrium') return both(zone)
-  return both('atrium')
+  const z = aliases[zone] ?? zone
+  const named = NAMED_ZONES.find((n) => n === z)
+  return both(named ?? 'atrium')
 }
 
 export function zoneLabel(zone: string, lang: Lang): string {

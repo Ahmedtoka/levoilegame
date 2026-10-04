@@ -9,7 +9,7 @@ import { Input, type Action } from './player/input'
 import { TouchControls } from './player/touch'
 import { Player } from './player/player'
 import { Interaction } from './interact/interaction'
-import { Character } from './actors/character'
+import { Character, type Persona } from './actors/character'
 import { avatarLook } from './actors/palette'
 import { audio } from './audio/audio'
 import { store, watch } from './state/store'
@@ -18,7 +18,7 @@ import type { GameBridge } from './ui/dom'
 import type { ShellHandles } from './world/mall'
 
 export interface Actor {
-  character: Character
+  character: Persona
   /** Called when the player is near (greetings etc.). */
   onNear?: (dist: number) => void
   /** Extra visibility gate (e.g. the shop interior is culled). */
@@ -172,8 +172,8 @@ export class Game implements GameBridge {
   teleport(target: string): void {
     const { layout } = this
     let dest = { x: layout.spawn.x, z: layout.spawn.z, yaw: layout.spawn.yaw }
-    if (target === 'cashier') dest = { x: layout.cashier.x - 2.4, z: layout.cashier.z, yaw: -Math.PI / 2 }
-    if (target === 'exit') dest = { x: 0, z: -4.5, yaw: Math.PI }
+    if (target === 'cashier') dest = { ...layout.cashier.arrival }
+    if (target === 'exit') dest = { ...layout.exit.arrival }
     const shop = layout.shops.find((s) => s.section?.id === target || (target === 'lounge' && s.kind === 'lounge'))
     if (shop) dest = shopArrival(shop)
     this.fade.style.opacity = '1'
@@ -239,15 +239,14 @@ export class Game implements GameBridge {
     const s = store.getState()
     if (s.phase !== 'playing' || s.overlay) return
     const { x, z } = this.player.pos
-    const c = this.layout.cashier
+    const { cashier, exit } = this.layout
     // Customer side of the counter: auto-open checkout once per approach.
-    const near = x > c.x - 3.2 && x < c.x - 0.4 && Math.abs(z - c.z) < 2.3
+    const near = rectContains(cashier.approach, x, z)
     if (near && !this.atCounter && s.cart.length) this.openCheckout()
     this.atCounter = near
-    // Doors slide open as you approach; stepping into them leaves.
-    const doorZone = Math.abs(x) < 3.2 && z > -3.2
-    this.shell.doors.target = doorZone || this.leaving ? 1 : 0
-    const atDoor = Math.abs(x) < 2.8 && z > -1.0
+    // Doors open as you approach; stepping into the exit zone leaves.
+    this.shell.doors.target = rectContains(exit.doors, x, z) || this.leaving ? 1 : 0
+    const atDoor = rectContains(exit.zone, x, z)
     if (atDoor && !this.atDoor) this.tryLeave()
     this.atDoor = atDoor
   }
@@ -279,6 +278,7 @@ export class Game implements GameBridge {
     for (const s of this.layout.shops) {
       if (rectContains(s.rect, x, z)) return s.section?.id ?? 'lounge'
     }
+    for (const zn of this.layout.zones ?? []) if (rectContains(zn.rect, x, z)) return zn.id
     if (rectContains(this.layout.cashier.zone, x, z)) return 'cashier'
     if (rectContains(this.layout.atrium, x, z)) return 'atrium'
     return 'boulevard'

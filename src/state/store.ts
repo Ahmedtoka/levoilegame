@@ -3,9 +3,11 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import type { Lang } from '../i18n/i18n'
 import type { Catalog } from '../data/types'
 import type { QualityLevel } from '../engine/quality'
+import type { ChatMessage, Coupon, FlashSale, GroupDeal, Prize, StaffRef, User } from '../social/types'
+import { priceCart } from '../social/pricing'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -29,6 +31,9 @@ export interface Order {
   number: string
   lines: (CartLine & { title: string; price: number })[]
   total: number
+  discount?: number
+  shipping?: number
+  coupon?: string
   currency: string
   customer: Customer
   method: PaymentMethod
@@ -59,7 +64,23 @@ export interface AppState {
   bubble: { text: string; id: number } | null
   toast: { text: string; id: number } | null
 
-  set: (patch: Partial<AppState>) => void
+  // ---- live mall (src/social) ----
+  /** Logged-in customer (mock phone + OTP). */
+  user: User | null
+  coupons: Coupon[]
+  appliedCoupon: string | null
+  /** Section ids stamped in the passport this session. */
+  passport: string[]
+  /** Treasure-hunt logos found this session. */
+  treasures: number[]
+  wheelSpun: boolean
+  /** Prize waiting to be claimed (claim overlay). */
+  prize: (Prize & { source: Coupon['source'] }) | null
+  chat: { staff: StaffRef; messages: ChatMessage[]; typing: boolean } | null
+  groupDeal: GroupDeal | null
+  flash: FlashSale | null
+
+  set:(patch: Partial<AppState>) => void
   openProduct: (id: string) => void
   closeOverlay: () => void
   addToCart: (line: Omit<CartLine, 'key'>) => void
@@ -97,6 +118,17 @@ export const store = createStore<AppState>()(
       bubble: null,
       toast: null,
 
+      user: null,
+      coupons: [],
+      appliedCoupon: null,
+      passport: [],
+      treasures: [],
+      wheelSpun: false,
+      prize: null,
+      chat: null,
+      groupDeal: null,
+      flash: null,
+
       set: (patch) => set(patch),
       openProduct: (id) => set({ overlay: 'product', productId: id }),
       closeOverlay: () => set({ overlay: null, productId: null }),
@@ -129,6 +161,9 @@ export const store = createStore<AppState>()(
         view: s.view,
         minimap: s.minimap,
         cart: s.cart,
+        user: s.user,
+        coupons: s.coupons,
+        appliedCoupon: s.appliedCoupon,
       }),
     },
   ),
@@ -166,17 +201,10 @@ export function catalog(): Catalog {
   return catalogRef
 }
 
+/** Item count and the payable total (after live-mall discounts and shipping, see social/pricing.ts). */
 export function cartTotals(cart: CartLine[]): { count: number; total: number } {
-  const c = catalog()
-  let count = 0
-  let total = 0
-  for (const l of cart) {
-    const p = c.byId.get(l.productId)
-    if (!p) continue
-    count += l.qty
-    total += p.price * l.qty
-  }
-  return { count, total }
+  const count = cart.reduce((a, l) => a + (catalog().byId.has(l.productId) ? l.qty : 0), 0)
+  return { count, total: priceCart(cart, store.getState()).total }
 }
 
 /** Subscribe to a slice; fires only when the selected value changes (shallow for arrays/objects by identity). */
