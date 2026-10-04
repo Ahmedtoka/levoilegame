@@ -174,3 +174,9 @@ All three wings, built per wing in its local frame (new module `src/world/corrid
 - Perf script: plaza and wing draw calls and FPS for `?nodemo` and `?crowd=50`; report against the budgets above.
 - Interaction checks: E on the stage screen during a flash sale teleports to the brand; E on a corridor screen teleports; colliders stop the player at the stage edge, the benches and the islands, while the stage steps stay walkable.
 - The crowd still routes through every wing (islands leave 4.8 m lanes); no agent gets stuck for more than 2 s on islands, verified by sampling agent progress over 60 s.
+
+## Planning clarifications (2026-10-05)
+
+1. `buildPlaza` / `buildCorridor` are called from `main.ts` (`buildMall`) after `buildShell` (they need `interaction` and screen actions). `mall.ts` only moves the medallion to (0, −9.5) and removes the centre benches, the corridor runner and the centre light strips.
+2. The stage and its steps are not walkable (no vertical movement); both collide.
+3. Corridor column screens share one `ScreenFeed` per wing.
