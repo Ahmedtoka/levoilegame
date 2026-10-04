@@ -27,4 +27,30 @@ describe('glow', () => {
     setGlowsVisible(true)
     expect(meshes.every((m) => m.visible)).toBe(true)
   })
+
+  it('accumulates glows across multiple buildGlows calls and toggles all', () => {
+    // First batch: one halo
+    addHalo(0, 4, 0, 0.4)
+    const g = new Group()
+    const batch1 = buildGlows(g, false)
+    expect(batch1).toHaveLength(1)
+    expect(batch1[0].visible).toBe(false)
+
+    // Second batch: another halo
+    addHalo(5, 4, 0, 0.4)
+    const batch2 = buildGlows(g, false)
+    expect(batch2).toHaveLength(1)
+    expect(batch2[0].visible).toBe(false)
+
+    // Toggle all: should affect both batches
+    setGlowsVisible(true)
+    expect(batch1[0].visible).toBe(true)
+    expect(batch2[0].visible).toBe(true)
+
+    // Empty call doesn't drop earlier meshes
+    const batch3 = buildGlows(g, false)
+    expect(batch3).toHaveLength(0)
+    expect(batch1[0].visible).toBe(true)
+    expect(batch2[0].visible).toBe(true)
+  })
 })

@@ -37,7 +37,7 @@ export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] 
   if (cones.length) out.push(layer(new ConeGeometry(1, 1, 24, 1, true).translate(0, -0.5, 0), 0.06, cones, parent, visible))
   halos.length = 0
   cones.length = 0
-  built = out
+  built.push(...out)
   return out
 }
 
