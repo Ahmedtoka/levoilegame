@@ -27,6 +27,7 @@ const _pv = new Matrix4()
 const _fr = new Frustum()
 const _s = new Sphere()
 const _v = new Vector3()
+const fasciaCache = new Map<string, CanvasTexture>()
 const imgCache = new Map<string, HTMLImageElement | HTMLCanvasElement | null>()
 
 /** Image by URL (product photo / logo), null until loaded; `onLoad` asks for a redraw. */
@@ -228,7 +229,13 @@ export class ScreenFeed {
     const b = brandById.get(s.brandId ?? '')
     const sec = catalog().sections.find((x) => x.id === s.brandId)
     if (!b || !sec) return
-    const fascia = shopFascia(sec, '', { initials: b.initials, color: b.color, logo: b.logo })
+    let fascia = fasciaCache.get(b.id)
+    if (!fascia) {
+      fascia = shopFascia(sec, '', { initials: b.initials, color: b.color, logo: b.logo })
+      fasciaCache.set(b.id, fascia)
+    }
+    // The fascia paints its logo asynchronously; request a redraw once the image has loaded.
+    if (b.logo) img(b.logo, redraw, false)
     const fh = P ? 150 : 180
     g.drawImage(fascia.image as HTMLCanvasElement, P ? 30 : 160, 30, P ? W - 60 : W - 320, fh)
     const prods = sec.productIds.slice(0, 2).map((id) => catalog().byId.get(id)).filter((p) => !!p)
