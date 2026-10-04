@@ -5,7 +5,7 @@ import { Raycaster, Vector2, Vector3, type Camera, type Object3D } from 'three'
 import type { CollisionWorld } from '../engine/colliders'
 import { store } from '../state/store'
 
-export type InteractKind = 'product' | 'model' | 'staff' | 'cashier' | 'exit' | 'customer' | 'treasure' | 'wheel' | 'deal'
+export type InteractKind = 'product' | 'model' | 'staff' | 'cashier' | 'exit' | 'customer' | 'treasure' | 'wheel' | 'deal' | 'rewards'
 
 export interface Interactable {
   object: Object3D

@@ -1,4 +1,4 @@
-// Customer ↔ Le Voile staff chat, simulated with keyword-based canned replies
+// Customer ↔ 122 Mall staff chat, simulated with keyword-based canned replies
 // in Egyptian Arabic / English. Staff can attach product cards (added to the
 // cart only when the customer approves); stylists send a full look.
 // Laravel + Reverb: replace with a private channel per conversation.
@@ -48,8 +48,8 @@ const RULES: { re: RegExp; reply: Reply[]; suggest?: boolean }[] = [
     re: /سعر|بكام|كام|أسعار|اسعار|price|cost|cheap|خصم|عرض|offer|deal/i,
     reply: [
       {
-        ar: 'الأسعار مكتوبة على كل قطعة، وعندنا دلوقتي صفقة جماعية بخصم ٢٥٪ وفلاش سيل كل شوية 🔥 ولو لفيتي الأقسام كلها في الباسبور تاخدي ١٥٪ زيادة.',
-        en: 'Prices are on every piece. Right now there’s a group deal at 25% off and flash sales every few minutes 🔥 Stamp every section in your passport for an extra 15%.',
+        ar: 'الأسعار مكتوبة على كل قطعة، وعندنا دلوقتي صفقة جماعية بخصم ٢٥٪ وفلاش سيل كل شوية 🔥 ولو لفيتي على المحلات بتجمعي 122 Coins تستبدليها بخصومات في عداد المكافآت.',
+        en: 'Prices are on every piece. Right now there’s a group deal at 25% off and flash sales every few minutes 🔥 Visiting shops earns 122 Coins you can swap for discounts at the rewards counters.',
       },
     ],
   },
@@ -79,18 +79,16 @@ const FALLBACK: Reply = {
 
 /** Words that point at a section (Egyptian Arabic + English). */
 const SECTION_WORDS: [RegExp, string][] = [
-  [/فستان|فساتين|عباي|dress|abaya/i, 'dresses'],
-  [/دنيم|جينز|جينز|denim|jeans/i, 'denim'],
-  [/يومي|كاجوال|everyday|casual/i, 'everyday-wear'],
-  [/طرح|سكارف|إيشارب|ايشارب|scarf|scarves/i, 'scarves'],
-  [/بونيه|بندانة|inner cap|undercap/i, 'inner-caps'],
-  [/إسدال|اسدال|صلاة|isdal|prayer/i, 'isdal'],
-  [/إكسسوار|اكسسوار|accessor/i, 'accessories'],
-  [/جديد|new/i, 'new-arrivals'],
-  [/أوكازيون|اوكازيون|تخفيض|sale/i, 'sale'],
+  [/عباي|إسدال|اسدال|abaya|isdal/i, 'nourhan'],
+  [/فستان|فساتين|dress/i, 'noha-collection'],
+  [/طرح|سكارف|إيشارب|ايشارب|بونيه|scarf|scarves|hijab/i, 'scarfest'],
+  [/شنط|شنطة|حقيبة|bag/i, 'hashbag'],
+  [/جزم|جزمة|حذاء|كوتشي|صندل|shoe|sneaker/i, 'slip-and-go'],
+  [/بنطلون|جينز|دنيم|pants|jeans|denim/i, 'axis'],
+  [/كاجوال|يومي|casual|everyday/i, 'the-cause-wear'],
 ]
 
-const OUTFIT_SECTIONS = ['dresses', 'everyday-wear', 'denim', 'isdal', 'sale']
+const OUTFIT_SECTIONS = ['nourhan', 'noha-collection', 'levoile', 'rwan-designs', 'bezravoga', 'dnd', 'fashion-avenue']
 
 export class MockStaffChat implements StaffChatService {
   private readonly threads = new Map<string, ChatMessage[]>()
@@ -116,10 +114,10 @@ export class MockStaffChat implements StaffChatService {
     const sec = this.catalog.sections.find((s) => s.id === staff.sectionId)
     const hello: Reply =
       staff.role === 'stylist'
-        ? { ar: `أهلاً! أنا ${staff.name}، ستايلست في Le Voile ✨ قوليلي المناسبة وأنا أظبطلك لوك كامل: لبس + طرحة + إكسسوار.`, en: `Hi! I’m ${staff.name}, a Le Voile stylist ✨ Tell me the occasion and I’ll put together a full look: outfit + hijab + accessory.` }
+        ? { ar: `أهلاً! أنا ${staff.name}، ستايلست في ١٢٢ مول ✨ قوليلي المناسبة وأنا أظبطلك لوك كامل: لبس + طرحة + إكسسوار.`, en: `Hi! I’m ${staff.name}, a 122 Mall stylist ✨ Tell me the occasion and I’ll put together a full look: outfit + hijab + accessory.` }
         : sec
           ? { ar: `أهلاً بيكي في قسم ${sec.titleAr}! أنا ${staff.name}، تحبي أساعدك في إيه؟`, en: `Welcome to ${sec.title}! I’m ${staff.name} — how can I help?` }
-          : { ar: `أهلاً بيكي في Le Voile! أنا ${staff.name}، محتاجة مساعدة في إيه؟`, en: `Welcome to Le Voile! I’m ${staff.name} — what can I help you with?` }
+          : { ar: `أهلاً بيكي في ١٢٢ مول! أنا ${staff.name}، محتاجة مساعدة في إيه؟`, en: `Welcome to 122 Mall! I’m ${staff.name} — what can I help you with?` }
     this.push(staff.id, { from: 'staff', text: hello[lang] })
   }
 
@@ -184,9 +182,9 @@ export class MockStaffChat implements StaffChatService {
 
   /** Outfit + hijab + accessory. */
   private look(): Product[] {
-    const outfit = this.fromSection(this.pick(OUTFIT_SECTIONS.filter((s) => this.catalog.sections.some((x) => x.id === s))) ?? 'dresses')
-    const hijab = this.fromSection('scarves') ?? this.fromSection('inner-caps')
-    const acc = this.fromSection('accessories') ?? this.fromSection('inner-caps')
+    const outfit = this.fromSection(this.pick(OUTFIT_SECTIONS.filter((s) => this.catalog.sections.some((x) => x.id === s))) ?? 'levoile')
+    const hijab = this.fromSection('scarfest')
+    const acc = this.fromSection('hashbag') ?? this.fromSection('slip-and-go')
     return [outfit, hijab, acc].filter((p): p is Product => !!p)
   }
 

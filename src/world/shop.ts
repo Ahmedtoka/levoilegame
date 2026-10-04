@@ -25,7 +25,7 @@ import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { imageMat, MAT, tintMat } from './materials'
 import { blobShadow, framedPlane, plant, slimPlant, v3 } from './props'
-import { bladeSign, logoTexture, priceTagTexture, shopFascia } from './signage'
+import { bladeSign, comingSoonTexture, labelSign, logoTexture, priceTagTexture, shopFascia, type Monogram } from './signage'
 import type { Kit } from './kit'
 import type { DisplayKind } from '../config/sections'
 import { easelRow, loadCards, lookbookStand, registerCards } from './displays'
@@ -87,7 +87,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const base = new Matrix4().makeRotationY(shop.yaw).setPosition(shop.entrance.x, 0, shop.entrance.z)
   const f = ctx.batcher.frame(base, ctx.colliders)
   const group = new Group()
-  group.name = `shop:${shop.section?.id ?? 'lounge'}`
+  group.name = `shop:${shop.id}`
   group.matrixAutoUpdate = false
   group.matrix.copy(base)
   group.matrixWorldNeedsUpdate = true
@@ -127,26 +127,44 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const depth = MALL.shopDepth
   const half = MALL.shopLen / 2
 
+  if (shop.kind === 'soon') {
+    // Empty unit: hoarding across the closed front, nothing inside.
+    const hoarding = new Mesh(new PlaneGeometry(MALL.shopLen - 0.6, 3.75), imageMat(comingSoonTexture()))
+    hoarding.position.set(0, 1.9, 0.03)
+    group.add(hoarding)
+    f.box(MAT.brass, 0, 3.8, 0.02, MALL.shopLen - 0.5, 0.06, 0.04)
+    interior.visible = false
+    handles.update = () => {}
+    handles.interiorVisible = false
+    return handles
+  }
+
   if (shop.kind === 'lounge' || !shop.section || !shop.style) {
     buildLounge(f, interior, loaders, ctx.kit ?? null, ctx.colliders)
+    if (shop.amenity === 'lounge') {
+      const sign = new Mesh(new PlaneGeometry(4.2, 1.05), imageMat(labelSign('122 Lounge', 'استراحة ١٢٢', { bg: '#f4ede3', fg: '#6b4f35' })))
+      sign.position.set(0, 4.55, 0.06)
+      group.add(sign)
+    }
     return handles
   }
 
   const section = shop.section
   const style = shop.style
+  const mono = shop.brand ? { initials: shop.brand.initials, color: shop.brand.color } : undefined
   const tint = style.tint
   const accent = tintMat('#ece3d6', 1, 0.9)
   const accentDeep = tintMat('#a57b52', 1, 0.6)
   const products = section.productIds.map((id) => ctx.catalog.byId.get(id)).filter((p): p is Product => !!p)
 
   // ---------------------------------------------------------- storefront
-  const fascia = new Mesh(new PlaneGeometry(5.8, 1.45), imageMat(shopFascia(section, tint)))
+  const fascia = new Mesh(new PlaneGeometry(5.8, 1.45), imageMat(shopFascia(section, tint, mono)))
   fascia.position.set(0, 4.95, 0.03)
   group.add(fascia)
   f.box(MAT.brass, 0, 4.95, 0.015, 5.95, 1.6, 0.02)
 
   // Blade sign sticking out over the boulevard, readable from both directions.
-  const bladeTex = bladeSign(section)
+  const bladeTex = bladeSign(section, mono)
   for (const side of [1, -1]) {
     const blade = new Mesh(new PlaneGeometry(1.1, 1.1), imageMat(bladeTex))
     blade.position.set(-half + 0.9 + side * 0.022, 4.2, 1.0)
@@ -189,7 +207,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
     f.box(MAT.brass, sx * (half - 0.05), 1.0, -depth / 2, 0.03, 0.03, depth - 0.4)
   }
   // Section name inside, above the back display
-  const inner = new Mesh(new PlaneGeometry(3.6, 0.9), imageMat(shopFascia(section, tint)))
+  const inner = new Mesh(new PlaneGeometry(3.6, 0.9), imageMat(shopFascia(section, tint, mono)))
   inner.position.set(0, 3.85, -depth + 0.07)
   interior.add(inner)
 
@@ -199,7 +217,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const kit = ctx.kit ?? null
   const display = new ProductDisplay(ctx, f, interior, loaders)
   if (kit) {
-    furnishWithKit(kit, ctx, f, interior, style.display, section, products, loaders)
+    furnishWithKit(kit, ctx, f, interior, style.display, section, products, loaders, mono)
   } else switch (style.display) {
     case 'rack':
       rackDisplay(display, products, tint)
@@ -237,6 +255,9 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
     const w = f.toWorld(modelProducts.length ? half - 1.3 : half - 1.6, 0, modelProducts.length ? -2.6 : -4.2)
     handles.staffSpot = { x: w.x, z: w.z, yaw: shop.yaw - 0.9 }
   }
+
+  // 122 Coins rewards counter just inside the entrance (left).
+  if (shop.brand) rewardsCounter(ctx, f, interior, shop.brand.id, shop.brand.color)
 
   return handles
 }
@@ -516,6 +537,7 @@ function furnishWithKit(
   section: Section,
   products: Product[],
   loaders: (() => Promise<unknown>)[],
+  mono?: Monogram,
 ): void {
   const put = (name: string, x: number, z: number, face: number, collide = true) =>
     kit.place(name, interior, x, z, face, collide ? ctx.colliders : undefined)
@@ -559,7 +581,12 @@ function furnishWithKit(
     case 'boxes': {
       sideWall(-1, ['scarfbay_2', 'scarfbay_4', 'scarfbay_1'], [-6.0, -8.55, -11.1])
       sideWall(1, ['scarfbay_3', 'scarfbay_5', 'scarfbay_2'], [-6.0, -8.55, -11.1])
-      put('brandpanel', 0, BACK_Z + 0.16, FACE_IN, false)
+      // The shop's own sign on the back wall (the kit's baked panel carries another brand).
+      {
+        const panel = new Mesh(new PlaneGeometry(3.4, 0.85), imageMat(shopFascia(section, '', mono)))
+        panel.position.set(0, 2.4, BACK_Z + 0.02)
+        interior.add(panel)
+      }
       put('plant', -2.4, BACK_Z + 0.5, FACE_IN)
       put('plant', 2.4, BACK_Z + 0.5, FACE_IN)
       put('table', 0, -10.4, FACE_IN)
@@ -579,4 +606,28 @@ function furnishWithKit(
   }
   registerCards(ctx.interaction, cards)
   loaders.push(async () => loadCards(cards))
+}
+
+/** Small counter where 122 Coins are swapped for this brand's discount. */
+function rewardsCounter(ctx: ShopContext, f: BatchFrame, interior: Group, brandId: string, color: string): void {
+  const x = -MALL.shopLen / 2 + 1.6
+  const z = -2.0
+  f.block(MAT.brass, x, 0, z, 1.1, 0.06, 0.55, { collide: true })
+  f.block(tintMat(color, 1, 0.5), x, 0.06, z, 1.0, 0.98, 0.5)
+  f.block(MAT.marbleTop, x, 1.04, z, 1.14, 0.05, 0.6)
+  f.cyl(MAT.brass, x, 1.09, z, 0.16, 0.05)
+  f.sphere(MAT.brass, x, 1.24, z, 0.11, 0.35)
+  const sign = new Mesh(new PlaneGeometry(1.0, 0.25), imageMat(labelSign('122 Coins · Rewards', 'عداد المكافآت', { bg: color, fg: '#ffffff', w: 1024, h: 256 })))
+  sign.position.set(x, 0.55, z + 0.26)
+  interior.add(sign)
+  const hit = new Mesh(new PlaneGeometry(1.1, 1.3), new MeshBasicMaterial({ visible: false }))
+  hit.position.set(x, 0.75, z + 0.3)
+  interior.add(hit)
+  ctx.interaction.add({
+    object: hit,
+    kind: 'rewards',
+    label: () => `${t('rewardsPrompt', store.getState().lang)} · ${store.getState().coins} 🪙`,
+    onInteract: () => store.getState().set({ overlay: 'rewards', rewardsBrand: brandId }),
+    maxDist: 3.2,
+  })
 }

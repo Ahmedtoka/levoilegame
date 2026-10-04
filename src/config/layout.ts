@@ -1,17 +1,23 @@
-// Procedural mall layout. Coordinates are metres, Y up. The entrance doors are
-// on z = 0 and the mall extends towards -z:
+// 122 Mall layout. Coordinates are metres, Y up. The entrance doors are on
+// z = 0 and the mall extends towards -z:
 //
-//    z=0   ┌──────── entrance / exit ────────┐
-//          │  ATRIUM (logo, skylight, cashier) │
-//  z=-22   ├──────┬───────────────┬──────────┤
-//          │ shop │   BOULEVARD   │  shop    │   shops alternate L / R
-//          │ shop │               │  shop    │   SHOP_LEN metres each along z
-//          └──────┴───────────────┴──────────┘
+//                       ┌──── NORTH WING ────┐
+//                       │ shop │      │ shop │
+//                       │ shop │      │ shop │
+//   ┌── WEST WING ──────┴──────┴──────┴──────┴────── EAST WING ──┐
+//   │ shop shop shop    │       PLAZA        │    shop shop shop  │
+//   │ ══ corridor ══    │ (wheel · cashier)  │    ══ corridor ══  │
+//   │ shop shop shop    │                    │    shop shop shop  │
+//   └───────────────────┴──── entrance ──────┴────────────────────┘
 //
-// Adding a section to products.json adds a shop here automatically.
+// Each wing is built in its own local frame: origin = where it meets the
+// plaza, local −Z runs away from the plaza, shops alternate left / right
+// (local −X / +X). Shop interiors keep their own local frame on top of that
+// (origin = centre of the opening, −Z into the shop).
 
 import type { Section } from '../data/types'
 import { sectionStyle, type SectionStyle } from './sections'
+import { brandById, WINGS, type BrandDef, type WingDef, type WingId } from './mall'
 
 export interface Rect {
   x0: number
@@ -21,9 +27,11 @@ export interface Rect {
 }
 
 export const MALL = {
-  halfWidth: 20,
-  atriumDepth: 22,
-  boulevardHalf: 6,
+  /** Plaza half width (x) and depth (z). */
+  plazaHalf: 22,
+  plazaDepth: 34,
+  /** Wing corridor half width. */
+  corridorHalf: 6,
   shopLen: 12,
   shopDepth: 14,
   doorHalf: 3,
@@ -31,23 +39,9 @@ export const MALL = {
   boulevardHeight: 6,
   shopHeight: 4.4,
   wallT: 0.3,
+  /** z of the west / east wing centre line. */
+  sideWingZ: -20,
 } as const
-
-export interface ShopLayout {
-  kind: 'shop' | 'lounge'
-  section: Section | null
-  style: SectionStyle | null
-  index: number
-  side: 'L' | 'R'
-  rect: Rect
-  /** Centre of the shop's opening on the boulevard. */
-  entrance: { x: number; z: number }
-  /** Group yaw so that local -Z points into the shop and local +X runs along its front. */
-  yaw: number
-  center: { x: number; z: number }
-  /** Where teleport puts you (defaults to just inside the entrance). */
-  arrival?: Pose
-}
 
 export interface Pose {
   x: number
@@ -55,13 +49,48 @@ export interface Pose {
   yaw: number
 }
 
+export interface Wing {
+  id: WingId
+  def: WingDef
+  /** Where the corridor meets the plaza. */
+  origin: { x: number; z: number }
+  /** Rotation of the wing frame (local −Z = away from the plaza). */
+  yaw: number
+  /** Corridor length. */
+  len: number
+  /** Corridor footprint (world). */
+  rect: Rect
+}
+
+export interface ShopLayout {
+  /** shop = brand tenant, soon = Coming Soon unit, lounge = mall amenity (studio / rest area). */
+  kind: 'shop' | 'lounge' | 'soon'
+  /** Slot id: brand id, 'studio' or 'lounge'. */
+  id: string
+  section: Section | null
+  brand: BrandDef | null
+  style: SectionStyle | null
+  amenity?: 'studio' | 'lounge'
+  index: number
+  wing: WingId | null
+  side: 'L' | 'R'
+  rect: Rect
+  /** Centre of the shop's opening on the corridor. */
+  entrance: { x: number; z: number }
+  /** Group yaw so that local −Z points into the shop and local +X runs along its front. */
+  yaw: number
+  center: { x: number; z: number }
+  /** Where teleport puts you (defaults to the threshold). */
+  arrival?: Pose
+}
+
 export interface MallLayout {
   /** 'mall' = procedural mall; 'boutique' = baked store model. */
   kind: 'mall' | 'boutique'
   bounds: Rect
-  /** Entrance hall (zone "atrium"). */
+  /** Entrance plaza (zone "atrium"). */
   atrium: Rect
-  boulevard: Rect
+  wings: Wing[]
   shops: ShopLayout[]
   /** Extra named areas (e.g. fitting rooms) checked after shops. */
   zones?: { id: string; rect: Rect }[]
@@ -76,38 +105,87 @@ export function rectContains(r: Rect, x: number, z: number): boolean {
   return x >= r.x0 && x <= r.x1 && z >= r.z0 && z <= r.z1
 }
 
-export function buildLayout(sections: Section[]): MallLayout {
-  const { halfWidth: W, atriumDepth: A, boulevardHalf: B, shopLen: L } = MALL
-  const perSide = Math.ceil(sections.length / 2)
-  const zEnd = -A - perSide * L
+/** Local (wing or shop frame) → world. */
+export function toWorld(origin: { x: number; z: number }, yaw: number, x: number, z: number): { x: number; z: number } {
+  const c = Math.cos(yaw)
+  const s = Math.sin(yaw)
+  return { x: origin.x + x * c + z * s, z: origin.z - x * s + z * c }
+}
 
+function rectOf(origin: { x: number; z: number }, yaw: number, x0: number, z0: number, x1: number, z1: number): Rect {
+  const pts = [toWorld(origin, yaw, x0, z0), toWorld(origin, yaw, x1, z1)]
+  const r = (n: number) => Math.round(n * 1000) / 1000
+  return {
+    x0: r(Math.min(pts[0].x, pts[1].x)),
+    z0: r(Math.min(pts[0].z, pts[1].z)),
+    x1: r(Math.max(pts[0].x, pts[1].x)),
+    z1: r(Math.max(pts[0].z, pts[1].z)),
+  }
+}
+
+const WING_FRAME: Record<WingId, { origin: { x: number; z: number }; yaw: number }> = {
+  north: { origin: { x: 0, z: -MALL.plazaDepth }, yaw: 0 },
+  west: { origin: { x: -MALL.plazaHalf, z: MALL.sideWingZ }, yaw: Math.PI / 2 },
+  east: { origin: { x: MALL.plazaHalf, z: MALL.sideWingZ }, yaw: -Math.PI / 2 },
+}
+
+export function buildLayout(sections: Section[]): MallLayout {
+  const { plazaHalf: W, plazaDepth: A, corridorHalf: B, shopLen: L, shopDepth: D } = MALL
+  const wings: Wing[] = []
   const shops: ShopLayout[] = []
-  for (let slot = 0; slot < perSide * 2; slot++) {
-    const side = slot % 2 === 0 ? 'L' : 'R'
-    const row = Math.floor(slot / 2)
-    const z1 = -A - row * L
-    const z0 = z1 - L
-    const rect: Rect = side === 'L' ? { x0: -W, z0, x1: -B, z1 } : { x0: B, z0, x1: W, z1 }
-    const section = sections[slot] ?? null
-    const ex = side === 'L' ? -B : B
-    shops.push({
-      kind: section ? 'shop' : 'lounge',
-      section,
-      style: section ? sectionStyle(section.id, slot) : null,
-      index: slot,
-      side,
-      rect,
-      entrance: { x: ex, z: (z0 + z1) / 2 },
-      yaw: side === 'L' ? Math.PI / 2 : -Math.PI / 2,
-      center: { x: (rect.x0 + rect.x1) / 2, z: (z0 + z1) / 2 },
+  let index = 0
+
+  for (const def of WINGS) {
+    const { origin, yaw } = WING_FRAME[def.id]
+    const rows = Math.ceil(def.slots.length / 2)
+    const len = rows * L
+    wings.push({ id: def.id, def, origin, yaw, len, rect: rectOf(origin, yaw, -B, -len, B, 0) })
+
+    def.slots.forEach((slot, k) => {
+      const side = k % 2 === 0 ? 'L' : 'R'
+      const row = Math.floor(k / 2)
+      const z1 = -row * L
+      const z0 = z1 - L
+      const lx0 = side === 'L' ? -B - D : B
+      const lx1 = side === 'L' ? -B : B + D
+      const ex = side === 'L' ? -B : B
+      const brand = brandById.get(slot) ?? null
+      const section = sections.find((s) => s.id === slot) ?? null
+      const amenity = slot === 'studio' || slot === 'lounge' ? slot : undefined
+      const kind: ShopLayout['kind'] = amenity ? 'lounge' : brand?.status === 'soon' || !section ? 'soon' : 'shop'
+      const entrance = toWorld(origin, yaw, ex, (z0 + z1) / 2)
+      const rect = rectOf(origin, yaw, lx0, z0, lx1, z1)
+      shops.push({
+        kind,
+        id: slot,
+        section: kind === 'shop' ? section : null,
+        brand,
+        style: kind === 'shop' && section ? sectionStyle(section.id, index) : null,
+        amenity,
+        index: index++,
+        wing: def.id,
+        side,
+        rect,
+        entrance,
+        yaw: yaw + (side === 'L' ? Math.PI / 2 : -Math.PI / 2),
+        center: { x: (rect.x0 + rect.x1) / 2, z: (rect.z0 + rect.z1) / 2 },
+      })
     })
+  }
+
+  const all = [{ x0: -W, z0: -A, x1: W, z1: 0 }, ...wings.map((w) => w.rect), ...shops.map((s) => s.rect)]
+  const bounds: Rect = {
+    x0: Math.min(...all.map((r) => r.x0)),
+    z0: Math.min(...all.map((r) => r.z0)),
+    x1: Math.max(...all.map((r) => r.x1)),
+    z1: Math.max(...all.map((r) => r.z1)),
   }
 
   return {
     kind: 'mall',
-    bounds: { x0: -W, z0: zEnd, x1: W, z1: 0 },
+    bounds,
     atrium: { x0: -W, z0: -A, x1: W, z1: 0 },
-    boulevard: { x0: -B, z0: zEnd, x1: B, z1: -A },
+    wings,
     shops,
     spawn: { x: 0, z: -3.2, yaw: 0 },
     cashier: {
@@ -134,6 +212,11 @@ export function buildLayout(sections: Section[]): MallLayout {
  */
 export function shopArrival(s: ShopLayout): Pose {
   if (s.arrival) return s.arrival
-  const inward = s.side === 'L' ? -1 : 1
-  return { x: s.entrance.x + inward * 0.3, z: s.entrance.z, yaw: s.yaw }
+  const p = toWorld(s.entrance, s.yaw, 0, -0.3)
+  return { x: p.x, z: p.z, yaw: s.yaw }
+}
+
+/** Zone id of a slot: brand/section id, 'studio', 'lounge' or the Coming Soon id. */
+export function shopZone(s: ShopLayout): string {
+  return s.section?.id ?? s.id
 }

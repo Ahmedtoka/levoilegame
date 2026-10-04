@@ -10,7 +10,8 @@ import { displayImage } from '../data/types'
 import { social, demoEnabled } from '../social'
 import { CONCIERGE, openChat, sendChat, type PurchaseToast } from '../social/session'
 import { flashActive } from '../social/pricing'
-import { savePrize, spinWheel, TREASURE_COUNT, WHEEL_PRIZES, wheelAlreadySpun } from '../social/games'
+import { redeemReward, REWARD_TIERS, savePrize, spinWheel, TREASURE_COUNT, WHEEL_PRIZES, wheelAlreadySpun } from '../social/games'
+import { brandById } from '../config/mall'
 import type { FlashSale } from '../social/types'
 import { normalizePhone } from './checkout'
 import { FREE_SIZE } from '../data/defaults'
@@ -53,6 +54,7 @@ export function mountSocial(root: HTMLElement, game: GameBridge): void {
   mountChat(root, game)
   mountWheel(root, game)
   mountClaim(root, game)
+  mountRewards(root, game)
 }
 
 // ---------------------------------------------------------------- HUD chips
@@ -82,12 +84,14 @@ function mountHudChips(root: HTMLElement, game: GameBridge): void {
         <span class="dots">${catalog().sections.map((x) => `<i class="${s.passport.includes(x.id) ? 'on' : ''}"></i>`).join('')}</span>
       </button>
       <button class="live-chip" data-action="treasure" title="${esc(t('hiddenLogosHint', L))}"><span class="ico">✨</span><span>${s.treasures.length}/${TREASURE_COUNT}</span></button>
+      <button class="live-chip coins" data-action="coins" title="${esc(t('coinsHint', L))}"><span class="ico">🪙</span><span data-coins>${s.coins}</span></button>
       ${s.coupons.length ? `<button class="live-chip" data-action="cart" title="${esc(t('coupons', L))}"><span class="ico">🎟️</span><span>${s.coupons.length}</span></button>` : ''}
       ${d && dealP ? `<button class="live-chip deal ${d.unlocked ? 'won' : ''}" data-action="deal"><span class="ico">👥</span><span>${d.unlocked ? '−25% ✓' : `${d.joined}/${d.target}`}</span><span class="timer" data-deal-timer>${d.unlocked ? '' : mmss(d.endsAt - Date.now())}</span></button>` : ''}
       ${f ? `<button class="live-chip flash" data-action="flash"><span class="ico">⚡</span><span>−${f.percent}% ${esc(sectionTitle(f.sectionId, L))}</span><span class="timer" data-flash-timer>${mmss(f.endsAt - Date.now())}</span></button>` : ''}`
   }
 
   onAction(chips, {
+    coins: () => store.getState().showToast(t('coinsHint', store.getState().lang)),
     passport: () => store.getState().showToast(`${t('passport', store.getState().lang)}: ${store.getState().passport.length}/${catalog().sections.length} → 15%`),
     treasure: () => store.getState().showToast(t('hiddenLogosHint', store.getState().lang)),
     cart: () => store.getState().set({ overlay: 'cart' }),
@@ -101,7 +105,7 @@ function mountHudChips(root: HTMLElement, game: GameBridge): void {
     },
   })
 
-  for (const sel of [(s: ReturnType<typeof store.getState>) => s.passport, (s: ReturnType<typeof store.getState>) => s.treasures, (s: ReturnType<typeof store.getState>) => s.coupons, (s: ReturnType<typeof store.getState>) => s.groupDeal, (s: ReturnType<typeof store.getState>) => s.flash, (s: ReturnType<typeof store.getState>) => s.lang])
+  for (const sel of [(s: ReturnType<typeof store.getState>) => s.passport, (s: ReturnType<typeof store.getState>) => s.treasures, (s: ReturnType<typeof store.getState>) => s.coupons, (s: ReturnType<typeof store.getState>) => s.coins, (s: ReturnType<typeof store.getState>) => s.groupDeal, (s: ReturnType<typeof store.getState>) => s.flash, (s: ReturnType<typeof store.getState>) => s.lang])
     watch(sel as (s: ReturnType<typeof store.getState>) => unknown, render, false)
   render()
 
@@ -163,6 +167,14 @@ function mountHudChips(root: HTMLElement, game: GameBridge): void {
     const name = (e as CustomEvent<string>).detail
     const L = store.getState().lang
     if (store.getState().phase === 'playing') pushToast(`<div class="ico">👥</div><div><div class="who">${esc(name)} ${esc(t('dealJoinedBy', L))}</div></div>`)
+  })
+  // Floating "+N 🪙" and the reason, whenever coins are earned.
+  window.addEventListener('lv:coins', (e) => {
+    const { n, reason } = (e as CustomEvent<{ n: number; reason: string }>).detail
+    const fly = el('div', 'coin-fly', `+${n} 🪙`)
+    wrap.appendChild(fly)
+    setTimeout(() => fly.remove(), 1600)
+    if (store.getState().phase === 'playing') pushToast(`<div class="ico">🪙</div><div><div class="who">${esc(reason)}</div><div class="what">+${n} ${esc(t('coins', store.getState().lang))}</div></div>`)
   })
   window.addEventListener('lv:celebrate', () => {
     confetti()
@@ -323,7 +335,7 @@ function mountWheel(root: HTMLElement, game: GameBridge): void {
     const r = 140
     const path = `M150,150 L${150 + r * Math.cos(a0)},${150 + r * Math.sin(a0)} A${r},${r} 0 0 1 ${150 + r * Math.cos(a1)},${150 + r * Math.sin(a1)} Z`
     const mid = (i + 0.5) * seg
-    const dark = ['#9e197e', '#6f0f58'].includes(p.color)
+    const dark = ['#5b2b82', '#3e1c5c'].includes(p.color)
     return `<path d="${path}" fill="${p.color}" stroke="#fff" stroke-width="2"/><text transform="rotate(${mid} 150 150) translate(150 52)" text-anchor="middle" fill="${dark ? '#fff' : '#5a2a4a'}" font-size="14" font-weight="700">${esc(p.title.ar)}</text>`
   }).join('')
 
@@ -343,14 +355,16 @@ function mountWheel(root: HTMLElement, game: GameBridge): void {
           <div class="eyebrow">${esc(t('wheelOnce', L))}</div>
           <h2>${esc(t('wheel', L))}</h2>
           <div class="wheel-wrap">
-            <svg viewBox="0 0 300 300" class="wheel-svg" style="transform:rotate(${angle}deg)">${slices}<circle cx="150" cy="150" r="26" fill="#fbf8f6" stroke="#b08a55" stroke-width="4"/><text x="150" y="156" text-anchor="middle" font-size="16" fill="#9e197e" font-family="Playfair Display, serif">LV</text></svg>
+            <svg viewBox="0 0 300 300" class="wheel-svg" style="transform:rotate(${angle}deg)">${slices}<circle cx="150" cy="150" r="26" fill="#fbf8f6" stroke="#b08a55" stroke-width="4"/><text x="150" y="156" text-anchor="middle" font-size="16" fill="#5b2b82" font-family="Playfair Display, serif">LV</text></svg>
             <div class="wheel-pointer"></div>
           </div>
           ${
             prize
               ? prize.coupon
                 ? `<p class="wheel-result">${esc(t('youWon', L))} <b>${esc(prize.title[L])}</b> 🎉</p><button class="btn block lg" data-action="claim">${esc(t('takeIt', L))}</button>`
-                : `<p class="wheel-result">${esc(t('betterLuck', L))}</p>`
+                : prize.coins
+                  ? `<p class="wheel-result">${esc(t('youWon', L))} <b>${prize.coins} 🪙</b> 🎉</p><p class="muted">${esc(t('coinsHint', L))}</p>`
+                  : `<p class="wheel-result">${esc(t('betterLuck', L))}</p>`
               : used
                 ? `<p class="wheel-result">${esc(t('wheelUsed', L))}</p>`
                 : `<button class="btn block lg" data-action="spin" ${spinning ? 'disabled' : ''}>${esc(t('spin', L))}</button>`
@@ -467,7 +481,7 @@ function mountClaim(root: HTMLElement, game: GameBridge): void {
       }
       render()
     } else if (step === 'otp') {
-      const user = await id.verify(phone, code, name || 'Le Voile')
+      const user = await id.verify(phone, code, name || '122 Mall')
       busy = false
       if (!user) {
         error = t('wrongCode', L)
@@ -498,6 +512,145 @@ function mountClaim(root: HTMLElement, game: GameBridge): void {
     }
     render()
   })
+  watch((s) => s.lang, render)
+}
+
+// ------------------------------------------------------------------ rewards
+
+/** A shop's rewards counter: exchange 122 Coins for that brand's discount (login first). */
+function mountRewards(root: HTMLElement, game: GameBridge): void {
+  const veil = el('div', 'veil hidden')
+  root.appendChild(veil)
+  let step: 'list' | 'phone' | 'otp' | 'done' = 'list'
+  let pendingTier = -1
+  let phone = ''
+  let name = ''
+  let code = ''
+  let error = ''
+  let busy = false
+  let lastCode = ''
+
+  const render = () => {
+    const s = store.getState()
+    const brand = s.rewardsBrand ? brandById.get(s.rewardsBrand) : null
+    if (s.overlay !== 'rewards' || !brand) {
+      veil.classList.add('hidden')
+      return
+    }
+    const L = s.lang
+    let body = ''
+    if (step === 'list') {
+      body = `<div class="coin-balance">🪙 <b>${s.coins}</b> ${esc(t('coins', L))}</div>
+        <div class="tiers">${REWARD_TIERS.map(
+          (r, i) => `<div class="tier ${s.coins >= r.coins ? '' : 'locked'}">
+            <div class="pct">${r.percent}%</div>
+            <div class="lbl">${esc(t('offAt', L))} ${esc(L === 'ar' ? brand.nameAr : brand.name)}</div>
+            <button class="btn sm" data-action="redeem" data-i="${i}" ${s.coins >= r.coins ? '' : 'disabled'}>${r.coins} 🪙</button>
+          </div>`,
+        ).join('')}</div>
+        <p class="muted">${esc(t('earnCoinsHow', L))}</p>`
+    } else if (step === 'phone')
+      body = `<p>${esc(t('loginToClaim', L))}</p>
+        <form data-form="phone" novalidate>
+          <div class="field"><label for="r-name">${esc(t('yourName', L))}</label><input id="r-name" data-f="name" value="${esc(name)}" autocomplete="name" /></div>
+          <div class="field ${error ? 'err' : ''}"><label for="r-phone">${esc(t('phone', L))}</label><input id="r-phone" data-f="phone" value="${esc(phone)}" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="01xxxxxxxxx" />${error ? `<span class="msg">${esc(error)}</span>` : ''}</div>
+          <button class="btn block lg" type="submit" ${busy ? 'disabled' : ''}>${esc(t('sendCode', L))}</button>
+        </form>`
+    else if (step === 'otp')
+      body = `<p>${esc(t('enterCode', L))}</p><p class="muted" dir="ltr">${esc(phone)}</p>
+        <form data-form="otp" novalidate>
+          <div class="field ${error ? 'err' : ''}"><input class="otp" data-f="code" value="${esc(code)}" inputmode="numeric" maxlength="4" dir="ltr" autocomplete="one-time-code" placeholder="• • • •" />${error ? `<span class="msg">${esc(error)}</span>` : ''}</div>
+          <button class="btn block lg" type="submit" ${busy ? 'disabled' : ''}>${esc(t('verify', L))}</button>
+        </form>`
+    else
+      body = `<div class="thanks" style="padding:0"><div class="tick">${ICONS.check}</div></div><p>${esc(t('couponSaved', L))}</p><div class="order-no" dir="ltr">${esc(lastCode)}</div>
+        <div class="row-btns"><button class="btn" data-action="cart">${esc(t('cart', L))}</button><button class="btn ghost" data-action="back">${esc(t('back', L))}</button></div>`
+    paint(veil, `<div class="card narrow claim-card rewards-card" role="dialog" aria-modal="true">
+      <button class="close" data-action="close" aria-label="${esc(t('close', L))}">${ICONS.close}</button>
+      <div class="card-body">
+        <div class="mono" style="--c:${esc(brand.color)}">${esc(brand.initials)}</div>
+        <div class="eyebrow">${esc(t('rewardsCounter', L))}</div>
+        <h2>${esc(L === 'ar' ? brand.nameAr : brand.name)}</h2>
+        ${body}
+      </div></div>`)
+    veil.querySelector<HTMLInputElement>('input[data-f="code"], input[data-f="phone"]')?.focus()
+  }
+
+  const finish = () => {
+    const s = store.getState()
+    const c = s.rewardsBrand ? redeemReward(s.rewardsBrand, pendingTier) : null
+    if (!c) {
+      step = 'list'
+      render()
+      return
+    }
+    lastCode = c.code
+    audio.success()
+    confetti()
+    step = 'done'
+    render()
+  }
+
+  veil.addEventListener('input', (e) => {
+    const i = e.target as HTMLInputElement
+    if (i.dataset.f === 'phone') phone = i.value
+    if (i.dataset.f === 'name') name = i.value
+    if (i.dataset.f === 'code') code = i.value.replace(/\D/g, '').slice(0, 4)
+  })
+  veil.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const L = store.getState().lang
+    const id = social().identity
+    error = ''
+    busy = true
+    if (step === 'phone') {
+      const norm = normalizePhone(phone)
+      const r = await id.requestOtp(norm)
+      busy = false
+      if (!r.ok) error = t('invalidPhone', L)
+      else {
+        phone = norm
+        step = 'otp'
+      }
+      render()
+    } else if (step === 'otp') {
+      const user = await id.verify(phone, code, name || '122 Mall')
+      busy = false
+      if (!user) {
+        error = t('wrongCode', L)
+        render()
+      } else finish()
+    }
+  })
+  onAction(veil, {
+    redeem: (b) => {
+      pendingTier = Number(b.dataset.i)
+      if (social().identity.current()) finish()
+      else {
+        step = 'phone'
+        render()
+      }
+    },
+    close: () => game.resume(),
+    back: () => {
+      step = 'list'
+      render()
+    },
+    cart: () => store.getState().set({ overlay: 'cart' }),
+  })
+  veil.addEventListener('click', (e) => {
+    if (e.target === veil) game.resume()
+  })
+  watch((s) => s.overlay, (o, prev) => {
+    if (o === 'rewards' && prev !== 'rewards') {
+      step = 'list'
+      code = ''
+      error = ''
+      busy = false
+    }
+    render()
+  })
+  watch((s) => s.coins, render)
   watch((s) => s.lang, render)
 }
 

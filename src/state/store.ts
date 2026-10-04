@@ -7,7 +7,7 @@ import type { ChatMessage, Coupon, FlashSale, GroupDeal, Prize, StaffRef, User }
 import { priceCart } from '../social/pricing'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -69,6 +69,10 @@ export interface AppState {
   user: User | null
   coupons: Coupon[]
   appliedCoupon: string | null
+  /** 122 Coins balance (earned by playing, spent at each shop's rewards counter). */
+  coins: number
+  /** Brand whose rewards counter is open. */
+  rewardsBrand: string | null
   /** Section ids stamped in the passport this session. */
   passport: string[]
   /** Treasure-hunt logos found this session. */
@@ -121,6 +125,8 @@ export const store = createStore<AppState>()(
       user: null,
       coupons: [],
       appliedCoupon: null,
+      coins: 0,
+      rewardsBrand: null,
       passport: [],
       treasures: [],
       wheelSpun: false,
@@ -164,6 +170,7 @@ export const store = createStore<AppState>()(
         user: s.user,
         coupons: s.coupons,
         appliedCoupon: s.appliedCoupon,
+        coins: s.coins,
       }),
     },
   ),

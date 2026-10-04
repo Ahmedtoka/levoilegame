@@ -1,6 +1,6 @@
 // The simulated mall crowd: renders and walks the shoppers that the presence
 // source describes (browsing a shop, queueing at the cashier and leaving with
-// a Le Voile bag, playing at the wheel / treasure hunting, sitting with a
+// a 122 Mall bag, playing at the wheel / treasure hunting, sitting with a
 // stylist, friends standing together).
 //
 // Performance (50 shoppers would be ~600 draw calls as full rigs):
@@ -31,7 +31,7 @@ import {
 } from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { BRAND } from '../config/brand'
-import { rectContains } from '../config/layout'
+import { rectContains, toWorld, type Wing } from '../config/layout'
 import type { Game } from '../game'
 import { Character } from '../actors/character'
 import { customerLook, OUTFIT_PALETTE } from '../actors/palette'
@@ -235,13 +235,19 @@ export class Crowd {
       this.browse.push(list)
     }
     const L = this.game.layout
-    for (let z = -4; z >= -20; z -= 2.5)
-      for (let x = -16; x <= 16; x += 3) {
+    for (let z = -4; z >= -L.atrium.z1 + L.atrium.z0 + 3; z -= 2.5)
+      for (let x = L.atrium.x0 + 4; x <= L.atrium.x1 - 4; x += 3) {
         if (Math.abs(x) < 3.5 && z > -6) continue
         if (rectContains(L.cashier.zone, x, z)) continue
         if (!this.blocked(x, z, 0.9)) this.hangouts.push({ x, z })
       }
-    for (let z = -26; z > L.bounds.z0 + 4; z -= 6) for (const x of [-3, 3]) if (!this.blocked(x, z, 0.9)) this.hangouts.push({ x, z })
+    // Along every wing corridor.
+    for (const w of L.wings)
+      for (let d = 6; d < w.len - 3; d += 6)
+        for (const lx of [-3, 3]) {
+          const p = toWorld(w.origin, w.yaw, lx, -d)
+          if (!this.blocked(p.x, p.z, 0.9)) this.hangouts.push(p)
+        }
   }
 
   private shopIndexAt(x: number, z: number): number {
@@ -306,24 +312,30 @@ export class Crowd {
     }
   }
 
+  private wingAt(x: number, z: number): Wing | null {
+    return this.game.layout.wings.find((w) => rectContains(w.rect, x, z)) ?? null
+  }
+
+  /** Wing of a point: its corridor, or the wing of the shop it's in. */
+  private wingOf(p: Pt): Wing | null {
+    const si = this.shopIndexAt(p.x, p.z)
+    const id = si >= 0 ? this.shops[si].layout.wing : null
+    return id ? (this.game.layout.wings.find((w) => w.id === id) ?? null) : this.wingAt(p.x, p.z)
+  }
+
+  /** Waypoints: out of the shop → along the wing → across the plaza → into the other wing → into the shop. */
   private route(from: Pt, to: Pt): Pt[] {
     const pts: Pt[] = []
     const fs = this.shopIndexAt(from.x, from.z)
     const ts = this.shopIndexAt(to.x, to.z)
-    let cur = from
-    if (fs >= 0 && fs !== ts) {
-      pts.push(this.local(this.shops[fs], 0, -1.6), (cur = this.local(this.shops[fs], 0, 1.8)))
+    if (fs >= 0 && fs !== ts) pts.push(this.local(this.shops[fs], 0, -1.6), this.local(this.shops[fs], 0, 1.8))
+    const fw = this.wingOf(from)
+    const tw = this.wingOf(to)
+    if (fw !== tw) {
+      if (fw) pts.push(toWorld(fw.origin, fw.yaw, 0, -1.5), toWorld(fw.origin, fw.yaw, 0, 2))
+      if (tw) pts.push(toWorld(tw.origin, tw.yaw, 0, 2), toWorld(tw.origin, tw.yaw, 0, -1.5))
     }
-    const A = -this.game.layout.atrium.z0
-    const mouth = (z: number) => ({ x: Math.max(-3.5, Math.min(3.5, cur.x)), z })
-    if (ts >= 0 && ts !== fs) {
-      const outer = this.local(this.shops[ts], 0, 1.8)
-      if (cur.z > -A + 0.5) pts.push(mouth(-A + 1.5), mouth(-A - 1.5))
-      pts.push(outer, this.local(this.shops[ts], 0, -1.6))
-    } else if (ts < 0) {
-      if (cur.z < -A && to.z > -A) pts.push(mouth(-A - 1.5), mouth(-A + 1.5))
-      if (cur.z > -A && to.z < -A) pts.push(mouth(-A + 1.5), mouth(-A - 1.5))
-    }
+    if (ts >= 0 && ts !== fs) pts.push(this.local(this.shops[ts], 0, 1.8), this.local(this.shops[ts], 0, -1.6))
     pts.push(to)
     return pts
   }
@@ -563,7 +575,7 @@ const _frustum = new Frustum()
 const _sphere = new Sphere()
 const BAG_MAT = new MeshStandardMaterial({ color: BRAND.magenta, roughness: 0.6 })
 
-/** Le Voile shopping bag: box + handle, one geometry (hangs below the hand). */
+/** 122 Mall shopping bag: box + handle, one geometry (hangs below the hand). */
 function bagGeometry(): BufferGeometry {
   const box = new BoxGeometry(0.26, 0.3, 0.1).translate(0, -0.2, 0)
   const handle = new TorusGeometry(0.06, 0.008, 4, 12, Math.PI).translate(0, -0.05, 0)

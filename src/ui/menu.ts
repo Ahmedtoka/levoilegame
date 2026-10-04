@@ -62,7 +62,7 @@ export function mountMenu(root: HTMLElement, game: GameBridge): void {
             ${go('atrium', t('atrium', L), t('directory', L), '#f1e7ec')}
             ${go('cashier', t('cashier', L), t('checkout', L), BRAND.magenta)}
             ${sectionButtons}
-            ${game.layout.shops.some((x) => x.kind === 'lounge') ? go('lounge', t('studioTitle', L), t('stylistRole', L), '#e8d9c8') : ''}
+            ${game.layout.shops.some((x) => x.amenity === 'studio') ? go('studio', t('studioTitle', L), t('stylistRole', L), '#e8d9c8') : ''}
           </div>
           <h3>${esc(t('settings', L))}</h3>
           <div class="settings">

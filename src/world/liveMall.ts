@@ -20,6 +20,7 @@ import {
   type Texture,
 } from 'three'
 import type { Game } from '../game'
+import { toWorld as layoutToWorld } from '../config/layout'
 import { BRAND } from '../config/brand'
 import { canvasTexture, loadImage, makeCanvas } from '../engine/textures'
 import { labelSign } from './signage'
@@ -88,7 +89,7 @@ const CREAM = new MeshStandardMaterial({ color: '#f3ece4', roughness: 0.8 })
 
 /** Mirrors + stylists in the lounge slot. Returns the customer pose at each mirror (world). */
 function buildStudio(game: Game, shops: ShopHandles[], logo: Texture | null): CrowdPlaces['studio'] {
-  const lounge = shops.find((s) => s.layout.kind === 'lounge')
+  const lounge = shops.find((s) => s.layout.amenity === 'studio')
   if (!lounge) return []
   const g = frameGroup(lounge)
   game.engine.scene.add(g)
@@ -151,7 +152,7 @@ function wheelTexture(): CanvasTexture {
     g.save()
     g.translate(S / 2, S / 2)
     g.rotate(((i + 0.5) / n) * Math.PI * 2)
-    const dark = ['#9e197e', '#6f0f58'].includes(WHEEL_PRIZES[i].color)
+    const dark = ['#5b2b82', '#3e1c5c'].includes(WHEEL_PRIZES[i].color)
     g.fillStyle = dark ? '#fff' : '#5a2a4a'
     g.textAlign = 'center'
     g.font = `700 30px ${BRAND.fontUi}`
@@ -219,8 +220,8 @@ async function treasureTexture(): Promise<CanvasTexture> {
   const S = 256
   const [c, g] = makeCanvas(S, S)
   const grad = g.createRadialGradient(S / 2, S / 2, 10, S / 2, S / 2, S / 2)
-  grad.addColorStop(0, '#c0359e')
-  grad.addColorStop(1, '#6f0f58')
+  grad.addColorStop(0, '#8a4fb5')
+  grad.addColorStop(1, '#3e1c5c')
   g.fillStyle = grad
   g.beginPath()
   g.arc(S / 2, S / 2, S / 2 - 8, 0, Math.PI * 2)
@@ -255,14 +256,15 @@ function haloTexture(): CanvasTexture {
 
 function buildTreasures(game: Game, shops: ShopHandles[]): void {
   const byId = (id: string) => shops.find((s) => s.layout.section?.id === id)
-  const lounge = shops.find((s) => s.layout.kind === 'lounge')
-  const zEnd = game.layout.bounds.z0
+  const lounge = shops.find((s) => s.layout.amenity === 'studio')
+  const north = game.layout.wings.find((w) => w.id === 'north')
+  const end = north ? layoutToWorld(north.origin, north.yaw, -5.4, -north.len + 0.6) : { x: 0, z: -40 }
   const spots: { pos: P3; shop?: ShopHandles }[] = [
     { pos: [-3.85, 0.55, -8.15] }, // behind the directory totem
-    { pos: [18.7, 0.5, -21.0] }, // far atrium corner, by the plant
-    { pos: [-5.4, 2.4, zEnd + 0.6] }, // end of the boulevard, up high
+    { pos: [20.6, 0.5, -32.6] }, // far plaza corner, by the plant
+    { pos: [end.x, 2.4, end.z] }, // end of the north wing, up high
   ]
-  const sc = byId('scarves') ?? shops.find((s) => s.layout.section)
+  const sc = byId('scarfest') ?? shops.find((s) => s.layout.section)
   if (sc) {
     const w = toWorld(sc, 5.3, -13.3)
     spots.push({ pos: [w.x, 2.7, w.z], shop: sc })
@@ -416,7 +418,7 @@ function buildDealBoards(game: Game, shops: ShopHandles[]): void {
     boards.push({ g: b, panel, shop })
   }
 
-  makeBoard(3.6, -19.6, 0)
+  makeBoard(11, -27.5, 0)
   const placeShopBoard = () => {
     const d = store.getState().groupDeal
     const p = d && catalog().byId.get(d.productId)

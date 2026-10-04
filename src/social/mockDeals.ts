@@ -99,7 +99,7 @@ export class MockDeals implements DealsService {
     if ((this.nextFlash -= dt) <= 0) {
       this.nextFlash = FLASH_EVERY_S
       const secs = this.catalog.sections.filter((s) => s.id !== 'sale')
-      const pref = ['denim', 'dresses', 'scarves', 'everyday-wear', 'isdal', 'accessories', 'new-arrivals', 'inner-caps']
+      const pref = ['nourhan', 'scarfest', 'hashbag', 'levoile', 'axis', 'slip-and-go', 'jeno', 'rwan-designs']
       const order = [...pref.filter((id) => secs.some((s) => s.id === id)), ...secs.map((s) => s.id).filter((id) => !pref.includes(id))]
       const sectionId = order[this.flashIndex++ % order.length]
       const now = Date.now()

@@ -65,7 +65,10 @@ export function boutiqueLayout(catalog: Catalog): MallLayout {
       const z = st.zone
       return {
         kind: 'shop' as const,
+        id: section.id,
         section,
+        brand: null,
+        wing: null,
         style: sectionStyle(section.id, catalog.sections.indexOf(section)),
         index: i,
         side: st.x < 0 ? ('L' as const) : ('R' as const),
@@ -83,7 +86,7 @@ export function boutiqueLayout(catalog: Catalog): MallLayout {
     kind: 'boutique',
     bounds: BOUTIQUE.bounds,
     atrium: BOUTIQUE.entrance,
-    boulevard: { x0: 0, z0: 0, x1: 0, z1: 0 },
+    wings: [],
     shops,
     zones: [{ id: 'fitting', rect: BOUTIQUE.fitting }],
     spawn: BOUTIQUE.spawn,

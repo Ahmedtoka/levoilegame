@@ -30,9 +30,34 @@ function spaced(text: string): string {
   return text.toUpperCase().split('').join(' ')
 }
 
-/** Magenta fascia above a shop entrance: English serif + Arabic. */
-export function shopFascia(section: Section, tint: string): CanvasTexture {
+export interface Monogram {
+  initials: string
+  color: string
+}
+
+/** Brand monogram in a ring (as in the client list). */
+function drawMonogram(g: CanvasRenderingContext2D, m: Monogram, x: number, y: number, r: number): void {
+  g.save()
+  g.fillStyle = '#ffffff'
+  g.beginPath()
+  g.arc(x, y, r, 0, Math.PI * 2)
+  g.fill()
+  g.lineWidth = r * 0.12
+  g.strokeStyle = m.color
+  g.stroke()
+  g.fillStyle = m.color
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.direction = 'ltr'
+  g.font = `800 ${r * (m.initials.length > 2 ? 0.62 : 0.8)}px ${BRAND.fontUi}`
+  g.fillText(m.initials, x, y + r * 0.04)
+  g.restore()
+}
+
+/** Fascia above a shop entrance: English serif + Arabic, with the brand monogram when given. */
+export function shopFascia(section: Section, tint: string, brand?: Monogram): CanvasTexture {
   void tint
+  if (brand) return brandFascia(section, brand)
   const [c, g] = makeCanvas(1024, 256)
   g.fillStyle = '#f4ede3'
   g.fillRect(0, 0, 1024, 256)
@@ -53,8 +78,80 @@ export function shopFascia(section: Section, tint: string): CanvasTexture {
   return canvasTexture(c)
 }
 
-/** Square double-sided blade sign that sticks out over the boulevard. */
-export function bladeSign(section: Section): CanvasTexture {
+function brandFascia(section: Section, m: Monogram): CanvasTexture {
+  const [c, g] = makeCanvas(1024, 256)
+  g.fillStyle = '#f7f2ec'
+  g.fillRect(0, 0, 1024, 256)
+  g.fillStyle = m.color
+  g.fillRect(0, 244, 1024, 12)
+  g.strokeStyle = 'rgba(107,79,53,0.35)'
+  g.lineWidth = 3
+  g.strokeRect(14, 14, 996, 222)
+  drawMonogram(g, m, 128, 128, 84)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.fillStyle = m.color
+  fitText(g, section.title.toUpperCase(), (px) => `700 ${px}px ${BRAND.fontLatin}`, 84, 720)
+  g.fillText(section.title.toUpperCase(), 600, 92)
+  g.fillStyle = '#5a4a3c'
+  g.direction = 'rtl'
+  fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 52, 720)
+  g.fillText(section.titleAr, 600, 186)
+  return canvasTexture(c)
+}
+
+/** Hoarding for an empty unit: "Coming Soon" over 122 Mall stripes. */
+export function comingSoonTexture(): CanvasTexture {
+  const [c, g] = makeCanvas(1024, 320)
+  g.fillStyle = '#efe6d8'
+  g.fillRect(0, 0, 1024, 320)
+  g.fillStyle = 'rgba(200,164,110,0.25)'
+  for (let x = -320; x < 1024; x += 64) {
+    g.beginPath()
+    g.moveTo(x, 320)
+    g.lineTo(x + 32, 320)
+    g.lineTo(x + 352, 0)
+    g.lineTo(x + 320, 0)
+    g.fill()
+  }
+  g.fillStyle = 'rgba(247,242,236,0.92)'
+  g.fillRect(212, 60, 600, 200)
+  g.strokeStyle = BRAND.gold
+  g.lineWidth = 4
+  g.strokeRect(212, 60, 600, 200)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.fillStyle = BRAND.magenta
+  g.font = `600 64px ${BRAND.fontLatin}`
+  g.fillText('COMING SOON', 512, 122)
+  g.direction = 'rtl'
+  g.fillStyle = '#5a4a3c'
+  g.font = `700 48px ${BRAND.fontUi}`
+  g.fillText('قريباً في ١٢٢ مول', 512, 200)
+  return canvasTexture(c)
+}
+
+/** Square double-sided blade sign that sticks out over the corridor. */
+export function bladeSign(section: Section, brand?: Monogram): CanvasTexture {
+  if (brand) {
+    const [c, g] = makeCanvas(512, 512)
+    g.fillStyle = '#f7f2ec'
+    g.fillRect(0, 0, 512, 512)
+    g.strokeStyle = brand.color
+    g.lineWidth = 12
+    g.strokeRect(18, 18, 476, 476)
+    drawMonogram(g, brand, 256, 200, 120)
+    g.fillStyle = '#3a2e26'
+    g.textAlign = 'center'
+    g.textBaseline = 'middle'
+    fitText(g, section.title, (px) => `700 ${px}px ${BRAND.fontLatin}`, 60, 430)
+    g.fillText(section.title, 256, 390)
+    g.direction = 'rtl'
+    g.fillStyle = brand.color
+    fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 44, 430)
+    g.fillText(section.titleAr, 256, 450)
+    return canvasTexture(c)
+  }
   const [c, g] = makeCanvas(512, 512)
   g.fillStyle = '#f4ede3'
   g.fillRect(0, 0, 512, 512)
@@ -139,7 +236,7 @@ export function directoryTexture(entries: DirectoryEntry[]): CanvasTexture {
     g.fillText(e.titleAr, 424, y)
     g.direction = 'ltr'
     g.textAlign = 'center'
-    drawArrow(g, 458, y, e.arrow === '←' ? -1 : 1)
+    drawArrow(g, 458, y, e.arrow === '←' ? -1 : e.arrow === '↑' ? 0 : 1)
     g.fillStyle = 'rgba(0,0,0,0.06)'
     g.fillRect(24, y + rowH / 2 - 1, 464, 1)
   })
@@ -147,10 +244,11 @@ export function directoryTexture(entries: DirectoryEntry[]): CanvasTexture {
 }
 
 /** Direction arrow drawn as a path (glyph arrows get mirrored in RTL contexts). */
-function drawArrow(g: CanvasRenderingContext2D, x: number, y: number, dir: 1 | -1): void {
+function drawArrow(g: CanvasRenderingContext2D, x: number, y: number, dir: 1 | -1 | 0): void {
   g.save()
   g.translate(x, y)
-  g.scale(dir, 1)
+  if (dir === 0) g.rotate(-Math.PI / 2) // straight ahead
+  else g.scale(dir, 1)
   g.strokeStyle = '#8a6a46'
   g.lineWidth = 5
   g.lineCap = 'round'
@@ -181,7 +279,7 @@ export async function logoTexture(bg: string | null, w = 1024, h = 300, logo: st
     g.textAlign = 'center'
     g.textBaseline = 'middle'
     g.font = `500 ${h * 0.45}px ${BRAND.fontLatin}`
-    g.fillText('Le Voile', w / 2, h / 2)
+    g.fillText(BRAND.name, w / 2, h / 2)
   }
   return canvasTexture(c)
 }

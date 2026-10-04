@@ -1,4 +1,5 @@
-// The mall shell: floors, walls, ceilings, skylight, entrance doors and atrium decor.
+// The mall shell: plaza (entrance, skylight, decor) and the three wings
+// (corridor, shop boxes, ceilings). Wings are built in their own local frame.
 
 import {
   BoxGeometry,
@@ -13,7 +14,7 @@ import {
   type Texture,
 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
-import { MALL, type MallLayout, type Rect } from '../config/layout'
+import { MALL, type MallLayout, type Rect, type Wing } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import type { QualitySettings } from '../engine/quality'
@@ -22,7 +23,7 @@ import { BRAND } from '../config/brand'
 import { glowMat, imageMat, MAT, tintMat } from './materials'
 import { bench, column, plant } from './props'
 import type { Kit } from './kit'
-import { directoryTexture, labelSign, logoTexture } from './signage'
+import { directoryTexture, labelSign, logoTexture, type DirectoryEntry } from './signage'
 
 export interface ShellHandles {
   doors: { target: number; update(dt: number): void }
@@ -96,14 +97,13 @@ export async function buildShell(
   kit: Kit | null = null,
 ): Promise<ShellHandles> {
   const f = batcher.frame(new Matrix4(), colliders)
-  const { halfWidth: W, atriumDepth: A, boulevardHalf: B, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
-  const zEnd = layout.bounds.z0
+  const { plazaHalf: W, plazaDepth: A, corridorHalf: B, shopDepth: SD, shopLen: SL, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
   const root = new Group()
   root.name = 'shell'
   scene.add(root)
-
-  // ---------------------------------------------------------------- floors
   const marble = storeTexture('/textures/marble.jpg', [1, 1])
+
+  // ------------------------------------------------------------ plaza floor
   const atriumFloorMat = new MeshStandardMaterial({
     map: repeatTex(marble, (2 * W) / 4, A / 4),
     roughness: 0.18,
@@ -112,15 +112,12 @@ export async function buildShell(
     opacity: 0.8,
   })
   root.add(floorPlane(layout.atrium, atriumFloorMat))
-  const blvdFloor = new MeshStandardMaterial({ map: repeatTex(marble, (2 * B) / 4, -zEnd / 4), roughness: 0.22 })
-  root.add(floorPlane(layout.boulevard, blvdFloor))
 
-  // Reflection under the atrium floor (High quality only).
+  // Reflection under the plaza floor (High quality only).
   let reflector: Reflector | null = null
   const makeReflector = () => {
     if (reflector) return reflector
-    const geo = new PlaneGeometry(2 * W, A)
-    reflector = new Reflector(geo, {
+    reflector = new Reflector(new PlaneGeometry(2 * W, A), {
       textureWidth: Math.round(window.innerWidth * 0.5),
       textureHeight: Math.round(window.innerHeight * 0.5),
       color: 0xb8b0b4,
@@ -132,83 +129,136 @@ export async function buildShell(
     return reflector
   }
 
-  // Runner down the boulevard and a medallion in the atrium.
-  const runner = new Mesh(new PlaneGeometry(2.6, -zEnd - A - 1), tintMat('#d8cbb8', 1, 0.6))
-  runner.rotation.x = -Math.PI / 2
-  runner.position.set(0, 0.004, (zEnd + -A) / 2)
-  root.add(runner)
-  const ring = new Mesh(new RingGeometry(2.3, 2.6, 64), MAT.brass)
+  // Medallion with the mall logo in the middle of the plaza.
+  const mid = -A / 2
+  const ring = new Mesh(new RingGeometry(3.3, 3.6, 72), MAT.brass)
   ring.rotation.x = -Math.PI / 2
-  ring.position.set(0, 0.005, -12)
+  ring.position.set(0, 0.005, mid)
   root.add(ring)
-  const disc = new Mesh(new CircleGeometry(2.3, 64), tintMat('#efe7dc', 1, 0.4))
+  const disc = new Mesh(new CircleGeometry(3.3, 72), tintMat('#efe7dc', 1, 0.4))
   disc.rotation.x = -Math.PI / 2
-  disc.position.set(0, 0.004, -12)
+  disc.position.set(0, 0.004, mid)
   root.add(disc)
   logoTexture(null, 1024, 300).then((tex) => {
-    const logo = new Mesh(new PlaneGeometry(3.6, 1.05), imageMat(tex, { transparent: true }))
+    const logo = new Mesh(new PlaneGeometry(5.2, 1.5), imageMat(tex, { transparent: true }))
     logo.rotation.x = -Math.PI / 2
-    logo.position.set(0, 0.006, -12)
+    logo.position.set(0, 0.006, mid)
     root.add(logo)
   })
 
-  // ----------------------------------------------------------------- walls
-  const wall = (x0: number, z0: number, x1: number, z1: number, y0: number, y1: number, mat = MAT.wall) =>
-    f.box(mat, (x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2, Math.max(x1 - x0, T), y1 - y0, Math.max(z1 - z0, T), {
+  const wall = (fr: BatchFrame, x0: number, z0: number, x1: number, z1: number, y0: number, y1: number, mat = MAT.wall) =>
+    fr.box(mat, (x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2, Math.max(x1 - x0, T), y1 - y0, Math.max(z1 - z0, T), {
       collide: y0 < 1.9,
       occlude: true,
     })
 
-  // Entrance wall (z = 0) with the door opening.
+  // ------------------------------------------------------------ plaza walls
   const D = MALL.doorHalf
-  wall(-W - T, 0, -D, T, 0, AH)
-  wall(D, 0, W + T, T, 0, AH)
-  wall(-D, 0, D, T, 3.3, AH)
-  // Atrium side walls
-  wall(-W - T, -A, -W, 0, 0, AH)
-  wall(W, -A, W + T, 0, 0, AH)
-  // Header over the boulevard mouth (carries the big logo).
-  wall(-B, -A - T, B, -A, BH, AH)
-  // Outer walls along the shops and the boulevard end.
-  wall(-W - T, zEnd, -W, -A, 0, SH)
-  wall(W, zEnd, W + T, -A, 0, SH)
-  wall(-B, zEnd - T, B, zEnd, 0, BH)
+  // Entrance façade (z = 0) with the door opening.
+  wall(f, -W - T, 0, -D, T, 0, AH)
+  wall(f, D, 0, W + T, T, 0, AH)
+  wall(f, -D, 0, D, T, 3.3, AH)
+  // Plaza back wall beside the north wing mouth, and the corners the wings don't cover.
+  const north = layout.wings.find((w) => w.id === 'north')
+  const northOuter = north ? B + SD : 0
+  if (north) {
+    wall(f, -W - T, -A - T, -northOuter, -A, 0, AH)
+    wall(f, northOuter, -A - T, W + T, -A, 0, AH)
+  } else wall(f, -W - T, -A - T, W + T, -A, 0, AH)
+  for (const side of [-1, 1]) {
+    const wing = layout.wings.find((w) => w.id === (side < 0 ? 'west' : 'east'))
+    if (wing) {
+      // The wing's shops cover the plaza side wall; close what's left above them.
+      const zc = wing.origin.z
+      const reach = B + SD
+      if (zc + reach < 0) wall(f, side < 0 ? -W - T : W, zc + reach, side < 0 ? -W : W + T, 0, 0, AH)
+      if (zc - reach > -A) wall(f, side < 0 ? -W - T : W, -A, side < 0 ? -W : W + T, zc - reach, 0, AH)
+    } else wall(f, side < 0 ? -W - T : W, -A, side < 0 ? -W : W + T, 0, 0, AH)
+  }
 
-  const doneSide = new Set<string>()
-  for (const s of layout.shops) {
-    const { x0, x1, z0, z1 } = s.rect
-    for (const z of [z0, z1]) {
-      const key = `${s.side}${z}`
-      if (doneSide.has(key)) continue
-      doneSide.add(key)
-      const h = z === -A ? AH : SH
-      wall(x0, z - T / 2, x1, z + T / 2, 0, h)
+  // ----------------------------------------------------------------- wings
+  for (const wing of layout.wings) buildWing(wing)
+
+  function buildWing(wing: Wing): void {
+    const base = new Matrix4().makeRotationY(wing.yaw).setPosition(wing.origin.x, 0, wing.origin.z)
+    const wf = batcher.frame(base, colliders)
+    const len = wing.len
+    const group = new Group()
+    group.position.set(wing.origin.x, 0, wing.origin.z)
+    group.rotation.y = wing.yaw
+    root.add(group)
+
+    // Corridor floor + runner
+    const floor = new Mesh(new PlaneGeometry(2 * B, len), new MeshStandardMaterial({ map: repeatTex(marble, (2 * B) / 4, len / 4), roughness: 0.22 }))
+    floor.rotation.x = -Math.PI / 2
+    floor.position.set(0, 0, -len / 2)
+    group.add(floor)
+    const runner = new Mesh(new PlaneGeometry(2.6, len - 1), tintMat('#d8cbb8', 1, 0.6))
+    runner.rotation.x = -Math.PI / 2
+    runner.position.set(0, 0.004, -len / 2 - 0.5)
+    group.add(runner)
+
+    // Outer walls behind the shops, corridor end, and the header over the mouth.
+    wall(wf, -B - SD - T, -len, -B - SD, 0, 0, SH)
+    wall(wf, B + SD, -len, B + SD + T, 0, 0, SH)
+    wall(wf, -B, -len - T, B, -len, 0, BH)
+    wall(wf, -B, -T, B, 0, BH, AH)
+
+    // Shop separators (the one at the mouth is plaza height).
+    const rows = Math.ceil(wing.def.slots.length / 2)
+    for (let r = 0; r <= rows; r++) {
+      const z = -r * SL
+      const h = r === 0 ? AH : SH
+      wall(wf, -B - SD, z - T / 2, -B, z + T / 2, 0, h)
+      wall(wf, B, z - T / 2, B + SD, z + T / 2, 0, h)
     }
-    // Front wall towards the boulevard with an opening (lounges are open).
-    const fx0 = s.side === 'L' ? -B - T : B
-    const fx1 = s.side === 'L' ? -B : B + T
-    const zc = s.entrance.z
-    const open = s.kind === 'lounge' ? MALL.shopLen / 2 - 0.4 : 3
-    if (s.kind === 'shop') {
-      wall(fx0, z0, fx1, zc - open, 0, BH)
-      wall(fx0, zc + open, fx1, z1, 0, BH)
-    } else {
-      column(f, s.side === 'L' ? -B - 0.3 : B + 0.3, z0 + 0.3, BH)
-      column(f, s.side === 'L' ? -B - 0.3 : B + 0.3, z1 - 0.3, BH)
+
+    // Shop fronts: an opening for shops, open for lounges, hoarding for Coming Soon.
+    const wingShops = layout.shops.filter((x) => x.wing === wing.id)
+    wingShops.forEach((s, k) => {
+      const side = k % 2 === 0 ? -1 : 1
+      const row = Math.floor(k / 2)
+      const z1 = -row * SL
+      const z0 = z1 - SL
+      const zc = (z0 + z1) / 2
+      const fx0 = side < 0 ? -B - T : B
+      const fx1 = side < 0 ? -B : B + T
+      if (s.kind === 'shop') {
+        wall(wf, fx0, z0, fx1, zc - 3, 0, BH)
+        wall(wf, fx0, zc + 3, fx1, z1, 0, BH)
+        wall(wf, fx0, zc - 3, fx1, zc + 3, 3.9, BH)
+      } else if (s.kind === 'soon') {
+        wall(wf, fx0, z0, fx1, z1, 0, BH, MAT.wallWarm)
+      } else {
+        column(wf, side * (B + 0.3), z0 + 0.3, BH)
+        column(wf, side * (B + 0.3), z1 - 0.3, BH)
+        wall(wf, fx0, z0 + 0.4, fx1, z1 - 0.4, 3.9, BH)
+      }
+    })
+
+    // Corridor ceiling with light strips.
+    wf.box(MAT.ceiling, 0, BH + 0.1, -len / 2, 2 * B, 0.2, len)
+    for (let z = -2; z > -len + 1; z -= 4) {
+      wf.box(MAT.lightPanel, -3, BH - 0.02, z - 1.5, 0.18, 0.04, 3)
+      wf.box(MAT.lightPanel, 3, BH - 0.02, z - 1.5, 0.18, 0.04, 3)
     }
-    wall(fx0, zc - open, fx1, zc + open, 3.9, BH)
+
+    // Wing name over the mouth (faces the plaza, local +Z).
+    const sign = new Mesh(new PlaneGeometry(5, 1.25), imageMat(labelSign(wing.def.nameEn, wing.def.nameAr, { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
+    sign.position.set(0, 6.75, 0.08)
+    group.add(sign)
+    wf.box(MAT.brass, 0, 6.75, 0.04, 5.2, 1.4, 0.04)
   }
 
   // -------------------------------------------------------------- ceilings
   const slab = (x0: number, z0: number, x1: number, z1: number, y: number) =>
     f.box(MAT.ceiling, (x0 + x1) / 2, y + 0.1, (z0 + z1) / 2, x1 - x0, 0.2, z1 - z0)
-  // Atrium with a skylight opening.
-  const sky = { x0: -9, z0: -17, x1: 9, z1: -5 }
+  // Plaza with a skylight opening.
+  const sky = { x0: -10, z0: -25, x1: 10, z1: -9 }
   slab(-W, -A, W, sky.z0, AH)
   slab(-W, sky.z1, W, 0, AH)
   slab(-W, sky.z0, sky.x0, sky.z1, AH)
   slab(sky.x1, sky.z0, W, sky.z1, AH)
-  // Light well and mullions
   const wellH = 0.8
   f.box(MAT.wall, 0, AH + wellH / 2, sky.z0, sky.x1 - sky.x0, wellH, 0.1)
   f.box(MAT.wall, 0, AH + wellH / 2, sky.z1, sky.x1 - sky.x0, wellH, 0.1)
@@ -216,8 +266,7 @@ export async function buildShell(
   f.box(MAT.wall, sky.x1, AH + wellH / 2, (sky.z0 + sky.z1) / 2, 0.1, wellH, sky.z1 - sky.z0)
   for (let x = sky.x0 + 3; x < sky.x1; x += 3) f.box(MAT.brass, x, AH + 0.3, (sky.z0 + sky.z1) / 2, 0.08, 0.12, sky.z1 - sky.z0)
   for (let z = sky.z0 + 3; z < sky.z1; z += 3) f.box(MAT.brass, 0, AH + 0.3, z, sky.x1 - sky.x0, 0.12, 0.08)
-  const skyMat = imageMat(gradientTexture([[0, '#cfe6f7'], [1, '#ffffff']]))
-  const skyPlane = new Mesh(new PlaneGeometry(sky.x1 - sky.x0, sky.z1 - sky.z0), skyMat)
+  const skyPlane = new Mesh(new PlaneGeometry(sky.x1 - sky.x0, sky.z1 - sky.z0), imageMat(gradientTexture([[0, '#cfe6f7'], [1, '#ffffff']])))
   skyPlane.rotation.x = Math.PI / 2
   skyPlane.position.set(0, AH + wellH, (sky.z0 + sky.z1) / 2)
   root.add(skyPlane)
@@ -225,77 +274,72 @@ export async function buildShell(
   // Soft light shafts from the skylight (additive, Medium/High).
   const shafts = new Group()
   const shaftTex = gradientTexture([[0, 'rgba(255,255,255,0.0)'], [0.15, 'rgba(255,250,240,0.55)'], [1, 'rgba(255,250,240,0)']])
-  for (let i = 0; i < 4; i++) {
-    const m = new Mesh(new PlaneGeometry(3.4, AH + 1), glowMat(shaftTex, '#fff6ea', 0.16))
-    m.position.set(-5 + i * 3.6, AH / 2, -11 + (i % 2) * 1.5)
+  for (let i = 0; i < 5; i++) {
+    const m = new Mesh(new PlaneGeometry(3.4, AH + 1), glowMat(shaftTex, '#fff6ea', 0.15))
+    m.position.set(-7 + i * 3.6, AH / 2, mid + 2 - (i % 2) * 2.5)
     m.rotation.set(0, i * 0.6, 0.18)
     shafts.add(m)
   }
   root.add(shafts)
+  f.box(MAT.lightWarm, 0, AH - 0.4, -0.2, 2 * W, 0.08, 0.06)
 
-  // Cove light strips around the atrium top.
-  f.box(MAT.lightWarm, -W + 0.05, AH - 0.4, -A / 2, 0.06, 0.08, A)
-  f.box(MAT.lightWarm, W - 0.05, AH - 0.4, -A / 2, 0.06, 0.08, A)
-
-  // Boulevard ceiling + light strips
-  slab(-B, zEnd, B, -A, BH)
-  for (let z = -A - 2; z > zEnd + 1; z -= 4) {
-    f.box(MAT.lightPanel, -3, BH - 0.02, z - 1.5, 0.18, 0.04, 3)
-    f.box(MAT.lightPanel, 3, BH - 0.02, z - 1.5, 0.18, 0.04, 3)
-  }
-  // Shop ceilings with square light panels
+  // Shop ceilings with square light panels, and their floors.
   for (const s of layout.shops) {
     const { x0, x1, z0, z1 } = s.rect
     slab(x0, z0, x1, z1, SH)
+    const along = x1 - x0 > z1 - z0
     for (let i = 0; i < 3; i++)
       for (let j = 0; j < 2; j++) {
-        const x = x0 + ((x1 - x0) * (i + 0.5)) / 3
-        const z = z0 + ((z1 - z0) * (j + 0.5)) / 2
+        const u = (i + 0.5) / 3
+        const v = (j + 0.5) / 2
+        const x = x0 + (x1 - x0) * (along ? u : v)
+        const z = z0 + (z1 - z0) * (along ? v : u)
         f.box(MAT.lightPanel, x, SH - 0.02, z, 1.3, 0.04, 1.3)
       }
-    // Shop floor (wood tinted to the section colour)
-    const tint = s.style?.tint ?? '#efd7e3'
-    void tint
     const stone = storeTexture('/textures/marble.jpg', [(x1 - x0) / 4, (z1 - z0) / 4])
-    root.add(floorPlane(s.rect, new MeshStandardMaterial({ map: stone, color: '#f6efe4', roughness: 0.35 }), 0.002))
+    const floorColor = s.kind === 'soon' ? '#e6dccd' : '#f6efe4'
+    root.add(floorPlane(s.rect, new MeshStandardMaterial({ map: stone, color: floorColor, roughness: 0.35 }), 0.002))
   }
 
-  // ------------------------------------------------------- atrium features
-  for (const [x, z] of [[-6.5, -7], [6.5, -7], [-6.5, -16.5], [6.5, -16.5]] as const) column(f, x, z, AH)
-  // The boutique's real (baked) plant when the décor kit is available.
-  const plants: [number, number, number][] = [[-12, -15, 1.6], [-15.5, -19.5, 1.2], [15.5, -19.5, 1.2], [-18.5, -2, 1.3], [18.5, -2, 1.3], [9.4, -19, 1.1]]
+  // ------------------------------------------------------- plaza features
+  for (const [x, z] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) column(f, x, z, AH)
+  const plants: [number, number, number][] = [[-14, -30, 1.4], [14, -30, 1.4], [-19.5, -2, 1.3], [19.5, -2, 1.3], [-19.5, -31.5, 1.2], [19.5, -31.5, 1.2], [9.4, -19, 1.1]]
   plants.forEach(([x, z, sc], i) => {
     if (!kit?.place('plant', root, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
   })
+  // Seating around the medallion: the community meeting point.
+  bench(f, -6.2, mid, 2.6, Math.PI / 2)
+  bench(f, 6.2, mid, 2.6, Math.PI / 2)
+  bench(f, -12, -4.5, 2.4)
   bench(f, -12, -11.5, 2.4)
-  bench(f, -12, -18.5, 2.4)
 
-  // Big logo above the boulevard mouth.
-  f.box(MAT.brass, 0, 7.5, -A + 0.06, 9.4, 2.5, 0.06)
-  f.box(MAT.wall, 0, 7.5, -A + 0.1, 9.2, 2.3, 0.06)
-  logoTexture('#fdf7fa', 1024, 256).then((tex) => {
-    const m = new Mesh(new PlaneGeometry(9.2, 2.3), imageMat(tex))
-    m.position.set(0, 7.5, -A + 0.14)
+  // Mall logo above the north wing mouth (over the wing name).
+  f.box(MAT.brass, 0, 8.25, -A + 0.06, 4.6, 1.4, 0.04)
+  logoTexture('#fdf7fa', 1024, 288).then((tex) => {
+    const m = new Mesh(new PlaneGeometry(4.4, 1.24), imageMat(tex))
+    m.position.set(0, 8.25, -A + 0.1)
     root.add(m)
   })
-  // Welcome sign on the inner face of the entrance (seen when leaving).
+
+  // Signs on the inner face of the entrance (seen when leaving).
   const exitSign = new Mesh(new PlaneGeometry(2.4, 0.6), imageMat(labelSign('Exit', 'خروج', { bg: '#8a6a46', fg: '#f4ede3' })))
   exitSign.position.set(0, 3.9, -0.08)
   exitSign.rotation.y = Math.PI
   root.add(exitSign)
-  const thanks = new Mesh(new PlaneGeometry(8, 1.6), imageMat(labelSign('Thank you for visiting', 'شكراً لزيارتك', { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
+  const thanks = new Mesh(new PlaneGeometry(8, 1.6), imageMat(labelSign('Thank you for visiting 122 Mall', 'شكراً لزيارتك ١٢٢ مول', { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
   thanks.position.set(0, 6.5, -0.08)
   thanks.rotation.y = Math.PI
   root.add(thanks)
 
-  // Directory totem near the spawn point.
-  const entries = layout.shops
-    .filter((s) => s.section)
+  // Directory totem near the spawn point: every shop with its wing.
+  const arrowOf = { west: '←', north: '↑', east: '→' } as const
+  const entries: DirectoryEntry[] = layout.shops
+    .filter((s) => s.kind !== 'lounge' || s.amenity === 'studio')
     .map((s) => ({
-      title: s.section!.title,
-      titleAr: s.section!.titleAr,
-      arrow: s.side === 'L' ? '←' : '→',
-      color: s.style!.tint,
+      title: s.kind === 'lounge' ? 'Styling Studio' : (s.brand?.name ?? s.id),
+      titleAr: s.kind === 'lounge' ? 'ستوديو الستايلينج' : (s.brand?.nameAr ?? ''),
+      arrow: s.wing ? arrowOf[s.wing] : '↑',
+      color: s.kind === 'shop' ? (s.brand?.color ?? '#ddd') : '#d8cbb8',
     }))
   entries.push({ title: 'Cashier', titleAr: 'الكاشير', arrow: '→', color: BRAND.magenta })
   const totem = new Group()
@@ -333,9 +377,9 @@ export async function buildShell(
       reflectionsOn = q.reflections
       setQuality(q)
     },
-    update: (_px, pz) => {
-      // Only pay for the mirror pass when the atrium can be seen.
-      if (reflector) reflector.visible = reflectionsOn && pz > -A - 26
+    update: (px, pz) => {
+      // Only pay for the mirror pass while the plaza can be seen.
+      if (reflector) reflector.visible = reflectionsOn && Math.abs(px) < W + 26 && pz > -A - 26
     },
   }
 }

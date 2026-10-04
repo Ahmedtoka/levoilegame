@@ -1,8 +1,8 @@
 :root {
-  --magenta: #9e197e;
-  --magenta-600: #86136a;
-  --magenta-050: #fbeef6;
-  --blush: #f7e6f0;
+  --magenta: #5b2b82;
+  --magenta-600: #4a2169;
+  --magenta-050: #f3ecf8;
+  --blush: #efe6f6;
   --ink: #2a1f27;
   --muted: #85777f;
   --line: rgba(42, 31, 39, 0.1);
@@ -105,7 +105,7 @@ button {
   font-weight: 700;
   font-size: 16px;
   letter-spacing: 0.01em;
-  box-shadow: 0 10px 24px -10px rgba(158, 25, 126, 0.7);
+  box-shadow: 0 10px 24px -10px rgba(91, 43, 130, 0.7);
   transition: transform 0.2s var(--ease), background 0.2s, box-shadow 0.2s;
 }
 
@@ -271,7 +271,7 @@ button {
   width: min(320px, 70vw);
   height: 3px;
   border-radius: 3px;
-  background: rgba(158, 25, 126, 0.12);
+  background: rgba(91, 43, 130, 0.12);
   overflow: hidden;
 }
 
@@ -547,7 +547,7 @@ button {
   color: #fff;
   display: grid;
   place-items: center;
-  box-shadow: 0 12px 30px -10px rgba(158, 25, 126, 0.8);
+  box-shadow: 0 12px 30px -10px rgba(91, 43, 130, 0.8);
   transition: transform 0.2s var(--ease), opacity 0.2s;
 }
 
@@ -570,7 +570,7 @@ button {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.28);
   border: 1.5px solid rgba(255, 255, 255, 0.7);
-  box-shadow: inset 0 0 30px rgba(158, 25, 126, 0.12), var(--shadow);
+  box-shadow: inset 0 0 30px rgba(91, 43, 130, 0.12), var(--shadow);
   pointer-events: none;
   opacity: 0.55;
   transition: opacity 0.2s;
@@ -865,7 +865,7 @@ button {
 }
 
 .chip:hover {
-  box-shadow: inset 0 0 0 1px rgba(158, 25, 126, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(91, 43, 130, 0.5);
 }
 
 .chip.on {

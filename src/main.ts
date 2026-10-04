@@ -28,6 +28,7 @@ import { buildCashierDesk } from './world/cashier'
 import { buildCashierPerson, buildPeople } from './world/people'
 import { boutiqueAvailable, boutiqueLayout, buildBoutique } from './world/boutique'
 import { Kit } from './world/kit'
+import { buildMallCatalog } from './data/mallCatalog'
 import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
@@ -55,9 +56,12 @@ const frame = () =>
 
 async function boot(): Promise<void> {
   let catalog: Catalog | null = null
+  let levoileCatalog: Catalog | null = null
   const provider = createProductProvider()
   try {
-    catalog = await provider.loadCatalog()
+    levoileCatalog = await provider.loadCatalog()
+    // 122 Mall: one shop per brand (?boutique keeps the single Le Voile store).
+    catalog = new URLSearchParams(location.search).has('boutique') ? levoileCatalog : buildMallCatalog(levoileCatalog)
     setCatalog(catalog)
   } catch (err) {
     console.error('Catalog failed to load', err)

@@ -14,7 +14,8 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
   const b = L.bounds
   const worldW = b.x1 - b.x0
   const worldH = b.z1 - b.z0
-  const scale = (game.isTouch ? 150 : 210) / worldH
+  // Fit the whole mall (plaza + wings) in a small box.
+  const scale = Math.min((game.isTouch ? 170 : 240) / worldW, (game.isTouch ? 120 : 170) / worldH)
   const W = Math.round(worldW * scale)
   const H = Math.round(worldH * scale)
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -36,16 +37,16 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
   s.fillStyle = '#fbf7f9'
   s.fillRect(0, 0, W, H)
   s.fillStyle = '#f1e7ec'
-  s.fillRect(px(L.atrium.x0), pz(L.atrium.z0), (L.atrium.x1 - L.atrium.x0) * scale, (L.atrium.z1 - L.atrium.z0) * scale)
+  for (const r of [L.atrium, ...L.wings.map((w) => w.rect)]) s.fillRect(px(r.x0), pz(r.z0), (r.x1 - r.x0) * scale, (r.z1 - r.z0) * scale)
   for (const shop of L.shops) {
     const r = shop.rect
-    s.fillStyle = shop.style?.tint ?? '#ece4e8'
+    s.fillStyle = shop.kind === 'soon' ? '#e9e2d8' : (shop.style?.tint ?? '#ece4e8')
     s.fillRect(px(r.x0) + 1, pz(r.z0) + 1, (r.x1 - r.x0) * scale - 2, (r.z1 - r.z0) * scale - 2)
-    s.fillStyle = 'rgba(42,31,39,.55)'
-    s.font = `700 ${Math.min(10, Math.max(7, Math.round(scale * 3.6)))}px Cairo, sans-serif`
+    s.fillStyle = shop.kind === 'shop' && shop.brand ? shop.brand.color : 'rgba(42,31,39,.45)'
+    s.font = `800 ${Math.min(10, Math.max(7, Math.round(scale * 3.4)))}px Cairo, sans-serif`
     s.textAlign = 'center'
     s.textBaseline = 'middle'
-    const label = shop.section ? shop.section.title.split(/[ |]/)[0] : '☕'
+    const label = shop.kind === 'shop' ? (shop.brand?.initials ?? shop.section?.title.slice(0, 2) ?? '') : shop.kind === 'soon' ? '·' : shop.amenity === 'studio' ? '✂' : '☕'
     s.fillText(label, px(shop.center.x), pz(shop.center.z))
   }
   // Cashier + exit
@@ -83,7 +84,7 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
     g.save()
     g.translate(px(p.x), pz(p.z))
     g.rotate(-p.yaw)
-    g.fillStyle = 'rgba(158,25,126,.18)'
+    g.fillStyle = 'rgba(91,43,130,.18)'
     g.beginPath()
     g.moveTo(0, 0)
     g.arc(0, 0, 22, -Math.PI / 2 - 0.55, -Math.PI / 2 + 0.55)

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" width="640" height="180">
+  <g fill="#5b2b82">
+    <text x="20" y="132" font-family="Georgia, 'Playfair Display', serif" font-size="140" font-weight="700" letter-spacing="-4">122</text>
+  </g>
+  <rect x="300" y="38" width="4" height="104" fill="#c8a46e"/>
+  <text x="330" y="102" font-family="Georgia, 'Playfair Display', serif" font-size="70" letter-spacing="14" fill="#2a1f33">MALL</text>
+  <text x="333" y="140" font-family="Arial, sans-serif" font-size="22" letter-spacing="6" fill="#8a7a6a">SHOP · PLAY · MEET</text>
+</svg>

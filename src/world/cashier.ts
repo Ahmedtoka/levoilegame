@@ -32,11 +32,10 @@ export function buildCashierDesk(
   group.matrix.copy(base)
   root.add(group)
 
-  // Baked Le Voile counter + brand panel when the décor kit is available.
+  // Baked counter when the décor kit is available (the mall logo panel goes on the back wall).
   const kitCounter = kit?.place('counter', group, 0, 0, 0, colliders)
   if (kitCounter) {
     f.block(MAT.wall, 0, 0, -2.0, 5.0, 3.4, 0.4, { collide: true })
-    kit!.place('brandpanel', group, 0, -1.78, 0, undefined)
     kit!.place('plant', group, -2.9, -1.3, 0, colliders)
     kit!.place('plant', group, 2.9, -1.3, 0, colliders)
   } else {
@@ -65,9 +64,9 @@ export function buildCashierDesk(
     front.position.set(0, 0.55, 0.49)
     group.add(front)
   })
-  if (!kitCounter) logoMat('#fdf7fa', BRAND.logo).then((m) => {
-    const back = new Mesh(new PlaneGeometry(4.6, 1.15), m)
-    back.position.set(0, 3.0, -1.78)
+  logoMat('#fdf7fa', BRAND.logo).then((m) => {
+    const back = new Mesh(new PlaneGeometry(kitCounter ? 3.8 : 4.6, kitCounter ? 0.95 : 1.15), m)
+    back.position.set(0, kitCounter ? 2.35 : 3.0, -1.78)
     group.add(back)
   })
 

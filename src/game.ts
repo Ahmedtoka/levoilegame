@@ -4,7 +4,7 @@ import { Timer, Vector3 } from 'three'
 import type { Engine } from './engine/renderer'
 import { FpsGovernor, QUALITY_ORDER, type QualityLevel } from './engine/quality'
 import type { CollisionWorld } from './engine/colliders'
-import { rectContains, shopArrival, type MallLayout } from './config/layout'
+import { rectContains, shopArrival, shopZone, type MallLayout } from './config/layout'
 import { Input, type Action } from './player/input'
 import { TouchControls } from './player/touch'
 import { Player } from './player/player'
@@ -174,7 +174,7 @@ export class Game implements GameBridge {
     let dest = { x: layout.spawn.x, z: layout.spawn.z, yaw: layout.spawn.yaw }
     if (target === 'cashier') dest = { ...layout.cashier.arrival }
     if (target === 'exit') dest = { ...layout.exit.arrival }
-    const shop = layout.shops.find((s) => s.section?.id === target || (target === 'lounge' && s.kind === 'lounge'))
+    const shop = layout.shops.find((s) => shopZone(s) === target)
     if (shop) dest = shopArrival(shop)
     this.fade.style.opacity = '1'
     setTimeout(() => {
@@ -276,8 +276,9 @@ export class Game implements GameBridge {
 
   zoneAt(x: number, z: number): string {
     for (const s of this.layout.shops) {
-      if (rectContains(s.rect, x, z)) return s.section?.id ?? 'lounge'
+      if (rectContains(s.rect, x, z)) return shopZone(s)
     }
+    for (const w of this.layout.wings) if (rectContains(w.rect, x, z)) return `wing-${w.id}`
     for (const zn of this.layout.zones ?? []) if (rectContains(zn.rect, x, z)) return zn.id
     if (rectContains(this.layout.cashier.zone, x, z)) return 'cashier'
     if (rectContains(this.layout.atrium, x, z)) return 'atrium'

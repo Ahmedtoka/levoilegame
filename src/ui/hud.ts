@@ -1,4 +1,5 @@
 import { BRAND } from '../config/brand'
+import { brandById, WINGS } from '../config/mall'
 import { both, formatPrice, t, type Lang } from '../i18n/i18n'
 import { cartTotals, catalog, store, watch } from '../state/store'
 import { audio } from '../audio/audio'
@@ -10,11 +11,14 @@ export function setZoneAliases(map: Record<string, string>): void {
   Object.assign(aliases, map)
 }
 
-const NAMED_ZONES = ['boulevard', 'lounge', 'cashier', 'atrium', 'entrance', 'fitting', 'store'] as const
+const NAMED_ZONES = ['boulevard', 'lounge', 'studio', 'cashier', 'atrium', 'entrance', 'fitting', 'store'] as const
 
 export function zoneTitles(zone: string): { en: string; ar: string } {
   const section = catalog().sections.find((s) => s.id === zone)
   if (section) return { en: section.title, ar: section.titleAr }
+  const wing = WINGS.find((w) => `wing-${w.id}` === zone)
+  if (wing) return { en: wing.nameEn, ar: wing.nameAr }
+  if (brandById.get(zone)?.status === 'soon') return both('comingSoon')
   const z = aliases[zone] ?? zone
   const named = NAMED_ZONES.find((n) => n === z)
   return both(named ?? 'atrium')
@@ -70,7 +74,7 @@ export function mountHud(root: HTMLElement, game: GameBridge): void {
     const muted = !(s.music || s.sound)
     topbar.innerHTML = `
       <div class="brand-chip">
-        <img src="${BRAND.logo}" alt="Le Voile" />
+        <img src="${BRAND.logo}" alt="122 Mall" />
         <span class="zone">${esc(zoneLabel(s.zone, L))}</span>
       </div>
       <div class="actions">
@@ -98,7 +102,7 @@ export function mountHud(root: HTMLElement, game: GameBridge): void {
   let bannerTimer = 0
   watch((s) => s.zone, (zone, prev) => {
     renderTop()
-    if (zone === prev || zone === 'boulevard') return
+    if (zone === prev || zone === 'boulevard' || zone.startsWith('wing-')) return
     const tt = zoneTitles(zone)
     banner.innerHTML = `<div class="en">${esc(tt.en)}</div><div class="ar">${esc(tt.ar)}</div><div class="rule"></div>`
     banner.classList.add('show')

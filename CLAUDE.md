@@ -1,6 +1,29 @@
-# Le Voile — Virtual Store
+# 122 Mall — Virtual Community Mall
 
-A walkable 3D virtual store for **Le Voile** (levoilestores.com, an Egyptian modest-fashion brand). Visitors walk a mall, browse sections and models, add to cart, check out at the cashier (mocked) and exit. Today the catalogue is a static JSON snapshot; the data layer is shaped so the **Shopify Storefront API** can replace it without touching the 3D code. User docs: `README.md`. Future work: `ROADMAP.md`.
+A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon" units, plus a Styling Studio and a lounge. Visitors walk the plaza and three wings, browse each brand's shop, play games that earn **122 Coins**, swap coins for brand discounts at each shop's rewards counter, chat with staff, and check out at the plaza cashier (mocked). It started as the Le Voile virtual store; Le Voile is now one tenant and keeps its real catalogue. User docs: `README.md`. Future work: `ROADMAP.md`.
+
+## 122 Mall structure (branch `122-mall`)
+
+- **Brands and slots:** `src/config/mall.ts`.
+  - `BRANDS` holds name, Arabic name, monogram initials and colour, status (open / soon), display, outfit and placeholder product kinds.
+  - `WINGS` holds the slot order per wing (west / north / east).
+  - The base look of each shop comes from its brand: brand fascia, blade sign with monogram, tint, display.
+  - Bespoke décor per shop is the next phase.
+- **Catalogue:** `src/data/mallCatalog.ts`.
+  - `buildMallCatalog()` makes one `Section` per open brand.
+  - Le Voile merges its real `products.json` sections into one shop.
+  - Other brands get placeholder products with generated SVG photos. TODO: one real data file per brand.
+  - `?boutique` still walks the single Le Voile store with the original catalogue.
+- **Layout:** `src/config/layout.ts`.
+  - A plaza (44 × 34 m, entrance at z = 0) with 3 wings.
+  - Each wing has its own frame (origin = mouth on the plaza, local −Z away from it); `toWorld()` converts.
+  - `ShopLayout.kind` is `shop | soon | lounge` (`amenity`: `studio` / `lounge`). Zone ids are a brand id, `studio`, `lounge`, `soon-N`, `wing-<id>` or `atrium` (plaza).
+- **Shell:** `src/world/mall.ts` builds the plaza and each wing in its local frame. Coming Soon units get a closed hoarding front.
+- **122 Coins:** `src/social/games.ts`.
+  - Earned from: passport +10 per shop (+150 for all), treasure +25 each (+100 for all), and the wheel (coins or free shipping).
+  - `REWARD_TIERS` (100 / 250 / 400 coins → 10 / 20 / 30%) are redeemed at each shop's rewards counter (`rewardsCounter` in `shop.ts`, overlay in `ui/social.ts`). This needs the mock login.
+  - The result is a brand-scoped coupon (`Coupon.brandId`) that `pricing.ts` applies only to that brand's lines.
+- **Branding:** `BRAND` in `src/config/brand.ts`. The `magenta` key holds the 122 plum. Logos are `public/brand/122-logo*.svg`.
 
 ## Stack and key decisions
 

@@ -3,6 +3,7 @@
 // default display ("rack"). See README → "Add a section".
 
 import { Color } from 'three'
+import { brandById } from './mall'
 
 /** How products are presented inside the shop. */
 export type DisplayKind = 'rack' | 'shelf' | 'gallery' | 'boxes'
@@ -34,14 +35,25 @@ const OVERRIDES: Record<string, Partial<SectionStyle>> = {
 
 /** Pastel tint derived from the brand hue for sections without an override. */
 function generatedTint(index: number): string {
-  const brand = new Color('#9e197e')
+  const brand = new Color('#5b2b82')
   const hsl = { h: 0, s: 0, l: 0 }
   brand.getHSL(hsl)
   const c = new Color().setHSL((hsl.h + ((index * 0.137) % 0.3) - 0.15 + 1) % 1, 0.45, 0.9)
   return `#${c.getHexString()}`
 }
 
+/** Pastel version of a brand colour for floors, walls and the minimap. */
+export function brandTint(hex: string): string {
+  return `#${new Color(hex).lerp(new Color('#fbf6f2'), 0.82).getHexString()}`
+}
+
 export function sectionStyle(id: string, index: number): SectionStyle {
+  // 122 Mall: tenant brands carry their own style.
+  const brand = brandById.get(id)
+  if (brand) {
+    const free = brand.kinds.length > 0 && !brand.kinds.some((k) => ['dress', 'abaya', 'blouse', 'pants', 'cardigan'].includes(k))
+    return { display: brand.display, tint: brandTint(brand.color), outfit: brand.outfit, sizes: free ? 'free' : 'apparel' }
+  }
   return {
     display: 'rack',
     tint: generatedTint(index),

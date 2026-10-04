@@ -75,7 +75,7 @@ export interface ChatMessage {
 
 export type ChatEvent = { staffId: string; type: 'message'; message: ChatMessage } | { staffId: string; type: 'typing'; typing: boolean }
 
-/** Customer ↔ Le Voile staff only (customers never chat with each other). Laravel: private channel per conversation. */
+/** Customer ↔ mall/store staff only (customers never chat with each other). Laravel: private channel per conversation. */
 export interface StaffChatService {
   history(staffId: string): readonly ChatMessage[]
   /** Opens (or resumes) a conversation; the staff member greets on first open. */
@@ -148,12 +148,16 @@ export interface Coupon {
   percent?: number
   /** Product given for free (kind 'gift'). */
   giftProductId?: string
-  source: 'passport' | 'treasure' | 'wheel'
+  /** Only for this brand's products (122 Coins rewards); mall-wide when absent. */
+  brandId?: string
+  source: 'passport' | 'treasure' | 'wheel' | 'rewards'
 }
 
 export interface Prize {
-  /** null = "better luck next time". */
+  /** null = "better luck next time" (or a coins-only prize). */
   coupon: Omit<Coupon, 'code'> | null
+  /** 122 Coins won. */
+  coins?: number
   /** Short label, e.g. "15%" or "Free shipping". */
   title: { ar: string; en: string }
 }

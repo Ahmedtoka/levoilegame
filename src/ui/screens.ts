@@ -33,14 +33,14 @@ export function mountScreens(root: HTMLElement, game: GameBridge): void {
     const L = s.lang
     loading.innerHTML = `
       <div class="stack">
-        <img class="logo" src="${BRAND.logo}" alt="Le Voile" />
+        <img class="logo" src="${BRAND.logo}" alt="122 Mall" />
         <div class="progress"><i style="width:${Math.round(s.loadProgress * 100)}%"></i></div>
         <p>${esc(s.loadLabel || t('loading', L))}</p>
       </div>`
     intro.innerHTML = `
       <div class="corner">${langButton()}</div>
       <div class="stack">
-        <img class="logo" src="${BRAND.logo}" alt="Le Voile" />
+        <img class="logo" src="${BRAND.logo}" alt="122 Mall" />
         <h1 class="display display-ar">${esc(t('tagline', L))}</h1>
         <button class="btn lg" data-action="enter">${esc(t('enterMall', L))}</button>
         <div class="kbd-hint">${esc(t(game.isTouch ? 'controlsMobile' : 'controlsDesktop', L))}</div>
@@ -57,7 +57,7 @@ export function mountScreens(root: HTMLElement, game: GameBridge): void {
     const order = s.lastOrder
     exited.innerHTML = `
       <div class="stack">
-        <img class="logo" src="${BRAND.logo}" alt="Le Voile" />
+        <img class="logo" src="${BRAND.logo}" alt="122 Mall" />
         <h1 class="display display-ar">${esc(t('comeBack', L))}</h1>
         ${order ? `<p>${esc(t('orderNumber', L))}: <b>${esc(order.number)}</b> · ${esc(formatPrice(order.total, L))}</p>` : ''}
         <button class="btn lg" data-action="restart">${esc(t('continueShopping', L))}</button>
@@ -97,9 +97,8 @@ export function mountFallback(root: HTMLElement, catalog: Catalog | null): void 
   const items = catalog?.products ?? []
   wrap.innerHTML = `
     <header>
-      <img class="logo" style="width:220px" src="${BRAND.logo}" alt="Le Voile" />
+      <img class="logo" style="width:220px" src="${BRAND.logo}" alt="122 Mall" />
       <p>${esc(t('noWebgl', L))}</p>
-      <p><a class="link" href="${BRAND.site}" target="_blank" rel="noopener">levoilestores.com</a></p>
     </header>
     <div class="grid">
       ${items

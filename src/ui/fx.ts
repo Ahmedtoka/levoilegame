@@ -4,7 +4,7 @@ import { el } from './dom'
 /** Brand-coloured confetti burst (order placed, prize won, group deal unlocked). */
 export function confetti(): void {
   const box = el('div', 'confetti')
-  const colors = [BRAND.magenta, '#f4b6d9', '#c8a46e', '#ffffff', '#6f0f58']
+  const colors = [BRAND.magenta, '#f4b6d9', '#c8a46e', '#ffffff', '#3e1c5c']
   for (let i = 0; i < 70; i++) {
     const c = el('i')
     c.style.left = `${Math.random() * 100}%`

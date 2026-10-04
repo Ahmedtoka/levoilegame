@@ -51,7 +51,10 @@ export function autoDeal(productId: string, s: Pick<PricingState, 'flash' | 'gro
 }
 
 export function couponLabel(c: Coupon): Label {
-  if (c.kind === 'percent') return { ar: `خصم ${c.percent}%`, en: `${c.percent}% off` }
+  if (c.kind === 'percent') {
+    const b = c.brandId ? catalog().sections.find((s) => s.id === c.brandId) : null
+    return b ? { ar: `خصم ${c.percent}% ${b.titleAr}`, en: `${c.percent}% off ${b.title}` } : { ar: `خصم ${c.percent}%`, en: `${c.percent}% off` }
+  }
   if (c.kind === 'freeShipping') return { ar: 'شحن مجاني', en: 'Free shipping' }
   const p = c.giftProductId ? catalog().byId.get(c.giftProductId) : null
   return { ar: `هدية: ${p?.title ?? 'Inner cap'}`, en: `Gift: ${p?.title ?? 'Inner cap'}` }
@@ -84,7 +87,18 @@ export function priceCart(cart: CartLine[], s: PricingState): PricedCart {
   let gift: Product | null = null
   if (coupon && cart.length) {
     if (coupon.kind === 'percent' && coupon.percent) {
-      discounts.push({ label: couponLabel(coupon), amount: Math.round((afterDeals * coupon.percent) / 100) })
+      // Brand rewards only discount that brand's lines (after their deals).
+      let base = afterDeals
+      if (coupon.brandId) {
+        base = 0
+        for (const l of cart) {
+          const p = c.byId.get(l.productId)
+          if (!p || p.section !== coupon.brandId) continue
+          const deal = autoDeal(p.id, s)
+          base += p.price * l.qty * (1 - (deal?.percent ?? 0) / 100)
+        }
+      }
+      if (base > 0) discounts.push({ label: couponLabel(coupon), amount: Math.round((base * coupon.percent) / 100) })
     } else if (coupon.kind === 'freeShipping') {
       discounts.push({ label: couponLabel(coupon), amount: shipping })
       shipping = 0
