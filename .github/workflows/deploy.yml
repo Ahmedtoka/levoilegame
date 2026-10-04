@@ -1,0 +1,62 @@
+# Build the static site and upload dist/ to the Cloudways application over SSH.
+#
+# Repo → Settings → Secrets and variables → Actions → New repository secret:
+#   CLOUDWAYS_HOST      server public IP (Cloudways → Server → Master Credentials)
+#   CLOUDWAYS_USER      SSH username (master or application credentials)
+#   CLOUDWAYS_SSH_KEY   private key whose public half is added in Cloudways → SSH keys
+#   CLOUDWAYS_PATH      app web root, e.g. /home/master/applications/<app-id>/public_html
+# Optional: CLOUDWAYS_PORT (default 22).
+#
+# The site must be served from the domain root (assets use absolute /products, /models…).
+
+name: Deploy to Cloudways
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-cloudways
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (typecheck + vite build)
+        run: npm run build
+
+      - name: Set up SSH
+        env:
+          SSH_KEY: ${{ secrets.CLOUDWAYS_SSH_KEY }}
+          HOST: ${{ secrets.CLOUDWAYS_HOST }}
+          PORT: ${{ secrets.CLOUDWAYS_PORT || '22' }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/cloudways
+          chmod 600 ~/.ssh/cloudways
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload dist/ (rsync)
+        env:
+          HOST: ${{ secrets.CLOUDWAYS_HOST }}
+          USER: ${{ secrets.CLOUDWAYS_USER }}
+          PORT: ${{ secrets.CLOUDWAYS_PORT || '22' }}
+          DEST: ${{ secrets.CLOUDWAYS_PATH }}
+        run: |
+          test -n "$DEST" || { echo "CLOUDWAYS_PATH secret is missing"; exit 1; }
+          # --delete removes files that are no longer in the build; .well-known (SSL) is kept.
+          rsync -az --delete --exclude '.well-known' \
+            -e "ssh -i ~/.ssh/cloudways -p $PORT" \
+            dist/ "$USER@$HOST:$DEST/"
