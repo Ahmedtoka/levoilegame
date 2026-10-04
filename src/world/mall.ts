@@ -25,6 +25,7 @@ import { glowMat, imageMat, MAT, tintMat } from './materials'
 import { bench, column, plant } from './props'
 import type { Kit } from './kit'
 import { directoryTexture, labelSign, logoTexture, type DirectoryEntry } from './signage'
+import { setGlowsVisible } from './glow'
 
 export interface ShellHandles {
   doors: { target: number; update(dt: number): void }
@@ -375,6 +376,7 @@ export async function buildShell(
   root.add(doors.group)
 
   const setQuality = (q: QualitySettings) => {
+    setGlowsVisible(q.fancyDecor)
     shafts.visible = q.fancyDecor
     if (q.reflections) {
       makeReflector().visible = true
