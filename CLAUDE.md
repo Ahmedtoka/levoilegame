@@ -23,6 +23,11 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - Earned from: passport +10 per shop (+150 for all), treasure +25 each (+100 for all), and the wheel (coins or free shipping).
   - `REWARD_TIERS` (100 / 250 / 400 coins → 10 / 20 / 30%) are redeemed at each shop's rewards counter (`rewardsCounter` in `shop.ts`, overlay in `ui/social.ts`). This needs the mock login.
   - The result is a brand-scoped coupon (`Coupon.brandId`) that `pricing.ts` applies only to that brand's lines.
+- **Bespoke shops:** `ShopContext.bespoke[brandId]` replaces the generic furnishing (`?nobespoke` turns it off).
+  - Le Voile is the real baked boutique (`src/world/bespoke/levoile.ts`, `store.glb`) at real size in a 16 m-deep anchor unit (`BrandDef.depth`).
+  - Its baked garments and scarves (`store_soft`) are hidden; only real products show: composed card panels on the wall bays, rails and rear display, plus easels.
+  - The model preloads about 2.5 s after boot.
+  - Brand logos: `BrandDef.logo` (shopfront + blade sign).
 - **Branding:** `BRAND` in `src/config/brand.ts`. The `magenta` key holds the 122 plum. Logos are `public/brand/122-logo*.svg`.
 
 ## Stack and key decisions

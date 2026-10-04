@@ -33,6 +33,25 @@ function spaced(text: string): string {
 export interface Monogram {
   initials: string
   color: string
+  /** Real logo image: replaces the monogram + name once loaded. */
+  logo?: string
+}
+
+/** Redraws a sign with the brand's logo image once it has loaded. */
+function withLogo(tex: CanvasTexture, logo: string | undefined, draw: (img: HTMLImageElement) => void): CanvasTexture {
+  if (logo)
+    loadImage(logo)
+      .then((img) => {
+        draw(img)
+        tex.needsUpdate = true
+      })
+      .catch(() => {})
+  return tex
+}
+
+function fitImage(g: CanvasRenderingContext2D, img: HTMLImageElement, cx: number, cy: number, maxW: number, maxH: number): void {
+  const s = Math.min(maxW / img.width, maxH / img.height)
+  g.drawImage(img, cx - (img.width * s) / 2, cy - (img.height * s) / 2, img.width * s, img.height * s)
 }
 
 /** Brand monogram in a ring (as in the client list). */
@@ -97,7 +116,16 @@ function brandFascia(section: Section, m: Monogram): CanvasTexture {
   g.direction = 'rtl'
   fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 52, 720)
   g.fillText(section.titleAr, 600, 186)
-  return canvasTexture(c)
+  return withLogo(canvasTexture(c), m.logo, (img) => {
+    g.fillStyle = '#f7f2ec'
+    g.fillRect(20, 20, 984, 216)
+    fitImage(g, img, 512, 110, 760, 150)
+    g.fillStyle = '#5a4a3c'
+    g.textAlign = 'center'
+    g.direction = 'rtl'
+    fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 34, 600)
+    g.fillText(section.titleAr, 512, 210)
+  })
 }
 
 /** Hoarding for an empty unit: "Coming Soon" over 122 Mall stripes. */
@@ -150,7 +178,16 @@ export function bladeSign(section: Section, brand?: Monogram): CanvasTexture {
     g.fillStyle = brand.color
     fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 44, 430)
     g.fillText(section.titleAr, 256, 450)
-    return canvasTexture(c)
+    return withLogo(canvasTexture(c), brand.logo, (img) => {
+      g.fillStyle = '#f7f2ec'
+      g.fillRect(30, 30, 452, 452)
+      fitImage(g, img, 256, 230, 400, 240)
+      g.fillStyle = brand.color
+      g.textAlign = 'center'
+      g.direction = 'rtl'
+      fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 46, 400)
+      g.fillText(section.titleAr, 256, 420)
+    })
   }
   const [c, g] = makeCanvas(512, 512)
   g.fillStyle = '#f4ede3'
@@ -353,10 +390,23 @@ export function productCardTexture(
   oldPrice: string | null,
   badge: string | null,
 ): CanvasTexture {
+  const [c, g] = makeCanvas(512, 768)
+  drawProductCard(g, image, title, price, oldPrice, badge)
+  return canvasTexture(c)
+}
+
+/** Draws a product card in a 512 × 768 space (scale/translate `g` to place it elsewhere). */
+export function drawProductCard(
+  g: CanvasRenderingContext2D,
+  image: CanvasImageSource & { width: number; height: number },
+  title: string,
+  price: string,
+  oldPrice: string | null,
+  badge: string | null,
+): void {
   const W = 512
   const PH = 620
   const H = 768
-  const [c, g] = makeCanvas(W, H)
   g.fillStyle = '#ffffff'
   g.fillRect(0, 0, W, H)
   // cover-crop the photo into the top area
@@ -390,5 +440,4 @@ export function productCardTexture(
   } else {
     g.fillText(price, W / 2, PH + 104)
   }
-  return canvasTexture(c)
 }

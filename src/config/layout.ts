@@ -146,10 +146,11 @@ export function buildLayout(sections: Section[]): MallLayout {
       const row = Math.floor(k / 2)
       const z1 = -row * L
       const z0 = z1 - L
-      const lx0 = side === 'L' ? -B - D : B
-      const lx1 = side === 'L' ? -B : B + D
-      const ex = side === 'L' ? -B : B
       const brand = brandById.get(slot) ?? null
+      const depth = brand?.depth ?? D
+      const lx0 = side === 'L' ? -B - depth : B
+      const lx1 = side === 'L' ? -B : B + depth
+      const ex = side === 'L' ? -B : B
       const section = sections.find((s) => s.id === slot) ?? null
       const amenity = slot === 'studio' || slot === 'lounge' ? slot : undefined
       const kind: ShopLayout['kind'] = amenity ? 'lounge' : brand?.status === 'soon' || !section ? 'soon' : 'shop'

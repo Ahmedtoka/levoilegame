@@ -15,6 +15,7 @@ import {
 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
 import { MALL, type MallLayout, type Rect, type Wing } from '../config/layout'
+import { brandById } from '../config/mall'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import type { QualitySettings } from '../engine/quality'
@@ -198,19 +199,35 @@ export async function buildShell(
     runner.position.set(0, 0.004, -len / 2 - 0.5)
     group.add(runner)
 
-    // Outer walls behind the shops, corridor end, and the header over the mouth.
-    wall(wf, -B - SD - T, -len, -B - SD, 0, 0, SH)
-    wall(wf, B + SD, -len, B + SD + T, 0, 0, SH)
+    // Corridor end and the header over the mouth.
     wall(wf, -B, -len - T, B, -len, 0, BH)
     wall(wf, -B, -T, B, 0, BH, AH)
 
-    // Shop separators (the one at the mouth is plaza height).
+    // Back wall of each unit (units can be deeper, e.g. anchor stores) and the
+    // separators between units, as long as the deeper neighbour.
+    const depthOf = (k: number) => {
+      const slot = wing.def.slots[k]
+      return slot ? (brandById.get(slot)?.depth ?? SD) : 0
+    }
     const rows = Math.ceil(wing.def.slots.length / 2)
-    for (let r = 0; r <= rows; r++) {
-      const z = -r * SL
-      const h = r === 0 ? AH : SH
-      wall(wf, -B - SD, z - T / 2, -B, z + T / 2, 0, h)
-      wall(wf, B, z - T / 2, B + SD, z + T / 2, 0, h)
+    for (const side of [-1, 1]) {
+      const first = side < 0 ? 0 : 1
+      for (let r = 0; r < rows; r++) {
+        const d = depthOf(first + r * 2)
+        if (!d) continue
+        const z1 = -r * SL
+        if (side < 0) wall(wf, -B - d - T, z1 - SL, -B - d, z1, 0, SH)
+        else wall(wf, B + d, z1 - SL, B + d + T, z1, 0, SH)
+      }
+      for (let r = 0; r <= rows; r++) {
+        const d = Math.max(depthOf(first + (r - 1) * 2), depthOf(first + r * 2))
+        if (!d) continue
+        const z = -r * SL
+        // The one at the mouth is plaza height.
+        const h = r === 0 ? AH : SH
+        if (side < 0) wall(wf, -B - d, z - T / 2, -B, z + T / 2, 0, h)
+        else wall(wf, B, z - T / 2, B + d, z + T / 2, 0, h)
+      }
     }
 
     // Shop fronts: an opening for shops, open for lounges, hoarding for Coming Soon.

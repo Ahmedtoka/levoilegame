@@ -160,7 +160,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
 
   const section = shop.section
   const style = shop.style
-  const mono = shop.brand ? { initials: shop.brand.initials, color: shop.brand.color } : undefined
+  const mono = shop.brand ? { initials: shop.brand.initials, color: shop.brand.color, logo: shop.brand.logo } : undefined
   const tint = style.tint
   const accent = tintMat('#ece3d6', 1, 0.9)
   const accentDeep = tintMat('#a57b52', 1, 0.6)

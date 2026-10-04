@@ -25,6 +25,10 @@ export interface BrandDef {
   kinds: ProductKind[]
   /** Brand with a real catalogue (src/data/products.json). */
   realCatalog?: boolean
+  /** Real logo (shopfront + blade sign); monogram otherwise. */
+  logo?: string
+  /** Unit depth in metres (default MALL.shopDepth); anchor stores go deeper. */
+  depth?: number
   site?: string
 }
 
@@ -46,7 +50,7 @@ export const BRANDS: BrandDef[] = [
   { id: 'hashbag', name: 'HashBag', nameAr: 'هاش باج', initials: 'HS', color: '#a21caf', status: 'open', display: 'boxes', outfit: 'skirt', kinds: ['bag', 'bag', 'bag', 'bag', 'bag', 'bag'] },
   { id: 'rwan-designs', name: 'Rwan Designs', nameAr: 'روان ديزاينز', initials: 'RW', color: '#e07b1a', status: 'open', display: 'rack', outfit: 'abaya', kinds: MODEST },
   { id: 'fashion-avenue', name: 'Fashion Avenue', nameAr: 'فاشون أفينيو', initials: 'FA', color: '#1f6fb2', status: 'open', display: 'gallery', outfit: 'skirt', kinds: APPAREL },
-  { id: 'levoile', name: 'Le Voile', nameAr: 'لوفوال', initials: 'LV', color: '#9e197e', status: 'open', display: 'rack', outfit: 'abaya', kinds: MODEST, realCatalog: true, site: 'https://levoilestores.com' },
+  { id: 'levoile', name: 'Le Voile', nameAr: 'لوفوال', initials: 'LV', color: '#9e197e', status: 'open', display: 'rack', outfit: 'abaya', kinds: MODEST, realCatalog: true, site: 'https://levoilestores.com', logo: '/brand/logo-trim.png', depth: 16 },
   { id: 'noha-collection', name: 'Noha Collection', nameAr: 'نهى كولكشن', initials: 'NO', color: '#c0213a', status: 'open', display: 'rack', outfit: 'abaya', kinds: MODEST },
   { id: 'promax', name: 'ProMax', nameAr: 'بروماكس', initials: 'PR', color: '#157a8a', status: 'open', display: 'boxes', outfit: 'pants', kinds: ['box', 'box', 'bag', 'box', 'box', 'bag'] },
   ...[1, 2, 3, 4].map(
