@@ -2,17 +2,32 @@
 // stands (section header + grid of product cards) and small easel cards for
 // tables/gondolas. Card = photo + title + price baked into one texture.
 
-import { Group, Mesh, MeshBasicMaterial, MeshStandardMaterial, PlaneGeometry, type Material, type Object3D } from 'three'
+import {
+  DoubleSide,
+  FrontSide,
+  Group,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  PlaneGeometry,
+  Shape,
+  ShapeGeometry,
+  type BufferGeometry,
+  type Material,
+  type Object3D,
+  type Texture,
+} from 'three'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { BRAND } from '../config/brand'
 import type { BatchFrame } from '../engine/batcher'
-import { loadProductTexture } from '../engine/textures'
+import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
 import { discountPercent, type Product, type Section } from '../data/types'
 import { formatPrice } from '../i18n/i18n'
 import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { imageMat } from './materials'
 import { blobShadow } from './props'
-import { BOUTIQUE_CREAM, boutiqueHeader, productCardTexture } from './signage'
+import { BOUTIQUE_CREAM, boutiqueHeader, drawProductCard, productCardTexture } from './signage'
 import { openProductLabel } from './shop'
 
 export const OAK = new MeshStandardMaterial({ color: '#b98a5c', roughness: 0.55 })
@@ -110,4 +125,153 @@ export function loadCards(cards: Card[]): void {
       })
       .catch((e) => console.warn(e))
   }
+}
+
+// ---------------------------------------------------------------------------
+// Composed card panel: a grid of product cards drawn into ONE texture on one
+// plane (one draw call per fixture). Invisible per-card hit planes make every
+// product clickable; a plum frame per card shows on hover.
+
+const HIDDEN = new MeshBasicMaterial({ visible: false })
+const PENDING = new MeshBasicMaterial({ color: '#eee6dd', side: DoubleSide })
+const PENDING_FRONT = new MeshBasicMaterial({ color: '#eee6dd' })
+
+export interface CardPanelOpts {
+  /** Texture pixels per card (default 192 × 288). */
+  cellW?: number
+  cellH?: number
+  /** A second, non-mirrored face on the back (free-standing rails). */
+  doubleSided?: boolean
+  maxDist?: number
+}
+
+export interface CardPanelCtx {
+  interaction: Interaction
+  loaders: (() => Promise<unknown>)[]
+}
+
+/** Composed panel textures are shared between fixtures showing the same cards. */
+const panelTextures = new Map<string, Promise<Texture>>()
+
+function panelTexture(cells: Product[], cols: number, rows: number, W: number, H: number): Promise<Texture> {
+  const key = `${cells.map((p) => p.id).join(',')}|${cols}x${rows}|${W}x${H}`
+  let t = panelTextures.get(key)
+  if (!t) {
+    t = (async () => {
+      const [c, cg] = makeCanvas(cols * W, rows * H)
+      cg.fillStyle = '#f4ede3'
+      cg.fillRect(0, 0, c.width, c.height)
+      const images = await Promise.all(cells.map((p) => loadProductTexture(p.images[0], H).then((r) => r.image as HTMLCanvasElement)))
+      // Spread the drawing over frames so walking in doesn't hitch.
+      await new Promise((r) => setTimeout(r, Math.random() * 400))
+      const m = Math.round((W * 6) / 256)
+      cells.forEach((p, i) => {
+        const off = discountPercent(p)
+        cg.save()
+        cg.translate((i % cols) * W + m, Math.floor(i / cols) * H + m)
+        cg.scale((W - 2 * m) / 512, (H - 2 * m) / 768)
+        drawProductCard(
+          cg,
+          images[i],
+          p.title,
+          formatPrice(p.price, 'en'),
+          p.compareAtPrice && off ? formatPrice(p.compareAtPrice, 'en') : null,
+          off ? `-${off}%` : null,
+        )
+        cg.restore()
+      })
+      return canvasTexture(c)
+    })()
+    panelTextures.set(key, t)
+    t.catch(() => panelTextures.delete(key))
+  }
+  return t
+}
+
+const frames = new Map<string, BufferGeometry>()
+
+/** Thin rectangular frame (w × h outside) used as the hover outline. */
+function frameGeometry(w: number, h: number): BufferGeometry {
+  const key = `${w.toFixed(3)}x${h.toFixed(3)}`
+  let g = frames.get(key)
+  if (!g) {
+    const t = Math.min(w, h) * 0.035
+    const s = new Shape().moveTo(-w / 2, -h / 2).lineTo(w / 2, -h / 2).lineTo(w / 2, h / 2).lineTo(-w / 2, h / 2).closePath()
+    const hole = new Shape()
+      .moveTo(-w / 2 + t, -h / 2 + t)
+      .lineTo(-w / 2 + t, h / 2 - t)
+      .lineTo(w / 2 - t, h / 2 - t)
+      .lineTo(w / 2 - t, -h / 2 + t)
+      .closePath()
+    s.holes.push(hole)
+    g = new ShapeGeometry(s)
+    frames.set(key, g)
+  }
+  return g
+}
+
+/**
+ * A cols × rows grid of product cards as one textured plane in `parent`
+ * (centre x, y, z; yaw of its front; card width cw, height 1.5 cw). The
+ * texture is drawn lazily through `ctx.loaders`. Returns null when `list` is empty.
+ */
+export function cardPanel(
+  ctx: CardPanelCtx,
+  parent: Object3D,
+  list: Product[],
+  cols: number,
+  rows: number,
+  x: number,
+  y: number,
+  z: number,
+  yaw: number,
+  cw: number,
+  opts: CardPanelOpts = {},
+): Mesh | null {
+  const ch = cw * 1.5
+  const cells = list.slice(0, cols * rows)
+  if (!cells.length) return null
+  const PW = cols * cw
+  const PH = rows * ch
+  let geo: BufferGeometry = new PlaneGeometry(PW, PH)
+  if (opts.doubleSided) geo = mergeGeometries([geo, new PlaneGeometry(PW, PH).rotateY(Math.PI)], false)
+  const panel = new Mesh(geo, opts.doubleSided ? PENDING_FRONT : PENDING)
+  panel.position.set(x, y, z)
+  panel.rotation.y = yaw
+  parent.add(panel)
+  const outline = frameGeometry(cw * 0.98, ch * 0.98)
+  const faces = opts.doubleSided ? [1, -1] : [1]
+  for (const side of faces) {
+    cells.forEach((p, i) => {
+      // On the back face the columns run the other way (viewer's left is +x there).
+      const cx = side * (-(cols - 1) / 2 + (i % cols)) * cw
+      const cy = ((rows - 1) / 2 - Math.floor(i / cols)) * ch
+      const hit = new Mesh(new PlaneGeometry(cw * 0.96, ch * 0.96), HIDDEN)
+      hit.position.set(cx, cy, side * 0.01)
+      if (side < 0) hit.rotation.y = Math.PI
+      panel.add(hit)
+      const hl = new Mesh(outline, HL)
+      hl.position.set(cx, cy, side * 0.004)
+      if (side < 0) hl.rotation.y = Math.PI
+      hl.visible = false
+      panel.add(hl)
+      ctx.interaction.add({
+        object: hit,
+        kind: 'product',
+        label: () => openProductLabel(p),
+        onInteract: () => store.getState().openProduct(p.id),
+        highlight: (on) => (hl.visible = on),
+        maxDist: opts.maxDist ?? 3.4,
+      })
+    })
+  }
+  const W = opts.cellW ?? 192
+  const H = opts.cellH ?? 288
+  ctx.loaders.push(async () => {
+    const tex = await panelTexture(cells, cols, rows, W, H)
+    const mat = imageMat(tex)
+    if (opts.doubleSided) mat.side = FrontSide
+    panel.material = mat
+  })
+  return panel
 }

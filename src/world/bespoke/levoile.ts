@@ -27,15 +27,12 @@ import { BOUTIQUE } from '../../config/boutique'
 import { brandById } from '../../config/mall'
 import { BRAND } from '../../config/brand'
 import type { BatchFrame } from '../../engine/batcher'
-import { canvasTexture, loadProductTexture, makeCanvas } from '../../engine/textures'
-import { discountPercent, type Product } from '../../data/types'
-import { formatPrice } from '../../i18n/i18n'
-import { store } from '../../state/store'
-import { CREAM, BRONZE, easelRow, loadCards, registerCards, type Card } from '../displays'
+import type { Product } from '../../data/types'
+import { CREAM, BRONZE, cardPanel, easelRow, loadCards, registerCards, type Card } from '../displays'
 import { imageMat } from '../materials'
-import { BOUTIQUE_CREAM, drawProductCard, logoTexture } from '../signage'
+import { BOUTIQUE_CREAM, logoTexture } from '../signage'
 import { prepareBakedStore } from '../boutique'
-import { openProductLabel, rewardsCounter, type ShopContext, type ShopHandles } from '../shop'
+import { rewardsCounter, type ShopContext, type ShopHandles } from '../shop'
 
 /** Shop-local z of the boutique's glass front (just behind the 0.3 m mall shopfront). */
 const FRONT_Z = -0.32
@@ -46,7 +43,6 @@ interface Anchors {
 }
 
 const HIDDEN = new MeshBasicMaterial({ visible: false })
-const PENDING = new MeshBasicMaterial({ color: '#eee6dd', side: DoubleSide })
 
 /** Boutique coordinates → shop-local. */
 function local(x: number, z: number): { x: number; z: number } {
@@ -107,57 +103,9 @@ export function levoileInterior(ctx: ShopContext, f: BatchFrame, handles: ShopHa
   })
 
   // ----------------------------------------- products on the store's fixtures
-  const register = (p: Product, hit: Mesh) =>
-    ctx.interaction.add({
-      object: hit,
-      kind: 'product',
-      label: () => openProductLabel(p),
-      onInteract: () => store.getState().openProduct(p.id),
-      maxDist: 3.4,
-    })
-
   /** A grid of product cards as one textured plane (centre x, y, z; yaw of its front). */
-  const wall = (list: Product[], cols: number, rows: number, x: number, y: number, z: number, yaw: number, cw: number) => {
-    const ch = cw * 1.5
-    const cells = list.slice(0, cols * rows)
-    if (!cells.length) return
-    const panel = new Mesh(new PlaneGeometry(cols * cw, rows * ch), PENDING)
-    panel.position.set(x, y, z)
-    panel.rotation.y = yaw
-    g.add(panel)
-    cells.forEach((p, i) => {
-      const hit = new Mesh(new PlaneGeometry(cw * 0.96, ch * 0.96), HIDDEN)
-      hit.position.set((-(cols - 1) / 2 + (i % cols)) * cw, ((rows - 1) / 2 - Math.floor(i / cols)) * ch, 0.01)
-      panel.add(hit)
-      register(p, hit)
-    })
-    loaders.push(async () => {
-      const W = 256
-      const H = 384
-      const [c, cg] = makeCanvas(cols * W, rows * H)
-      cg.fillStyle = '#f4ede3'
-      cg.fillRect(0, 0, c.width, c.height)
-      const images = await Promise.all(cells.map((p) => loadProductTexture(p.images[0], 384).then((r) => r.image as HTMLCanvasElement)))
-      // Spread the drawing over frames so walking in doesn't hitch.
-      await new Promise((r) => setTimeout(r, Math.random() * 400))
-      cells.forEach((p, i) => {
-        const off = discountPercent(p)
-        cg.save()
-        cg.translate((i % cols) * W + 6, Math.floor(i / cols) * H + 6)
-        cg.scale((W - 12) / 512, (H - 12) / 768)
-        drawProductCard(
-          cg,
-          images[i],
-          p.title,
-          formatPrice(p.price, 'en'),
-          p.compareAtPrice && off ? formatPrice(p.compareAtPrice, 'en') : null,
-          off ? `-${off}%` : null,
-        )
-        cg.restore()
-      })
-      panel.material = imageMat(canvasTexture(c))
-    })
-  }
+  const wall = (list: Product[], cols: number, rows: number, x: number, y: number, z: number, yaw: number, cw: number) =>
+    cardPanel({ interaction: ctx.interaction, loaders }, g, list, cols, rows, x, y, z, yaw, cw, { cellW: 256, cellH: 384 })
 
   // Wall bays (fronts face into the store).
   const left = of('scarves', 'inner-caps', 'accessories')
