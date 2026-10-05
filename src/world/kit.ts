@@ -74,8 +74,10 @@ export class Kit {
    * Clone a piece into `parent` at local (x, z), rotated so its front faces
    * `face` (a yaw: front → (sin face, 0, cos face) in the parent's frame).
    * Adds a world-space collider for the footprint unless collide === false.
+   * hideSoft hides the baked garments/scarves (`*_store_soft`) so only real
+   * products are on show (don't use it on plants/pendants: that's their foliage/shade).
    */
-  place(name: string, parent: Object3D, x: number, z: number, face: number, colliders?: CollisionWorld, opts: { y?: number; collide?: boolean } = {}): Object3D | null {
+  place(name: string, parent: Object3D, x: number, z: number, face: number, colliders?: CollisionWorld, opts: { y?: number; collide?: boolean; hideSoft?: boolean } = {}): Object3D | null {
     const src = this.pieces.get(name)
     const info = this.info[name]
     if (!src || !info) return null
@@ -87,6 +89,7 @@ export class Kit {
     o.traverse((c) => {
       c.matrixAutoUpdate = false
       c.updateMatrix()
+      if (opts.hideSoft && c.name.includes('store_soft')) c.visible = false
     })
     if (colliders && opts.collide !== false) {
       o.updateWorldMatrix(true, true) // include parents: shops are placed before the first render

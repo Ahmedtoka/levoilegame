@@ -551,8 +551,9 @@ function furnishWithKit(
   loaders: (() => Promise<unknown>)[],
   mono?: Monogram,
 ): void {
+  // No fake goods: fixtures drop the baked Le Voile garments/scarves (plants keep their foliage).
   const put = (name: string, x: number, z: number, face: number, collide = true) =>
-    kit.place(name, interior, x, z, face, collide ? ctx.colliders : undefined)
+    kit.place(name, interior, x, z, face, collide ? ctx.colliders : undefined, { hideSoft: name !== 'plant' && name !== 'pendant' })
   const depthOf = (name: string) => kit.info[name]?.size[0] ?? 0.75
   const backRow = (names: string[]) =>
     names.forEach((n, i) => put(n, -3.95 + i * 2.62, BACK_Z + depthOf(n) / 2, FACE_IN))
