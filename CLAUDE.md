@@ -138,5 +138,5 @@ node scripts/fetch-assets.mjs              # validate + download images and logo
 - New UI strings go in `src/i18n/i18n.ts` in both `ar` and `en`. Use natural Egyptian Arabic and keep brand terms in English.
 - Overlays render through `paint()` (`src/ui/dom.ts`) so re-renders don't replay entrance animations.
 - Boot yields must not rely on `requestAnimationFrame` alone, because background tabs throttle it.
-- Dev: `window.lv` exposes `{ game, store, engine, layout, catalog, social }`. Useful URL flags are `?fps`, `?nolock`, `?debug`, `?crowd=N` and `?nodemo`.
+- Dev: `window.lv` exposes `{ game, store, engine, layout, catalog, social }`. Useful URL flags are `?fps`, `?nolock`, `?debug`, `?crowd=N`, `?nodemo` and `?nobloom`.
 - Don't commit `.venv/`, `node_modules/` or `tools/`.

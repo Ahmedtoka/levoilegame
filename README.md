@@ -32,6 +32,7 @@ URL flags:
 | `?nobespoke` | Generic furnishing for every shop (turns off bespoke interiors such as Le Voile's) |
 | `?crowd=N` | Number of simulated shoppers (0–80). Default by quality: High 50, Medium 30, Low 20 |
 | `?nodemo` | Turns off every simulation: crowd, purchase toasts, viewer counts, group deal and flash sales. Staff chat and the games stay |
+| `?nobloom` | No bloom on High (renders straight to the canvas, like Medium) |
 
 ## Controls
 
@@ -309,6 +310,7 @@ To trigger things on demand (dev / `?debug`): `lv.social.deals.nextFlash = 0`, `
   FPS varies a lot between runs when other windows render (the ranges above are 2-3 runs). Always-visible kit plants are batched (`Kit.placeBatched`), and a screen's fade layer is hidden between slides.
 - **Plaza stage and corridor finishing:** the plaza has a stage with an LED wall, live screens and seating (`plaza.ts`). Each wing gets its own finishing in `corridor.ts`: floor inlays, islands with planters, pendant lights, ceiling coves, column screens, storefront frames, brand doormats, a wing portal, a directory board, wayfinding signs, an end-wall collage and wall shade. Screens share feeds (`screens.ts`, `screenSlides.ts`). Contact shadows and additive glows are instanced (`decals.ts`, `glow.ts`), and glows are hidden on Low.
 - **Mobile:** product images load as WebP (see Image pipeline) and the Le Voile boutique preload is skipped on touch devices. The numbers above are desktop/High only; phones are not yet measured. Design: `docs/superpowers/specs/2026-10-05-mobile-performance-design.md`.
-- **Lighting:** image-based lighting plus two lights, with blob shadows instead of shadow maps. The planar floor reflection is enabled on High only, and only while the plaza is in view.
+- **Lighting:** image-based lighting plus two lights, with blob shadows instead of shadow maps. Planar floor reflections are High only: the plaza mirror runs while the plaza floor is in view, a corridor mirror only in the wing you are in. Mirrors render `MIRROR_LAYER` alone (architecture, lights, lightboxes), so a mirror pass is a few dozen draw calls.
+- **Bloom (High only):** masked bloom on the light sources through an EffectComposer (`post.ts`, `bloom.ts`), about 14 fullscreen passes. On an integrated GPU (Intel UHD) it costs about 10 ms a frame, which is why High is auto-selected only on dedicated GPUs; if High still drops under 28 fps, the governor steps down to Medium, which removes the composer and the mirrors. `?nobloom` turns it off on High. Bloom also stays off (with a console warning) on any three.js release other than the one it was checked against (`BLOOM_THREE_REVISION`).
 - **Textures:** product images load lazily per shop as you approach and are downscaled to 512 px (Low) or 1024 px.
 - **No WebGL:** a 2D catalogue fallback with links to the website.
