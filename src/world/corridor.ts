@@ -13,11 +13,13 @@ import type { Kit } from './kit'
 import { imageMat, MAT, tintMat } from './materials'
 import { plant } from './props'
 import { addContactShadow } from './decals'
-import { addHalo } from './glow'
+import { addHalo, addPool } from './glow'
+import { addAOStrip, aoCeilJunction, aoFloorJunction } from './aoStrips'
+import { GYPSUM, marbleCladMat, oakVeneerMat, uvBox } from './finish'
 import { BRAND } from '../config/brand'
 import { canvasTexture, loadImage, loadProductTexture, makeCanvas } from '../engine/textures'
 import { catalog } from '../state/store'
-import { doormatTexture, starInlayTexture, wallGradientTexture, wayfindingTexture, wingDirectoryTexture } from './signage'
+import { doormatTexture, starInlayTexture, wayfindingTexture, wingDirectoryTexture } from './signage'
 import { ScreenFeed, registerScreen, screenMesh, type ScreenActions } from './screens'
 
 export interface CorridorCtx {
@@ -31,8 +33,6 @@ export interface CorridorCtx {
 
 let starGeo: PlaneGeometry | null = null
 let starMat: MeshBasicMaterial | null = null
-let wallGeo: PlaneGeometry | null = null
-let wallMat: MeshBasicMaterial | null = null
 
 /** A world point's z in the wing's local frame (distance along the corridor, negative away from the plaza). */
 function toLocalZ(wing: Wing, p: { x: number; z: number }): number {
@@ -87,27 +87,83 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
       wf.sphere(MAT.lightWarm, x, 4.3, z, 0.18)
       const p = w(x, z)
       addHalo(p.x, 4.3, p.z, 0.42)
+      addPool(p.x, p.z, 2.8, 2.8)
     }
 
-  // ---------------------------------------------------------- ceiling coves
+  // ------------------------------------------------------- ceiling tray
+  // Gypsum soffit bands along both walls, 0.22 m below the ceiling, leave a recessed
+  // central tray. Each band runs 2 cm into the wall and starts inside the portal beam
+  // (whose underside is 2 cm lower), so none of its faces is coplanar with another.
+  const SW = 1.5
+  const sb = BH - 0.22
+  const zs0 = -0.2
+  const zs1 = -len - 0.02
   for (const s of [-1, 1]) {
-    // Wide, flat recessed light band + a bronze fascia: thin slivers shimmered at distance.
-    // Flush against the wall: any gap between trim and wall shows a thin dark sliver of ceiling that shimmers.
-    wf.box(MAT.brass, s * (B - 0.08), BH - 0.1, -len / 2, 0.16, 0.2, len - 0.4)
-    wf.box(MAT.lightWarm, s * (B - 0.6), BH - 0.02, -len / 2, 0.88, 0.02, len - 0.4)
+    wf.box(GYPSUM, s * (B - SW / 2 + 0.01), (sb + BH + 0.05) / 2, (zs0 + zs1) / 2, SW + 0.02, BH + 0.05 - sb, zs0 - zs1)
+    // Linear slot light set into the soffit underside along the tray edge (1.5 cm proud).
+    wf.box(MAT.lightWarm, s * (B - SW + 0.1), sb - 0.005, (zs0 + zs1 + 0.01) / 2, 0.05, 0.02, zs0 - zs1 - 0.01)
+    // Round spot cans every 3 m: bronze trim ring with a shallow lit lens dome below it
+    // (the lens reuses the pendant globes' instanced sphere: no extra draw call).
+    for (let z = -1.5; z > -len + 0.5; z -= 3) {
+      wf.cyl(MAT.brass, s * (B - 0.75), sb - 0.025, z, 0.1, 0.07)
+      wf.sphere(MAT.lightWarm, s * (B - 0.75), sb - 0.005, z, 0.068, 0.35)
+    }
+    // Wall/soffit junction shading on the soffit underside.
+    aoCeilJunction(s * B, -0.3, s * B, -len, -s, 0, sb, wf.base, 0, 0.45)
   }
 
+  // ------------------------------------------- wainscot, pilasters, wall AO
+  // Oak-veneer wainscot (1.1 m) with a bronze cap rail on the solid wall either side
+  // of each shop opening; pieces stop 2 cm short of the row boundary (inside the
+  // pilaster) and 4 cm into the opening's bronze frame.
+  const WH = 1.1
+  const wLen = 2.94
+  const wGeo = uvBox(0.03, WH, wLen, 1)
+  const oak = oakVeneerMat()
+  shops.forEach((s, k) => {
+    const side = k % 2 === 0 ? -1 : 1
+    const z1 = -Math.floor(k / 2) * L
+    const z0 = z1 - L
+    const zc = (z0 + z1) / 2
+    const wx = side * B
+    if (s.kind === 'shop') {
+      for (const pz of [zc + 3.04 + wLen / 2, zc - 3.04 - wLen / 2]) {
+        wf.custom(wGeo, oak, side * (B - 0.005), WH / 2, pz)
+        wf.box(MAT.brass, side * (B - 0.011), WH + 0.01, pz, 0.042, 0.04, wLen + 0.02)
+        // AO in front of the wainscot face (2 cm off the wall). Its 0.9 m wall band also
+        // takes over the old separate wall-shade quads (one draw call fewer).
+        aoFloorJunction(wx, pz - wLen / 2, wx, pz + wLen / 2, -side, 0, wf.base, 0.9, 0.5, 0.032)
+      }
+    } else if (s.kind === 'soon') aoFloorJunction(wx, z0, wx, z1, -side, 0, wf.base)
+  })
+  aoFloorJunction(-B, -len, B, -len, 0, 1, wf.base)
+
+  // Marble-clad pilasters at every row boundary, both sides (0.8 m wide, 8 cm proud of the wall, 1 cm into it).
+  const PD = 0.08
+  const PH = BH - 0.15 // top inside the soffit
+  const pGeo = uvBox(PD + 0.01, PH, 0.8, 1.6)
+  const clad = marbleCladMat()
+  for (let r = 1; r < rows; r++)
+    for (const side of [-1, 1]) {
+      const z = -r * L
+      wf.custom(pGeo, clad, side * (B - PD / 2 + 0.005), PH / 2 - 0.01, z)
+      wf.box(MAT.brass, side * (B - 0.045), 0.055, z, 0.11, 0.13, 0.84)
+      const fx = side * (B - PD - 0.012)
+      addAOStrip([fx, 0, z - 0.4], [fx, 0, z + 0.4], [0, 1, 0], 0.5, wf.base)
+    }
+
   // ------------------------------------------------------- column screens
-  // On the solid wall between two storefronts (each row boundary), both sides.
+  // Mounted on the pilasters at each row boundary, both sides; the bezel stands
+  // proud of the pilaster face (8 cm) so the screen is in front and clickable.
   const brandIds = shops.filter((s) => s.kind === 'shop' && s.brand).map((s) => s.brand!.id)
   const feed = new ScreenFeed({ kinds: ['flash', 'brand'], brandIds, portrait: true })
   for (let r = 1; r < rows; r++)
     for (const side of [-1, 1]) {
       const z = -r * L
-      wf.box(MAT.black, side * (B - 0.05), 1.9, z, 0.06, 1.62, 0.92)
-      wf.box(MAT.brass, side * (B - 0.04), 1.9, z, 0.04, 1.7, 1.0)
-      const m = screenMesh(feed, 0.84, 1.5)
-      m.position.set(side * (B - 0.09), 1.9, z)
+      wf.box(MAT.brass, side * (B - 0.095), 1.9, z, 0.04, 1.36, 0.78)
+      wf.box(MAT.black, side * (B - 0.115), 1.9, z, 0.04, 1.31, 0.74)
+      const m = screenMesh(feed, 0.7, 1.25)
+      m.position.set(side * (B - 0.145), 1.9, z)
       m.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2
       group.add(m)
       feed.addScreen(m)
@@ -206,13 +262,6 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     })
   for (const x of [-4.6, 4.6])
     if (!ctx.kit?.placeBatched('plant', wf, x, -len + 1.0, 0, ctx.colliders)) plant(wf, x, -len + 1.0, 1.2, 140 + Math.round(x))
-
-  // ----------------------------------------------------------- wall shade
-  // Dark-to-clear band at the base of the solid wall between storefronts.
-  wallGeo ??= new PlaneGeometry(6, 1.1)
-  wallMat ??= new MeshBasicMaterial({ map: wallGradientTexture(), transparent: true, depthWrite: false })
-  for (let r = 1; r < rows; r++)
-    for (const side of [-1, 1]) wf.custom(wallGeo, wallMat, side * (B - 0.01), 0.55, -r * L, 1, side < 0 ? Math.PI / 2 : -Math.PI / 2)
 
   return { feeds: [feed] }
 }

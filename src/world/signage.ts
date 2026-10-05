@@ -555,17 +555,3 @@ export function wayfindingTexture(headEn: string, headAr: string, names: string[
   g.fillText(line, 627, 128)
   return canvasTexture(c)
 }
-
-/** Vertical shade for the bottom of corridor walls (dark at the floor → clear). */
-let wallGrad: CanvasTexture | null = null
-export function wallGradientTexture(): CanvasTexture {
-  if (wallGrad) return wallGrad
-  const [c, g] = makeCanvas(4, 128)
-  const grad = g.createLinearGradient(0, 128, 0, 0)
-  grad.addColorStop(0, 'rgba(60,40,30,0.32)')
-  grad.addColorStop(1, 'rgba(60,40,30,0)')
-  g.fillStyle = grad
-  g.fillRect(0, 0, 4, 128)
-  wallGrad = canvasTexture(c)
-  return wallGrad
-}
