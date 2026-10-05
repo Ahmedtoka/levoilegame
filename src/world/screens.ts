@@ -179,67 +179,81 @@ export class ScreenFeed {
 
   private draw(c: HTMLCanvasElement, s: SlideSpec | null): void {
     const g = c.getContext('2d')!
-    const W = c.width
-    const H = c.height
+    this.paint(g, c.width, c.height, s)
+    gloss(g, c.width, c.height)
+  }
+
+  private paint(g: CanvasRenderingContext2D, W: number, H: number, s: SlideSpec | null): void {
     const P = this.portrait
     const redraw = () => (this.dirty = true)
     if (s?.kind === 'brand') {
       const bid = s.brandId
       if (!brandById.get(bid ?? '') || !catalog().sections.some((x) => x.id === bid)) s = null
     }
-    const grad = g.createLinearGradient(0, 0, W, H)
-    if (!s || s.kind === 'flash' || s.kind === 'games' || s.kind === 'welcome') {
-      grad.addColorStop(0, '#3e1c5c')
-      grad.addColorStop(1, '#5b2b82')
+    const dark = !s || s.kind === 'flash' || s.kind === 'games' || s.kind === 'welcome'
+    const grad = g.createLinearGradient(0, 0, W * 0.4, H)
+    if (dark) {
+      grad.addColorStop(0, '#47215f')
+      grad.addColorStop(1, '#25103a')
     } else {
-      grad.addColorStop(0, '#fbf6f2')
-      grad.addColorStop(1, '#efe6da')
+      grad.addColorStop(0, '#fcf8f3')
+      grad.addColorStop(1, '#eee4d6')
     }
     g.fillStyle = grad
     g.fillRect(0, 0, W, H)
-    g.strokeStyle = BRAND.gold
-    g.lineWidth = 6
-    g.strokeRect(12, 12, W - 24, H - 24)
+    frame(g, W, H, dark ? 'rgba(200,164,110,0.75)' : 'rgba(176,138,92,0.6)')
     const cx = W / 2
+    // Type scale: eyebrow (letter-spaced caps), display, title, body.
+    const eyebrow = 26
+    const ink = '#3a2e26'
     if (!s || s.kind === 'welcome') {
       const logo = img(BRAND.logoWhite, redraw, false)
-      if (logo) cover(g, logo, cx - (P ? 230 : 320), H / 2 - (P ? 130 : 110), P ? 460 : 640, P ? 130 : 180)
-      text(g, 'SHOP · PLAY · MEET', cx, H * (P ? 0.66 : 0.78), P ? 34 : 40, '#f1e6ff', 600, BRAND.fontLatin)
-      text(g, 'اتسوقي · العبي · قابلي صحابك', cx, H * (P ? 0.74 : 0.88), P ? 34 : 34, BRAND.gold, 700, BRAND.fontUi, true)
+      if (logo) contain(g, logo, cx, H * (P ? 0.42 : 0.4), P ? 420 : 560, P ? 120 : 160)
+      rule(g, cx, H * (P ? 0.55 : 0.6), 72, BRAND.gold)
+      text(g, spacedCaps('Shop · Play · Meet'), cx, H * (P ? 0.62 : 0.7), 30, '#f1e6ff', 500, BRAND.fontLatin)
+      text(g, 'اتسوقي · العبي · قابلي صحابك', cx, H * (P ? 0.69 : 0.8), 32, BRAND.gold, 700, BRAND.fontUi, true)
       return
     }
     if (s.kind === 'flash') {
       const b = brandById.get(s.brandId ?? '')
-      text(g, '⚡ FLASH SALE · فلاش سيل', cx, H * 0.16, P ? 40 : 48, BRAND.gold, 800)
-      text(g, `−${s.percent}%`, cx, H * (P ? 0.36 : 0.42), P ? 190 : 210, '#ffffff', 800, BRAND.fontLatin)
-      text(g, b?.name ?? '', cx, H * (P ? 0.56 : 0.66), P ? 56 : 64, '#ffffff', 700, BRAND.fontLatin)
-      text(g, b?.nameAr ?? '', cx, H * (P ? 0.64 : 0.77), P ? 46 : 48, '#f1e6ff', 700, BRAND.fontUi, true)
-      text(g, mmss((s.endsAt ?? 0) - Date.now()), cx, H * (P ? 0.8 : 0.9), P ? 64 : 52, BRAND.gold, 800, BRAND.fontLatin)
+      text(g, spacedCaps('Flash sale'), cx, H * (P ? 0.1 : 0.14), eyebrow, BRAND.gold, 600, BRAND.fontLatin)
+      text(g, 'فلاش سيل', cx, H * (P ? 0.15 : 0.23), 30, '#f1e6ff', 700, BRAND.fontUi, true)
+      text(g, `−${s.percent}%`, cx, H * (P ? 0.34 : 0.45), P ? 180 : 190, '#ffffff', 700, BRAND.fontLatin)
+      rule(g, cx, H * (P ? 0.47 : 0.62), 64, BRAND.gold)
+      text(g, b?.name ?? '', cx, H * (P ? 0.54 : 0.7), P ? 52 : 56, '#ffffff', 600, BRAND.fontLatin)
+      text(g, b?.nameAr ?? '', cx, H * (P ? 0.61 : 0.79), 40, '#f1e6ff', 700, BRAND.fontUi, true)
+      pill(g, cx, H * (P ? 0.78 : 0.9), P ? 260 : 220, P ? 84 : 64, 'rgba(200,164,110,0.18)', BRAND.gold)
+      text(g, mmss((s.endsAt ?? 0) - Date.now()), cx, H * (P ? 0.78 : 0.9), P ? 56 : 44, BRAND.gold, 700, BRAND.fontLatin)
       return
     }
     if (s.kind === 'games') {
-      text(g, '🎡  🛂  ✨  🪙', cx, H * 0.3, P ? 90 : 110, '#ffffff', 400)
-      text(g, 'Play & earn 122 Coins', cx, H * 0.55, P ? 48 : 60, '#ffffff', 700, BRAND.fontLatin)
-      text(g, 'العبي واكسبي 122 Coins', cx, H * 0.7, P ? 48 : 56, BRAND.gold, 800, BRAND.fontUi, true)
-      text(g, 'Wheel · Passport · Hidden logos', cx, H * 0.84, P ? 30 : 34, '#f1e6ff', 600, BRAND.fontLatin)
+      text(g, spacedCaps('122 Coins'), cx, H * (P ? 0.14 : 0.16), eyebrow, BRAND.gold, 600, BRAND.fontLatin)
+      coin(g, cx, H * (P ? 0.32 : 0.36), P ? 96 : 84)
+      text(g, 'Play & earn 122 Coins', cx, H * (P ? 0.52 : 0.6), P ? 44 : 54, '#ffffff', 600, BRAND.fontLatin)
+      text(g, 'العبي واكسبي 122 Coins', cx, H * (P ? 0.6 : 0.72), P ? 40 : 44, BRAND.gold, 700, BRAND.fontUi, true)
+      rule(g, cx, H * (P ? 0.68 : 0.8), 64, 'rgba(200,164,110,0.7)')
+      text(g, 'Wheel · Passport · Hidden logos', cx, H * (P ? 0.75 : 0.87), P ? 26 : 28, '#e6d8f2', 500, BRAND.fontLatin)
       return
     }
     if (s.kind === 'deal') {
       const p = catalog().byId.get(s.productId ?? '')
       const ph = p ? img(p.images[0], redraw) : null
-      const [px, py, pw, phh] = P ? [60, 60, W - 120, H * 0.48] : [40, 40, W * 0.42, H - 80]
+      const [px, py, pw, phh] = P ? [56, 56, W - 112, H * 0.46] : [48, 48, W * 0.42, H - 96]
+      g.fillStyle = '#e9dfd2'
+      g.fillRect(px, py, pw, phh)
       if (ph) cover(g, ph, px, py, pw, phh)
-      const tx = P ? cx : W * 0.72
-      const ty = P ? H * 0.58 : H * 0.18
-      text(g, '👥 Group deal · صفقة جماعية', tx, ty, P ? 34 : 38, '#5b2b82', 800)
-      text(g, `${s.joined}/${s.target}`, tx, ty + (P ? 110 : 120), P ? 120 : 130, '#2a1f33', 800, BRAND.fontLatin)
-      const bw = P ? W - 160 : W * 0.44
-      g.fillStyle = '#e6d9ee'
-      g.fillRect(tx - bw / 2, ty + (P ? 190 : 210), bw, 22)
-      g.fillStyle = '#5b2b82'
-      g.fillRect(tx - bw / 2, ty + (P ? 190 : 210), (bw * Math.min(s.joined ?? 0, s.target ?? 1)) / (s.target ?? 1), 22)
-      text(g, `−${s.percent}% · ${mmss((s.endsAt ?? 0) - Date.now())}`, tx, ty + (P ? 270 : 290), P ? 46 : 50, '#5b2b82', 800, BRAND.fontLatin)
-      if (p) text(g, p.title, tx, ty + (P ? 330 : 350), P ? 30 : 32, '#6b4f35', 600, BRAND.fontLatin)
+      const tx = P ? cx : W * 0.73
+      const ty = P ? H * 0.57 : H * 0.17
+      text(g, spacedCaps('Group deal'), tx, ty, eyebrow, '#8a6a46', 600, BRAND.fontLatin)
+      text(g, 'صفقة جماعية', tx, ty + 40, 30, '#5b2b82', 700, BRAND.fontUi, true)
+      text(g, `${s.joined}/${s.target}`, tx, ty + (P ? 130 : 140), P ? 110 : 116, ink, 700, BRAND.fontLatin)
+      const bw = P ? W - 180 : W * 0.4
+      const by = ty + (P ? 200 : 214)
+      pill(g, tx, by + 8, bw, 16, '#e6d9ee', null)
+      const k = Math.min(s.joined ?? 0, s.target ?? 1) / (s.target ?? 1)
+      if (k > 0) pill(g, tx - (bw * (1 - k)) / 2, by + 8, Math.max(16, bw * k), 16, '#5b2b82', null)
+      text(g, `−${s.percent}% · ${mmss((s.endsAt ?? 0) - Date.now())}`, tx, by + 70, P ? 42 : 44, '#5b2b82', 700, BRAND.fontLatin)
+      if (p) text(g, p.title, tx, by + 124, 28, '#6b4f35', 500, BRAND.fontLatin)
       return
     }
     // brand
@@ -253,16 +267,110 @@ export class ScreenFeed {
     }
     // The fascia paints its logo asynchronously; request a redraw once the image has loaded.
     if (b.logo) img(b.logo, redraw, false)
-    const fh = P ? 150 : 180
-    g.drawImage(fascia.image as HTMLCanvasElement, P ? 30 : 160, 30, P ? W - 60 : W - 320, fh)
+    const fh = P ? 140 : 164
+    const fw = P ? W - 96 : W - 360
+    g.drawImage(fascia.image as HTMLCanvasElement, (W - fw) / 2, 44, fw, fh)
     const prods = sec.productIds.slice(0, 2).map((id) => catalog().byId.get(id)).filter((p) => !!p)
+    const gap = 24
     prods.forEach((p, k) => {
       const ph = img(p!.images[0], redraw)
-      const [x, y, w, h] = P ? [40 + k * ((W - 100) / 2 + 20), fh + 60, (W - 100) / 2, H * 0.5] : [60 + k * (W / 2 - 40), fh + 50, W / 2 - 100, H - fh - 150]
+      const [x, y, w, h] = P
+        ? [48 + k * ((W - 96 - gap) / 2 + gap), fh + 76, (W - 96 - gap) / 2, H * 0.5]
+        : [72 + k * ((W - 144 - gap) / 2 + gap), fh + 68, (W - 144 - gap) / 2, H - fh - 190]
+      g.fillStyle = '#e9dfd2'
+      g.fillRect(x, y, w, h)
       if (ph) cover(g, ph, x, y, w, h)
     })
-    text(g, `Discover ${b.name} · اكتشفي ${b.nameAr}`, cx, H - (P ? 90 : 50), P ? 34 : 38, b.color, 800)
+    rule(g, cx, H - (P ? 150 : 100), 56, b.color)
+    text(g, `Discover ${b.name}`, cx, H - (P ? 112 : 70), P ? 32 : 32, ink, 600, BRAND.fontLatin)
+    text(g, `اكتشفي ${b.nameAr}`, cx, H - (P ? 66 : 36), P ? 32 : 26, b.color, 700, BRAND.fontUi, true)
   }
+}
+
+/** Letter-spaced capitals for eyebrow labels. */
+function spacedCaps(t: string): string {
+  return t.toUpperCase().split('').join(' ')
+}
+
+function rule(g: CanvasRenderingContext2D, cx: number, y: number, w: number, color: string): void {
+  g.fillStyle = color
+  g.fillRect(cx - w / 2, y - 1, w, 2)
+}
+
+function pill(g: CanvasRenderingContext2D, cx: number, cy: number, w: number, h: number, fill: string, stroke: string | null): void {
+  const r = h / 2
+  g.beginPath()
+  g.moveTo(cx - w / 2 + r, cy - r)
+  g.lineTo(cx + w / 2 - r, cy - r)
+  g.arc(cx + w / 2 - r, cy, r, -Math.PI / 2, Math.PI / 2)
+  g.lineTo(cx - w / 2 + r, cy + r)
+  g.arc(cx - w / 2 + r, cy, r, Math.PI / 2, (Math.PI * 3) / 2)
+  g.closePath()
+  g.fillStyle = fill
+  g.fill()
+  if (stroke) {
+    g.strokeStyle = stroke
+    g.lineWidth = 2
+    g.stroke()
+  }
+}
+
+/** Hairline inner frame with small corner brackets. */
+function frame(g: CanvasRenderingContext2D, W: number, H: number, color: string): void {
+  const m = 22
+  const k = 34
+  g.strokeStyle = color
+  g.lineWidth = 1.5
+  g.strokeRect(m, m, W - m * 2, H - m * 2)
+  g.lineWidth = 4
+  g.beginPath()
+  for (const [x, y, dx, dy] of [[m, m, 1, 1], [W - m, m, -1, 1], [m, H - m, 1, -1], [W - m, H - m, -1, -1]] as const) {
+    g.moveTo(x, y + dy * k)
+    g.lineTo(x, y)
+    g.lineTo(x + dx * k, y)
+  }
+  g.stroke()
+}
+
+function contain(g: CanvasRenderingContext2D, im: HTMLImageElement | HTMLCanvasElement, cx: number, cy: number, w: number, h: number): void {
+  const s = Math.min(w / im.width, h / im.height)
+  g.drawImage(im, cx - (im.width * s) / 2, cy - (im.height * s) / 2, im.width * s, im.height * s)
+}
+
+function coin(g: CanvasRenderingContext2D, cx: number, cy: number, r: number): void {
+  const grad = g.createRadialGradient(cx - r * 0.3, cy - r * 0.34, r * 0.1, cx, cy, r)
+  grad.addColorStop(0, '#fff1c9')
+  grad.addColorStop(0.55, '#e3bf78')
+  grad.addColorStop(1, '#a8803f')
+  g.fillStyle = grad
+  g.beginPath()
+  g.arc(cx, cy, r, 0, Math.PI * 2)
+  g.fill()
+  g.strokeStyle = 'rgba(120,84,32,0.6)'
+  g.lineWidth = 3
+  g.beginPath()
+  g.arc(cx, cy, r * 0.82, 0, Math.PI * 2)
+  g.stroke()
+  text(g, '122', cx, cy + r * 0.04, r * 0.62, '#6b4a1c', 800, BRAND.fontLatin)
+}
+
+/** Subtle screen gloss baked over every slide: a soft top sheen and one diagonal streak. */
+function gloss(g: CanvasRenderingContext2D, W: number, H: number): void {
+  const top = g.createLinearGradient(0, 0, 0, H * 0.45)
+  top.addColorStop(0, 'rgba(255,255,255,0.09)')
+  top.addColorStop(1, 'rgba(255,255,255,0)')
+  g.fillStyle = top
+  g.fillRect(0, 0, W, H * 0.45)
+  g.save()
+  g.globalCompositeOperation = 'lighter'
+  const d = g.createLinearGradient(W * 0.08, 0, W * 0.5, H)
+  d.addColorStop(0, 'rgba(255,255,255,0)')
+  d.addColorStop(0.46, 'rgba(255,255,255,0)')
+  d.addColorStop(0.5, 'rgba(255,255,255,0.05)')
+  d.addColorStop(0.6, 'rgba(255,255,255,0)')
+  g.fillStyle = d
+  g.fillRect(0, 0, W, H)
+  g.restore()
 }
 
 export function screenMesh(feed: ScreenFeed, w: number, h: number): Group {

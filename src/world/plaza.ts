@@ -56,9 +56,10 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
 
   // ------------------------------------------------------- LED screen
   const sz2 = STAGE.screenZ
-  for (const px of [-3.7, 3.7]) f.block(MAT.brass, px, 0.45, sz2, 0.2, 6.2, 0.2)
-  f.box(MAT.brass, sx, 4.47, sz2, 7.45, 4.35, 0.12)
-  f.box(MAT.black, sx, 4.47, sz2, 7.3, 4.2, 0.18)
+  // Slim bronze bezel (6 cm) around a black surround; the screen sits 1 cm proud of it.
+  for (const px of [-3.68, 3.68]) f.block(MAT.brass, px, 0.45, sz2, 0.2, 6.2, 0.2)
+  f.box(MAT.brass, sx, 4.47, sz2, 7.2, 4.14, 0.12)
+  f.box(MAT.black, sx, 4.47, sz2, 7.08, 4.02, 0.18)
   const front = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games', 'welcome'], brandIds: openBrandIds(), portrait: false })
   const back = new ScreenFeed({ kinds: ['brand'], brandIds: openBrandIds(), portrait: false, interval: 4 })
   const fm = screenMesh(front, 7, 3.94)
@@ -111,6 +112,9 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   const colFeed = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games'], brandIds: openBrandIds(), portrait: true })
   for (const [cx, cz] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) {
     const yaw = Math.atan2(sx - cx, sz - cz)
+    // Thin bronze bezel plate behind the screen, sunk into the column.
+    f.box(MAT.brass, cx + Math.sin(yaw) * 0.43, 2.1, cz + Math.cos(yaw) * 0.43, 1.07, 1.85, 0.06, { rotY: yaw })
+    f.box(MAT.black, cx + Math.sin(yaw) * 0.445, 2.1, cz + Math.cos(yaw) * 0.445, 1.03, 1.81, 0.04, { rotY: yaw })
     const m = screenMesh(colFeed, 1.0, 1.78)
     m.position.set(cx + Math.sin(yaw) * 0.47, 2.1, cz + Math.cos(yaw) * 0.47)
     m.rotation.y = yaw
