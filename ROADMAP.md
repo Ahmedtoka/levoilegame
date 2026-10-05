@@ -1,47 +1,43 @@
 # Roadmap
 
-## 1. Shopify Storefront API (next)
-- Fill `ShopifyStorefrontProvider`: fetch per collection (already written), map variants to sizes and colors, and color swatches from metafields.
-- Cart sync: mirror the local cart into a Shopify Cart (`cartCreate`/`cartLinesAdd`/`cartLinesUpdate`) so it survives devices, and add buyer identity before redirecting to `checkoutUrl`.
-- Drive `modelOutfit` and the hosted cutout URL from product tags or metafields; regenerate cutouts in a CI job (`scripts/remove-bg.py`).
-- Inventory: show "sold out" on panels and disable sizes without stock.
-- Handle Shopify's return from checkout (order status page → "thank you" scene).
+Current state: the 122 Mall is a frontend-only demo (plaza, three wings, 16 brands + 4 Coming Soon, Le Voile's real boutique, 122 Coins, simulated crowd). Next steps, roughly in order:
 
-## 2. Store visuals: baked boutique scene
-- Use the Le Voile boutique Blender scene (`EL_REBAT_Render.blend`) as the store. Bake its Cycles lighting (lightmaps/AO) into textures and export a Draco-compressed GLB to `public/models/mall/`.
-- Place sections, products, models and the cashier on anchors (empties) authored in Blender, so merchandisers can rearrange the store without code.
-- Adopt its look across the procedural parts: warm palette (cream, oak, bronze, marble) and warm area lighting.
-- Convert product photos to WebP/AVIF at 1024 px (currently ~45 MB of JPEG/PNG) and generate KTX2 textures for the GLB.
+## 1. Real catalogues per brand (Shopify per brand)
+- Replace the generated placeholder products (`src/data/mallCatalog.ts`) with one real data source per brand: a data file first, then a Shopify Storefront collection or store per brand (`ShopifyStorefrontProvider` already exists for Le Voile).
+- Map variants to sizes and colours, swatches from metafields, inventory ("sold out", disabled sizes), `modelOutfit` and hosted cutouts from tags or metafields.
+- Per-brand checkout: cart lines grouped by brand, redirect to the brand's `checkoutUrl`; handle the return from checkout ("thank you" scene).
+- Brand logos (`BrandDef.logo`) and Arabic names confirmed with each client.
 
-## 3. Better clothing on models (stylised, modest)
-- Keep the friendly cartoon characters; realistic human bodies are out. The modesty rule is mandatory: never unclothed, abaya / long dress or long sleeves with a long skirt or wide trousers, only face and hands visible, most in hijab.
-- Outfit meshes per silhouette (abaya, wide-leg pants, maxi skirt, cardigan) on the same rig, textured from the product photo (projected or AI-generated texture), instead of a flat tint.
-- Hijab variants with light cloth wobble (vertex shader).
-- More poses and subtle idle loops.
+## 2. Bespoke décor per brand
+- Le Voile is done (`src/world/bespoke/levoile.ts`, baked boutique). Give each open brand its own interior through `ShopContext.bespoke[brandId]`: palette, fixtures, signage and display layout.
+- Open the 4 Coming Soon units as brands sign up (replace the `soon-N` slot in `WINGS`).
 
-## 4. Live mall backend: Laravel + Reverb on Cloudways
-The live-mall demo (`src/social/`) is frontend-only today. Each mock gets a real implementation of the same interface:
-- `PresenceSource` → a Reverb presence channel per mall: real shoppers, what they're viewing, purchases (social-proof toasts and viewer counts from real data).
-- `StaffChatService` → realtime staff ↔ customer chat on private channels, with a staff dashboard (Laravel) to answer, send product cards and full looks. Customers never chat with each other.
-- `DealsService` → group deals, flash sales and coupons from the admin, broadcast as events.
-- `IdentityService` → Sanctum + SMS OTP; coupons stored server-side and redeemed as Shopify discount codes.
-- Hosting: Laravel app + Reverb websocket server on Cloudways; the static frontend stays on Cloudflare Pages.
+## 3. Live backend: Laravel + Reverb on Cloudways
+Each mock in `src/social/` gets a real implementation of the same interface:
+- `PresenceSource` → a Reverb presence channel per mall: real shoppers, what they view, purchases.
+- `StaffChatService` → realtime staff ↔ customer chat on private channels with a staff console in Laravel (reply, send product cards and full looks). Customers never chat with each other.
+- `DealsService` → group deals, flash sales and coupons from an admin panel, broadcast as events.
+- `IdentityService` → Sanctum + SMS OTP.
+- Server-side 122 Coins and coupons: earning and spending validated on the server, brand-scoped coupons redeemed as discount codes.
+- Hosting: Laravel + Reverb on Cloudways; the static frontend keeps deploying through the GitHub Action.
 
-## 5. Voice / AI shopping assistant
-- Staff chat gets an AI first responder, reusing the existing Le Voile bot logic and tone in Egyptian Arabic and English, with hand-off to a human.
-- Tools: search the catalogue, "take me to…" (calls `game.teleport`), add to cart, size advice, current promos.
-- Voice input and output (Web Speech API, or a TTS service) with lip-flap animation on the assistant.
+## 4. Visual quality and weight
+- **Whole-mall lighting bake** (plaza, wings, shops) in the boutique's warm look, plus **KTX2** textures for the GLBs and large images.
+- **Kit re-bake without soft goods:** the baked garments are hidden at runtime (`hideSoft`), but their faint baked shadows remain; re-bake the kit without them.
+- Mobile: measure real phones (current numbers are desktop/High only) and tune tiers.
 
-## 6. Analytics
-- Events: section entered, product viewed (dwell time), add to cart, checkout started, order placed, exit (with or without purchase).
-- Heatmap of walked paths and gaze (crosshair targets) per section, to inform layout and merchandising.
-- Send to GA4 / Shopify Pixels; A/B test layouts and display types.
+## 5. Analytics
+- Events: shop entered, product viewed (dwell time), add to cart, checkout started, order placed, coins earned and redeemed, exit.
+- Heatmaps of walked paths and gaze per wing and shop, to inform brand placement; send to GA4 / Shopify Pixels; A/B test layouts.
 
-## 7. Multiplayer / guided tours
-- Real shoppers as crowd avatars via the Reverb presence channel (the crowd already renders `PresenceSource` members).
-- Guided tours: a stylist hosts a live session, with teleport-together, product spotlight and voice.
-- Events in the mall: launch days and collection reveals with timed scenes.
+## 6. AI first responder
+- Staff chat gets an AI first responder in Egyptian Arabic and English, with hand-off to a human. Tools: search catalogues, "take me to…" (`game.teleport`), add to cart, size advice, current promos.
+- Optional voice input/output with lip-flap on the assistant.
+
+## 7. Real-shopper avatars and events
+- Real shoppers as crowd avatars via the presence channel (the crowd already renders `PresenceSource` members).
+- Events on the plaza stage: launch days, collection reveals, guided tours hosted by a stylist.
 
 ## Housekeeping
-- Unit tests for the cart store, phone validation and layout generation; a Playwright smoke test (boot → add to cart → mock checkout → exit).
-- Accessibility: keyboard-only UI navigation, reduced-motion mode, and a 2D catalogue toggle for anyone who prefers it.
+- Playwright smoke test (boot → add to cart → mock checkout → exit).
+- Accessibility: keyboard-only UI navigation, reduced-motion mode, and a 2D catalogue toggle.

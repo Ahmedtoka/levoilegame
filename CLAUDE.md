@@ -29,13 +29,17 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - The model preloads about 2.5 s after boot.
   - Brand logos: `BrandDef.logo` (shopfront + blade sign).
 - **Plaza/corridor finishing:** `plaza.ts` (stage + LED + seating), `corridor.ts` (per-wing finishing), `screens.ts`/`screenSlides.ts` (live screens, shared feeds), `decals.ts`/`glow.ts` (instanced contact shadows / additive glows, glows hidden on Low).
+- **Product display:** every shop shows its products on fixtures: `cardPanel` and the lookbook stand in `src/world/displays.ts`, with kit pieces placed via `Kit.place(..., { hideSoft: true })` so the baked garments (`store_soft`) are hidden. Always-visible kit plants use `Kit.placeBatched` (one batched draw). Design: `docs/superpowers/specs/2026-10-05-product-display-design.md`.
+- **Controls:** `src/player/controlsMath.ts` holds the pure maths (look smoothing, tap-to-walk, product focus, touch tuning), unit-tested. Design: `docs/superpowers/specs/2026-10-05-controls-design.md`.
+- **WebP images:** `scripts/optimize-images.py` writes `.webp` next to each product photo/cutout; `src/data/webImage.ts` picks them at runtime (failed cutouts have none); a Vite plugin in `vite.config.ts` prunes the jpg/png sources from `dist/`.
+- **Plaza and corridors:** the plaza has an events stage with LED wall and live screens (`plaza.ts`, `screens.ts`); each wing is finished in `corridor.ts`. Notes: `docs/superpowers/notes/`.
 - **Branding:** `BRAND` in `src/config/brand.ts`. The `magenta` key holds the 122 plum. Logos are `public/brand/122-logo*.svg`.
 
 ## Stack and key decisions
 
 - **Vite + TypeScript + plain Three.js** (no React/R3F: lighter on phones, and the HUD is simple panels). **Zustand vanilla** store (`src/state/store.ts`) drives the HTML/CSS HUD. It persists cart, language and settings.
 - **Everything 3D is procedural:** mall, props, canvas-drawn bilingual signage and characters. The décor kit / boutique GLBs (`public/models/mall/`) are optional, and the app never blocks on them.
-- **Layout comes from config** (`src/config/layout.ts`): an atrium at the entrance (z = 0, the mall extends to −z), then a boulevard with shops alternating L/R. One shop per section; an odd count leaves a lounge. Shop interiors are built in a local frame (origin = centre of the opening, −Z into the shop).
+- **Layout comes from config** (`src/config/layout.ts` + `src/config/mall.ts`): a plaza at the entrance (z = 0) with three wings, one shop per slot. Shop interiors are built in a local frame (origin = centre of the opening, −Z into the shop).
 - **Per-section look** is in `src/config/sections.ts` (`display`: rack/shelf/gallery/boxes, `tint`, model `outfit`, size profile, Shopify `collection`). Unknown sections get defaults.
 - **Characters** (`src/actors/`): every character comes from `createCharacter(look, seed)`, one procedural cartoon rig (Groups: hips, spine, head, arms, legs). Hijab / hair meshes are added straight onto the head and spine bones. Meshes are merged per bone with vertex colours (`bake.ts`, ~10 draw calls each). Outfit colours are sampled from the product cutout. Models only for products with `modelOutfit: true`; every shop has a sales assistant (magenta vest + logo); there's also a concierge, a cashier and 3 stylists. Realistic / GLB human bodies were removed on purpose: don't bring them back.
 - **MODESTY RULE (mandatory, no exceptions):**
@@ -60,7 +64,7 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - Static geometry is instanced via `engine/batcher.ts`.
   - Shop interiors and their characters are culled when not visible.
   - Product textures are lazy-loaded per shop.
-  - Blob shadows only. The floor reflector is High-only and shown only while the atrium is in view.
+  - Blob shadows only. The floor reflector is High-only and shown only while the plaza is in view.
 - **Audio** is generated with Web Audio (`src/audio/audio.ts`); there are no audio files.
 - **Arabic is the default.** `<html dir>` follows the language; use CSS logical properties. Product titles stay in English. 3D price tags use Latin digits (they're baked into textures once).
 
@@ -108,7 +112,7 @@ node scripts/fetch-assets.mjs              # validate + download images and logo
 
 `EL_REBAT_Render.blend` (project root, Blender 4.2, Cycles) is the **Le Voile boutique** design: warm palette (cream, oak, bronze, grey marble), 10 warm area lights, and signage "Le Voile", "NEW", "FITTING" and "THANK YOU".
 
-**Decision (user):** keep the **mall** (atrium, boulevard, 9 section shops, atrium cashier, exit) as the experience, and give it the boutique's décor and quality.
+**Decision (user):** keep the **mall** (plaza, wings, shops, plaza cashier, exit) as the experience, and give it the boutique's décor and quality.
 
 - **Pipeline:** `node scripts/bake-store.mjs` drives `scripts/blender/export_store.py` in stages: prep → bake (arch, ceiling, fixtures, soft, hardware) → export → kit. It uses portable Blender in `tools/` and writes working files to `tools/bake-work/`.
   - Each bake group is joined into ONE object first. Baking many selected objects runs one Cycles pass per object, which is very slow.

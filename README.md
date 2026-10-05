@@ -1,46 +1,37 @@
-# Le Voile — Virtual Store
+# 122 Mall — Virtual Community Mall
 
-A walkable 3D fashion mall for **Le Voile** (levoilestores.com). Visitors walk through the shops, look at styled models and products, add to cart, pay at the cashier (mocked for now) and leave through the doors. It's frontend-only and builds to a static `dist/`. The data and checkout sit behind interfaces, so Shopify can replace them later.
+A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon" units, a Styling Studio and a lounge. Visitors walk the plaza and three wings, browse each brand's shop, play games that earn **122 Coins**, swap coins for brand discounts at each shop's rewards counter, chat with staff, and check out at the plaza cashier (mocked). It started as the Le Voile virtual store; Le Voile is now one tenant and keeps its real catalogue and its real baked boutique. It's frontend-only and builds to a static `dist/`. Data and checkout sit behind interfaces, so Shopify and a Laravel backend can replace the mocks later.
 
 - **Stack:** Vite + TypeScript, Three.js (plain, no React), Zustand (vanilla) for state, and an HTML/CSS HUD over the canvas.
 - **Languages:** Arabic (default, RTL) and English, switchable at any time.
-- **Assets:** everything 3D is generated in code (mall, props, signage, characters). The store décor comes from an optional baked kit (`kit.glb`), and the app never blocks on missing assets.
+- **Assets:** everything 3D is generated in code (mall, props, signage, characters). The décor comes from an optional baked kit (`kit.glb`) and Le Voile's boutique (`store.glb`); the app never blocks on missing assets.
 - **Characters:** stylised, friendly cartoon people, all procedural. **Modesty rule (no exceptions):** every character is fully and modestly dressed (abaya / long dress, or long sleeves with a long skirt or wide trousers). Only the face and hands are skin; legs and neck are always covered, and most wear hijab. Clothing is merged into the same mesh as the body, and a character stays hidden until it's fully built, so a body can never render without clothes.
-- **Live mall demo:** a simulated crowd, staff chat, group deal, flash sales and discount games. Everything is mocked in the browser behind interfaces that a Laravel + Reverb backend can replace later (see [Live mall demo](#live-mall-demo)).
+- **Live mall demo:** a simulated crowd, staff chat, group deal, flash sales and discount games, all mocked in the browser behind interfaces that a Laravel + Reverb backend can replace later (see [Live mall demo](#live-mall-demo)).
 
 ## Run locally
 
-Requirements: Node.js ≥ 20.
+Requirements: Node.js ≥ 22.12.
 
 ```bash
 npm install
+npm run dev      # http://localhost:5173
+npm test         # vitest
+npm run build    # tsc + vite build → dist/
+npm run preview  # serve dist/ locally
 ```
 
-```bash
-npm run dev
-```
-
-Then open http://localhost:5173. Useful URL flags:
+URL flags:
 
 | Flag | Effect |
 |---|---|
 | `?fps` | FPS / draw-call / quality readout |
 | `?nolock` | Drag-to-look instead of pointer lock (embedded previews, iframes) |
-| `?debug` | Exposes `window.lv` (game, store, engine) in production builds; always on in dev |
-| `?boutique` | Walk the single baked Le Voile boutique instead of the mall |
-| `?nokit` | Mall with procedural props instead of the baked décor kit |
+| `?debug` | Exposes `window.lv` (game, store, engine, layout, catalog, social) in production builds; always on in dev |
+| `?boutique` | Walk the single baked Le Voile boutique (original catalogue) instead of the mall |
+| `?nokit` | Procedural props instead of the baked décor kit |
+| `?nobespoke` | Generic furnishing for every shop (turns off bespoke interiors such as Le Voile's) |
 | `?crowd=N` | Number of simulated shoppers (0–80). Default by quality: High 50, Medium 30, Low 20 |
 | `?nodemo` | Turns off every simulation: crowd, purchase toasts, viewer counts, group deal and flash sales. Staff chat and the games stay |
-
-Production build and local preview:
-
-```bash
-npm run build
-```
-
-```bash
-npm run preview
-```
 
 ## Controls
 
@@ -48,9 +39,55 @@ npm run preview
 |---|---|
 | WASD / ↑↓ move, ←→ turn | Left half: floating joystick (push far to run) |
 | Mouse look (click Enter to lock the pointer) | Right half: drag to look |
-| Shift run · E or click interact | Tap a product / person, or the ✋ button |
+| Shift run · E or click interact | Tap a product / person / screen, or the ✋ button |
 | C cart · M minimap · V camera (1st/3rd person) · T or Tab teleport menu | Top bar buttons |
-| Esc releases the mouse / closes a panel | |
+| Esc releases the mouse / closes a panel | **Tap-to-walk:** tap the floor (touch, or click in `?nolock` mode) and you walk there; a ring marks the target. Any joystick/WASD input cancels it |
+
+- **Look smoothing:** mouse and touch look ease towards the target, so uneven pointer events don't jitter the camera.
+- **Product focus:** opening a product eases the camera so the product sits centred behind the sheet (first person only).
+- The pure maths lives in `src/player/controlsMath.ts` (unit-tested). Design: `docs/superpowers/specs/2026-10-05-controls-design.md`.
+
+## The mall layout
+
+Config lives in `src/config/layout.ts` (geometry) and `src/config/mall.ts` (brands and slots).
+
+- **Plaza:** 44 × 34 m, entrance at z = 0, with an events stage, an LED wall and live screens, seating, the cashier, the wheel and the group-deal board.
+- **Three wings** open off the plaza, each with finished corridors (floor inlays, planters, pendant lights, directory board, wayfinding). Slots, in order:
+
+| Wing | Slots |
+|---|---|
+| West | Le Voile, Nourhan, Scarfest, BezraVoga, Noha Collection, Rwan Designs, Coming Soon 1, Styling Studio |
+| North | AXIS, THE CAUSE WEAR, DND, Jeno, Pistage, Fashion Avenue, Coming Soon 2, Lounge |
+| East | HashBag, Slip & Go, Nanosh, ProMax, Coming Soon 3, Coming Soon 4 |
+
+Coming Soon units get a closed hoarding front. The Styling Studio and the lounge are amenity units.
+
+## Add a brand
+
+1. **Brand and slot** in `src/config/mall.ts`: add a `BrandDef` to `BRANDS` (`id`, `name`, `nameAr`, `initials`, `color`, `status`, `display` rack/shelf/gallery/boxes, model `outfit`, placeholder `kinds`) and put its id in a wing's `slots` in `WINGS`. To open a Coming Soon unit, replace its `soon-N` slot with the brand id.
+2. **Logo:** set `BrandDef.logo` (e.g. `/brand/<id>.png`); it is used on the shopfront and the blade sign. Without it, a monogram is drawn.
+3. **Products:** today every brand except Le Voile gets generated placeholder products (`buildMallCatalog()` in `src/data/mallCatalog.ts`). Real products later come from one data file or Shopify collection per brand (TODO).
+4. **Bespoke interior (optional):** register a builder in `ShopContext.bespoke[brandId]` (see `src/world/bespoke/levoile.ts`). It replaces the generic furnishing; `?nobespoke` turns it off. A bespoke unit can be deeper via `BrandDef.depth`.
+
+Products are shown on fixtures in every shop: composed card panels, rails, shelves and easels (`src/world/displays.ts`, `cardPanel`), placed with `Kit.place(..., { hideSoft: true })` so baked garments don't compete with real products.
+
+## 122 Coins
+
+Frontend-only today (`src/social/games.ts`). Redeeming needs the mock login.
+
+| Earn | Coins |
+|---|---|
+| Passport stamp per shop visited | +10 (all shops: +150 bonus) |
+| Treasure logo found (5 hidden in the mall) | +25 each (5/5: +100 bonus) |
+| Wheel of fortune (one spin per session) | 20 / 50 / 100 / 200 coins, free shipping, or better luck |
+
+| Spend (at a shop's rewards counter) | Discount |
+|---|---|
+| 100 coins | 10% |
+| 250 coins | 20% |
+| 400 coins | 30% |
+
+The result is a brand-scoped coupon: `pricing.ts` applies it only to that brand's cart lines. Coupons are single-use.
 
 ## Test on a phone (temporary public URL)
 
@@ -64,20 +101,33 @@ cloudflared tunnel --url http://localhost:5173
 
 It prints a `https://….trycloudflare.com` link; open it on the phone. The tunnel lives only while the command runs. Vite may reject the unknown host. If it does, run `npm run build && npm run preview -- --host` and tunnel port 4173 instead, or add the tunnel host to `server.allowedHosts` in `vite.config.ts`.
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudways (GitHub Action)
 
-1. Push the project to GitHub (or GitLab).
-2. In Cloudflare: **Workers & Pages → Create → Pages → Connect to Git** and pick the repo.
-3. Use framework preset **None**, build command `npm run build`, output directory `dist`, and set the environment variable `NODE_VERSION=20` (or newer).
-4. Deploy. Each push redeploys.
+`.github/workflows/deploy.yml` runs on every push to `master` (and manually via **Run workflow**): `npm ci` → `npm test` → `npm run build` → rsync `dist/` to the Cloudways app over SSH. Add these in the repo under **Settings → Secrets and variables → Actions**:
 
-The same `dist/` works as-is on Netlify or Vercel (build `npm run build`, publish `dist`). Assets use absolute paths (`/products`, `/brand`, `/models`), so deploy at a domain root, not a sub-folder.
+| Secret | Value |
+|---|---|
+| `CLOUDWAYS_HOST` | Server public IP |
+| `CLOUDWAYS_USER` | SSH username |
+| `CLOUDWAYS_SSH_KEY` | Private key whose public half is added in Cloudways → SSH keys |
+| `CLOUDWAYS_PATH` | App web root, e.g. `/home/master/applications/<app-id>/public_html` |
+| `CLOUDWAYS_PORT` | Optional, default 22 |
 
-Direct upload without Git:
+Assets use absolute paths (`/products`, `/brand`, `/models`), so serve from the **domain root**, not a sub-folder. The upload uses `--delete` but keeps `.well-known` (SSL).
+
+**Alternative:** Cloudflare Pages / Netlify / Vercel work with the same `dist/` (build `npm run build`, output `dist`, `NODE_VERSION=22`). Direct upload: `npx wrangler pages deploy dist --project-name <name>`.
+
+## Image pipeline
 
 ```bash
-npx wrangler pages deploy dist --project-name levoile-virtual-store
+node scripts/fetch-assets.mjs                    # validate + download images and logo (skips existing)
+.venv/Scripts/python scripts/remove-bg.py        # cutouts (skips existing; --force --only <id>)
+.venv/Scripts/python scripts/optimize-images.py  # WebP derivatives of photos and cutouts
 ```
+
+- Python tooling runs in `.venv` (Python 3.12).
+- `optimize-images.py` writes `.webp` next to each source. The app loads WebP (`src/data/webImage.ts`), and a Vite plugin in `vite.config.ts` prunes the `.jpg` / `.png` sources from `dist/`, so the build ships only WebP. Failed cutouts get no WebP and fall back to `images[0]`.
+- Don't hand-edit image paths in `products.json`; `products.remote.json` is the source for re-fetching.
 
 ## Project structure
 
@@ -85,44 +135,30 @@ npx wrangler pages deploy dist --project-name levoile-virtual-store
 src/
   main.ts                  boot: catalog → engine → world → UI
   game.ts                  loop, controls state, zones, cashier/exit triggers, teleport
-  config/                  brand, layout (procedural mall), sections (per-section style)
-  data/                    products.json, types, defaults (sizes/colors TODO), providers/
+  config/                  brand, mall (brands, wings), layout (plaza + wings), sections
+  data/                    products.json, mallCatalog (placeholders), types, webImage, providers/
   services/                CheckoutService (mock + Shopify)
   engine/                  renderer, quality tiers, batcher (instancing), colliders, textures
-  world/                   mall shell, shops, cashier desk, people, props, signage, materials,
+  world/                   mall shell (plaza, corridors), shops, bespoke/, displays, kit, cashier,
                            crowd (simulated shoppers + LOD), liveMall (studio, wheel, treasures, deal boards)
   actors/                  procedural character, hijab/hair, palettes
-  social/                  live-mall services: presence, staff chat, deals, identity (mocks), pricing, games
-  player/                  input (keyboard/mouse), touch joystick, player movement/camera
+  social/                  presence, staff chat, deals, identity (mocks), pricing, games (122 Coins)
+  player/                  input, touch joystick, controlsMath, movement/camera
   interact/                raycast interaction
-  ui/                      HUD, product card, cart, checkout, menu, minimap, screens, social (chat, wheel, claim, live HUD)
+  ui/                      HUD, product card, cart, checkout, menu, minimap, screens, social
   audio/                   generative ambient music + UI sounds (Web Audio, no files)
 public/
-  products/<id>/1.jpg …    product photos; cutout.png (valid cutouts only)
-  brand/                   logo.png, logo-trim.png, logo-white.png
-  models/{props,mall}/     optional GLBs: décor kit, baked boutique
-  draco/                   Draco decoder for compressed GLBs
-scripts/                   fetch-assets.mjs, remove-bg.py (asset pipeline)
+  products/<id>/…          product photos (+ .webp), cutouts
+  brand/                   122 and Le Voile logos
+  models/mall/             kit.glb, store.glb (optional)
+  draco/                   Draco decoder
+scripts/                   fetch-assets.mjs, remove-bg.py, optimize-images.py, bake-store.mjs
+docs/superpowers/          design specs and notes
 ```
 
-## Add a section or product
+## Le Voile catalogue
 
-Everything comes from `src/data/products.json`.
-
-**Add a product:** add an object to `products` (see the contract in `CLAUDE.md`), put its photos in `public/products/<id>/1.jpg, 2.jpg…`, and add its id to the section's `productIds`. `cutout` is optional (`null` falls back to `images[0]`). Set `modelOutfit: true` to give it a showcase model and standee.
-
-**Add a section:** add an entry to `sections` (with `id`, `title`, `titleAr` and `productIds`). The layout generates a new shop on the boulevard automatically (shops alternate left/right), and it appears on the directory, minimap and teleport menu.
-
-Optionally, style it in `src/config/sections.ts`:
-
-```ts
-'new-section': { display: 'shelf', tint: '#f1e2ea', outfit: 'skirt', sizes: 'free', collection: 'shopify-collection-handle' },
-```
-
-- `display` is `rack` (hanging panels), `shelf` (framed cards on two shelves), `gallery` (framed wall art) or `boxes` (vitrines on plinths).
-- Without an entry, the section gets a brand-derived pastel tint and a `rack` display.
-
-To refresh images from Shopify's CDN, run `node scripts/fetch-assets.mjs` (it reads `products.remote.json`). For cutouts, run `.venv/Scripts/python scripts/remove-bg.py --only <id>`, then check the result before adding the `cutout` path.
+Le Voile's real catalogue is `src/data/products.json` (contract in `CLAUDE.md`). To add a product, add its object, put photos in `public/products/<id>/1.jpg…`, add its id to a section's `productIds`, and run the image pipeline. Set `modelOutfit: true` for a showcase model. Its sections are merged into the single Le Voile shop.
 
 ## Switch to Shopify
 
@@ -203,13 +239,13 @@ Frontend only: every "live" thing is simulated in the browser. The services live
 | `DealsService` | `MockDeals`: group deal (starts 7/10), flash sales (first ~45 s after entering, then every 3 min, 2 min long) | Deals API + broadcast events |
 | `IdentityService` | `MockIdentity`: phone + OTP, **any 4 digits work** | Sanctum + SMS OTP |
 
-Customers never chat with each other: chat is only between the customer and Le Voile staff.
+Customers never chat with each other: chat is only between the customer and shop staff.
 
 **What's in the mall:**
 
 - **Crowd (20–50 shoppers):** cartoon and modest, with these states:
   - browsing: walking between shops and stopping at displays;
-  - buying: queueing at the cashier, then leaving through the doors with a Le Voile bag;
+  - buying: queueing at the cashier, then leaving through the doors with a shopping bag;
   - playing: at the wheel, or treasure hunting;
   - styling: at a Styling Studio mirror, with outfit colours changing every few seconds;
   - friends: groups of 2–3 standing together.
@@ -219,14 +255,15 @@ Customers never chat with each other: chat is only between the customer and Le V
   - E on any sales assistant (one in every shop), the concierge or a stylist, or the persistent "محتاجة مساعدة" button;
   - quick replies: sizes, colours, hijab styling, prices, shipping, suggestions;
   - staff-sent products are added to the cart only after you approve them.
-- **Styling Studio:** in the lounge slot at the end of the boulevard. Three stylists with mirrors; a stylist sends a full look (outfit + hijab + accessory) with "ضيفي اللوك كله للسلة".
+- **Styling Studio:** in the Styling Studio slot (end of the west wing). Three stylists with mirrors; a stylist sends a full look (outfit + hijab + accessory) with "ضيفي اللوك كله للسلة".
 - **Games:**
-  - **Section passport:** a stamp per section, 9/9 → 15%.
-  - **Treasure hunt:** 5 glowing Le Voile logos hidden around the mall, press E to collect, 5/5 → 20%.
-  - **Wheel of fortune:** at the entrance, one spin per session. Prizes: 5% / 10% / 15% / free shipping / gift inner cap / better luck.
-  - Every prize shows at once. "خديه" asks for phone + (mock) OTP, then saves the coupon and applies it in the cart and the mock checkout. Coupons are single-use.
+  - **Passport:** a stamp per shop visited, +10 coins each (+150 when complete).
+  - **Treasure hunt:** 5 glowing logos hidden around the mall, press E to collect, +25 coins each (+100 for all five).
+  - **Wheel of fortune:** on the plaza, one spin per session. Prizes: 20 / 50 / 100 / 200 coins, free shipping, or better luck.
+  - **Rewards counter** in every shop: spend coins on that brand's discount (100 / 250 / 400 coins → 10 / 20 / 30%). Needs phone + (mock) OTP login; see [122 Coins](#122-coins).
+  - Free shipping from the wheel is a coupon: "خديه" asks for phone + (mock) OTP, then saves it and applies it in the cart and the mock checkout. Coupons are single-use.
 - **Group deal:**
-  - one product, with live boards in the atrium and in front of its shop, plus a HUD chip;
+  - one product, with live boards on the plaza and in front of its shop, plus a HUD chip;
   - fake shoppers join over time; your join completes it, with confetti and 25% off that product.
 - **Flash sale:**
   - Web Audio chime plus a banner;
@@ -239,15 +276,16 @@ Customers never chat with each other: chat is only between the customer and Le V
 
 ### 2-minute test scenario
 
-1. Open `http://localhost:5173/?fps` and enter the mall. The atrium has shoppers: friends chatting, people at the wheel, a queue at the cashier.
-2. Press E on the **wheel** (right of the entrance) → spin → if you win, "خديه" → any name, `01001234567`, any 4 digits → the coupon is saved (🎟️ chip).
-3. Click **محتاجة مساعدة** → tap "اقترحي عليا" → approve the suggested product → it lands in the cart.
-4. Walk into the boulevard. The 🛂 passport chip stamps each shop you enter. Watch for purchase toasts.
-5. Step close to a shopper standing in a shop: the "بتتفرج على …" card shows above her head; click it.
-6. Open the **group deal** board (atrium, near the boulevard mouth) → "انضمي للصفقة". Fake shoppers keep joining; when it hits 10/10 you get confetti and 25% off.
-7. At ~45 s the **flash sale** chime and banner appear → "روحي هناك" → shoppers hurry into that shop.
-8. Teleport to the **Styling Studio** (menu → lounge) → E on a stylist → "عايزة لوك لخروجة" → "ضيفي اللوك كله للسلة".
-9. Open the cart: the flash / group / coupon discounts, shipping and total. Go to the cashier and place the mock order.
+1. Open `http://localhost:5173/?fps` and enter the mall. The plaza has shoppers: friends chatting, people at the wheel, a queue at the cashier. Look at the stage: the LED wall and screens cycle slides.
+2. Walk to the **stage screen** and press **E** (or tap it) to open its content. On a phone, **tap the floor** to walk there (a ring marks the target) instead of using the joystick.
+3. Press E on the **wheel** → spin → coins are added to your balance (floating "+N"). Free shipping needs "خديه" → any name, `01001234567`, any 4 digits.
+4. Click **محتاجة مساعدة** → "اقترحي عليا" → approve the suggested product → it lands in the cart.
+5. Enter a wing (West: Le Voile, the real boutique). The 🛂 passport stamps each shop you enter (+10 coins). Open a product on a fixture: the camera eases to centre it.
+6. Step close to a shopper standing in a shop: the "بتتفرج على …" card shows above her head; click it.
+7. At a shop's **rewards counter**, press E → log in (mock OTP) → redeem 100 coins for 10% off that brand.
+8. Open the **group deal** board on the plaza → "انضمي للصفقة"; fake shoppers keep joining until 10/10 (confetti, 25% off). At ~45 s the **flash sale** chime appears → "روحي هناك".
+9. Teleport (T) to the **Styling Studio** → E on a stylist → "عايزة لوك لخروجة" → "ضيفي اللوك كله للسلة".
+10. Open the cart: flash / group / brand-coupon discounts, shipping and total. Go to the plaza cashier and place the mock order.
 
 To trigger things on demand (dev / `?debug`): `lv.social.deals.nextFlash = 0`, `lv.social.deals.nextJoin = 0`, `lv.social.presence.nextPurchase = 0`.
 
@@ -259,7 +297,7 @@ To trigger things on demand (dev / `?debug`): `lv.social.deals.nextFlash = 0`, `
   - only the nearest on-screen shoppers are full animated rigs (High 8 within 11 m, Medium 6 within 9 m, Low 4 within 7 m), and rigs beyond 8 m animate at a third of the rate;
   - every other visible shopper is a static LOD mesh drawn in **one `BatchedMesh` call**, plus one `InstancedMesh` for all their shadows;
   - shoppers off-screen, inside a culled shop, or (when you're in a shop) outside it are not drawn.
-- **Measured** (desktop, High tier, 1280×760, headed Edge, `?nolock`, fresh page per query; avg draw calls / fps):
+- **Measured** (desktop only, High tier, 1280×760, headed Edge, `?nolock`, fresh page per query; avg draw calls / fps):
 
 | Area | `?nodemo` | `?crowd=50` |
 |---|---|---|
@@ -270,6 +308,7 @@ To trigger things on demand (dev / `?debug`): `lv.social.deals.nextFlash = 0`, `
 
   FPS varies a lot between runs when other windows render (the ranges above are 2-3 runs). Always-visible kit plants are batched (`Kit.placeBatched`), and a screen's fade layer is hidden between slides.
 - **Plaza stage and corridor finishing:** the plaza has a stage with an LED wall, live screens and seating (`plaza.ts`). Each wing gets its own finishing in `corridor.ts`: floor inlays, islands with planters, pendant lights, ceiling coves, column screens, storefront frames, brand doormats, a wing portal, a directory board, wayfinding signs, an end-wall collage and wall shade. Screens share feeds (`screens.ts`, `screenSlides.ts`). Contact shadows and additive glows are instanced (`decals.ts`, `glow.ts`), and glows are hidden on Low.
-- **Lighting:** image-based lighting plus two lights, with blob shadows instead of shadow maps. The planar floor reflection is enabled on High only, and only while the atrium is in view.
+- **Mobile:** product images load as WebP (see Image pipeline) and the Le Voile boutique preload is skipped on touch devices. The numbers above are desktop/High only; phones are not yet measured. Design: `docs/superpowers/specs/2026-10-05-mobile-performance-design.md`.
+- **Lighting:** image-based lighting plus two lights, with blob shadows instead of shadow maps. The planar floor reflection is enabled on High only, and only while the plaza is in view.
 - **Textures:** product images load lazily per shop as you approach and are downscaled to 512 px (Low) or 1024 px.
 - **No WebGL:** a 2D catalogue fallback with links to the website.
