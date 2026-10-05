@@ -9,17 +9,23 @@ import {
   type WebGLRenderer,
 } from 'three'
 import { webImage, type ImageSize } from '../data/webImage'
+import { imageLoads, imagePacer } from './pace'
 
 let maxAniso = 4
 export function setMaxAnisotropy(renderer: WebGLRenderer, cap: number): void {
   maxAniso = Math.min(renderer.capabilities.getMaxAnisotropy(), cap)
 }
 
-export function makeCanvas(w: number, h: number): [HTMLCanvasElement, CanvasRenderingContext2D] {
+/**
+ * `readable`: a CPU-backed canvas (willReadFrequently). Use it for canvases whose
+ * pixels are read back (getImageData) or that only hold a decoded photo: reading a
+ * GPU-backed canvas waits for the GPU and stalled frames by 20–550 ms.
+ */
+export function makeCanvas(w: number, h: number, readable = false): [HTMLCanvasElement, CanvasRenderingContext2D] {
   const c = document.createElement('canvas')
   c.width = w
   c.height = h
-  return [c, c.getContext('2d')!]
+  return [c, c.getContext('2d', readable ? { willReadFrequently: true } : undefined)!]
 }
 
 export function canvasTexture(c: HTMLCanvasElement, repeat?: [number, number]): CanvasTexture {
@@ -157,6 +163,12 @@ interface LoadedImage {
   texture: Texture
   image: HTMLCanvasElement | HTMLImageElement
   aspect: number
+  /**
+   * A small CPU-side copy (longest side ≤ 128 px) for reading pixels. `image` is a
+   * GPU-backed canvas: reading it back (getImageData, or drawing it into a CPU
+   * canvas) waits for the GPU and stalled frames by 20–550 ms.
+   */
+  thumb: HTMLCanvasElement
 }
 
 const imageCache = new Map<string, Promise<LoadedImage>>()
@@ -165,7 +177,8 @@ function loadRaw(url: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.decoding = 'async'
-    img.onload = () => resolve(img)
+    // Decode off the main thread before anyone draws it (drawImage would decode synchronously).
+    img.onload = () => img.decode().then(() => resolve(img), () => resolve(img))
     img.onerror = () => reject(new Error(`Failed to load ${url}`))
     img.src = url
   })
@@ -181,19 +194,43 @@ export function loadProductTexture(url: string, maxSize: number): Promise<Loaded
   const key = `${url}@${maxSize}`
   let p = imageCache.get(key)
   if (!p) {
-    p = loadImage(url, maxSize <= 512 ? 'small' : 'large').then((img) => {
-      const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight))
-      const w = Math.round(img.naturalWidth * scale)
-      const h = Math.round(img.naturalHeight * scale)
-      const [c, g] = makeCanvas(w, h)
-      g.imageSmoothingQuality = 'high'
-      g.drawImage(img, 0, 0, w, h)
-      const texture = canvasTexture(c)
-      return { texture, image: c, aspect: w / h }
-    })
+    p = imageLoads
+      .run(async () => {
+        const img = await loadImage(url, maxSize <= 512 ? 'small' : 'large')
+        const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight))
+        const w = Math.round(img.naturalWidth * scale)
+        const h = Math.round(img.naturalHeight * scale)
+        // Decode + resize off the main thread (createImageBitmap) so the canvases below
+        // only need 1:1 copies; drawing the <img> itself could decode it synchronously.
+        const k = Math.min(1, 128 / Math.max(w, h))
+        const tw = Math.max(1, Math.round(w * k))
+        const th = Math.max(1, Math.round(h * k))
+        const [src, small] = await Promise.all([bitmap(img, w, h), bitmap(img, tw, th)])
+        return { img, w, h, tw, th, src, small }
+      })
+      .then(async ({ img, w, h, tw, th, src, small }) => {
+        await imagePacer.slot()
+        const [c, g] = makeCanvas(w, h)
+        g.imageSmoothingQuality = 'high'
+        g.drawImage(src, 0, 0, w, h)
+        const [thumb, tg] = makeCanvas(tw, th, true)
+        tg.drawImage(small, 0, 0, tw, th)
+        for (const b of [src, small]) if (b !== img) (b as ImageBitmap).close()
+        return { texture: canvasTexture(c), image: c, aspect: w / h, thumb }
+      })
     imageCache.set(key, p)
   }
   return p
+}
+
+/** The image decoded (and resized) off the main thread; falls back to the image itself. */
+async function bitmap(img: HTMLImageElement, w: number, h: number): Promise<HTMLImageElement | ImageBitmap> {
+  if (typeof createImageBitmap !== 'function') return img
+  try {
+    return await createImageBitmap(img, { resizeWidth: w, resizeHeight: h, resizeQuality: 'high' })
+  } catch {
+    return img
+  }
 }
 
 /**
@@ -204,7 +241,7 @@ export function regionColor(
   img: HTMLCanvasElement | HTMLImageElement,
   region: { x0: number; y0: number; x1: number; y1: number },
 ): Color | null {
-  const [c, g] = makeCanvas(48, 48)
+  const [c, g] = makeCanvas(48, 48, true)
   g.drawImage(img, 0, 0, 48, 48)
   const { data } = g.getImageData(0, 0, 48, 48)
   let r = 0

@@ -21,6 +21,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { BRAND } from '../config/brand'
 import type { BatchFrame } from '../engine/batcher'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
+import { imagePacer } from '../engine/pace'
 import { discountPercent, type Product, type Section } from '../data/types'
 import { formatPrice } from '../i18n/i18n'
 import { store } from '../state/store'
@@ -163,7 +164,7 @@ function panelTexture(cells: Product[], cols: number, rows: number, W: number, H
       cg.fillRect(0, 0, c.width, c.height)
       const images = await Promise.all(cells.map((p) => loadProductTexture(p.images[0], H).then((r) => r.image as HTMLCanvasElement)))
       // Spread the drawing over frames so walking in doesn't hitch.
-      await new Promise((r) => setTimeout(r, Math.random() * 400))
+      await imagePacer.slot()
       const m = Math.round((W * 6) / 256)
       cells.forEach((p, i) => {
         const off = discountPercent(p)

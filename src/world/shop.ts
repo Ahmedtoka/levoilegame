@@ -287,23 +287,35 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
 
 // -------------------------------------------------------------------------
 
-/** Bounding box of the non-transparent pixels of a cutout. */
-function alphaBounds(im: HTMLCanvasElement): { x: number; y: number; w: number; h: number } {
-  const d = im.getContext('2d')!.getImageData(0, 0, im.width, im.height).data
-  let x0 = im.width
-  let y0 = im.height
+/**
+ * Bounding box of the non-transparent pixels of a cutout, in `w`×`h` image pixels.
+ * Measured on the small CPU thumbnail (reading the GPU-backed full-size canvas back
+ * stalled frames), then padded by one sample so the crop never cuts the figure.
+ */
+function alphaBounds(thumb: HTMLCanvasElement, w: number, h: number): { x: number; y: number; w: number; h: number } {
+  const sw = thumb.width
+  const sh = thumb.height
+  const d = thumb.getContext('2d', { willReadFrequently: true })!.getImageData(0, 0, sw, sh).data
+  let x0 = sw
+  let y0 = sh
   let x1 = -1
   let y1 = -1
-  for (let y = 0; y < im.height; y += 2)
-    for (let x = 0; x < im.width; x += 2)
-      if (d[(y * im.width + x) * 4 + 3] > 24) {
+  for (let y = 0; y < sh; y++)
+    for (let x = 0; x < sw; x++)
+      if (d[(y * sw + x) * 4 + 3] > 24) {
         if (x < x0) x0 = x
         if (x > x1) x1 = x
         if (y < y0) y0 = y
         if (y > y1) y1 = y
       }
-  if (x1 < 0) return { x: 0, y: 0, w: im.width, h: im.height }
-  return { x: x0, y: y0, w: Math.min(im.width - x0, x1 - x0 + 2), h: Math.min(im.height - y0, y1 - y0 + 2) }
+  if (x1 < 0) return { x: 0, y: 0, w, h }
+  const kx = w / sw
+  const ky = h / sh
+  const X0 = Math.max(0, Math.floor((x0 - 1) * kx))
+  const Y0 = Math.max(0, Math.floor((y0 - 1) * ky))
+  const X1 = Math.min(w, Math.ceil((x1 + 2) * kx))
+  const Y1 = Math.min(h, Math.ceil((y1 + 2) * ky))
+  return { x: X0, y: Y0, w: X1 - X0, h: Y1 - Y0 }
 }
 
 /** Display-window geometry (shop-local, mirrored on both sides of the opening). */
@@ -425,12 +437,12 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   loaders.push(() =>
     Promise.allSettled(
       picks.map((p, i) =>
-        loadProductTexture(displayImage(p), tm).then(({ image }) => {
+        loadProductTexture(displayImage(p), tm).then(({ image, thumb }) => {
           const im = image as HTMLCanvasElement
           const hw = tm / 2
           const x0 = i * hw
           // A full-length cutout (tall once trimmed) stands on the plinth like a mannequin.
-          const b = hasCutout(p) ? alphaBounds(im) : null
+          const b = hasCutout(p) ? alphaBounds(thumb, im.width, im.height) : null
           if (b && b.h / b.w > 1.45) {
             const sc = Math.min((480 * k) / b.w, (1000 * k) / b.h)
             g.drawImage(im, b.x, b.y, b.w, b.h, x0 + (hw - b.w * sc) / 2, tm - b.h * sc, b.w * sc, b.h * sc)

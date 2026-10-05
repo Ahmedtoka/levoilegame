@@ -49,9 +49,9 @@ export function addProductModel(
     maxDist: 3.6,
   })
   loadProductTexture(displayImage(product), 256)
-    .then(({ image }) => {
-      const top = regionColor(image, { x0: 0.3, y0: 0.22, x1: 0.7, y1: 0.45 })
-      const bottom = regionColor(image, { x0: 0.3, y0: 0.62, x1: 0.7, y1: 0.9 }) ?? top
+    .then(({ thumb }) => {
+      const top = regionColor(thumb, { x0: 0.3, y0: 0.22, x1: 0.7, y1: 0.45 })
+      const bottom = regionColor(thumb, { x0: 0.3, y0: 0.62, x1: 0.7, y1: 0.9 }) ?? top
       c.setOutfitColors(top ? `#${top.getHexString()}` : null, bottom ? `#${bottom.getHexString()}` : null)
     })
     .catch(() => {})
