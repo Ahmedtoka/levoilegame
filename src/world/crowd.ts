@@ -49,6 +49,8 @@ export interface CrowdPlaces {
   wheel: Pt
   /** Customer pose at each styling-studio mirror. */
   studio: Pose[]
+  /** Standing spots facing the stage screen. */
+  stage: Pose[]
 }
 
 interface Agent {
@@ -271,6 +273,10 @@ export class Crowd {
       case 'styling': {
         const p = this.places.studio[m.spot % Math.max(1, this.places.studio.length)]
         return p ? { to: p, key: `sty${m.spot}` } : null
+      }
+      case 'watching': {
+        const p = this.places.stage[m.spot % Math.max(1, this.places.stage.length)]
+        return p ? { to: p, key: `watch${m.spot}` } : null
       }
       case 'playing': {
         if (m.spot === 0) {

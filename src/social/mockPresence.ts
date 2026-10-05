@@ -25,6 +25,7 @@ const CITIES: [string, string][] = [
 export const STUDIO_SEATS = 3
 const MAX_BUYERS = 4
 const MAX_PLAYERS = 6
+export const STAGE_SPOTS = 6
 
 export class MockPresence implements PresenceSource {
   private readonly list: PresenceMember[] = []
@@ -135,6 +136,7 @@ export class MockPresence implements PresenceSource {
     if (x < 0.1 && this.countOf('styling') < STUDIO_SEATS) return 'styling'
     if (x < 0.2 && this.countOf('playing') < MAX_PLAYERS) return 'playing'
     if (x < 0.3 && this.countOf('buying') < MAX_BUYERS) return 'buying'
+    if (x < 0.4 && this.countOf('watching') < STAGE_SPOTS) return 'watching'
     return 'browsing'
   }
 
@@ -169,6 +171,10 @@ export class MockPresence implements PresenceSource {
       const used = new Set(this.list.filter((x) => x.activity === 'styling' && x !== m).map((x) => x.spot))
       m.spot = [0, 1, 2].find((i) => !used.has(i)) ?? 0
       m.sectionId = null
+    } else if (a === 'watching') {
+      const used = new Set(this.list.filter((x) => x.activity === 'watching' && x !== m).map((x) => x.spot))
+      m.spot = [0, 1, 2, 3, 4, 5].find((i) => !used.has(i)) ?? 0
+      m.sectionId = null
     } else if (a === 'playing') {
       m.spot = this.r() < 0.6 ? 0 : 1 // 0 = wheel, 1 = treasure hunt
       m.sectionId = null
@@ -182,6 +188,7 @@ export class MockPresence implements PresenceSource {
       playing: [25, 50],
       buying: [70, 120], // completed earlier by the purchase scheduler
       leaving: [14, 18],
+      watching: [30, 60],
     }
     const [a0, a1] = dur[a]
     this.timers.set(m.id, a0 + this.r() * (a1 - a0))

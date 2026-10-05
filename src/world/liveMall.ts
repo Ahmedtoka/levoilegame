@@ -30,6 +30,7 @@ import { stylistLook } from '../actors/palette'
 import { addGreeter, placeCharacter } from './people'
 import type { ShopHandles } from './shop'
 import { Crowd, type CrowdPlaces } from './crowd'
+import { stageSpots } from './plaza'
 import { catalog, store, watch } from '../state/store'
 import { t } from '../i18n/i18n'
 import { displayImage } from '../data/types'
@@ -53,7 +54,7 @@ export function buildLiveMall(game: Game, shops: ShopHandles[], logo: Texture | 
   const presence = social().presence
   let crowd: Crowd | null = null
   if (presence) {
-    const places: CrowdPlaces = { wheel: wheel.centre, studio: studioPoses }
+    const places: CrowdPlaces = { wheel: wheel.centre, studio: studioPoses, stage: stageSpots() }
     crowd = new Crowd(game, shops, presence, places)
     crowd.build()
     crowd.onWheelPlay = () => wheel.spin()

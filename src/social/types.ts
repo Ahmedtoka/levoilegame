@@ -8,7 +8,7 @@ import type { Lang } from '../i18n/i18n'
 // ------------------------------------------------------------------ presence
 
 /** What another shopper is doing right now (drives the crowd animation). */
-export type Activity = 'browsing' | 'buying' | 'playing' | 'styling' | 'friends' | 'leaving'
+export type Activity = 'browsing' | 'buying' | 'playing' | 'styling' | 'friends' | 'leaving' | 'watching'
 
 export interface PresenceMember {
   id: string
