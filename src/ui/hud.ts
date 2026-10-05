@@ -104,7 +104,9 @@ export function mountHud(root: HTMLElement, game: GameBridge): void {
     renderTop()
     if (zone === prev || zone === 'boulevard' || zone.startsWith('wing-')) return
     const tt = zoneTitles(zone)
-    banner.innerHTML = `<div class="en">${esc(tt.en)}</div><div class="ar">${esc(tt.ar)}</div><div class="rule"></div>`
+    // English UI shows the English name only; the Arabic UI keeps the bilingual pair.
+    const ar = store.getState().lang === 'ar' ? `<div class="ar">${esc(tt.ar)}</div>` : ''
+    banner.innerHTML = `<div class="en">${esc(tt.en)}</div>${ar}<div class="rule"></div>`
     banner.classList.add('show')
     clearTimeout(bannerTimer)
     bannerTimer = window.setTimeout(() => banner.classList.remove('show'), 2400)
