@@ -28,7 +28,12 @@ export class Interaction {
   private readonly targets: Object3D[] = []
   private readonly map = new Map<Object3D, Interactable>()
   current: Interactable | null = null
+  /** Called after a target is activated (E / click / tap), with the world point that was hit. */
+  onActivate: (it: Interactable, point: Vector3) => void = () => {}
   private promptKey = ''
+  /** World point of the last successful pick, and of the current crosshair target. */
+  private readonly hitPoint = new Vector3()
+  private readonly currentPoint = new Vector3()
 
   constructor() {
     this.ray.far = 12
@@ -52,6 +57,7 @@ export class Interaction {
       _dir.copy(this.ray.ray.direction)
       const wall = world.raycast(this.ray.ray.origin, _dir, h.distance)
       if (wall < h.distance - 0.05) return null
+      this.hitPoint.copy(h.point)
       return it
     }
     return null
@@ -61,6 +67,7 @@ export class Interaction {
   update(camera: Camera, player: Vector3, world: CollisionWorld, active: boolean, isTouch: boolean): void {
     let next: Interactable | null = null
     if (active) next = this.pick(camera, _center, player, world)
+    if (next) this.currentPoint.copy(this.hitPoint)
     if (next !== this.current) {
       this.current?.highlight?.(false)
       next?.highlight?.(true)
@@ -79,6 +86,7 @@ export class Interaction {
     const it = this.pick(camera, _ndc, player, world)
     if (it) {
       it.onInteract()
+      this.onActivate(it, this.hitPoint)
       return true
     }
     return false
@@ -86,7 +94,9 @@ export class Interaction {
 
   trigger(): boolean {
     if (!this.current) return false
-    this.current.onInteract()
+    const it = this.current
+    it.onInteract()
+    this.onActivate(it, this.currentPoint)
     return true
   }
 

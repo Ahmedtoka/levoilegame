@@ -1,6 +1,6 @@
 // Ties engine, world, player, interaction and UI state together and runs the loop.
 
-import { Timer, Vector3 } from 'three'
+import { Mesh, MeshBasicMaterial, Raycaster, RingGeometry, Timer, Vector2, Vector3 } from 'three'
 import type { Engine } from './engine/renderer'
 import { FpsGovernor, QUALITY_ORDER, type QualityLevel } from './engine/quality'
 import type { CollisionWorld } from './engine/colliders'
@@ -8,6 +8,7 @@ import { rectContains, shopArrival, shopZone, type MallLayout } from './config/l
 import { Input, type Action } from './player/input'
 import { TouchControls } from './player/touch'
 import { Player } from './player/player'
+import { floorPoint } from './player/controlsMath'
 import { Interaction } from './interact/interaction'
 import { Character, type Persona } from './actors/character'
 import { avatarLook } from './actors/palette'
@@ -44,6 +45,10 @@ export class Game implements GameBridge {
   private readonly fade: HTMLDivElement
   private readonly governor: FpsGovernor
   private touch: TouchControls | null = null
+  /** Tap-to-walk target marker: a plum ring on the floor that fades on arrival. */
+  private readonly marker: Mesh<RingGeometry, MeshBasicMaterial>
+  private markerFade = 0
+  private readonly tapRay = new Raycaster()
 
   constructor(engine: Engine, layout: MallLayout, colliders: CollisionWorld, uiRoot: HTMLElement, isTouch: boolean) {
     this.engine = engine
@@ -77,6 +82,20 @@ export class Game implements GameBridge {
 
     const { spawn } = layout
     this.player.teleport(spawn.x, spawn.z, spawn.yaw)
+
+    this.marker = new Mesh(
+      new RingGeometry(0.2, 0.28, 40),
+      new MeshBasicMaterial({ color: 0x5b2b82, transparent: true, opacity: 0, depthWrite: false }),
+    )
+    this.marker.rotation.x = -Math.PI / 2
+    this.marker.renderOrder = 2
+    this.marker.visible = false
+    engine.scene.add(this.marker)
+    this.player.onWalkEnd = () => (this.markerFade = 1)
+    // Opening a product eases the view to centre it behind the sheet.
+    this.interaction.onActivate = (_it, point) => {
+      if (store.getState().overlay === 'product') this.player.focusOn(point)
+    }
 
     this.input.onAction = (a) => this.onAction(a)
     this.input.onLockChange = () => this.syncControl()
@@ -295,6 +314,35 @@ export class Game implements GameBridge {
     requestAnimationFrame(loop)
   }
 
+  /** Walk to the floor point under a screen position, if it's in reach and not behind a wall. */
+  tapWalk(x: number, y: number): boolean {
+    this.tapRay.setFromCamera(_ndc.set((x / innerWidth) * 2 - 1, -(y / innerHeight) * 2 + 1), this.engine.camera)
+    const { origin, direction } = this.tapRay.ray
+    const hit = floorPoint(origin, direction)
+    if (!hit) return false
+    if (this.colliders.raycast(origin, direction, hit.dist) < hit.dist - 0.05) return false
+    this.player.walkTo(hit.x, hit.z)
+    this.marker.position.set(hit.x, 0.02, hit.z)
+    this.marker.visible = true
+    this.marker.material.opacity = 0.9
+    this.markerFade = 0
+    return true
+  }
+
+  private updateMarker(dt: number, t: number): void {
+    const m = this.marker
+    if (!m.visible) return
+    if (this.player.walk) {
+      m.scale.setScalar(1 + Math.sin(t * 6) * 0.08)
+      return
+    }
+    // Walk over: fade out (and grow slightly).
+    this.markerFade = Math.max(0, this.markerFade - dt / 0.45)
+    m.material.opacity = 0.9 * this.markerFade
+    m.scale.setScalar(1 + (1 - this.markerFade) * 0.5)
+    if (this.markerFade <= 0) m.visible = false
+  }
+
   private tick(): void {
     const dt = Math.min(this.timer.getDelta(), 1 / 20)
     this.time += dt
@@ -337,9 +385,13 @@ export class Game implements GameBridge {
       const tap = this.input.tap
       if (tap) {
         this.input.tap = null
-        if (active) this.interaction.tapAt(tap.x, tap.y, this.engine.camera, p.pos, this.colliders)
+        if (active && !this.interaction.tapAt(tap.x, tap.y, this.engine.camera, p.pos, this.colliders)) {
+          // Nothing to interact with: tap-to-walk (touch, or click in drag-look mode).
+          if (this.isTouch || !this.input.locked) this.tapWalk(tap.x, tap.y)
+        }
       }
     }
+    this.updateMarker(dt, t)
 
     // Footsteps
     if (p.speed > 0.8 && active) {
@@ -360,3 +412,4 @@ export class Game implements GameBridge {
 }
 
 const _v = new Vector3()
+const _ndc = new Vector2()

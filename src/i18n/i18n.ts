@@ -11,8 +11,8 @@ const STRINGS = {
     en: 'WASD move · Mouse look · Shift run · E interact · C cart · M map',
   },
   controlsMobile: {
-    ar: 'الجويستيك للحركة · اسحب للنظر · المس المنتج عشان تشوفه',
-    en: 'Joystick to move · Drag to look · Tap a product to view it',
+    ar: 'الجويستيك للحركة · اسحب للنظر · المسي الأرض عشان تمشي · المس المنتج عشان تشوفه',
+    en: 'Joystick to move · Drag to look · Tap the floor to walk · Tap a product to view it',
   },
   paused: { ar: 'متوقف مؤقتاً', en: 'Paused' },
   resume: { ar: 'كمّل', en: 'Resume' },
