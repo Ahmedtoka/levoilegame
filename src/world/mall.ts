@@ -11,9 +11,9 @@ import {
   PlaneGeometry,
   RingGeometry,
   type Object3D,
-  type Texture,
 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { MALL, type MallLayout, type Rect, type Wing } from '../config/layout'
 import { brandById } from '../config/mall'
 import type { Batcher, BatchFrame } from '../engine/batcher'
@@ -25,7 +25,10 @@ import { glowMat, imageMat, MAT, tintMat } from './materials'
 import { bench, column, plant } from './props'
 import type { Kit } from './kit'
 import { directoryTexture, labelSign, logoTexture, type DirectoryEntry } from './signage'
-import { setGlowsVisible } from './glow'
+import { addPool, setGlowsVisible } from './glow'
+import { aoCeilJunction, aoFloorJunction } from './aoStrips'
+import { addContactShadow } from './decals'
+import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, tintedPlane, tiledPlane } from './finish'
 
 export interface ShellHandles {
   doors: { target: number; update(dt: number): void }
@@ -43,13 +46,6 @@ function floorPlane(r: Rect, mat: MeshStandardMaterial, y = 0): Mesh {
   m.matrixAutoUpdate = false
   m.updateMatrix()
   return m
-}
-
-function repeatTex(tex: Texture, rx: number, rz: number): Texture {
-  const t = tex.clone()
-  t.repeat.set(rx, rz)
-  t.needsUpdate = true
-  return t
 }
 
 export class SlidingDoors {
@@ -103,17 +99,21 @@ export async function buildShell(
   const root = new Group()
   root.name = 'shell'
   scene.add(root)
-  const marble = storeTexture('/textures/marble.jpg', [1, 1])
 
   // ------------------------------------------------------------ plaza floor
+  // Large-format marble tiles (shared atlas); grout lines on the plaza axis and the entrance line.
   const atriumFloorMat = new MeshStandardMaterial({
-    map: repeatTex(marble, (2 * W) / 4, A / 4),
+    map: floorAtlas(),
     roughness: 0.18,
     metalness: 0.05,
     transparent: false,
     opacity: 0.8,
   })
-  root.add(floorPlane(layout.atrium, atriumFloorMat))
+  const plazaFloor = new Mesh(tiledPlane(2 * W, A, atlasPeriod(), 0, A / 2), atriumFloorMat)
+  plazaFloor.position.set(0, 0, -A / 2)
+  plazaFloor.matrixAutoUpdate = false
+  plazaFloor.updateMatrix()
+  root.add(plazaFloor)
 
   // Reflection under the plaza floor (High quality only).
   let reflector: Reflector | null = null
@@ -185,17 +185,30 @@ export async function buildShell(
   function buildWing(wing: Wing): void {
     const base = new Matrix4().makeRotationY(wing.yaw).setPosition(wing.origin.x, 0, wing.origin.z)
     const wf = batcher.frame(base, colliders)
+    const toWorldXZ = (x: number, z: number) => {
+      const v = wf.toWorld(x, 0, z)
+      return { x: v.x, z: v.z }
+    }
     const len = wing.len
     const group = new Group()
     group.position.set(wing.origin.x, 0, wing.origin.z)
     group.rotation.y = wing.yaw
     root.add(group)
 
-    // Corridor floor
-    const floor = new Mesh(new PlaneGeometry(2 * B, len), new MeshStandardMaterial({ map: repeatTex(marble, (2 * B) / 4, len / 4), roughness: 0.22 }))
-    floor.rotation.x = -Math.PI / 2
+    // Corridor floor: a large-format marble field (joints aligned to the border and the mouth)
+    // with a darker 0.6 m band along both walls, split by a fine brass strip. Field and band
+    // meet edge to edge (no overlapping coplanar faces).
+    const band = 0.6
+    const floor = new Mesh(
+      mergeGeometries([
+        tintedPlane(tiledPlane(2 * (B - band), len, atlasPeriod(), B - band, len / 2), '#ffffff'),
+        ...[-1, 1].map((sd) => tintedPlane(tiledPlane(band, len, atlasPeriod(band), 0, len / 2).translate(sd * (B - band / 2), 0, 0), '#a89c90')),
+      ]),
+      corridorFloorMat(),
+    )
     floor.position.set(0, 0, -len / 2)
     group.add(floor)
+    for (const sd of [-1, 1]) wf.box(MAT.brass, sd * (B - band), 0.002, -len / 2, 0.03, 0.004, len - 0.02)
 
     // Corridor end and the header over the mouth.
     wall(wf, -B, -len - T, B, -len, 0, BH)
@@ -246,14 +259,17 @@ export async function buildShell(
       } else if (s.kind === 'soon') {
         wall(wf, fx0, z0, fx1, z1, 0, BH, MAT.wallWarm)
       } else {
-        column(wf, side * (B + 0.3), z0 + 0.3, BH)
-        column(wf, side * (B + 0.3), z1 - 0.3, BH)
+        for (const cz of [z0 + 0.3, z1 - 0.3]) {
+          column(wf, side * (B + 0.3), cz, BH)
+          const c = toWorldXZ(side * (B + 0.3), cz)
+          addContactShadow(c.x, c.z, 1.6, 1.6)
+        }
         wall(wf, fx0, z0 + 0.4, fx1, z1 - 0.4, 3.9, BH)
       }
     })
 
-    // Corridor ceiling (coves and pendants come from corridor.ts).
-    wf.box(MAT.ceiling, 0, BH + 0.1, -len / 2, 2 * B, 0.2, len)
+    // Corridor ceiling: warm gypsum (the tray soffits, slot lights and cans come from corridor.ts).
+    wf.box(GYPSUM, 0, BH + 0.1, -len / 2, 2 * B, 0.2, len)
 
     // Wing name over the mouth (faces the plaza, local +Z).
     const sign = new Mesh(new PlaneGeometry(5, 1.25), imageMat(labelSign(wing.def.nameEn, wing.def.nameAr, { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
@@ -263,14 +279,15 @@ export async function buildShell(
   }
 
   // -------------------------------------------------------------- ceilings
-  const slab = (x0: number, z0: number, x1: number, z1: number, y: number) =>
-    f.box(MAT.ceiling, (x0 + x1) / 2, y + 0.1, (z0 + z1) / 2, x1 - x0, 0.2, z1 - z0)
-  // Plaza with a skylight opening.
+  const slab = (x0: number, z0: number, x1: number, z1: number, y: number, mat = MAT.ceiling) =>
+    f.box(mat, (x0 + x1) / 2, y + 0.1, (z0 + z1) / 2, x1 - x0, 0.2, z1 - z0)
+  // Plaza: warm gypsum with a skylight opening.
   const sky = { x0: -10, z0: -25, x1: 10, z1: -9 }
-  slab(-W, -A, W, sky.z0, AH)
-  slab(-W, sky.z1, W, 0, AH)
-  slab(-W, sky.z0, sky.x0, sky.z1, AH)
-  slab(sky.x1, sky.z0, W, sky.z1, AH)
+  slab(-W, -A, W, sky.z0, AH, GYPSUM)
+  slab(-W, sky.z1, W, 0, AH, GYPSUM)
+  slab(-W, sky.z0, sky.x0, sky.z1, AH, GYPSUM)
+  slab(sky.x1, sky.z0, W, sky.z1, AH, GYPSUM)
+  buildPlazaCeiling()
   const wellH = 0.8
   f.box(MAT.wall, 0, AH + wellH / 2, sky.z0, sky.x1 - sky.x0, wellH, 0.1)
   f.box(MAT.wall, 0, AH + wellH / 2, sky.z1, sky.x1 - sky.x0, wellH, 0.1)
@@ -282,6 +299,97 @@ export async function buildShell(
   skyPlane.rotation.x = Math.PI / 2
   skyPlane.position.set(0, AH + wellH, (sky.z0 + sky.z1) / 2)
   root.add(skyPlane)
+
+  /**
+   * Coffer grid of 0.3 m gypsum downstands around the skylight, a bronze frame
+   * on the skylight well and a ring of spot cans in the coffers next to it.
+   * Beam tops sit 5 cm inside the slab and their ends 2 cm inside the walls or
+   * the frame, so no face is coplanar with another surface.
+   */
+  function buildPlazaCeiling(): void {
+    const bw = 0.36
+    const yb = AH - 0.3
+    const beamX = (x: number, z0: number, z1: number) => f.box(GYPSUM, x, (yb + AH + 0.05) / 2, (z0 + z1) / 2, bw, AH + 0.05 - yb, Math.abs(z1 - z0))
+    const beamZ = (z: number, x0: number, x1: number) => f.box(GYPSUM, (x0 + x1) / 2, (yb + AH + 0.05) / 2, z, Math.abs(x1 - x0), AH + 0.05 - yb, bw)
+    const out = 0.02
+    const fr = 0.2 // how far a beam runs into the skylight frame
+    // Side bays (|x| > 10): lines every 4 m across the full depth, cross lines on the skylight grid.
+    for (const sd of [-1, 1]) {
+      for (const x of [14, 18]) beamX(sd * x, out, -A - out)
+      for (const z of [sky.z1, -13, -17, -21, sky.z0]) beamZ(z, sd * (sky.x1 + fr), sd * (W + out))
+    }
+    // Front and back bays: cross lines at -4.5 / -29.5, short lines up to the frame.
+    beamZ(-4.5, -W - out, W + out)
+    beamZ(-29.5, -W - out, W + out)
+    for (const x of [-10, -6.67, -3.33, 3.33, 6.67, 10]) {
+      beamX(x, out, sky.z1 + fr)
+      beamX(x, sky.z0 - fr, -A - out)
+    }
+
+    // Bronze frame around the skylight well: 0.4 m deep (below the beams), its inner
+    // face 1 cm proud of the well walls.
+    const fy = AH - 0.15
+    const fh = 0.5
+    const fw = 0.41
+    f.box(MAT.brass, 0, fy, sky.z0 - fw / 2 + 0.06, sky.x1 - sky.x0 + 0.7, fh, fw)
+    f.box(MAT.brass, 0, fy, sky.z1 + fw / 2 - 0.06, sky.x1 - sky.x0 + 0.7, fh, fw)
+    for (const sd of [-1, 1]) f.box(MAT.brass, sd * (sky.x1 + fw / 2 - 0.06), fy, (sky.z0 + sky.z1) / 2, fw, fh, sky.z1 - sky.z0 - 0.12)
+    // Warm light line tucked under the inner lip of the frame.
+    f.box(MAT.lightWarm, 0, AH - 0.405, sky.z0 + 0.04, sky.x1 - sky.x0 - 0.1, 0.02, 0.03)
+    f.box(MAT.lightWarm, 0, AH - 0.405, sky.z1 - 0.04, sky.x1 - sky.x0 - 0.1, 0.02, 0.03)
+    for (const sd of [-1, 1]) f.box(MAT.lightWarm, sd * (sky.x1 - 0.04), AH - 0.405, (sky.z0 + sky.z1) / 2, 0.03, 0.02, sky.z1 - sky.z0 - 0.1)
+
+    // Spot cans: one per coffer in the ring around the skylight.
+    const can = (x: number, z: number) => {
+      f.cyl(MAT.brass, x, AH - 0.03, z, 0.17, 0.08)
+      f.sphere(MAT.lightWarm, x, AH - 0.01, z, 0.115, 0.35)
+    }
+    for (const sd of [-1, 1]) {
+      for (const z of [-6.75, -11, -15, -19, -23, -27.25]) can(sd * 12, z)
+    }
+    for (const x of [-8.33, -5, 0, 5, 8.33]) {
+      can(x, -6.75)
+      can(x, -27.25)
+    }
+  }
+
+  /** Fake AO along the plaza perimeter (wall/floor and wall/ceiling). */
+  function plazaAO(): void {
+    const sep = T / 2 // the wing mouths' separator walls stand 15 cm proud of the plaza line
+    const nOut = B + SD
+    // Entrance façade (inner face z = 0), door opening left clear on the floor.
+    aoFloorJunction(-W, 0, -D, 0, 0, -1)
+    aoFloorJunction(D, 0, W, 0, 0, -1)
+    aoCeilJunction(-W, 0, W, 0, 0, -1, AH, undefined, 0.6)
+    // Back wall: plaza wall at the corners, the north wing's shop sides in between, the mouth header.
+    for (const sd of [-1, 1]) {
+      const [a, b] = sd < 0 ? [-W, -nOut] : [nOut, W]
+      aoFloorJunction(a, -A, b, -A, 0, 1)
+      aoCeilJunction(a, -A, b, -A, 0, 1, AH, undefined, 0.6)
+      const [c, d] = sd < 0 ? [-nOut, -B] : [B, nOut]
+      aoFloorJunction(c, -A + sep, d, -A + sep, 0, 1)
+      aoCeilJunction(c, -A + sep, d, -A + sep, 0, 1, AH, undefined, 0.6)
+    }
+    aoCeilJunction(-B, -A, B, -A, 0, 1, AH, undefined, 0.6)
+    // Sides: the west / east wings' shop sides, with the mouth header over the corridor.
+    for (const sd of [-1, 1]) {
+      const wing = layout.wings.find((w) => w.id === (sd < 0 ? 'west' : 'east'))
+      const x = sd * W
+      const n = -sd
+      if (!wing) {
+        aoFloorJunction(x, 0, x, -A, n, 0)
+        aoCeilJunction(x, 0, x, -A, n, 0, AH, undefined, 0.6)
+        continue
+      }
+      const zc = wing.origin.z
+      const xs = x + n * sep
+      for (const [z0, z1] of [[0, zc + B], [zc - B, -A]] as const) {
+        aoFloorJunction(xs, z0, xs, z1, n, 0)
+        aoCeilJunction(xs, z0, xs, z1, n, 0, AH, undefined, 0.6)
+      }
+      aoCeilJunction(x, zc + B, x, zc - B, n, 0, AH, undefined, 0.6)
+    }
+  }
 
   // Soft light shafts from the skylight (additive, Medium/High).
   const shafts = new Group()
@@ -325,7 +433,13 @@ export async function buildShell(
   }
 
   // ------------------------------------------------------- plaza features
-  for (const [x, z] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) column(f, x, z, AH)
+  for (const [x, z] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) {
+    column(f, x, z, AH)
+    addContactShadow(x, z, 1.8, 1.8)
+  }
+  plazaAO()
+  // Daylight pool under the skylight (Medium/High, with the other glows).
+  addPool(0, (sky.z0 + sky.z1) / 2, (sky.x1 - sky.x0) * 1.1, (sky.z1 - sky.z0) * 1.1)
   const plants: [number, number, number][] = [[-14, -30, 1.4], [14, -30, 1.4], [-19.5, -2, 1.3], [19.5, -2, 1.3], [-19.5, -31.5, 1.2], [19.5, -31.5, 1.2], [9.4, -19, 1.1]]
   plants.forEach(([x, z, sc], i) => {
     if (!kit?.placeBatched('plant', f, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
