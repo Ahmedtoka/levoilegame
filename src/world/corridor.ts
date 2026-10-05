@@ -174,10 +174,14 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   for (const s of shops) {
     if (s.kind !== 'shop') continue
     const sf = ctx.batcher.frame(new Matrix4().makeRotationY(s.yaw).setPosition(s.entrance.x, 0, s.entrance.z), ctx.colliders)
-    for (const x of [-3.02, 3.02]) sf.box(MAT.brass, x, 1.95, 0.03, 0.08, 3.9, 0.06)
-    sf.box(MAT.brass, 0, 3.93, 0.03, 6.12, 0.08, 0.06)
-    sf.box(MAT.lightWarm, 0, 4.14, 0.05, 5.6, 0.07, 0.03)
-    for (const x of [-4.55, 4.55]) sf.box(MAT.lightWarm, x, 0.47, 0.07, 1.9, 0.03, 0.04)
+    // Bronze portal: slim jambs on plinth blocks, a deeper lintel, and a light line above it
+    // (the display windows beside the opening light their own posters).
+    for (const x of [-3.04, 3.04]) {
+      sf.box(MAT.brass, x, 1.95, 0.03, 0.12, 3.92, 0.08)
+      sf.box(MAT.brass, x, 0.11, 0.045, 0.18, 0.23, 0.11)
+    }
+    sf.box(MAT.brass, 0, 3.93, 0.035, 6.26, 0.14, 0.09)
+    sf.box(MAT.lightWarm, 0, 4.11, 0.05, 5.6, 0.05, 0.03)
     if (s.brand) {
       const mat = new Mesh(new PlaneGeometry(2.4, 1.2), imageMat(doormatTexture({ initials: s.brand.initials, color: s.brand.color, logo: s.brand.logo })))
       const p = toWorld(s.entrance, s.yaw, 0, 0.75)

@@ -5,6 +5,8 @@
 
 import {
   BoxGeometry,
+  Color,
+  FrontSide,
   Group,
   Matrix4,
   Mesh,
@@ -18,14 +20,18 @@ import { BRAND } from '../config/brand'
 import { MALL, type ShopLayout } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
-import { loadProductTexture } from '../engine/textures'
-import { discountPercent, displayImage, type Catalog, type Product, type Section } from '../data/types'
+import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
+import { discountPercent, displayImage, hasCutout, type Catalog, type Product, type Section } from '../data/types'
 import { formatPrice, t } from '../i18n/i18n'
 import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { imageMat, MAT, tintMat } from './materials'
 import { blobShadow, framedPlane, plant, slimPlant, v3 } from './props'
-import { bladeSign, comingSoonTexture, labelSign, logoTexture, priceTagTexture, shopFascia, type Monogram } from './signage'
+import { bladeSign, comingSoonTexture, labelSign, lightboxBlade, lightboxFascia, logoTexture, priceTagTexture, shopFascia, type Monogram } from './signage'
+import { addCone, addRectHalo } from './glow'
+import { aoFloorJunction } from './aoStrips'
+import { windowGlass } from './finish'
 import type { Kit } from './kit'
 import type { DisplayKind } from '../config/sections'
 import { cardPanel, easelRow, loadCards, lookbookStand, registerCards, type Card } from './displays'
@@ -167,31 +173,34 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const products = section.productIds.map((id) => ctx.catalog.byId.get(id)).filter((p): p is Product => !!p)
 
   // ---------------------------------------------------------- storefront
-  const fascia = new Mesh(new PlaneGeometry(5.8, 1.45), imageMat(shopFascia(section, tint, mono)))
-  fascia.position.set(0, 4.95, 0.03)
-  group.add(fascia)
-  f.box(MAT.brass, 0, 4.95, 0.015, 5.95, 1.6, 0.02)
-
-  // Blade sign sticking out over the boulevard, readable from both directions.
-  const bladeTex = bladeSign(section, mono)
-  for (const side of [1, -1]) {
-    const blade = new Mesh(new PlaneGeometry(1.1, 1.1), imageMat(bladeTex))
-    blade.position.set(-half + 0.9 + side * 0.022, 4.2, 1.0)
-    blade.rotation.y = (side * Math.PI) / 2
-    group.add(blade)
+  if (mono) storefront(f, group, shop, section, mono, products, loaders)
+  else {
+    const fascia = new Mesh(new PlaneGeometry(5.8, 1.45), imageMat(shopFascia(section, tint, mono)))
+    fascia.position.set(0, 4.95, 0.03)
+    group.add(fascia)
+    f.box(MAT.brass, 0, 4.95, 0.015, 5.95, 1.6, 0.02)
+    const bladeTex = bladeSign(section, mono)
+    for (const side of [1, -1]) {
+      const blade = new Mesh(new PlaneGeometry(1.1, 1.1), imageMat(bladeTex))
+      blade.position.set(-half + 0.9 + side * 0.022, 4.2, 1.0)
+      blade.rotation.y = (side * Math.PI) / 2
+      group.add(blade)
+    }
+    f.bar(MAT.brass, v3(-half + 0.9, 4.85, 0), v3(-half + 0.9, 4.85, 1.65), 0.025)
+    f.box(MAT.brass, -half + 0.9, 4.2, 1.0, 0.03, 1.2, 1.2)
   }
-  f.bar(MAT.brass, v3(-half + 0.9, 4.85, 0), v3(-half + 0.9, 4.85, 1.65), 0.025)
-  f.box(MAT.brass, -half + 0.9, 4.2, 1.0, 0.03, 1.2, 1.2)
 
-  // Window posters on both sides of the entrance (second photo when available).
+  // Window posters on both sides of the entrance (second photo when available);
+  // with a display window they hang inside it as the backdrop.
   products.slice(0, 2).forEach((p, i) => {
-    const x = i === 0 ? -4.55 : 4.55
-    const w = 2.0
+    const x = (i === 0 ? -1 : 1) * (mono ? WIN.poster : 4.55)
+    const w = mono ? 1.38 : 2.0
     const h = w * (1306 / 1080)
+    const y = mono ? 1.95 : 1.75
     const poster = new Mesh(new PlaneGeometry(w, h), PLACEHOLDER)
-    poster.position.set(x, 1.75, 0.04)
+    poster.position.set(x, y, 0.04)
     group.add(poster)
-    framedPlane(f, x, 1.75, 0.03, w, h, MAT.brass, 0.05)
+    framedPlane(f, x, y, 0.03, w, h, MAT.brass, 0.05)
     const src = p.images[1] ?? p.images[0]
     loaders.push(() =>
       loadProductTexture(src, ctx.textureMax()).then(({ texture }) => {
@@ -275,6 +284,159 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
 }
 
 // -------------------------------------------------------------------------
+
+/** Bounding box of the non-transparent pixels of a cutout. */
+function alphaBounds(im: HTMLCanvasElement): { x: number; y: number; w: number; h: number } {
+  const d = im.getContext('2d')!.getImageData(0, 0, im.width, im.height).data
+  let x0 = im.width
+  let y0 = im.height
+  let x1 = -1
+  let y1 = -1
+  for (let y = 0; y < im.height; y += 2)
+    for (let x = 0; x < im.width; x += 2)
+      if (d[(y * im.width + x) * 4 + 3] > 24) {
+        if (x < x0) x0 = x
+        if (x > x1) x1 = x
+        if (y < y0) y0 = y
+        if (y > y1) y1 = y
+      }
+  if (x1 < 0) return { x: 0, y: 0, w: im.width, h: im.height }
+  return { x: x0, y: y0, w: Math.min(im.width - x0, x1 - x0 + 2), h: Math.min(im.height - y0, y1 - y0 + 2) }
+}
+
+/** Display-window geometry (shop-local, mirrored on both sides of the opening). */
+const WIN = {
+  x0: 3.2, // inner edge (clear of the opening's bronze frame)
+  x1: 5.5, // outer edge (clear of the row pilaster at 5.6)
+  z: 0.6, // glass line, in front of the wall face
+  y0: 0.3, // glass from the stone base…
+  y1: 3.6, // …to the lit header
+  poster: 4.68, // backdrop poster centre (outer half)
+  plinth: 3.68, // product plinth centre (inner half, by the door)
+}
+const FASCIA_Y = 4.97
+const FIG_W = 0.9
+const FIG_H = 1.8
+const PLINTH_TOP = 0.74
+const _white = new Color('#ffffff')
+
+/**
+ * Lightbox fascia, lightbox blade sign on a bronze bracket, and two display
+ * windows (stone base, glass, lit header, plinth with a product) beside the
+ * opening. Static parts are batched; the textured faces are one mesh each
+ * (the two blade faces and the two window products share a mesh).
+ */
+function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Section, mono: Monogram, products: Product[], loaders: (() => Promise<unknown>)[]): void {
+  const half = MALL.shopLen / 2
+  const cream = tintMat('#f3ece4', 1, 0.8)
+
+  // Fascia: bronze box (1 cm into the wall, front at z 0.15), lit face 5 mm proud, halo on the wall.
+  f.box(MAT.brass, 0, FASCIA_Y, 0.07, 6.0, 1.5, 0.16)
+  const face = new Mesh(new PlaneGeometry(5.84, 1.36), imageMat(lightboxFascia(section, mono)))
+  face.position.set(0, FASCIA_Y, 0.155)
+  group.add(face)
+  const hw = f.toWorld(0, FASCIA_Y, 0.012)
+  addRectHalo(hw.x, hw.y, hw.z, 6.0 / 0.8, 1.5 / 0.62, shop.yaw, `#${new Color(mono.color).lerp(_white, 0.5).getHexString()}`)
+
+  // Blade: 0.14 m bronze lightbox with a lit face each side (one mesh), hung from a wall bracket.
+  const bx = -half + 0.9
+  f.box(MAT.brass, bx, 4.2, 1.0, 0.14, 1.2, 1.2)
+  const faces = mergeGeometries([
+    new PlaneGeometry(1.08, 1.08).rotateY(Math.PI / 2).translate(0.075, 0, 0),
+    new PlaneGeometry(1.08, 1.08).rotateY(-Math.PI / 2).translate(-0.075, 0, 0),
+  ])
+  const bladeMat = imageMat(lightboxBlade(section, mono))
+  bladeMat.side = FrontSide
+  const blade = new Mesh(faces, bladeMat)
+  blade.position.set(bx, 4.2, 1.0)
+  group.add(blade)
+  f.box(MAT.brass, bx, 4.95, 0.01, 0.12, 0.34, 0.04) // wall plate
+  f.bar(MAT.brass, v3(bx, 4.95, 0.02), v3(bx, 4.95, 1.68), 0.02) // arm
+  f.bar(MAT.brass, v3(bx, 4.66, 0.02), v3(bx, 4.95, 0.46), 0.011) // brace
+  for (const hz of [0.52, 1.48]) f.bar(MAT.brass, v3(bx, 4.79, hz), v3(bx, 4.95, hz), 0.008) // hangers
+
+  // Display windows.
+  const cx = (WIN.x0 + WIN.x1) / 2
+  const vw = WIN.x1 - WIN.x0
+  const gh = WIN.y1 - WIN.y0
+  const glass = windowGlass()
+  for (const sx of [-1, 1]) {
+    const x = sx * cx
+    // Stone base (1 cm into the wall and below the floor), collider.
+    f.box(cream, x, 0.145, WIN.z / 2 - 0.005, vw, 0.31, WIN.z + 0.01, { collide: true })
+    // Glass: front pane + two side returns; bronze rails and corner posts.
+    f.box(glass, x, WIN.y0 + gh / 2, WIN.z, vw, gh, 0.012)
+    for (const ex of [WIN.x0, WIN.x1]) {
+      f.box(glass, sx * ex, WIN.y0 + gh / 2, WIN.z / 2, 0.012, gh, WIN.z)
+      f.box(MAT.brass, sx * ex, WIN.y0 + gh / 2, WIN.z, 0.04, gh, 0.04)
+      f.box(MAT.brass, sx * ex, WIN.y0 + 0.004, WIN.z / 2, 0.04, 0.048, WIN.z)
+    }
+    f.box(MAT.brass, x, WIN.y0 + 0.005, WIN.z, vw + 0.04, 0.05, 0.04)
+    f.box(MAT.brass, x, WIN.y1 - 0.015, WIN.z, vw + 0.04, 0.05, 0.04)
+    // Header (cream, the bronze top rail runs into it) with a light line along its underside.
+    f.box(cream, x, WIN.y1 + 0.12, WIN.z / 2 + 0.015, vw + 0.06, 0.24, WIN.z + 0.05)
+    f.box(MAT.lightWarm, x, WIN.y1 - 0.005, WIN.z * 0.45, vw - 0.3, 0.02, 0.04)
+    // Lit plinth: cream block, bronze cap, glowing band; a soft spot cone from the header.
+    const px = sx * WIN.plinth
+    f.box(cream, px, (WIN.y0 + PLINTH_TOP - 0.02) / 2, 0.3, 0.72, PLINTH_TOP - 0.02 - WIN.y0 + 0.01, 0.4)
+    f.box(MAT.brass, px, PLINTH_TOP - 0.01, 0.3, 0.74, 0.02, 0.42)
+    f.box(MAT.lightWarm, px, PLINTH_TOP - 0.065, 0.502, 0.66, 0.025, 0.01)
+    const cw = f.toWorld(px, WIN.y1 - 0.02, 0.3)
+    addCone(cw.x, cw.y, cw.z, WIN.y1 - PLINTH_TOP - 0.05, 0.42, 0, 0)
+    // Contact shading where the base meets the floor.
+    aoFloorJunction(sx * WIN.x0, WIN.z + 0.005, sx * WIN.x1, WIN.z + 0.005, 0, 1, f.base, 0.25, 0.4)
+  }
+
+  // The two window products share one 1024² canvas (left half / right half) and one mesh.
+  // Prefer products with a clean cutout (they stand on the plinth like a mannequin).
+  const rank = (p: Product) => (hasCutout(p) ? (p.modelOutfit ? 0 : 1) : 2)
+  const picks = [...products].sort((a, b) => rank(a) - rank(b)).slice(0, 2)
+  if (!picks.length || typeof document === 'undefined') return
+  const quads = picks.map((_, i) => {
+    const q = new PlaneGeometry(FIG_W, FIG_H).translate((i === 0 ? -1 : 1) * WIN.plinth, PLINTH_TOP + FIG_H / 2, 0.3)
+    const uv = q.getAttribute('uv')
+    for (let k = 0; k < uv.count; k++) uv.setX(k, uv.getX(k) * 0.5 + i * 0.5)
+    return q
+  })
+  const [c, g] = makeCanvas(1024, 1024)
+  const tex = canvasTexture(c)
+  const mat = imageMat(tex)
+  mat.side = FrontSide
+  mat.alphaTest = 0.5
+  const figs = new Mesh(mergeGeometries(quads), mat)
+  figs.visible = false
+  group.add(figs)
+  loaders.push(() =>
+    Promise.allSettled(
+      picks.map((p, i) =>
+        loadProductTexture(displayImage(p), 1024).then(({ image }) => {
+          const im = image as HTMLCanvasElement
+          const x0 = i * 512
+          // A full-length cutout (tall once trimmed) stands on the plinth like a mannequin.
+          const b = hasCutout(p) ? alphaBounds(im) : null
+          if (b && b.h / b.w > 1.45) {
+            const sc = Math.min(480 / b.w, 1000 / b.h)
+            g.drawImage(im, b.x, b.y, b.w, b.h, x0 + (512 - b.w * sc) / 2, 1024 - b.h * sc, b.w * sc, b.h * sc)
+          } else {
+            // Otherwise a mounted print standing on the plinth.
+            const w = 440
+            const h = Math.min(620, (w * im.height) / im.width)
+            const y = 1024 - h - 24
+            g.fillStyle = '#fbf8f4'
+            g.fillRect(x0 + 16, y - 24, w + 40, h + 48)
+            if (b) {
+              const sc = Math.min(w / b.w, h / b.h)
+              g.drawImage(im, b.x, b.y, b.w, b.h, x0 + 36 + (w - b.w * sc) / 2, y + (h - b.h * sc) / 2, b.w * sc, b.h * sc)
+            } else g.drawImage(im, x0 + 36, y, w, h)
+          }
+        }),
+      ),
+    ).then(() => {
+      tex.needsUpdate = true
+      figs.visible = true
+    }),
+  )
+}
 
 /** Shared helpers to place interactive product visuals inside a shop frame. */
 class ProductDisplay {

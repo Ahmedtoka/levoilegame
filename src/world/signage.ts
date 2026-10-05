@@ -49,7 +49,7 @@ function withLogo(tex: CanvasTexture, logo: string | undefined, draw: (img: HTML
   return tex
 }
 
-function fitImage(g: CanvasRenderingContext2D, img: HTMLImageElement, cx: number, cy: number, maxW: number, maxH: number): void {
+function fitImage(g: CanvasRenderingContext2D, img: HTMLImageElement | HTMLCanvasElement, cx: number, cy: number, maxW: number, maxH: number): void {
   const s = Math.min(maxW / img.width, maxH / img.height)
   g.drawImage(img, cx - (img.width * s) / 2, cy - (img.height * s) / 2, img.width * s, img.height * s)
 }
@@ -126,6 +126,155 @@ function brandFascia(section: Section, m: Monogram): CanvasTexture {
     fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 34, 600)
     g.fillText(section.titleAr, 512, 210)
   })
+}
+
+// ---------------------------------------------------------------------------
+// Lightbox signs (storefront fascia + blade): brand-colour face with a soft inner
+// light, raised cream lettering with a drop shadow. Bright enough for bloom.
+
+const LB_CREAM = '#fbf3e6'
+
+/** The logo recoloured to one flat colour (keeps its alpha). */
+function tintedLogo(img: HTMLImageElement, color: string): HTMLCanvasElement {
+  const [c, g] = makeCanvas(img.width, img.height)
+  g.drawImage(img, 0, 0)
+  g.globalCompositeOperation = 'source-in'
+  g.fillStyle = color
+  g.fillRect(0, 0, img.width, img.height)
+  return c
+}
+
+function lightboxBackground(g: CanvasRenderingContext2D, w: number, h: number, color: string, inset: number): void {
+  g.fillStyle = color
+  g.fillRect(0, 0, w, h)
+  // Backlit diffuser: brighter in the middle, a little darker towards the rim.
+  const r = g.createRadialGradient(w / 2, h * 0.42, 0, w / 2, h / 2, Math.max(w, h) * 0.62)
+  r.addColorStop(0, 'rgba(255,255,255,0.26)')
+  r.addColorStop(0.55, 'rgba(255,255,255,0.08)')
+  r.addColorStop(1, 'rgba(0,0,0,0.16)')
+  g.fillStyle = r
+  g.fillRect(0, 0, w, h)
+  const v = g.createLinearGradient(0, 0, 0, h)
+  v.addColorStop(0, 'rgba(255,255,255,0.12)')
+  v.addColorStop(0.5, 'rgba(255,255,255,0)')
+  v.addColorStop(1, 'rgba(0,0,0,0.12)')
+  g.fillStyle = v
+  g.fillRect(0, 0, w, h)
+  g.strokeStyle = 'rgba(251,243,230,0.55)'
+  g.lineWidth = 2
+  g.strokeRect(inset, inset, w - inset * 2, h - inset * 2)
+}
+
+/** Raised-look lettering: soft drop shadow, a darker lower edge, then a cream face. */
+function raisedText(g: CanvasRenderingContext2D, text: string, x: number, y: number, px: number, depth: number): void {
+  g.save()
+  g.shadowColor = 'rgba(0,0,0,0.38)'
+  g.shadowBlur = px * 0.16
+  g.shadowOffsetY = px * 0.07
+  g.fillStyle = 'rgba(70,48,30,0.55)'
+  g.fillText(text, x, y + depth)
+  g.restore()
+  const grad = g.createLinearGradient(0, y - px * 0.5, 0, y + px * 0.5)
+  grad.addColorStop(0, '#fffdf8')
+  grad.addColorStop(1, '#efe0c8')
+  g.fillStyle = grad
+  g.fillText(text, x, y)
+}
+
+function creamMonogram(g: CanvasRenderingContext2D, m: Monogram, x: number, y: number, r: number): void {
+  g.save()
+  g.shadowColor = 'rgba(0,0,0,0.3)'
+  g.shadowBlur = r * 0.18
+  g.shadowOffsetY = r * 0.06
+  g.fillStyle = LB_CREAM
+  g.beginPath()
+  g.arc(x, y, r, 0, Math.PI * 2)
+  g.fill()
+  g.restore()
+  g.strokeStyle = m.color
+  g.lineWidth = r * 0.05
+  g.beginPath()
+  g.arc(x, y, r * 0.86, 0, Math.PI * 2)
+  g.stroke()
+  g.fillStyle = m.color
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.direction = 'ltr'
+  g.font = `800 ${r * (m.initials.length > 2 ? 0.58 : 0.74)}px ${BRAND.fontUi}`
+  g.fillText(m.initials, x, y + r * 0.04)
+}
+
+/** Storefront lightbox face (1280 × 300, for a 5.84 × 1.36 m face). */
+export function lightboxFascia(section: Section, m: Monogram): CanvasTexture {
+  const W = 1280
+  const H = 300
+  const [c, g] = makeCanvas(W, H)
+  const paint = (logo: HTMLImageElement | null) => {
+    g.clearRect(0, 0, W, H)
+    lightboxBackground(g, W, H, m.color, 12)
+    g.textAlign = 'center'
+    g.textBaseline = 'middle'
+    if (logo) {
+      const t = tintedLogo(logo, LB_CREAM)
+      g.save()
+      g.shadowColor = 'rgba(0,0,0,0.38)'
+      g.shadowBlur = 14
+      g.shadowOffsetY = 6
+      fitImage(g, t, W / 2, 128, 860, 170)
+      g.restore()
+      g.direction = 'rtl'
+      fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 40, 600)
+      raisedText(g, section.titleAr, W / 2, 254, 40, 2)
+      g.direction = 'ltr'
+      return
+    }
+    creamMonogram(g, m, 168, H / 2, 96)
+    const cx = 740
+    const name = section.title.toUpperCase()
+    const px = fitText(g, name, (p) => `700 ${p}px ${BRAND.fontLatin}`, 104, 880)
+    raisedText(g, name, cx, 120, px, 3)
+    // Hairline divider between the scripts.
+    g.fillStyle = 'rgba(251,243,230,0.55)'
+    g.fillRect(cx - 70, 184, 140, 2)
+    g.direction = 'rtl'
+    const pa = fitText(g, section.titleAr, (p) => `700 ${p}px ${BRAND.fontUi}`, 52, 820)
+    raisedText(g, section.titleAr, cx, 236, pa, 2)
+    g.direction = 'ltr'
+  }
+  paint(null)
+  const tex = canvasTexture(c)
+  return withLogo(tex, m.logo, (img) => paint(img))
+}
+
+/** Blade lightbox face (512², for a ~1.1 m square face). */
+export function lightboxBlade(section: Section, m: Monogram): CanvasTexture {
+  const S = 512
+  const [c, g] = makeCanvas(S, S)
+  const paint = (logo: HTMLImageElement | null) => {
+    g.clearRect(0, 0, S, S)
+    lightboxBackground(g, S, S, m.color, 16)
+    g.textAlign = 'center'
+    g.textBaseline = 'middle'
+    if (logo) {
+      const t = tintedLogo(logo, LB_CREAM)
+      g.save()
+      g.shadowColor = 'rgba(0,0,0,0.38)'
+      g.shadowBlur = 12
+      g.shadowOffsetY = 5
+      fitImage(g, t, S / 2, 220, 400, 200)
+      g.restore()
+    } else {
+      creamMonogram(g, m, S / 2, 190, 112)
+      const px = fitText(g, section.title, (p) => `700 ${p}px ${BRAND.fontLatin}`, 60, 430)
+      raisedText(g, section.title, S / 2, 360, px, 2)
+    }
+    g.direction = 'rtl'
+    const pa = fitText(g, section.titleAr, (p) => `700 ${p}px ${BRAND.fontUi}`, 44, 420)
+    raisedText(g, section.titleAr, S / 2, logo ? 400 : 432, pa, 2)
+    g.direction = 'ltr'
+  }
+  paint(null)
+  return withLogo(canvasTexture(c), m.logo, (img) => paint(img))
 }
 
 /** Hoarding for an empty unit: "Coming Soon" over 122 Mall stripes. */

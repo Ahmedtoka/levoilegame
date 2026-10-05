@@ -5,7 +5,7 @@
 // Boxes and floor planes get UVs in world units (`uvBox`, `tiledPlane`), so
 // one material + one texture serves every size without per-mesh clones.
 
-import { BoxGeometry, BufferAttribute, Color, MeshStandardMaterial, PlaneGeometry, type BufferGeometry, type Texture } from 'three'
+import { BoxGeometry, BufferAttribute, Color, DoubleSide, MeshPhysicalMaterial, MeshStandardMaterial, PlaneGeometry, type BufferGeometry, type Texture } from 'three'
 import { canvasTexture, makeCanvas, rng, storeTexture } from '../engine/textures'
 
 /** World size of one floor tile (large format) and of the 4 × 4 atlas. */
@@ -153,4 +153,45 @@ export function marbleCladMat(): MeshStandardMaterial {
   if (cladding) return cladding
   const map = typeof document === 'undefined' ? null : storeTexture('/textures/marble.jpg', [1, 1])
   return (cladding = new MeshStandardMaterial({ map, color: '#ffffff', roughness: 0.22, metalness: 0.05, emissive: new Color('#7a736b'), emissiveIntensity: 0.8 }))
+}
+
+// ------------------------------------------------------------------ glass
+let glass: MeshPhysicalMaterial | null = null
+
+/** Faint diagonal reflection streaks (alpha), so the panes read as glass. */
+function glassSheen(): Texture {
+  const [c, g] = makeCanvas(256, 256)
+  g.fillStyle = 'rgba(255,255,255,0.55)'
+  g.fillRect(0, 0, 256, 256)
+  for (const [x, w, a] of [[40, 46, 1], [104, 14, 0.85], [176, 30, 0.8]] as const) {
+    const grad = g.createLinearGradient(x, 0, x + w, 0)
+    grad.addColorStop(0, 'rgba(255,255,255,0)')
+    grad.addColorStop(0.5, `rgba(255,255,255,${a})`)
+    grad.addColorStop(1, 'rgba(255,255,255,0)')
+    g.save()
+    g.translate(128, 128)
+    g.rotate(-0.5)
+    g.translate(-128, -128)
+    g.fillStyle = grad
+    g.fillRect(x, -200, w, 656)
+    g.restore()
+  }
+  return canvasTexture(c)
+}
+
+/** The one shared shop-window glass (transparent physical, no transmission pass). */
+export function windowGlass(): MeshPhysicalMaterial {
+  if (glass) return glass
+  glass = new MeshPhysicalMaterial({
+    color: '#eaf3f2',
+    roughness: 0.04,
+    metalness: 0,
+    transparent: true,
+    opacity: 0.22,
+    depthWrite: false,
+    side: DoubleSide,
+    envMapIntensity: 1.8,
+  })
+  if (typeof document !== 'undefined') glass.map = glassSheen()
+  return glass
 }
