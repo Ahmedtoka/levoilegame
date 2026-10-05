@@ -220,6 +220,7 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   const live = buildLiveMall(game, shops, vestLogo)
   game.updaters.push(mountLookCard(document.getElementById('ui')!, game, () => live.crowd?.focus ?? null))
   Object.assign(game, { live })
+  game.buildActorLods()
   buildDecals(engine.scene)
   buildAOStrips(engine.scene)
   buildGlows(engine.scene, engine.quality.fancyDecor)

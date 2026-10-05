@@ -19,14 +19,20 @@ import { store, watch } from './state/store'
 import { t } from './i18n/i18n'
 import type { GameBridge } from './ui/dom'
 import type { ShellHandles } from './world/mall'
+import { ActorLods } from './world/actorLod'
 
 export interface Actor {
   character: Persona
   /** Called when the player is near (greetings etc.). */
   onNear?: (dist: number) => void
-  /** Extra visibility gate (e.g. the shop interior is culled). */
+  /** Extra gate for the full rig (e.g. the shop interior is culled). */
   visibleIf?: () => boolean
+  /** Extra gate for the far static LOD (e.g. the player is inside another shop). */
+  lodIf?: () => boolean
 }
+
+/** Placed characters (staff, models) switch from their static LOD to the full rig here. */
+const ACTOR_RIG_DISTANCE: Record<QualityLevel, number> = { low: 10, medium: 14, high: 18 }
 
 export class Game implements GameBridge {
   readonly isTouch: boolean
@@ -37,6 +43,8 @@ export class Game implements GameBridge {
   readonly player = new Player()
   readonly interaction = new Interaction()
   readonly actors: Actor[] = []
+  /** Static LODs of every placed character (one draw call), built once they all exist. */
+  private actorLods: ActorLods | null = null
   readonly updaters: ((dt: number, t: number) => void)[] = []
   shell!: ShellHandles
 
@@ -280,6 +288,12 @@ export class Game implements GameBridge {
 
   // -------------------------------------------------------------- quality
 
+  /** Call once every placed character exists (end of the mall build). */
+  buildActorLods(): void {
+    if (this.actorLods || !this.actors.length) return
+    this.actorLods = new ActorLods(this.engine.scene, this.actors.map((a) => a.character))
+  }
+
   applyQuality(level: QualityLevel): void {
     this.engine.setQuality(level)
     this.shell.setQuality(this.engine.quality)
@@ -369,18 +383,29 @@ export class Game implements GameBridge {
     this.shell.doors.update(dt)
     for (const fn of this.updaters) fn(dt, t)
 
-    // Characters: distance-cull, then animate.
-    const maxD = this.engine.quality.characterDistance
+    // Characters: full rigs near; beyond that a static LOD (one draw call for all of
+    // them) that stays drawn far out and does not depend on the interior culling.
+    const q = this.engine.quality
+    const maxD = q.characterDistance
+    const lodD = Math.max(q.crowdLodDistance, maxD)
+    const rigD = ACTOR_RIG_DISTANCE[q.level]
     const head = _v.set(p.pos.x, 1.6, p.pos.z)
+    const lods = this.actorLods
+    lods?.begin()
     for (const a of this.actors) {
-      const r = a.character.root
+      const c = a.character
+      const r = c.root
       const d = Math.hypot(r.position.x - p.pos.x, r.position.z - p.pos.z)
-      r.visible = withinGate(r.visible, d, maxD, 2) && (a.visibleIf?.() ?? true)
-      if (!r.visible) continue
-      a.character.lookTarget = d < 5 ? head : null
-      a.character.update(dt, t)
+      const hasLod = !!lods && lods.has(c)
+      const rig = withinGate(r.visible, d, hasLod ? rigD : maxD, 2) && (a.visibleIf?.() ?? true)
+      if (hasLod) lods!.show(c, !rig && withinGate(lods!.shown(c), d, lodD, 4) && (a.lodIf?.() ?? true))
+      r.visible = rig
+      if (!rig) continue
+      c.lookTarget = d < 5 ? head : null
+      c.update(dt, t)
       a.onNear?.(d)
     }
+    lods?.end()
     if (p.view === 'third' && p.avatar) p.avatar.update(dt, t)
 
     // Interaction: crosshair hover + taps.

@@ -133,7 +133,7 @@ function buildStudio(game: Game, shops: ShopHandles[], logo: Texture | null): Cr
     const c = createCharacter(stylistLook(500 + i * 13, logo), 500 + i)
     const yawToCustomer = Math.atan2(wc.x - ws.x, wc.z - ws.z)
     placeCharacter(game, c, ws.x, ws.z, yawToCustomer)
-    addGreeter(game, c, STYLISTS[i], () => lounge.interiorVisible, { id: `stylist-${i}`, name: STYLISTS[i], role: 'stylist' })
+    addGreeter(game, c, STYLISTS[i], () => lounge.interiorVisible, { id: `stylist-${i}`, name: STYLISTS[i], role: 'stylist' }, () => lounge.seenFrom)
   })
   return poses
 }

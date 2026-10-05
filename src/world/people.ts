@@ -34,13 +34,13 @@ export function addProductModel(
   outfit: OutfitStyle,
   spot: Spot,
   seed: number,
-  opts: { plinth?: number; visibleIf?: () => boolean } = {},
+  opts: { plinth?: number; visibleIf?: () => boolean; lodIf?: () => boolean } = {},
 ): Character {
   const pose: Pose = seed % 2 === 0 ? 'model' : 'handOnHip'
   const c = createCharacter(modelLook(seed * 31 + 7, outfit, pose), seed)
   placeCharacter(game, c, spot.x, spot.z, spot.yaw, 0.45)
   c.root.position.y = opts.plinth ?? 0
-  game.actors.push({ character: c, visibleIf: opts.visibleIf })
+  game.actors.push({ character: c, visibleIf: opts.visibleIf, lodIf: opts.lodIf })
   game.interaction.add({
     object: c.hitbox,
     kind: 'model',
@@ -59,7 +59,7 @@ export function addProductModel(
 }
 
 /** Staff member who waves and greets the visitor when close; E opens a chat with her. */
-export function addGreeter(game: Game, c: Character, name: string, visibleIf?: () => boolean, staff?: StaffRef): void {
+export function addGreeter(game: Game, c: Character, name: string, visibleIf?: () => boolean, staff?: StaffRef, lodIf?: () => boolean): void {
   let last = -1e9
   let n = 0
   const greet = () => {
@@ -71,6 +71,7 @@ export function addGreeter(game: Game, c: Character, name: string, visibleIf?: (
   game.actors.push({
     character: c,
     visibleIf,
+    lodIf,
     onNear: (d) => {
       if (d < 3.2 && performance.now() - last > 30000 && store.getState().phase === 'playing' && !store.getState().overlay) greet()
     },
@@ -96,7 +97,11 @@ export async function buildPeople(game: Game, shops: ShopHandles[], logo: Textur
     if (!section) continue
     const style = sectionStyle(section.id, shop.layout.index)
     shop.modelSpots.forEach((spot) => {
-      addProductModel(game, spot.product, style.outfit, spot, seed++, { plinth: spot.plinth ?? 0.12, visibleIf: () => shop.interiorVisible })
+      addProductModel(game, spot.product, style.outfit, spot, seed++, {
+        plinth: spot.plinth ?? 0.12,
+        visibleIf: () => shop.interiorVisible,
+        lodIf: () => shop.seenFrom,
+      })
     })
   }
   let staffN = 0
@@ -105,7 +110,7 @@ export async function buildPeople(game: Game, shops: ShopHandles[], logo: Textur
     const c = createCharacter(staffLook(seed++ * 17, logo, 'clasped'), seed)
     placeCharacter(game, c, shop.staffSpot.x, shop.staffSpot.z, shop.staffSpot.yaw)
     const name = STAFF_NAMES[staffN++ % STAFF_NAMES.length]
-    addGreeter(game, c, name, () => shop.interiorVisible, { id: `staff-${shop.layout.section?.id}`, name, role: 'staff', sectionId: shop.layout.section?.id })
+    addGreeter(game, c, name, () => shop.interiorVisible, { id: `staff-${shop.layout.section?.id}`, name, role: 'staff', sectionId: shop.layout.section?.id }, () => shop.seenFrom)
   }
   const concierge = createCharacter(staffLook(99, logo, 'clasped'), 99)
   placeCharacter(game, concierge, 4.2, -6.2, Math.PI * 0.85)

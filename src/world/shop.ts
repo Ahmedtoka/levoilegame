@@ -74,6 +74,12 @@ export interface ShopHandles {
   staffSpot: { x: number; z: number; yaw: number } | null
   /** False when the player can't see inside (culls products, tags and characters). */
   interiorVisible: boolean
+  /**
+   * True unless the player is inside another shop: the shop's characters stay drawn
+   * (as LODs beyond the rig distance) whenever its opening can be seen, independent
+   * of the interior-detail culling.
+   */
+  seenFrom: boolean
   /** Lazy-loads images when the player gets close and culls the interior. */
   update(px: number, pz: number, insideShop: boolean): void
   /** Force-load (teleport target). */
@@ -130,12 +136,14 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
     modelSpots: [],
     staffSpot: null,
     interiorVisible: true,
+    seenFrom: true,
     update(px, pz, insideShop) {
       if (!loaded && Math.hypot(px - shop.center.x, pz - shop.center.z) < 34) load()
       // Inside a shop you only see that shop; from the boulevard, shops near you.
       const inside = px >= r.x0 && px <= r.x1 && pz >= r.z0 && pz <= r.z1
       // Hysteresis: shown within 19 m, hidden again only past 22 m (no flicker at the edge).
       const near = withinGate(handles.interiorVisible, Math.hypot(px - shop.entrance.x, pz - shop.entrance.z), 19, 3)
+      handles.seenFrom = inside || !insideShop
       const v = inside || (!insideShop && near)
       if (v !== handles.interiorVisible) {
         handles.interiorVisible = v

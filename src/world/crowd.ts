@@ -13,7 +13,6 @@
 import {
   BatchedMesh,
   BoxGeometry,
-  DoubleSide,
   Frustum,
   Sphere,
   InstancedMesh,
@@ -34,6 +33,7 @@ import { BRAND } from '../config/brand'
 import { rectContains, toWorld, type Wing } from '../config/layout'
 import type { Game } from '../game'
 import { Character } from '../actors/character'
+import { encodeWalk, lodWalkMaterial } from '../actors/lodWalk'
 import { customerLook, OUTFIT_PALETTE } from '../actors/palette'
 import { blobShadowTexture } from '../engine/textures'
 import { pickNearest, withinGate } from '../engine/hysteresis'
@@ -82,6 +82,7 @@ interface Agent {
 const DOOR: Pt = { x: 0, z: -1.2 }
 const R = 0.28
 const _m = new Matrix4()
+const _m2 = new Matrix4()
 const _q = new Quaternion()
 const _s = new Vector3()
 const _up = new Vector3(0, 1, 0)
@@ -164,9 +165,12 @@ export class Crowd {
     const verts = valid.reduce((n, g) => n + g.attributes.position.count, 0)
     const idx = valid.reduce((n, g) => n + (g.index?.count ?? 0), 0)
     if (valid.length) {
-      const mat = new MeshStandardMaterial({ vertexColors: true, roughness: 0.82, side: DoubleSide })
-      const batch = new BatchedMesh(valid.length, verts, idx, mat)
+      const batch = new BatchedMesh(valid.length, verts, idx, lodWalkMaterial())
+      // Visibility and the frustum test are done per shopper below; the instance
+      // matrices also carry the walk phase (not affine), so three must not cull/sort.
       batch.frustumCulled = false
+      batch.perObjectFrustumCulled = false
+      batch.sortObjects = false
       geos.forEach((g, i) => {
         if (!g) return
         const gid = batch.addGeometry(g)
@@ -442,8 +446,9 @@ export class Crowd {
       a.zone = this.shopIndexAt(a.pos.x, a.pos.z)
       const d = Math.hypot(a.pos.x - P.x, a.pos.z - P.z)
       let show = !a.away && withinGate(a.shown, d, maxD, 4)
-      // In a shop whose interior is culled (that shop's own hysteresis applies).
-      if (show && a.zone >= 0 && !this.shops[a.zone].interiorVisible) show = false
+      // Shoppers in a shop stay drawn (as LODs) while its opening can be seen, independent
+      // of the interior-detail culling; not from inside another shop (that shop's seenFrom).
+      if (show && a.zone >= 0 && !this.shops[a.zone].seenFrom) show = false
       // Inside a shop you only see that shop's shoppers (plus the mall through its door).
       if (show && playerShop >= 0 && a.zone >= 0 && a.zone !== playerShop) show = false
       // Off-screen shoppers neither render nor take a full-rig slot.
@@ -477,10 +482,9 @@ export class Crowd {
         a.full = true
         a.c.root.visible = true
         if (a.lod >= 0) this.batch!.setVisibleAt(a.lod, false)
-        const walking = a.path.length ? 1 : 0
-        // A rig taking over from the LOD starts in the right gait, not where it was left.
-        a.c.walk = fresh ? walking : a.c.walk + (walking - a.c.walk) * Math.min(1, dt * 6)
-        a.c.walkRate = a.m.rushing ? 2.5 : 0.6
+        // The walk blend and phase are kept up while drawn as an LOD too, so a rig
+        // taking over continues the same stride.
+        this.blendWalk(a, dt)
         a.c.lookTarget = d < 4 ? _head.set(P.x, 1.6, P.z) : null
         // Distant rigs animate at a third of the rate (but always on the frame they appear).
         a.animAcc += dt
@@ -491,14 +495,16 @@ export class Crowd {
       } else {
         a.full = false
         a.c.root.visible = false
-        const bob = a.path.length ? Math.abs(Math.sin(time * 8 + a.idx)) * 0.03 : 0
+        // The LOD walks in the vertex shader (same stride, bob and swing as the rig).
+        this.blendWalk(a, dt)
+        a.c.stepWalk(dt)
         _q.setFromAxisAngle(_up, a.yaw)
         _s.setScalar(a.c.root.scale.x)
-        _m.compose(_v.set(a.pos.x, bob, a.pos.z), _q, _s)
-        this.batch!.setMatrixAt(a.lod, _m)
+        _m.compose(_v.set(a.pos.x, 0, a.pos.z), _q, _s)
+        _m2.copy(_m).multiply(_shadowM)
+        shadows.setMatrixAt(si++, _m2)
+        this.batch!.setMatrixAt(a.lod, encodeWalk(_m, a.c.walkPhase, a.c.walk))
         this.batch!.setVisibleAt(a.lod, true)
-        _m.multiply(_shadowM)
-        shadows.setMatrixAt(si++, _m)
       }
       const vp = this.viewing(a)
       if (vp && d < focusD) {
@@ -509,6 +515,13 @@ export class Crowd {
     shadows.count = si
     shadows.instanceMatrix.needsUpdate = true
     this.focus = focus
+  }
+
+  /** Eases the walk blend towards walking / standing (rig and LOD alike). */
+  private blendWalk(a: Agent, dt: number): void {
+    const walking = a.path.length ? 1 : 0
+    a.c.walk += (walking - a.c.walk) * Math.min(1, dt * 6)
+    a.c.walkRate = a.m.rushing ? 2.5 : 0.6
   }
 
   private simulate(a: Agent, dt: number): void {
