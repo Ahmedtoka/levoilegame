@@ -11,7 +11,7 @@ import type { CollisionWorld } from '../engine/colliders'
 import type { Interaction } from '../interact/interaction'
 import type { Kit } from './kit'
 import { imageMat, MAT, tintMat } from './materials'
-import { plant } from './props'
+import { premiumPlanter } from './props'
 import { addContactShadow } from './decals'
 import { addHalo, addPool } from './glow'
 import { addAOStrip, aoCeilJunction, aoFloorJunction } from './aoStrips'
@@ -72,13 +72,12 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     wf.block(plum, 0, 0.3, z, 0.58, 0.13, 2.36)
     wf.block(MAT.brass, 0, 0, z, 0.66, 0.04, 2.44)
     for (const dz of [-1.9, 1.9]) {
-      if (!ctx.kit?.placeBatched('plant', wf, 0, z + dz, 0, ctx.colliders)) {
-        wf.cyl(MAT.marbleTop, 0, 0, z + dz, 0.55, 0.55, { collide: true })
-        plant(wf, 0, z + dz, 1.1, 90 + r * 2 + (dz < 0 ? 0 : 1))
-      }
+      premiumPlanter(wf, 0, z + dz, 90 + r * 2 + (dz < 0 ? 0 : 1))
+      const p = w(0, z + dz)
+      addContactShadow(p.x, p.z, 1.15, 1.15, wing.yaw)
     }
     const c = w(0, z)
-    addContactShadow(c.x, c.z, 1.7, 5.8, wing.yaw)
+    addContactShadow(c.x, c.z, 1.7, 3.4, wing.yaw)
   }
 
   // ---------------------------------------------------------------- pendants
@@ -288,7 +287,11 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
       endTex.needsUpdate = true
     })
   for (const x of [-4.6, 4.6])
-    if (!ctx.kit?.placeBatched('plant', wf, x, -len + 1.0, 0, ctx.colliders)) plant(wf, x, -len + 1.0, 1.2, 140 + Math.round(x))
+  {
+    premiumPlanter(wf, x, -len + 1.0, 140 + Math.round(x), 1.15)
+    const p = w(x, -len + 1.0)
+    addContactShadow(p.x, p.z, 1.3, 1.3, wing.yaw)
+  }
 
   return { feeds: [feed] }
 }

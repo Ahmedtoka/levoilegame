@@ -23,7 +23,7 @@ import type { QualitySettings } from '../engine/quality'
 import { gradientTexture, storeTexture } from '../engine/textures'
 import { BRAND } from '../config/brand'
 import { glowMat, imageMat, MAT, tintMat } from './materials'
-import { bench, column, plant } from './props'
+import { bench, column, premiumPlanter } from './props'
 import type { Kit } from './kit'
 import { directoryTexture, labelSign, logoTexture, type DirectoryEntry } from './signage'
 import { addPool, setGlowsVisible } from './glow'
@@ -98,7 +98,7 @@ export async function buildShell(
   colliders: CollisionWorld,
   layout: MallLayout,
   quality: QualitySettings,
-  kit: Kit | null = null,
+  _kit: Kit | null = null, // kept for callers; the mall shell no longer places kit pieces
 ): Promise<ShellHandles> {
   const f = batcher.frame(new Matrix4(), colliders)
   const { plazaHalf: W, plazaDepth: A, corridorHalf: B, shopDepth: SD, shopLen: SL, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
@@ -472,7 +472,8 @@ export async function buildShell(
   addPool(0, (sky.z0 + sky.z1) / 2, (sky.x1 - sky.x0) * 1.1, (sky.z1 - sky.z0) * 1.1)
   const plants: [number, number, number][] = [[-14, -30, 1.4], [14, -30, 1.4], [-19.5, -2, 1.3], [19.5, -2, 1.3], [-19.5, -31.5, 1.2], [19.5, -31.5, 1.2], [9.4, -19, 1.1]]
   plants.forEach(([x, z, sc], i) => {
-    if (!kit?.placeBatched('plant', f, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
+    premiumPlanter(f, x, z, 11 + i, sc)
+    addContactShadow(x, z, 1.3 * sc, 1.3 * sc)
   })
   // Side benches by the entrance.
   bench(f, -12, -4.5, 2.4)
