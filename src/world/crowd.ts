@@ -36,6 +36,7 @@ import type { Game } from '../game'
 import { Character } from '../actors/character'
 import { customerLook, OUTFIT_PALETTE } from '../actors/palette'
 import { blobShadowTexture } from '../engine/textures'
+import { pickNearest, withinGate } from '../engine/hysteresis'
 import { t } from '../i18n/i18n'
 import { catalog, store } from '../state/store'
 import type { PresenceMember, PresenceSource } from '../social/types'
@@ -69,6 +70,9 @@ interface Agent {
   animAcc: number
   bag: Object3D | null
   recolorT: number
+  /** Drawn last frame (as a rig or an LOD instance) / as a full rig. */
+  shown: boolean
+  full: boolean
   /** Out of the door, waiting to come back in as a new shopper. */
   away: number
   dwell: number
@@ -144,6 +148,8 @@ export class Crowd {
         animAcc: 0,
         bag: null,
         recolorT: 3,
+        shown: false,
+        full: false,
         away: 0,
         dwell: 0,
         idx: i,
@@ -413,9 +419,14 @@ export class Crowd {
     const fullMax = tier === 'high' ? 8 : tier === 'medium' ? 6 : 4
     const fullDist = tier === 'high' ? 11 : tier === 'medium' ? 9 : 7
     const cam = g.engine.camera
+    // The camera was moved this frame but its matrices update only at render: refresh them,
+    // or shoppers at the screen edge appear a frame late when turning.
+    cam.updateMatrixWorld()
     _pv.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse)
     _frustum.setFromProjectionMatrix(_pv)
-    const maxD = q.characterDistance
+    // Static LOD instances are one draw call for everyone, so they stay drawn far into
+    // the fog instead of popping out at the full-rig distance (characterDistance).
+    const maxD = Math.max(q.crowdLodDistance, q.characterDistance)
 
     // Cashier queue order: longest wait first.
     if ((this.queueT -= dt) <= 0) {
@@ -430,39 +441,55 @@ export class Crowd {
       this.simulate(a, dt)
       a.zone = this.shopIndexAt(a.pos.x, a.pos.z)
       const d = Math.hypot(a.pos.x - P.x, a.pos.z - P.z)
-      let show = !a.away && d < maxD
+      let show = !a.away && withinGate(a.shown, d, maxD, 4)
+      // In a shop whose interior is culled (that shop's own hysteresis applies).
       if (show && a.zone >= 0 && !this.shops[a.zone].interiorVisible) show = false
-      if (show && playerShop >= 0 && a.zone !== playerShop && d > 9) show = false
+      // Inside a shop you only see that shop's shoppers (plus the mall through its door).
+      if (show && playerShop >= 0 && a.zone >= 0 && a.zone !== playerShop) show = false
       // Off-screen shoppers neither render nor take a full-rig slot.
-      if (show && !_frustum.intersectsSphere(_sphere.set(_v.set(a.pos.x, 0.9, a.pos.z), 1.1))) show = false
+      if (show && !_frustum.intersectsSphere(_sphere.set(_v.set(a.pos.x, 0.95, a.pos.z), 1.35))) show = false
+      a.shown = show
       if (show) vis.push({ a, d })
       else {
+        a.full = false
         a.c.root.visible = false
         if (a.lod >= 0) this.batch.setVisibleAt(a.lod, false)
       }
     }
-    vis.sort((x, y) => x.d - y.d)
+    // Nearest few get full rigs; the ones that have one keep it until clearly further than a newcomer.
+    const fullPick = pickNearest(
+      vis.map((v) => v.d),
+      vis.map((v) => v.a.full),
+      fullMax,
+      fullDist,
+      1.5,
+    )
 
     const shadows = this.shadows!
     let si = 0
     let focus: Crowd['focus'] = null
     let focusD = 4.2
-    vis.forEach(({ a, d }, rank) => {
-      const full = (rank < fullMax && d < fullDist) || !a.lodOk || a.lod < 0
+    vis.forEach(({ a, d }, i) => {
+      const full = fullPick[i] || !a.lodOk || a.lod < 0
       a.c.root.rotation.y = a.yaw
       if (full) {
+        const fresh = !a.full
+        a.full = true
         a.c.root.visible = true
         if (a.lod >= 0) this.batch!.setVisibleAt(a.lod, false)
-        a.c.walk += ((a.path.length ? 1 : 0) - a.c.walk) * Math.min(1, dt * 6)
+        const walking = a.path.length ? 1 : 0
+        // A rig taking over from the LOD starts in the right gait, not where it was left.
+        a.c.walk = fresh ? walking : a.c.walk + (walking - a.c.walk) * Math.min(1, dt * 6)
         a.c.walkRate = a.m.rushing ? 2.5 : 0.6
         a.c.lookTarget = d < 4 ? _head.set(P.x, 1.6, P.z) : null
-        // Distant rigs animate at a third of the rate.
+        // Distant rigs animate at a third of the rate (but always on the frame they appear).
         a.animAcc += dt
-        if (d < 8 || this.frame % 3 === a.idx % 3) {
-          a.c.update(a.animAcc, time)
+        if (fresh || d < 8 || this.frame % 3 === a.idx % 3) {
+          a.c.update(fresh ? dt : a.animAcc, time)
           a.animAcc = 0
         }
       } else {
+        a.full = false
         a.c.root.visible = false
         const bob = a.path.length ? Math.abs(Math.sin(time * 8 + a.idx)) * 0.03 : 0
         _q.setFromAxisAngle(_up, a.yaw)

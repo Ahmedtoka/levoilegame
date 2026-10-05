@@ -15,6 +15,11 @@ export interface QualitySettings {
   fancyDecor: boolean
   /** Distance beyond which characters stop rendering/animating. */
   characterDistance: number
+  /**
+   * How far crowd shoppers stay drawn as static LOD instances (one draw call for
+   * all of them). Well past characterDistance, into the fog, so they don't pop.
+   */
+  crowdLodDistance: number
   anisotropy: number
 }
 
@@ -24,11 +29,11 @@ export function qualitySettings(level: QualityLevel): QualitySettings {
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
   switch (level) {
     case 'low':
-      return { level, pixelRatio: Math.min(dpr, 1), reflections: false, bloom: false, textureMax: 512, bakedTextureMax: 1024, fancyDecor: false, characterDistance: 22, anisotropy: 1 }
+      return { level, pixelRatio: Math.min(dpr, 1), reflections: false, bloom: false, textureMax: 512, bakedTextureMax: 1024, fancyDecor: false, characterDistance: 22, crowdLodDistance: 45, anisotropy: 1 }
     case 'medium':
-      return { level, pixelRatio: Math.min(dpr, 1.5), reflections: false, bloom: false, textureMax: 1024, bakedTextureMax: 2048, fancyDecor: true, characterDistance: 32, anisotropy: 4 }
+      return { level, pixelRatio: Math.min(dpr, 1.5), reflections: false, bloom: false, textureMax: 1024, bakedTextureMax: 2048, fancyDecor: true, characterDistance: 32, crowdLodDistance: 70, anisotropy: 4 }
     case 'high':
-      return { level, pixelRatio: dpr, reflections: true, bloom: true, textureMax: 1024, bakedTextureMax: 4096, fancyDecor: true, characterDistance: 45, anisotropy: 8 }
+      return { level, pixelRatio: dpr, reflections: true, bloom: true, textureMax: 1024, bakedTextureMax: 4096, fancyDecor: true, characterDistance: 45, crowdLodDistance: 95, anisotropy: 8 }
   }
 }
 

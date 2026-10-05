@@ -4,6 +4,7 @@ import { Mesh, MeshBasicMaterial, Raycaster, RingGeometry, Timer, Vector2, Vecto
 import type { Engine } from './engine/renderer'
 import { FpsGovernor, QUALITY_ORDER, type QualityLevel } from './engine/quality'
 import { TextureWarmer } from './engine/textureWarmer'
+import { withinGate } from './engine/hysteresis'
 import type { CollisionWorld } from './engine/colliders'
 import { rectContains, shopArrival, shopZone, type MallLayout } from './config/layout'
 import { Input, type Action } from './player/input'
@@ -374,7 +375,7 @@ export class Game implements GameBridge {
     for (const a of this.actors) {
       const r = a.character.root
       const d = Math.hypot(r.position.x - p.pos.x, r.position.z - p.pos.z)
-      r.visible = d < maxD && (a.visibleIf?.() ?? true)
+      r.visible = withinGate(r.visible, d, maxD, 2) && (a.visibleIf?.() ?? true)
       if (!r.visible) continue
       a.character.lookTarget = d < 5 ? head : null
       a.character.update(dt, t)

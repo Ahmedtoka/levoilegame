@@ -21,6 +21,7 @@ import { MALL, type ShopLayout } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
+import { withinGate } from '../engine/hysteresis'
 import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
 import { MIRROR_LAYER } from '../engine/layers'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
@@ -133,7 +134,8 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
       if (!loaded && Math.hypot(px - shop.center.x, pz - shop.center.z) < 34) load()
       // Inside a shop you only see that shop; from the boulevard, shops near you.
       const inside = px >= r.x0 && px <= r.x1 && pz >= r.z0 && pz <= r.z1
-      const near = Math.hypot(px - shop.entrance.x, pz - shop.entrance.z) < 19
+      // Hysteresis: shown within 19 m, hidden again only past 22 m (no flicker at the edge).
+      const near = withinGate(handles.interiorVisible, Math.hypot(px - shop.entrance.x, pz - shop.entrance.z), 19, 3)
       const v = inside || (!insideShop && near)
       if (v !== handles.interiorVisible) {
         handles.interiorVisible = v
