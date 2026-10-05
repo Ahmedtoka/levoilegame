@@ -98,7 +98,7 @@ export class ScreenFeed {
     this.texA = canvasTexture(this.canA)
     this.texB = canvasTexture(this.canB)
     this.matA = new MeshBasicMaterial({ map: this.texA, toneMapped: false })
-    this.matB = new MeshBasicMaterial({ map: this.texB, toneMapped: false, transparent: true, opacity: 0, depthWrite: false })
+    this.matB = new MeshBasicMaterial({ map: this.texB, toneMapped: false, transparent: true, opacity: 0, depthWrite: false, visible: false })
     this.rebuild()
   }
 
@@ -134,6 +134,7 @@ export class ScreenFeed {
         this.draw(this.canA, this.current())
         this.texA.needsUpdate = true
         this.matB.opacity = 0
+        this.matB.visible = false
         this.fade = -1
       }
       return
@@ -151,6 +152,7 @@ export class ScreenFeed {
       this.draw(this.canB, this.current())
       this.texB.needsUpdate = true
       this.fade = 0
+      this.matB.visible = true
       return
     }
     // Countdowns tick once a second; first paint / image loads set `dirty`.
