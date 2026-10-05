@@ -316,7 +316,7 @@ export async function buildShell(
   for (const [x, z] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) column(f, x, z, AH)
   const plants: [number, number, number][] = [[-14, -30, 1.4], [14, -30, 1.4], [-19.5, -2, 1.3], [19.5, -2, 1.3], [-19.5, -31.5, 1.2], [19.5, -31.5, 1.2], [9.4, -19, 1.1]]
   plants.forEach(([x, z, sc], i) => {
-    if (!kit?.place('plant', root, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
+    if (!kit?.placeBatched('plant', f, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
   })
   // Side benches by the entrance.
   bench(f, -12, -4.5, 2.4)

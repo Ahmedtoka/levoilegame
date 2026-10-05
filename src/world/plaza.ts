@@ -91,7 +91,7 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
 
   // ------------------------------------------------------- planters
   for (const [px, pz] of [[-6.4, sz - 1.7], [6.4, sz - 1.7], [-6.4, sz + 2.3], [6.4, sz + 2.3]] as const) {
-    if (!ctx.kit?.place('plant', ctx.root, px, pz, px < 0 ? 0.6 : -0.6, ctx.colliders)) {
+    if (!ctx.kit?.placeBatched('plant', f, px, pz, px < 0 ? 0.6 : -0.6, ctx.colliders)) {
       f.cyl(MAT.marbleTop, px, 0, pz, 0.7, 0.6, { collide: true })
       f.cyl(MAT.brass, px, 0.6, pz, 0.72, 0.03)
       plant(f, px, pz, 1.2, 70 + Math.round(px + pz))

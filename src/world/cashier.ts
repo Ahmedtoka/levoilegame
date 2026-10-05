@@ -36,8 +36,8 @@ export function buildCashierDesk(
   const kitCounter = kit?.place('counter', group, 0, 0, 0, colliders)
   if (kitCounter) {
     f.block(MAT.wall, 0, 0, -2.0, 5.0, 3.4, 0.4, { collide: true })
-    kit!.place('plant', group, -2.9, -1.3, 0, colliders)
-    kit!.place('plant', group, 2.9, -1.3, 0, colliders)
+    kit!.placeBatched('plant', f, -2.9, -1.3, 0, colliders)
+    kit!.placeBatched('plant', f, 2.9, -1.3, 0, colliders)
   } else {
   // Counter: wood body, magenta front, marble top
   f.block(MAT.woodDark, 0, 0, 0, 4.2, 1.02, 0.9, { collide: true })

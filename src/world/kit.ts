@@ -3,8 +3,9 @@
 // Every piece keeps its baked Cycles lighting (unlit material) and shares the
 // atlas textures, so clones are cheap. Missing kit → shops use procedural props.
 
-import { Box3, MeshBasicMaterial, SRGBColorSpace, Vector3, type Mesh, type MeshStandardMaterial, type Object3D, type WebGLRenderer } from 'three'
+import { Box3, Euler, Matrix4, MeshBasicMaterial, Quaternion, SRGBColorSpace, Vector3, type Mesh, type MeshStandardMaterial, type Object3D, type WebGLRenderer } from 'three'
 import type { CollisionWorld } from '../engine/colliders'
+import type { BatchFrame } from '../engine/batcher'
 
 export interface KitPieceInfo {
   /** Footprint/height in metres: [width (x), height (y), depth (z)] as authored. */
@@ -97,5 +98,41 @@ export class Kit {
       if (box.max.x > box.min.x && box.max.z > box.min.z) colliders.addBox(box)
     }
     return o
+  }
+
+  /**
+   * Static variant of place(): the piece's meshes are added to the Batcher
+   * (instanced, never culled) in frame `f`, so it costs no extra draw calls.
+   * Use only for pieces that are always visible (plaza, corridors).
+   */
+  placeBatched(name: string, f: BatchFrame, x: number, z: number, face: number, colliders?: CollisionWorld, opts: { collide?: boolean } = {}): boolean {
+    const src = this.pieces.get(name)
+    const info = this.info[name]
+    if (!src || !info) return false
+    const frontYaw = Math.atan2(info.front[0], info.front[2])
+    const root = new Matrix4().compose(new Vector3(x, 0, z), new Quaternion().setFromEuler(new Euler(0, face - frontYaw, 0)), new Vector3(1, 1, 1))
+    const world = f.base.clone().multiply(root)
+    const box = new Box3()
+    const m = new Matrix4()
+    src.traverse((c) => {
+      const mesh = c as Mesh
+      if (!mesh.isMesh) return
+      m.identity()
+      for (let o: Object3D | null = mesh; o && o !== src; o = o.parent) {
+        o.updateMatrix()
+        m.premultiply(o.matrix)
+      }
+      const full = world.clone().multiply(m)
+      f.batcher.add(mesh.geometry, mesh.material as MeshBasicMaterial, full)
+      if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox()
+      box.union(mesh.geometry.boundingBox!.clone().applyMatrix4(full))
+    })
+    if (colliders && opts.collide !== false) {
+      box.expandByVector(new Vector3(-0.08, 0, -0.08))
+      box.min.y = 0
+      box.max.y = Math.min(box.max.y, 2)
+      if (box.max.x > box.min.x && box.max.z > box.min.z) colliders.addBox(box)
+    }
+    return true
   }
 }

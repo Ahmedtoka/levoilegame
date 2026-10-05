@@ -71,7 +71,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     wf.block(plum, 0, 0.3, z, 0.58, 0.13, 2.36)
     wf.block(MAT.brass, 0, 0, z, 0.66, 0.04, 2.44)
     for (const dz of [-1.9, 1.9]) {
-      if (!ctx.kit?.place('plant', group, 0, z + dz, dz < 0 ? 0 : Math.PI, ctx.colliders)) {
+      if (!ctx.kit?.placeBatched('plant', wf, 0, z + dz, dz < 0 ? 0 : Math.PI, ctx.colliders)) {
         wf.cyl(MAT.marbleTop, 0, 0, z + dz, 0.55, 0.55, { collide: true })
         plant(wf, 0, z + dz, 1.1, 90 + r * 2 + (dz < 0 ? 0 : 1))
       }
@@ -203,7 +203,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
       endTex.needsUpdate = true
     })
   for (const x of [-4.6, 4.6])
-    if (!ctx.kit?.place('plant', group, x, -len + 1.0, 0, ctx.colliders)) plant(wf, x, -len + 1.0, 1.2, 140 + Math.round(x))
+    if (!ctx.kit?.placeBatched('plant', wf, x, -len + 1.0, 0, ctx.colliders)) plant(wf, x, -len + 1.0, 1.2, 140 + Math.round(x))
 
   // ----------------------------------------------------------- wall shade
   // Dark-to-clear band at the base of the solid wall between storefronts.
