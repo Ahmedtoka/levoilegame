@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { toWorld } from '../src/config/layout'
 import { arcSeats, stageWatchSpots } from '../src/world/plazaMath'
 
 describe('arcSeats', () => {
@@ -46,6 +47,17 @@ describe('stageWatchSpots', () => {
     for (const s of spots) {
       expect(Math.hypot(s.x, s.z + 21.5)).toBeCloseTo(11, 6)
       expect(Math.sin(s.yaw) * -s.x + Math.cos(s.yaw) * (-21.5 - s.z)).toBeGreaterThan(0)
+    }
+  })
+})
+
+describe('toWorld round-trip used by corridor.toLocalZ', () => {
+  it('local z maps back for every wing yaw', () => {
+    for (const yaw of [0, Math.PI / 2, -Math.PI / 2]) {
+      const o = { x: 3, z: -20 }
+      const p = toWorld(o, yaw, 2.5, -17)
+      const dz = (p.x - o.x) * Math.sin(yaw) + (p.z - o.z) * Math.cos(yaw)
+      expect(dz).toBeCloseTo(-17, 6)
     }
   })
 })

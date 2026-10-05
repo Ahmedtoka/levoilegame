@@ -14,7 +14,10 @@ import { imageMat, MAT, tintMat } from './materials'
 import { plant } from './props'
 import { addContactShadow } from './decals'
 import { addHalo } from './glow'
-import { doormatTexture, starInlayTexture } from './signage'
+import { BRAND } from '../config/brand'
+import { canvasTexture, loadImage, loadProductTexture, makeCanvas } from '../engine/textures'
+import { catalog } from '../state/store'
+import { doormatTexture, starInlayTexture, wallGradientTexture, wayfindingTexture, wingDirectoryTexture } from './signage'
 import { ScreenFeed, registerScreen, screenMesh, type ScreenActions } from './screens'
 
 export interface CorridorCtx {
@@ -28,6 +31,15 @@ export interface CorridorCtx {
 
 let starGeo: PlaneGeometry | null = null
 let starMat: MeshBasicMaterial | null = null
+let wallGeo: PlaneGeometry | null = null
+let wallMat: MeshBasicMaterial | null = null
+
+/** A world point's z in the wing's local frame (distance along the corridor, negative away from the plaza). */
+function toLocalZ(wing: Wing, p: { x: number; z: number }): number {
+  const dx = p.x - wing.origin.x
+  const dz = p.z - wing.origin.z
+  return dx * Math.sin(wing.yaw) + dz * Math.cos(wing.yaw)
+}
 
 export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[]): { feeds: ScreenFeed[] } {
   const B = MALL.corridorHalf
@@ -117,6 +129,88 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
       ctx.root.add(mat)
     }
   }
+
+  // ------------------------------------------------------------ wing portal
+  for (const s of [-1, 1]) wf.box(MAT.brass, s * (B - 0.12), BH / 2, -0.15, 0.24, BH, 0.3, { collide: true })
+  wf.box(MAT.brass, 0, BH - 0.12, -0.15, 2 * B, 0.24, 0.3)
+
+  // ------------------------------------------------------ directory board
+  const rowsData = shops.map((s) => ({
+    name: s.kind === 'lounge' ? (s.amenity === 'studio' ? 'Styling Studio' : '122 Lounge') : (s.brand?.name ?? ''),
+    nameAr: s.kind === 'lounge' ? (s.amenity === 'studio' ? 'ستوديو الستايلينج' : 'استراحة ١٢٢') : (s.brand?.nameAr ?? ''),
+    color: s.kind === 'shop' ? (s.brand?.color ?? '#ddd') : '#d8cbb8',
+  }))
+  const dirTex = wingDirectoryTexture(wing.def.nameEn, wing.def.nameAr, rowsData)
+  wf.block(MAT.brass, -4.6, 0, -1.5, 1.32, 0.08, 0.3, { collide: true })
+  wf.box(cream, -4.6, 1.3, -1.5, 1.3, 2.36, 0.12)
+  for (const face of [0, Math.PI]) {
+    const board = new Mesh(new PlaneGeometry(1.2, 2.2), imageMat(dirTex))
+    board.position.set(-4.6, 1.3, -1.5 + (face ? -0.065 : 0.065))
+    board.rotation.y = face
+    group.add(board)
+  }
+
+  // ----------------------------------------------------------- wayfinding
+  const half = -len / 2
+  const ahead = shops.filter((s) => s.center && toLocalZ(wing, s.center) < half).map((s) => s.brand?.name ?? (s.amenity === 'studio' ? 'Studio' : s.amenity === 'lounge' ? 'Lounge' : '')).filter(Boolean)
+  const behind = shops.filter((s) => s.center && toLocalZ(wing, s.center) >= half).map((s) => s.brand?.name ?? '').filter(Boolean)
+  for (const x of [-1.4, 1.4]) wf.cyl(MAT.brass, x, 4.95, half, 0.015, BH - 4.95)
+  wf.box(MAT.brass, 0, 4.6, half, 3.36, 0.86, 0.06)
+  const toEnd = new Mesh(new PlaneGeometry(3.2, 0.8), imageMat(wayfindingTexture('Ahead', 'قدامك', ahead)))
+  toEnd.position.set(0, 4.6, half + 0.035)
+  group.add(toEnd)
+  const toPlaza = new Mesh(new PlaneGeometry(3.2, 0.8), imageMat(wayfindingTexture('To the Plaza', 'للبلازا', ['Plaza', ...behind.reverse()])))
+  toPlaza.position.set(0, 4.6, half - 0.035)
+  toPlaza.rotation.y = Math.PI
+  group.add(toPlaza)
+
+  // --------------------------------------------------------------- end wall
+  const endZ = -len + 0.16
+  wf.box(MAT.brass, 0, 2.6, endZ - 0.04, 10.2, 4.2, 0.06)
+  const [ec, eg] = makeCanvas(2048, 820)
+  eg.fillStyle = '#f4ede3'
+  eg.fillRect(0, 0, 2048, 820)
+  const endTex = canvasTexture(ec)
+  const endWall = new Mesh(new PlaneGeometry(10, 4), imageMat(endTex))
+  endWall.position.set(0, 2.6, endZ)
+  group.add(endWall)
+  const tiles = shops.filter((s) => s.kind === 'shop' && s.section).slice(0, 6)
+  const tileW = 2048 / Math.max(1, tiles.length)
+  Promise.all(
+    tiles.map((s, i) => {
+      const p = catalog().byId.get(s.section!.productIds[0])
+      return p ? loadProductTexture(p.images[0], 512).then(({ image }) => {
+        const im = image as HTMLCanvasElement
+        const sc = Math.max(tileW / im.width, 820 / im.height)
+        eg.save()
+        eg.beginPath()
+        eg.rect(i * tileW + 6, 6, tileW - 12, 808)
+        eg.clip()
+        eg.drawImage(im, i * tileW + (tileW - im.width * sc) / 2, (820 - im.height * sc) / 2, im.width * sc, im.height * sc)
+        eg.restore()
+      }) : Promise.resolve()
+    }),
+  )
+    .then(() => loadImage(BRAND.logo))
+    .then((logo) => {
+      eg.fillStyle = 'rgba(251,248,244,0.92)'
+      eg.fillRect(724, 300, 600, 220)
+      const s = Math.min(540 / logo.width, 180 / logo.height)
+      eg.drawImage(logo, 1024 - (logo.width * s) / 2, 410 - (logo.height * s) / 2, logo.width * s, logo.height * s)
+      endTex.needsUpdate = true
+    })
+    .catch(() => {
+      endTex.needsUpdate = true
+    })
+  for (const x of [-4.6, 4.6])
+    if (!ctx.kit?.place('plant', group, x, -len + 1.0, 0, ctx.colliders)) plant(wf, x, -len + 1.0, 1.2, 140 + Math.round(x))
+
+  // ----------------------------------------------------------- wall shade
+  // Dark-to-clear band at the base of the solid wall between storefronts.
+  wallGeo ??= new PlaneGeometry(6, 1.1)
+  wallMat ??= new MeshBasicMaterial({ map: wallGradientTexture(), transparent: true, depthWrite: false })
+  for (let r = 0; r <= rows; r++)
+    for (const side of [-1, 1]) wf.custom(wallGeo, wallMat, side * (B - 0.01), 0.55, -r * L, 1, side < 0 ? Math.PI / 2 : -Math.PI / 2)
 
   return { feeds: [feed] }
 }

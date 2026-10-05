@@ -490,3 +490,82 @@ export function doormatTexture(m: Monogram): CanvasTexture {
     fitImage(g, img, 256, 128, 400, 150)
   })
 }
+
+export interface DirectoryRow {
+  name: string
+  nameAr: string
+  color: string
+}
+
+/** Wing directory board: the wing name, then every unit in order. */
+export function wingDirectoryTexture(titleEn: string, titleAr: string, rows: DirectoryRow[]): CanvasTexture {
+  const [c, g] = makeCanvas(512, 940)
+  g.fillStyle = '#fbf8f4'
+  g.fillRect(0, 0, 512, 940)
+  g.fillStyle = '#8a6a46'
+  g.fillRect(0, 0, 512, 150)
+  g.fillStyle = '#ffffff'
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.font = `600 44px ${BRAND.fontLatin}`
+  g.fillText(titleEn, 256, 55)
+  g.direction = 'rtl'
+  g.font = `700 38px ${BRAND.fontUi}`
+  g.fillText(titleAr, 256, 108)
+  g.direction = 'ltr'
+  const rowH = Math.min(96, 760 / Math.max(1, rows.length))
+  rows.forEach((r, i) => {
+    const y = 175 + i * rowH + rowH / 2
+    g.fillStyle = r.color
+    g.fillRect(24, y - rowH / 2 + 8, 12, rowH - 16)
+    g.fillStyle = BRAND.ink
+    g.textAlign = 'left'
+    fitText(g, r.name, (px) => `600 ${px}px ${BRAND.fontLatin}`, Math.min(32, rowH * 0.38), 240)
+    g.fillText(r.name, 52, y)
+    g.textAlign = 'right'
+    g.direction = 'rtl'
+    fitText(g, r.nameAr, (px) => `700 ${px}px ${BRAND.fontUi}`, Math.min(30, rowH * 0.36), 170)
+    g.fillText(r.nameAr, 488, y)
+    g.direction = 'ltr'
+    g.fillStyle = 'rgba(0,0,0,0.06)'
+    g.fillRect(24, y + rowH / 2 - 1, 464, 1)
+  })
+  return canvasTexture(c)
+}
+
+/** Hanging wayfinding sign face: "Ahead / قدامك" and up to 4 unit names. */
+export function wayfindingTexture(headEn: string, headAr: string, names: string[]): CanvasTexture {
+  const [c, g] = makeCanvas(1024, 256)
+  g.fillStyle = '#f4ede3'
+  g.fillRect(0, 0, 1024, 256)
+  g.fillStyle = '#8a6a46'
+  g.fillRect(0, 0, 230, 256)
+  g.fillStyle = '#ffffff'
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.font = `600 40px ${BRAND.fontLatin}`
+  g.fillText(headEn, 115, 92)
+  g.direction = 'rtl'
+  g.font = `700 40px ${BRAND.fontUi}`
+  g.fillText(headAr, 115, 168)
+  g.direction = 'ltr'
+  g.fillStyle = BRAND.ink
+  const line = names.slice(0, 4).join('  ·  ')
+  fitText(g, line, (px) => `600 ${px}px ${BRAND.fontLatin}`, 52, 760)
+  g.fillText(line, 627, 128)
+  return canvasTexture(c)
+}
+
+/** Vertical shade for the bottom of corridor walls (dark at the floor → clear). */
+let wallGrad: CanvasTexture | null = null
+export function wallGradientTexture(): CanvasTexture {
+  if (wallGrad) return wallGrad
+  const [c, g] = makeCanvas(4, 128)
+  const grad = g.createLinearGradient(0, 128, 0, 0)
+  grad.addColorStop(0, 'rgba(60,40,30,0.32)')
+  grad.addColorStop(1, 'rgba(60,40,30,0)')
+  g.fillStyle = grad
+  g.fillRect(0, 0, 4, 128)
+  wallGrad = canvasTexture(c)
+  return wallGrad
+}
