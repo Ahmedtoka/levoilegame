@@ -34,6 +34,10 @@ import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
 import { buildLiveMall } from './world/liveMall'
+import { buildPlaza } from './world/plaza'
+import { buildDecals } from './world/decals'
+import { buildGlows } from './world/glow'
+import type { ScreenFeed, ScreenActions } from './world/screens'
 
 const uiRoot = document.getElementById('ui')!
 const appRoot = document.getElementById('app')!
@@ -199,6 +203,18 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   const live = buildLiveMall(game, shops, vestLogo)
   game.updaters.push(mountLookCard(document.getElementById('ui')!, game, () => live.crowd?.focus ?? null))
   Object.assign(game, { live })
+  const actions: ScreenActions = {
+    teleport: (id) => game.teleport(id),
+    openProduct: (id) => store.getState().openProduct(id),
+    openWheel: () => store.getState().set({ overlay: 'wheel' }),
+  }
+  const feeds: ScreenFeed[] = []
+  feeds.push(...buildPlaza({ root: engine.scene, batcher, colliders, interaction: game.interaction, kit, actions }).feeds)
+  buildDecals(engine.scene)
+  buildGlows(engine.scene, engine.quality.fancyDecor)
+  game.updaters.push((dt) => {
+    for (const fd of feeds) fd.update(dt, engine.camera)
+  })
   progress(0.85)
 }
 

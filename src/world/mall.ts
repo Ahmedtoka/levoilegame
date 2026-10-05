@@ -131,20 +131,21 @@ export async function buildShell(
     return reflector
   }
 
-  // Medallion with the mall logo in the middle of the plaza.
+  // Medallion with the mall logo, between the entrance and the stage seating.
   const mid = -A / 2
+  const medZ = -9.5
   const ring = new Mesh(new RingGeometry(3.3, 3.6, 72), MAT.brass)
   ring.rotation.x = -Math.PI / 2
-  ring.position.set(0, 0.005, mid)
+  ring.position.set(0, 0.005, medZ)
   root.add(ring)
   const disc = new Mesh(new CircleGeometry(3.3, 72), tintMat('#efe7dc', 1, 0.4))
   disc.rotation.x = -Math.PI / 2
-  disc.position.set(0, 0.004, mid)
+  disc.position.set(0, 0.004, medZ)
   root.add(disc)
   logoTexture(null, 1024, 300).then((tex) => {
     const logo = new Mesh(new PlaneGeometry(5.2, 1.5), imageMat(tex, { transparent: true }))
     logo.rotation.x = -Math.PI / 2
-    logo.position.set(0, 0.006, mid)
+    logo.position.set(0, 0.006, medZ)
     root.add(logo)
   })
 
@@ -325,9 +326,7 @@ export async function buildShell(
   plants.forEach(([x, z, sc], i) => {
     if (!kit?.place('plant', root, x, z, i * 1.3, colliders)) plant(f, x, z, sc, 11 + i)
   })
-  // Seating around the medallion: the community meeting point.
-  bench(f, -6.2, mid, 2.6, Math.PI / 2)
-  bench(f, 6.2, mid, 2.6, Math.PI / 2)
+  // Side benches by the entrance.
   bench(f, -12, -4.5, 2.4)
   bench(f, -12, -11.5, 2.4)
 
