@@ -1,0 +1,43 @@
+"""Build web-sized WebP derivatives of the product images (idempotent).
+
+  public/products/<id>/<n>.jpg      -> <n>.webp (1024 px, q80) + <n>.s.webp (512 px)
+  public/products/<id>/cutout.png   -> cutout.webp (1024 px, q82, alpha) + cutout.s.webp (512 px)
+
+Originals are left untouched. Run: .venv/Scripts/python scripts/optimize-images.py [--force]
+"""
+import sys
+from pathlib import Path
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parent.parent / "public" / "products"
+FORCE = "--force" in sys.argv
+
+
+def save(src: Path, dst: Path, size: int, quality: int, alpha: bool) -> None:
+    if dst.exists() and not FORCE and dst.stat().st_mtime >= src.stat().st_mtime:
+        return
+    im = Image.open(src)
+    im = im.convert("RGBA" if alpha else "RGB")
+    scale = min(1.0, size / max(im.size))
+    if scale < 1:
+        im = im.resize((round(im.width * scale), round(im.height * scale)), Image.LANCZOS)
+    im.save(dst, "WEBP", quality=quality, method=6)
+
+
+def total(paths) -> int:
+    return sum(p.stat().st_size for p in paths)
+
+
+sources = sorted(list(ROOT.glob("*/*.jpg")) + list(ROOT.glob("*/cutout.png")))
+for src in sources:
+    cut = src.name == "cutout.png"
+    q = 82 if cut else 80
+    base = src.with_suffix("")
+    save(src, base.with_suffix(".webp"), 1024, q, cut)
+    save(src, base.with_name(base.name + ".s.webp"), 512, q, cut)
+
+webps = sorted(ROOT.glob("*/*.webp"))
+print(f"sources: {len(sources)} files, {total(sources) / 1e6:.1f} MB")
+print(f"webp:    {len(webps)} files, {total(webps) / 1e6:.1f} MB")
+print(f"  large: {total([w for w in webps if not w.name.endswith('.s.webp')]) / 1e6:.1f} MB")
+print(f"  small: {total([w for w in webps if w.name.endswith('.s.webp')]) / 1e6:.1f} MB")
