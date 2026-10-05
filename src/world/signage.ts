@@ -474,3 +474,19 @@ export function starInlayTexture(): CanvasTexture {
   starTex = canvasTexture(c)
   return starTex
 }
+
+/** Doormat in the brand colour with its monogram (logo image when available). */
+export function doormatTexture(m: Monogram): CanvasTexture {
+  const [c, g] = makeCanvas(512, 256)
+  g.fillStyle = m.color
+  g.fillRect(0, 0, 512, 256)
+  g.strokeStyle = 'rgba(255,255,255,0.55)'
+  g.lineWidth = 8
+  g.strokeRect(16, 16, 480, 224)
+  drawMonogram(g, { ...m, color: m.color }, 256, 128, 78)
+  return withLogo(canvasTexture(c), m.logo, (img) => {
+    g.fillStyle = '#f7f2ec'
+    g.fillRect(36, 36, 440, 184)
+    fitImage(g, img, 256, 128, 400, 150)
+  })
+}
