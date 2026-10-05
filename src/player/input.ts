@@ -44,10 +44,7 @@ export class Input {
       this.locked = document.pointerLockElement === canvas
       this.onLockChange(this.locked)
     })
-    document.addEventListener('pointerlockerror', () => {
-      this.dragLook = true
-      this.onLockChange(false)
-    })
+    document.addEventListener('pointerlockerror', () => this.lockFailed())
     document.addEventListener('mousemove', (e) => {
       if (this.locked && this.enabled) {
         this.lookDX += e.movementX
@@ -86,15 +83,23 @@ export class Input {
       this.dragLook = true
       return
     }
+    // Requests made without a user gesture (e.g. from the Esc that closed an
+    // overlay) are refused by the browser; that is not a reason to give up on
+    // pointer lock for good — the pause veil asks for a click instead.
+    this.gesture = navigator.userActivation?.isActive ?? true
     try {
       const p = this.canvas.requestPointerLock() as unknown as Promise<void> | undefined
-      p?.catch?.(() => {
-        this.dragLook = true
-        this.onLockChange(false)
-      })
+      p?.catch?.(() => this.lockFailed())
     } catch {
-      this.dragLook = true
+      this.lockFailed()
     }
+  }
+
+  private gesture = true
+
+  private lockFailed(): void {
+    if (this.gesture) this.dragLook = true
+    this.onLockChange(false)
   }
 
   releaseLock(): void {

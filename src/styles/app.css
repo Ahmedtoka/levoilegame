@@ -71,7 +71,11 @@ button {
   z-index: 2;
 }
 
-#ui > * {
+/* Zero specificity on purpose: full-screen layers (.hud, .live, .fade-out)
+   set pointer-events: none with a class rule, and an id-weight rule here
+   would override that and let them swallow clicks meant for the overlays
+   and the canvas underneath. */
+:where(#ui) > * {
   pointer-events: auto;
 }
 
