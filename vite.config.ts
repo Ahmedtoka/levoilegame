@@ -2,7 +2,7 @@ import { defineConfig, type Plugin } from 'vite'
 import { existsSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 
-/** Ships only the WebP derivatives: drops every jpg/png under dist/products that have a .webp sibling. */
+/** Ships only the WebP derivatives: drops every jpg/png under dist/products that has a .webp sibling, plus all cutout.png (valid ones ship as .webp, failed ones are unused). */
 function pruneProductSources(): Plugin {
   return {
     name: 'prune-product-sources',
@@ -14,7 +14,7 @@ function pruneProductSources(): Plugin {
         for (const e of readdirSync(dir, { withFileTypes: true })) {
           const p = join(dir, e.name)
           if (e.isDirectory()) walk(p)
-          else if (/\.(jpe?g|png)$/i.test(e.name) && existsSync(p.replace(/\.(jpe?g|png)$/i, '.webp'))) rmSync(p)
+          else if (e.name === 'cutout.png' || (/\.(jpe?g|png)$/i.test(e.name) && existsSync(p.replace(/\.(jpe?g|png)$/i, '.webp')))) rmSync(p)
         }
       }
       walk(root)

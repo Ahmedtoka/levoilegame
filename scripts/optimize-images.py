@@ -5,12 +5,16 @@
 
 Originals are left untouched. Run: .venv/Scripts/python scripts/optimize-images.py [--force]
 """
+import json
 import sys
 from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent / "public" / "products"
 FORCE = "--force" in sys.argv
+# Products whose cut-out failed QA (cutout is null) never use it: skip those files.
+_cat = json.loads((ROOT.parent.parent / "src" / "data" / "products.json").read_text(encoding="utf8"))
+NO_CUTOUT = {p["id"] for p in _cat["products"] if p["cutout"] is None}
 
 
 def save(src: Path, dst: Path, size: int, quality: int, alpha: bool) -> None:
@@ -31,12 +35,14 @@ def total(paths) -> int:
 sources = sorted(list(ROOT.glob("*/*.jpg")) + list(ROOT.glob("*/cutout.png")))
 for src in sources:
     cut = src.name == "cutout.png"
+    if cut and src.parent.name in NO_CUTOUT:
+        continue
     q = 82 if cut else 80
     base = src.with_suffix("")
     save(src, base.with_suffix(".webp"), 1024, q, cut)
     save(src, base.with_name(base.name + ".s.webp"), 512, q, cut)
 
-webps = sorted(ROOT.glob("*/*.webp"))
+webps = sorted(w for w in ROOT.glob("*/*.webp") if not (w.name.startswith("cutout") and w.parent.name in NO_CUTOUT))
 print(f"sources: {len(sources)} files, {total(sources) / 1e6:.1f} MB")
 print(f"webp:    {len(webps)} files, {total(webps) / 1e6:.1f} MB")
 print(f"  large: {total([w for w in webps if not w.name.endswith('.s.webp')]) / 1e6:.1f} MB")
