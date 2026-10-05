@@ -1,0 +1,108 @@
+// Pure, DOM-free helpers for the player controls (look smoothing, tap-to-walk,
+// product focus, touch tuning). Unit-tested in tests/controls.test.ts.
+
+interface V3 {
+  x: number
+  y: number
+  z: number
+}
+interface V2 {
+  x: number
+  z: number
+}
+
+/** Look smoothing rate: the camera eases with 1 − exp(−dt·LOOK_RATE). */
+export const LOOK_RATE = 25
+/** Max floor distance (along the pick ray) for tap-to-walk. */
+export const TAP_MAX_DIST = 25
+/** Tap-to-walk stops this close to the target. */
+export const ARRIVE_DIST = 0.25
+/** Tap-to-walk gives up after this long without progress. */
+export const STALL_TIME = 1
+/** Below this speed towards the target (m/s) the walk counts as not progressing. */
+const PROGRESS_SPEED = 0.3
+/** Within this distance the walk slows down so it stops cleanly. */
+const SLOW_DIST = 1.5
+const MIN_GAIN = 0.25
+
+export function ease(dt: number, rate: number): number {
+  return 1 - Math.exp(-dt * rate)
+}
+
+/** One frame of look smoothing towards the target yaw/pitch. */
+export function smoothLook(
+  cur: { yaw: number; pitch: number },
+  target: { yaw: number; pitch: number },
+  dt: number,
+): { yaw: number; pitch: number } {
+  const k = ease(dt, LOOK_RATE)
+  if (k === 0) return { yaw: cur.yaw, pitch: cur.pitch }
+  return { yaw: cur.yaw + (target.yaw - cur.yaw) * k, pitch: cur.pitch + (target.pitch - cur.pitch) * k }
+}
+
+/** Where a ray meets the floor (y = 0), or null if it doesn't within maxDist. `dir` is unit length. */
+export function floorPoint(origin: V3, dir: V3, maxDist = TAP_MAX_DIST): { x: number; z: number; dist: number } | null {
+  if (dir.y >= -1e-4 || origin.y <= 0) return null
+  const t = -origin.y / dir.y
+  if (t > maxDist) return null
+  return { x: origin.x + dir.x * t, z: origin.z + dir.z * t, dist: t }
+}
+
+export type WalkStatus = 'walking' | 'arrived' | 'stalled'
+
+/**
+ * One frame of tap-to-walk: the direction and speed gain (0..1) to walk at,
+ * the updated stall timer, and whether the walk is over.
+ */
+export function walkStep(
+  pos: V2,
+  vel: V2,
+  target: V2,
+  stall: number,
+  dt: number,
+): { status: WalkStatus; dirX: number; dirZ: number; gain: number; stall: number } {
+  const dx = target.x - pos.x
+  const dz = target.z - pos.z
+  const dist = Math.hypot(dx, dz)
+  if (dist <= ARRIVE_DIST) return { status: 'arrived', dirX: 0, dirZ: 0, gain: 0, stall: 0 }
+  const dirX = dx / dist
+  const dirZ = dz / dist
+  const towards = vel.x * dirX + vel.z * dirZ
+  const nextStall = towards < PROGRESS_SPEED ? stall + dt : 0
+  if (nextStall >= STALL_TIME - 1e-9) return { status: 'stalled', dirX, dirZ, gain: 0, stall: nextStall }
+  const gain = Math.min(1, Math.max(MIN_GAIN, dist / SLOW_DIST))
+  return { status: 'walking', dirX, dirZ, gain, stall: nextStall }
+}
+
+/** Yaw that faces the (dx, dz) direction, with the player's forward = (−sin yaw, −cos yaw). */
+export function yawToward(dx: number, dz: number): number {
+  return Math.atan2(-dx, -dz)
+}
+
+/** Yaw and pitch that centre `point` from `eye`. */
+export function focusAngles(eye: V3, point: V3): { yaw: number; pitch: number } {
+  const dx = point.x - eye.x
+  const dz = point.z - eye.z
+  return { yaw: yawToward(dx, dz), pitch: Math.atan2(point.y - eye.y, Math.hypot(dx, dz)) }
+}
+
+/** Shortest signed angle from a to b. */
+export function angleDelta(a: number, b: number): number {
+  let d = (b - a) % (Math.PI * 2)
+  if (d > Math.PI) d -= Math.PI * 2
+  if (d < -Math.PI) d += Math.PI * 2
+  return d
+}
+
+/** Touch look sensitivity (rad per px), scaled by screen width. */
+export function touchLookSens(width: number): number {
+  return Math.min(0.0033, Math.max(0.0011, (0.0022 * 900) / Math.max(600, width)))
+}
+
+/** Joystick vector from a knob offset (px): dead zone, clamped to the radius, y up = forward. */
+export function stickVector(dx: number, dy: number, radius: number, dead = 8): { x: number; y: number } {
+  const len = Math.hypot(dx, dy)
+  if (len < dead) return { x: 0, y: 0 }
+  const s = len > radius ? radius / len : 1
+  return { x: (dx * s) / radius, y: (-dy * s) / radius }
+}
