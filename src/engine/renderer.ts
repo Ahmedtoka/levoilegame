@@ -14,18 +14,24 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { qualitySettings, type QualityLevel, type QualitySettings } from './quality'
 import { setMaxAnisotropy } from './textures'
 import { FLOOR_FX_LAYER } from './layers'
+import { BloomPipeline } from './post'
+import { setBloomSources } from './bloom'
 
 export class Engine {
   readonly renderer: WebGLRenderer
   readonly scene = new Scene()
   readonly camera: PerspectiveCamera
   quality: QualitySettings
+  /** Bloom composer, only while quality.bloom (High). */
+  private post: BloomPipeline | null = null
+  private readonly antialias: boolean
   private readonly listeners: ((q: QualitySettings) => void)[] = []
 
   constructor(container: HTMLElement, level: QualityLevel) {
     this.quality = qualitySettings(level)
+    this.antialias = level !== 'low'
     this.renderer = new WebGLRenderer({
-      antialias: level !== 'low',
+      antialias: this.antialias,
       powerPreference: 'high-performance',
       stencil: false,
     })
@@ -34,6 +40,8 @@ export class Engine {
     this.renderer.toneMappingExposure = 0.92
     this.renderer.setPixelRatio(this.quality.pixelRatio)
     this.renderer.setSize(window.innerWidth, window.innerHeight, false)
+    // Frames can be several renderer.render() calls (mirror passes, bloom): count the whole frame.
+    this.renderer.info.autoReset = false
     this.renderer.domElement.id = 'scene'
     container.appendChild(this.renderer.domElement)
     setMaxAnisotropy(this.renderer, this.quality.anisotropy)
@@ -57,7 +65,26 @@ export class Engine {
     sun.position.set(-8, 30, -6)
     this.scene.add(sun)
 
+    this.syncPost()
     window.addEventListener('resize', () => this.resize())
+  }
+
+  /** Creates or disposes the bloom composer to match the quality level. */
+  private syncPost(): void {
+    const want = this.quality.bloom && !new URLSearchParams(location.search).has('nobloom')
+    if (want && !this.post) {
+      this.post = new BloomPipeline(this.renderer, this.scene, this.camera, this.antialias ? 4 : 0)
+    } else if (!want && this.post) {
+      this.post.dispose()
+      this.post = null
+    }
+    setBloomSources(want)
+  }
+
+  /** Draw calls of the last frame: total, and how many of them were bloom/output passes. */
+  frameCalls(): { total: number; post: number } {
+    const total = this.renderer.info.render.calls
+    return { total, post: this.post ? total - this.post.sceneCalls : 0 }
   }
 
   onQualityChange(fn: (q: QualitySettings) => void): void {
@@ -68,6 +95,7 @@ export class Engine {
     if (level === this.quality.level) return
     this.quality = qualitySettings(level)
     this.renderer.setPixelRatio(this.quality.pixelRatio)
+    this.syncPost()
     this.resize()
     for (const fn of this.listeners) fn(this.quality)
   }
@@ -82,11 +110,14 @@ export class Engine {
     this.camera.fov = w < h ? 80 : 70
     this.camera.updateProjectionMatrix()
     this.renderer.setSize(w, h, false)
+    this.post?.setSize()
   }
 
   render(): void {
     // Cheap per-frame check: catches rotations/viewport changes that don't fire resize.
     if (window.innerWidth !== this.size.w || window.innerHeight !== this.size.h) this.resize()
-    this.renderer.render(this.scene, this.camera)
+    this.renderer.info.reset()
+    if (this.post) this.post.render()
+    else this.renderer.render(this.scene, this.camera)
   }
 }

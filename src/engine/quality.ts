@@ -3,8 +3,10 @@ export type QualityLevel = 'low' | 'medium' | 'high'
 export interface QualitySettings {
   level: QualityLevel
   pixelRatio: number
-  /** Planar reflection on the atrium floor. */
+  /** Planar reflections on the plaza floor and the corridor you are in. */
   reflections: boolean
+  /** Bloom on the light sources (EffectComposer). */
+  bloom: boolean
   /** Longest side of product textures uploaded to the GPU. */
   textureMax: number
   /** Light-shaft cones and other additive decor. */
@@ -20,11 +22,11 @@ export function qualitySettings(level: QualityLevel): QualitySettings {
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
   switch (level) {
     case 'low':
-      return { level, pixelRatio: Math.min(dpr, 1), reflections: false, textureMax: 512, fancyDecor: false, characterDistance: 22, anisotropy: 1 }
+      return { level, pixelRatio: Math.min(dpr, 1), reflections: false, bloom: false, textureMax: 512, fancyDecor: false, characterDistance: 22, anisotropy: 1 }
     case 'medium':
-      return { level, pixelRatio: Math.min(dpr, 1.5), reflections: false, textureMax: 1024, fancyDecor: true, characterDistance: 32, anisotropy: 4 }
+      return { level, pixelRatio: Math.min(dpr, 1.5), reflections: false, bloom: false, textureMax: 1024, fancyDecor: true, characterDistance: 32, anisotropy: 4 }
     case 'high':
-      return { level, pixelRatio: dpr, reflections: true, textureMax: 1024, fancyDecor: true, characterDistance: 45, anisotropy: 8 }
+      return { level, pixelRatio: dpr, reflections: true, bloom: true, textureMax: 1024, fancyDecor: true, characterDistance: 45, anisotropy: 8 }
   }
 }
 

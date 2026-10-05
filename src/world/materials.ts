@@ -7,6 +7,7 @@ import {
   type Texture,
 } from 'three'
 import { BRAND } from '../config/brand'
+import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
 
 const std = (color: string, roughness = 0.8, metalness = 0, extra: Partial<MeshStandardMaterial> = {}) =>
   Object.assign(new MeshStandardMaterial({ color, roughness, metalness }), extra)
@@ -43,6 +44,9 @@ export const MAT = {
   lightWarm: new MeshBasicMaterial({ color: '#fff3dc' }),
   neon: new MeshBasicMaterial({ color: '#ff8fd8' }),
 }
+// Light panels, slot lights, globes and can lenses glow on High (bloom.ts).
+registerBloom(MAT.lightWarm, BLOOM_WEIGHT.light)
+registerBloom(MAT.lightPanel, BLOOM_WEIGHT.light)
 
 const tintCache = new Map<string, MeshStandardMaterial>()
 /** Matte material in a shop tint (cached so batching still works). */

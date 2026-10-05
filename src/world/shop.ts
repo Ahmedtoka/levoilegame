@@ -21,6 +21,7 @@ import { MALL, type ShopLayout } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
+import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { discountPercent, displayImage, hasCutout, type Catalog, type Product, type Section } from '../data/types'
 import { formatPrice, t } from '../i18n/i18n'
@@ -332,7 +333,9 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
 
   // Fascia: bronze box (1 cm into the wall, front at z 0.15), lit face 5 mm proud, halo on the wall.
   f.box(MAT.brass, 0, FASCIA_Y, 0.07, 6.0, 1.5, 0.16)
-  const face = new Mesh(new PlaneGeometry(5.84, 1.36), imageMat(lightboxFascia(section, mono)))
+  const faceMat = imageMat(lightboxFascia(section, mono))
+  registerBloom(faceMat, BLOOM_WEIGHT.lightbox)
+  const face = new Mesh(new PlaneGeometry(5.84, 1.36), faceMat)
   face.position.set(0, FASCIA_Y, 0.155)
   group.add(face)
   const hw = f.toWorld(0, FASCIA_Y, 0.012)
@@ -347,6 +350,7 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   ])
   const bladeMat = imageMat(lightboxBlade(section, mono))
   bladeMat.side = FrontSide
+  registerBloom(bladeMat, BLOOM_WEIGHT.lightbox)
   const blade = new Mesh(faces, bladeMat)
   blade.position.set(bx, 4.2, 1.0)
   group.add(blade)

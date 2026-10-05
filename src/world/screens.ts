@@ -9,6 +9,7 @@ import { Frustum, Group, Matrix4, Mesh, MeshBasicMaterial, PlaneGeometry, Sphere
 import { BRAND } from '../config/brand'
 import { brandById } from '../config/mall'
 import { canvasTexture, loadImage, loadProductTexture, makeCanvas } from '../engine/textures'
+import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
 import { t } from '../i18n/i18n'
 import type { Interaction } from '../interact/interaction'
 import { catalog, store } from '../state/store'
@@ -110,6 +111,8 @@ export class ScreenFeed {
     this.texB = canvasTexture(this.canB)
     this.matA = new MeshBasicMaterial({ map: this.texA, toneMapped: false })
     this.matB = new MeshBasicMaterial({ map: this.texB, toneMapped: false, transparent: true, opacity: 0, depthWrite: false, visible: false })
+    // matB only shows during the cross-fade (transparent): matA carries the glow.
+    registerBloom(this.matA, BLOOM_WEIGHT.screen)
     this.rebuild()
   }
 
