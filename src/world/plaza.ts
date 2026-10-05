@@ -78,7 +78,7 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   for (const cx of [-3.75, -2.25, -0.75, 0.75, 2.25, 3.75]) {
     f.cyl(MAT.black, cx, 6.6, tz1, 0.13, 0.45)
     // Cone from the can down to the stage top, tilted back towards the stage.
-    addCone(cx, 6.6, tz1, 6.2, 1.1, -Math.atan2(1.2, 6.2), 0)
+    addCone(cx, 6.6, tz1, 6.2, 1.1, Math.atan2(1.2, 6.2), 0)
   }
 
   // ------------------------------------------------------- seating
