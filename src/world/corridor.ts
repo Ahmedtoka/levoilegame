@@ -176,30 +176,30 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   group.add(endWall)
   const tiles = shops.filter((s) => s.kind === 'shop' && s.section).slice(0, 6)
   const tileW = 2048 / Math.max(1, tiles.length)
-  Promise.all(
-    tiles.map((s, i) => {
-      const p = catalog().byId.get(s.section!.productIds[0])
-      return p ? loadProductTexture(p.images[0], 512).then(({ image }) => {
-        const im = image as HTMLCanvasElement
-        const sc = Math.max(tileW / im.width, 820 / im.height)
-        eg.save()
-        eg.beginPath()
-        eg.rect(i * tileW + 6, 6, tileW - 12, 808)
-        eg.clip()
-        eg.drawImage(im, i * tileW + (tileW - im.width * sc) / 2, (820 - im.height * sc) / 2, im.width * sc, im.height * sc)
-        eg.restore()
-      }) : Promise.resolve()
-    }),
-  )
+  const drawTile = (s: (typeof tiles)[number], i: number) => {
+    const p = catalog().byId.get(s.section!.productIds[0])
+    if (!p) return Promise.resolve()
+    return loadProductTexture(p.images[0], 512).then(({ image }) => {
+      const im = image as HTMLCanvasElement
+      const sc = Math.max(tileW / im.width, 820 / im.height)
+      eg.save()
+      eg.beginPath()
+      eg.rect(i * tileW + 6, 6, tileW - 12, 808)
+      eg.clip()
+      eg.drawImage(im, i * tileW + (tileW - im.width * sc) / 2, (820 - im.height * sc) / 2, im.width * sc, im.height * sc)
+      eg.restore()
+    })
+  }
+  void Promise.allSettled(tiles.map(drawTile))
     .then(() => loadImage(BRAND.logo))
     .then((logo) => {
       eg.fillStyle = 'rgba(251,248,244,0.92)'
       eg.fillRect(724, 300, 600, 220)
       const s = Math.min(540 / logo.width, 180 / logo.height)
       eg.drawImage(logo, 1024 - (logo.width * s) / 2, 410 - (logo.height * s) / 2, logo.width * s, logo.height * s)
-      endTex.needsUpdate = true
     })
-    .catch(() => {
+    .catch(() => {})
+    .then(() => {
       endTex.needsUpdate = true
     })
   for (const x of [-4.6, 4.6])
@@ -209,7 +209,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   // Dark-to-clear band at the base of the solid wall between storefronts.
   wallGeo ??= new PlaneGeometry(6, 1.1)
   wallMat ??= new MeshBasicMaterial({ map: wallGradientTexture(), transparent: true, depthWrite: false })
-  for (let r = 0; r <= rows; r++)
+  for (let r = 1; r < rows; r++)
     for (const side of [-1, 1]) wf.custom(wallGeo, wallMat, side * (B - 0.01), 0.55, -r * L, 1, side < 0 ? Math.PI / 2 : -Math.PI / 2)
 
   return { feeds: [feed] }
