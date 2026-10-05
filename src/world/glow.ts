@@ -1,10 +1,13 @@
-// Additive warm glows (pendant halos, stage light cones). Medium/High only:
-// toggled with quality.fancyDecor via setGlowsVisible().
+// Additive warm glows (pendant halos, stage light cones, light pools on the
+// floor). Medium/High only: toggled with quality.fancyDecor via setGlowsVisible().
 
-import { AdditiveBlending, ConeGeometry, InstancedMesh, Matrix4, MeshBasicMaterial, Quaternion, SphereGeometry, Vector3, type Object3D } from 'three'
+import { AdditiveBlending, ConeGeometry, InstancedMesh, Matrix4, MeshBasicMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type Object3D } from 'three'
+import { canvasTexture, makeCanvas } from '../engine/textures'
+import { FLOOR_FX_LAYER } from '../engine/layers'
 
 const halos: Matrix4[] = []
 const cones: Matrix4[] = []
+const pools: Matrix4[] = []
 let built: InstancedMesh[] = []
 const _y = new Vector3(0, 1, 0)
 const _x = new Vector3(1, 0, 0)
@@ -18,8 +21,32 @@ export function addCone(x: number, y: number, z: number, length: number, radius:
   cones.push(new Matrix4().compose(new Vector3(x, y, z), q, new Vector3(radius, length, radius)))
 }
 
-function layer(geo: SphereGeometry | ConeGeometry, opacity: number, list: Matrix4[], parent: Object3D, visible: boolean): InstancedMesh {
+/** Warm pool of light on the floor centred at (x, z), w × d metres (an ellipse; yaw turns it). */
+export function addPool(x: number, z: number, w: number, d: number, yaw = 0): void {
+  const q = new Quaternion().setFromAxisAngle(_y, yaw)
+  pools.push(new Matrix4().compose(new Vector3(x, 0.011, z), q, new Vector3(w, 1, d)))
+}
+
+function poolTexture() {
+  const [c, g] = makeCanvas(128, 128)
+  const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64)
+  grad.addColorStop(0, 'rgba(255,255,255,1)')
+  grad.addColorStop(0.35, 'rgba(255,255,255,0.6)')
+  grad.addColorStop(0.7, 'rgba(255,255,255,0.18)')
+  grad.addColorStop(1, 'rgba(255,255,255,0)')
+  g.fillStyle = grad
+  g.fillRect(0, 0, 128, 128)
+  return canvasTexture(c)
+}
+
+function layer(geo: SphereGeometry | ConeGeometry | PlaneGeometry, opacity: number, list: Matrix4[], parent: Object3D, visible: boolean, pool = false): InstancedMesh {
   const mat = new MeshBasicMaterial({ color: '#ffd9a0', transparent: true, opacity, depthWrite: false, blending: AdditiveBlending })
+  if (pool) {
+    mat.map = typeof document === 'undefined' ? null : poolTexture()
+    mat.polygonOffset = true
+    mat.polygonOffsetFactor = -1
+    mat.polygonOffsetUnits = -2
+  }
   const mesh = new InstancedMesh(geo, mat, list.length)
   list.forEach((m, i) => mesh.setMatrixAt(i, m))
   mesh.instanceMatrix.needsUpdate = true
@@ -35,8 +62,16 @@ export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] 
   // Unit cone: ConeGeometry's apex is at +0.5; translating by −0.5 puts the apex
   // at the origin and the base at y = −1, so it opens downwards by `length`.
   if (cones.length) out.push(layer(new ConeGeometry(1, 1, 24, 1, true).translate(0, -0.5, 0), 0.06, cones, parent, visible))
+  // Light pools: flat unit quads on the floor, drawn after the floor decals.
+  if (pools.length) {
+    const m = layer(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), 0.45, pools, parent, visible, true)
+    m.renderOrder = 2
+    m.layers.set(FLOOR_FX_LAYER)
+    out.push(m)
+  }
   halos.length = 0
   cones.length = 0
+  pools.length = 0
   built.push(...out)
   return out
 }

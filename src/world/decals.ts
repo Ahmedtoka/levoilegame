@@ -3,6 +3,7 @@
 
 import { InstancedMesh, Matrix4, MeshBasicMaterial, PlaneGeometry, Quaternion, Vector3, type Object3D } from 'three'
 import { blobShadowTexture } from '../engine/textures'
+import { FLOOR_FX_LAYER } from '../engine/layers'
 
 const items: Matrix4[] = []
 const _q = new Quaternion()
@@ -29,6 +30,7 @@ export function buildDecals(parent: Object3D): InstancedMesh | null {
   mesh.instanceMatrix.needsUpdate = true
   mesh.renderOrder = 1
   mesh.frustumCulled = false
+  mesh.layers.set(FLOOR_FX_LAYER)
   parent.add(mesh)
   items.length = 0
   return mesh

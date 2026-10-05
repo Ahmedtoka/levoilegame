@@ -29,7 +29,7 @@ import { buildCashierDesk } from './world/cashier'
 import { buildCashierPerson, buildPeople } from './world/people'
 import { boutiqueAvailable, boutiqueLayout, buildBoutique } from './world/boutique'
 import { Kit } from './world/kit'
-import { buildMallCatalog } from './data/mallCatalog'
+import { buildMallCatalog, loadBrandCatalogs } from './data/mallCatalog'
 import { levoileInterior } from './world/bespoke/levoile'
 import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
@@ -39,6 +39,7 @@ import { buildPlaza } from './world/plaza'
 import { buildDecals } from './world/decals'
 import { buildCorridor } from './world/corridor'
 import { buildGlows } from './world/glow'
+import { buildAOStrips } from './world/aoStrips'
 import type { ScreenFeed, ScreenActions } from './world/screens'
 
 const uiRoot = document.getElementById('ui')!
@@ -69,7 +70,9 @@ async function boot(): Promise<void> {
   try {
     levoileCatalog = await provider.loadCatalog()
     // 122 Mall: one shop per brand (?boutique keeps the single Le Voile store).
-    catalog = new URLSearchParams(location.search).has('boutique') ? levoileCatalog : buildMallCatalog(levoileCatalog)
+    catalog = new URLSearchParams(location.search).has('boutique')
+      ? levoileCatalog
+      : buildMallCatalog(levoileCatalog, await loadBrandCatalogs())
     setCatalog(catalog)
   } catch (err) {
     console.error('Catalog failed to load', err)
@@ -216,6 +219,7 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   game.updaters.push(mountLookCard(document.getElementById('ui')!, game, () => live.crowd?.focus ?? null))
   Object.assign(game, { live })
   buildDecals(engine.scene)
+  buildAOStrips(engine.scene)
   buildGlows(engine.scene, engine.quality.fancyDecor)
   game.updaters.push((dt) => {
     for (const fd of feeds) fd.update(dt, engine.camera)

@@ -13,6 +13,7 @@ import {
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { qualitySettings, type QualityLevel, type QualitySettings } from './quality'
 import { setMaxAnisotropy } from './textures'
+import { FLOOR_FX_LAYER } from './layers'
 
 export class Engine {
   readonly renderer: WebGLRenderer
@@ -38,6 +39,9 @@ export class Engine {
     setMaxAnisotropy(this.renderer, this.quality.anisotropy)
 
     this.camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.12, 140)
+    // Floor-level overlays (AO strips, light pools, contact shadows) live on FLOOR_FX_LAYER:
+    // the main camera sees them, the floor reflector's virtual camera (layer 0 only) skips them.
+    this.camera.layers.enable(FLOOR_FX_LAYER)
     this.scene.background = new Color('#ebe4da')
     this.scene.fog = new Fog('#ebe4da', 45, 120)
 
