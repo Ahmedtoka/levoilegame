@@ -175,6 +175,7 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
           interaction: game.interaction,
           catalog,
           textureMax: () => engine.quality.textureMax,
+          bakedTextureMax: () => engine.quality.bakedTextureMax,
           kit,
           onCheckout: () => game.openCheckout(),
           // ?nobespoke: every shop uses the generic kit furnishing.

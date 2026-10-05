@@ -45,6 +45,8 @@ export interface ShopContext {
   interaction: Interaction
   catalog: Catalog
   textureMax: () => number
+  /** Longest side of baked-store atlases (the Le Voile glTF) for the current quality. */
+  bakedTextureMax: () => number
   /** Baked décor kit (null → procedural props). */
   kit?: Kit | null
   /** Opens checkout (shops with their own cash desk). */

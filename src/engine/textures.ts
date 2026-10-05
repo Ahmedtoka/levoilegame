@@ -2,6 +2,10 @@ import {
   CanvasTexture,
   Color,
   LinearMipmapLinearFilter,
+  type Material,
+  type Mesh,
+  type MeshBasicMaterial,
+  type Object3D,
   RepeatWrapping,
   SRGBColorSpace,
   Texture,
@@ -231,6 +235,44 @@ async function bitmap(img: HTMLImageElement, w: number, h: number): Promise<HTML
   } catch {
     return img
   }
+}
+
+/**
+ * Shrinks the ImageBitmap textures under `root` (e.g. a glTF's baked atlases) to at
+ * most `max` px, off the main thread. Uploading one 4096² atlas blocked the main
+ * thread for ~100 ms on an integrated GPU; a 2048² one is a quarter of that (and of the memory).
+ */
+export async function capBitmapTextures(root: Object3D, max: number): Promise<void> {
+  const seen = new Set<Texture>()
+  root.traverse((o) => {
+    const mat = (o as Mesh).material as Material | Material[] | undefined
+    if (!mat) return
+    for (const m of Array.isArray(mat) ? mat : [mat]) {
+      const t = (m as MeshBasicMaterial).map
+      if (t) seen.add(t)
+    }
+  })
+  await Promise.all(
+    [...seen].map(async (t) => {
+      const im = t.image as ImageBitmap | null
+      if (typeof ImageBitmap === 'undefined' || !(im instanceof ImageBitmap) || Math.max(im.width, im.height) <= max) return
+      const k = max / Math.max(im.width, im.height)
+      try {
+        const small = await createImageBitmap(im, {
+          resizeWidth: Math.round(im.width * k),
+          resizeHeight: Math.round(im.height * k),
+          resizeQuality: 'high',
+          premultiplyAlpha: 'none',
+          colorSpaceConversion: 'none',
+        })
+        t.image = small
+        t.needsUpdate = true
+        im.close()
+      } catch {
+        /* keep the full-size atlas */
+      }
+    }),
+  )
 }
 
 /**

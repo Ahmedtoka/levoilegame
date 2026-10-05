@@ -27,6 +27,7 @@ import { BOUTIQUE } from '../../config/boutique'
 import { brandById } from '../../config/mall'
 import { BRAND } from '../../config/brand'
 import { isTouchDevice } from '../../engine/quality'
+import { capBitmapTextures } from '../../engine/textures'
 import type { BatchFrame } from '../../engine/batcher'
 import type { Product } from '../../data/types'
 import { CREAM, BRONZE, cardPanel, easelRow, loadCards, registerCards, type Card } from '../displays'
@@ -75,6 +76,7 @@ export function levoileInterior(ctx: ShopContext, f: BatchFrame, handles: ShopHa
     const gltf = await new GLTFLoader().setDRACOLoader(draco).loadAsync(BOUTIQUE.modelUrl)
     draco.dispose()
     prepareBakedStore(gltf.scene, 8)
+    await capBitmapTextures(gltf.scene, ctx.bakedTextureMax())
     gltf.scene.traverse((o) => {
       // Glass (with the door leaves) is replaced below; baked garments/scarves aren't products.
       if (o.name.startsWith('store_glass') || o.name.startsWith('store_soft')) o.visible = false

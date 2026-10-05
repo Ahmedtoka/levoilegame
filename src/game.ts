@@ -3,6 +3,7 @@
 import { Mesh, MeshBasicMaterial, Raycaster, RingGeometry, Timer, Vector2, Vector3 } from 'three'
 import type { Engine } from './engine/renderer'
 import { FpsGovernor, QUALITY_ORDER, type QualityLevel } from './engine/quality'
+import { TextureWarmer } from './engine/textureWarmer'
 import type { CollisionWorld } from './engine/colliders'
 import { rectContains, shopArrival, shopZone, type MallLayout } from './config/layout'
 import { Input, type Action } from './player/input'
@@ -44,6 +45,7 @@ export class Game implements GameBridge {
   private stepAcc = 0
   private readonly fade: HTMLDivElement
   private readonly governor: FpsGovernor
+  private readonly warmer: TextureWarmer
   private touch: TouchControls | null = null
   /** Tap-to-walk target marker: a plum ring on the floor that fades on arrival. */
   private readonly marker: Mesh<RingGeometry, MeshBasicMaterial>
@@ -73,6 +75,7 @@ export class Game implements GameBridge {
     document.body.appendChild(this.fade)
 
     this.governor = new FpsGovernor(() => this.autoDowngrade())
+    this.warmer = new TextureWarmer(engine.renderer, engine.scene)
 
     // Third-person avatar
     const avatar = new Character(avatarLook(), 3)
@@ -402,6 +405,7 @@ export class Game implements GameBridge {
       }
     }
 
+    this.warmer.update(performance.now())
     this.engine.render()
     this.governor.tick(dt)
     if (this.frame % 30 === 0) {
