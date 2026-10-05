@@ -5,6 +5,7 @@ import { buildLayout, type MallLayout } from './config/layout'
 import { BRAND } from './config/brand'
 import { createProductProvider } from './data/providers'
 import type { Catalog } from './data/types'
+import { installImageFallback } from './data/webImage'
 import { Engine } from './engine/renderer'
 import { detectQuality, isTouchDevice, webglAvailable } from './engine/quality'
 import { CollisionWorld } from './engine/colliders'
@@ -61,6 +62,7 @@ const frame = () =>
   })
 
 async function boot(): Promise<void> {
+  installImageFallback()
   let catalog: Catalog | null = null
   let levoileCatalog: Catalog | null = null
   const provider = createProductProvider()

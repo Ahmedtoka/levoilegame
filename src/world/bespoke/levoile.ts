@@ -26,6 +26,7 @@ import {
 import { BOUTIQUE } from '../../config/boutique'
 import { brandById } from '../../config/mall'
 import { BRAND } from '../../config/brand'
+import { isTouchDevice } from '../../engine/quality'
 import type { BatchFrame } from '../../engine/batcher'
 import type { Product } from '../../data/types'
 import { CREAM, BRONZE, cardPanel, easelRow, loadCards, registerCards, type Card } from '../displays'
@@ -80,7 +81,8 @@ export function levoileInterior(ctx: ShopContext, f: BatchFrame, handles: ShopHa
     })
     g.add(gltf.scene)
   }
-  setTimeout(() => loadModel().catch((e) => console.warn('Le Voile store', e)), 2500)
+  // Touch devices skip the boot preload: the distance-based loader fetches it when the player nears the shop.
+  if (!isTouchDevice()) setTimeout(() => loadModel().catch((e) => console.warn('Le Voile store', e)), 2500)
   loaders.push(loadModel)
 
   // Glass front without the door leaves: the doorway (x ±1.26) stays open.

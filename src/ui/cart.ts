@@ -1,3 +1,4 @@
+import { webImage } from '../data/webImage'
 import { formatPrice, t } from '../i18n/i18n'
 import { cartTotals, catalog, store, watch } from '../state/store'
 import { FREE_SIZE } from '../data/defaults'
@@ -33,7 +34,7 @@ export function mountCart(root: HTMLElement, game: GameBridge): void {
         const p = catalog().byId.get(l.productId)
         if (!p) return ''
         return `<div class="line">
-          <img src="${esc(p.images[0])}" alt="" />
+          <img src="${esc(webImage(p.images[0]))}" alt="" />
           <div>
             <div class="t">${esc(p.title)}</div>
             <div class="meta">${esc(l.size === FREE_SIZE ? t('freeSize', L) : l.size)} · ${esc(l.color)}</div>

@@ -1,3 +1,4 @@
+import { webImage } from '../data/webImage'
 import { discountPercent, type Product } from '../data/types'
 import { formatPrice, t } from '../i18n/i18n'
 import { catalog, store, watch } from '../state/store'
@@ -70,12 +71,12 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
         <button class="close" data-action="close" aria-label="${esc(t('close', L))}">${ICONS.close}</button>
         <div class="product">
           <div class="gallery">
-            <img class="main" src="${esc(p.images[imgIndex])}" alt="${esc(p.title)}" />
+            <img class="main" src="${esc(webImage(p.images[imgIndex]))}" alt="${esc(p.title)}" />
             ${off ? `<span class="sale-flag">-${off}%</span>` : ''}
             ${
               p.images.length > 1
                 ? `<div class="thumbs">${p.images
-                    .map((src, i) => `<button class="${i === imgIndex ? 'on' : ''}" data-action="img" data-i="${i}" aria-label="Image ${i + 1}"><img src="${esc(src)}" alt="" /></button>`)
+                    .map((src, i) => `<button class="${i === imgIndex ? 'on' : ''}" data-action="img" data-i="${i}" aria-label="Image ${i + 1}"><img src="${esc(webImage(src, 'small'))}" alt="" /></button>`)
                     .join('')}</div>`
                 : ''
             }

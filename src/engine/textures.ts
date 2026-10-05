@@ -8,6 +8,7 @@ import {
   TextureLoader,
   type WebGLRenderer,
 } from 'three'
+import { webImage, type ImageSize } from '../data/webImage'
 
 let maxAniso = 4
 export function setMaxAnisotropy(renderer: WebGLRenderer, cap: number): void {
@@ -160,7 +161,7 @@ interface LoadedImage {
 
 const imageCache = new Map<string, Promise<LoadedImage>>()
 
-export function loadImage(url: string): Promise<HTMLImageElement> {
+function loadRaw(url: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.decoding = 'async'
@@ -170,11 +171,17 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
   })
 }
 
+/** Loads the web-sized WebP of a product image; if it fails, retries the original URL once. */
+export function loadImage(url: string, size: ImageSize = 'large'): Promise<HTMLImageElement> {
+  const web = webImage(url, size)
+  return web === url ? loadRaw(url) : loadRaw(web).catch(() => loadRaw(url))
+}
+
 export function loadProductTexture(url: string, maxSize: number): Promise<LoadedImage> {
   const key = `${url}@${maxSize}`
   let p = imageCache.get(key)
   if (!p) {
-    p = loadImage(url).then((img) => {
+    p = loadImage(url, maxSize <= 512 ? 'small' : 'large').then((img) => {
       const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight))
       const w = Math.round(img.naturalWidth * scale)
       const h = Math.round(img.naturalHeight * scale)

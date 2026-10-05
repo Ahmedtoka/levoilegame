@@ -2,6 +2,7 @@
 // phone + OTP), HUD chips (passport, treasure hunt, group deal, flash sale),
 // the "need help" button, purchase toasts and the "what she's looking at" card.
 
+import { webImage } from '../data/webImage'
 import { Vector3, type Camera } from 'three'
 import { formatPrice, t, type Lang, type StringKey } from '../i18n/i18n'
 import { catalog, store, watch } from '../state/store'
@@ -161,7 +162,7 @@ function mountHudChips(root: HTMLElement, game: GameBridge): void {
     if (!p || store.getState().phase !== 'playing') return
     const L = store.getState().lang
     const city = L === 'ar' ? ev.cityAr : ev.cityEn
-    pushToast(`<img src="${esc(p.images[0])}" alt="" /><div><div class="who">🛍️ ${esc(t('someoneFrom', L))} ${esc(city)} ${esc(t('justBought', L))}</div><div class="what">${esc(p.title)}</div></div>`)
+    pushToast(`<img src="${esc(webImage(p.images[0], 'small'))}" alt="" /><div><div class="who">🛍️ ${esc(t('someoneFrom', L))} ${esc(city)} ${esc(t('justBought', L))}</div><div class="what">${esc(p.title)}</div></div>`)
   })
   window.addEventListener('lv:dealjoin', (e) => {
     const name = (e as CustomEvent<string>).detail
@@ -209,7 +210,7 @@ export function mountLookCard(root: HTMLElement, game: GameBridge & { engine: { 
       const p = catalog().byId.get(f.productId)
       if (!p) return
       shown = p.id
-      card.innerHTML = `<img src="${esc(displayImage(p))}" alt="" /><span><small>${esc(t('lookingAt', s.lang))}</small>${esc(p.title)}</span>`
+      card.innerHTML = `<img src="${esc(webImage(displayImage(p), 'small'))}" alt="" /><span><small>${esc(t('lookingAt', s.lang))}</small>${esc(p.title)}</span>`
     }
     card.classList.remove('hidden')
     card.style.transform = `translate(-50%, -100%) translate(${((v.x + 1) / 2) * innerWidth}px, ${((1 - v.y) / 2) * innerHeight}px)`
@@ -241,7 +242,7 @@ function mountChat(root: HTMLElement, game: GameBridge): void {
             const p = catalog().byId.get(x.id)
             if (!p) return ''
             return `<div class="chat-product">
-              <img src="${esc(displayImage(p))}" alt="" />
+              <img src="${esc(webImage(displayImage(p), 'small'))}" alt="" />
               <div><div class="t">${esc(p.title)}</div><div class="pr">${esc(formatPrice(p.price, L))}${x.size ? ` · ${esc(x.size === FREE_SIZE ? t('freeSize', L) : x.size)}` : ''}</div>
               <div class="row"><button class="link" data-action="view" data-id="${esc(p.id)}">${esc(t('view', L))}</button>
               ${m.look ? '' : `<button class="btn sm" data-action="approve" data-id="${esc(p.id)}" data-size="${esc(x.size)}">${esc(t('approveAdd', L))}</button>`}</div></div>

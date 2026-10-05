@@ -1,6 +1,7 @@
 // Checkout (summary + details + payment method), thank-you, and the
 // "leave with items in cart?" confirmation.
 
+import { webImage } from '../data/webImage'
 import { BRAND } from '../config/brand'
 import { formatPrice, t, type StringKey } from '../i18n/i18n'
 import { cartTotals, catalog, store, watch, type Customer, type PaymentMethod } from '../state/store'
@@ -60,7 +61,7 @@ export function mountCheckout(root: HTMLElement, game: GameBridge, service: Chec
         .map((l) => {
           const p = catalog().byId.get(l.productId)
           if (!p) return ''
-          return `<div class="line"><img src="${esc(p.images[0])}" alt="" /><div><div class="t">${esc(p.title)}</div><div class="meta">${esc(l.size === FREE_SIZE ? t('freeSize', L) : l.size)} · × ${l.qty}</div></div><div class="end"><span>${esc(formatPrice(p.price * l.qty, L))}</span></div></div>`
+          return `<div class="line"><img src="${esc(webImage(p.images[0]))}" alt="" /><div><div class="t">${esc(p.title)}</div><div class="meta">${esc(l.size === FREE_SIZE ? t('freeSize', L) : l.size)} · × ${l.qty}</div></div><div class="end"><span>${esc(formatPrice(p.price * l.qty, L))}</span></div></div>`
         })
         .join('')
       const m = METHODS.find((x) => x.id === method)!

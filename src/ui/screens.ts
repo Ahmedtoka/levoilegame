@@ -1,5 +1,6 @@
 // Full-screen states: loading, intro ("Enter the Mall"), pause, exit, no-WebGL.
 
+import { webImage } from '../data/webImage'
 import { BRAND } from '../config/brand'
 import { t, formatPrice } from '../i18n/i18n'
 import { store, watch } from '../state/store'
@@ -104,7 +105,7 @@ export function mountFallback(root: HTMLElement, catalog: Catalog | null): void 
       ${items
         .map(
           (p) => `<a href="${esc(p.url)}" target="_blank" rel="noopener">
-            <img loading="lazy" src="${esc(p.images[0])}" alt="${esc(p.title)}" />
+            <img loading="lazy" src="${esc(webImage(p.images[0]))}" alt="${esc(p.title)}" />
             <div class="meta"><b>${esc(p.title)}</b><br/>${esc(formatPrice(p.price, L))}</div>
           </a>`,
         )
