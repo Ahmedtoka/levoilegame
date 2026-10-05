@@ -322,7 +322,7 @@ export class Game implements GameBridge {
     if (!hit) return false
     if (this.colliders.raycast(origin, direction, hit.dist) < hit.dist - 0.05) return false
     this.player.walkTo(hit.x, hit.z)
-    this.marker.position.set(hit.x, 0.02, hit.z)
+    this.marker.position.set(hit.x, 0.05, hit.z)
     this.marker.visible = true
     this.marker.material.opacity = 0.9
     this.markerFade = 0
