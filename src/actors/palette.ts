@@ -5,29 +5,36 @@ import type { Texture } from 'three'
 import { BRAND } from '../config/brand'
 import type { OutfitStyle } from '../config/sections'
 import { rng } from '../engine/textures'
-import type { HairStyle, HijabStyle } from './hijab'
+import { FACE_STYLES } from './avatar/face'
+import type { AvatarOutfit, HairStyle, HijabStyle } from './avatar/pieces'
 import type { Look, Pose } from './character'
 
-const SKINS = ['#f3cfb1', '#e8b994', '#d49c74', '#b77a55', '#8a5a3c', '#f6dccb']
+export const SKINS = ['#f6dccb', '#f3cfb1', '#e8b994', '#d49c74', '#b77a55', '#8a5a3c']
 // Distinct fashion colours (no skin-like beiges, which read as bare skin on screen).
-const HIJAB_COLORS = ['#d9b8c6', '#3c3a47', '#7f8b9b', '#ece7e2', '#5d4b60', '#b8687f', '#a7b5a0', '#2f3b4e', '#8c3a52', '#26232a']
+export const HIJAB_COLORS = ['#d9b8c6', '#3c3a47', '#7f8b9b', '#ece7e2', '#5d4b60', '#b8687f', '#a7b5a0', '#2f3b4e', '#8c3a52', '#26232a']
 const ACCENTS = ['#ffffff', '#f3e6ea', '#e8d9c8', '#1f1f24']
-const HAIR = ['#2b1d16', '#4a3022', '#6f4a2e', '#1d1a1a', '#8a6142']
-const HIJAB_STYLES: HijabStyle[] = ['classic', 'long', 'wrap']
-const HAIR_STYLES: HairStyle[] = ['bun', 'ponytail', 'long', 'bob']
-const SHOES = ['#2b2528', '#e9e1dc', '#8b6b58', '#c9a9b6']
+export const HAIR = ['#2b1d16', '#4a3022', '#6f4a2e', '#1d1a1a', '#8a6142']
+export const HIJAB_STYLES: HijabStyle[] = ['classic', 'long']
+export const HAIR_STYLES: HairStyle[] = ['long', 'bun', 'ponytail', 'bob']
+export const SHOES = ['#2b2528', '#e9e1dc', '#8b6b58', '#c9a9b6']
+const TRIMS = ['#c8a46e', '#f1ebe4', '#2b2528', '#8c3a52']
 
 const pick = <T,>(r: () => number, arr: readonly T[]): T => arr[Math.floor(r() * arr.length) % arr.length]
+const face = (r: () => number) => Math.floor(r() * FACE_STYLES.length)
 
 /** Showcase model for a product. About four in five wear hijab. Always modestly dressed. */
 export function modelLook(seed: number, outfit: OutfitStyle, pose: Pose): Look {
   const r = rng(seed * 7919 + 13)
   const hijabi = outfit === 'abaya' || r() < 0.8
+  // Long-skirt products alternate between a dress and a skirt with a tunic.
+  const o: AvatarOutfit = outfit === 'skirt' && r() < 0.5 ? 'dress' : outfit
   return {
     skin: pick(r, SKINS),
+    face: face(r),
     top: '#d8c7bf',
     bottom: '#6f6a74',
-    outfit,
+    trim: pick(r, TRIMS),
+    outfit: o,
     shoes: pick(r, SHOES),
     head: hijabi
       ? { kind: 'hijab', color: pick(r, HIJAB_COLORS), style: pick(r, HIJAB_STYLES), accent: r() < 0.5 ? pick(r, ACCENTS) : undefined }
@@ -41,15 +48,17 @@ export function modelLook(seed: number, outfit: OutfitStyle, pose: Pose): Look {
 export function staffLook(seed: number, logo: Texture | null, pose: Pose = 'clasped'): Look {
   const r = rng(seed * 104729 + 7)
   const hijabi = r() < 0.85
-  const outfit: OutfitStyle = r() < 0.5 ? 'pants' : 'skirt'
+  const outfit: AvatarOutfit = r() < 0.5 ? 'pants' : 'skirt'
   return {
     skin: pick(r, SKINS),
+    face: face(r),
     top: '#fbf8f6',
     bottom: pick(r, ['#2f2b33', '#3d4250', '#4a3f45']),
+    trim: '#2b2528',
     outfit,
     shoes: '#2b2528',
     head: hijabi
-      ? { kind: 'hijab', color: pick(r, ['#2f2b33', '#ece7e2', '#d9b8c6', '#3c3a47', '#5d4b60']), style: pick(r, ['classic', 'wrap'] as const) }
+      ? { kind: 'hijab', color: pick(r, ['#2f2b33', '#ece7e2', '#d9b8c6', '#3c3a47', '#5d4b60']), style: 'classic' }
       : { kind: 'hair', color: pick(r, HAIR), style: pick(r, ['bun', 'ponytail'] as const) },
     vest: { color: BRAND.magenta, logo },
     pose,
@@ -57,13 +66,15 @@ export function staffLook(seed: number, logo: Texture | null, pose: Pose = 'clas
   }
 }
 
-/** The visitor's own third-person avatar. */
+/** Default look of the visitor's own avatar (until she designs hers). */
 export function avatarLook(): Look {
   return {
     skin: '#e8b994',
+    face: 0,
     top: '#f1e4ea',
     bottom: '#5b5566',
-    outfit: 'pants',
+    trim: '#c8a46e',
+    outfit: 'skirt',
     shoes: '#e9e1dc',
     head: { kind: 'hijab', color: '#c99aae', style: 'classic', accent: '#ffffff' },
     pose: 'relaxed',
@@ -77,13 +88,15 @@ const BOTTOMS = ['#2f2b33', '#3d4250', '#6f6a74', '#e8dccf', '#4a3f45', '#7f8b9b
 export function customerLook(seed: number): Look {
   const r = rng(seed * 2654435 + 97)
   const x = r()
-  const outfit: OutfitStyle = x < 0.38 ? 'abaya' : x < 0.7 ? 'skirt' : 'pants'
+  const outfit: AvatarOutfit = x < 0.32 ? 'abaya' : x < 0.5 ? 'dress' : x < 0.75 ? 'skirt' : 'pants'
   const hijabi = outfit === 'abaya' || r() < 0.85
   const top = pick(r, TOPS)
   return {
     skin: pick(r, SKINS),
+    face: face(r),
     top,
-    bottom: outfit === 'abaya' ? top : pick(r, BOTTOMS),
+    bottom: outfit === 'abaya' || outfit === 'dress' ? top : pick(r, BOTTOMS),
+    trim: pick(r, TRIMS),
     outfit,
     shoes: pick(r, SHOES),
     head: hijabi
@@ -97,7 +110,13 @@ export function customerLook(seed: number): Look {
 /** Studio stylist: dark blazer-style vest with the logo. */
 export function stylistLook(seed: number, logo: Texture | null): Look {
   const l = staffLook(seed, logo, 'clasped')
-  return { ...l, top: '#f3ece4', bottom: '#2b2528', vest: { color: '#2b2528', logo }, head: l.head.kind === 'hijab' ? { ...l.head, color: pick(rng(seed), ['#c8a46e', '#2b2528', '#ece7e2']) } : l.head }
+  return {
+    ...l,
+    top: '#f3ece4',
+    bottom: '#2b2528',
+    vest: { color: '#2b2528', logo },
+    head: l.head.kind === 'hijab' ? { ...l.head, color: pick(rng(seed), ['#c8a46e', '#2b2528', '#ece7e2']) } : l.head,
+  }
 }
 
 export const OUTFIT_PALETTE = TOPS

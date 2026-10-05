@@ -35,6 +35,7 @@ import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
 import { buildLiveMall } from './world/liveMall'
+import { loadAvatarKit } from './actors/avatar/kit'
 import { buildPlaza } from './world/plaza'
 import { buildDecals } from './world/decals'
 import { buildCorridor } from './world/corridor'
@@ -65,6 +66,8 @@ const frame = () =>
 
 async function boot(): Promise<void> {
   installImageFallback()
+  // Characters are built from this model; fetched alongside the catalogue.
+  const avatarKit = loadAvatarKit()
   let catalog: Catalog | null = null
   let levoileCatalog: Catalog | null = null
   const provider = createProductProvider()
@@ -107,6 +110,7 @@ async function boot(): Promise<void> {
   createSocial(catalog, crowdSize(level))
   startSession()
 
+  await avatarKit
   const colliders = new CollisionWorld()
   const game = new Game(engine, layout, colliders, uiRoot, isTouch)
   mountScreens(uiRoot, game)

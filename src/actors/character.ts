@@ -1,35 +1,40 @@
-// Stylized low-poly character built from primitives on a tiny rig of
-// Groups (hips, spine, neck, head, arms, legs). Faces +Z. One base body,
-// varied by outfit silhouette, colours, hijab/hair style, vest and pose.
+// District 122 characters: one stylised base (big head, slim body) skinned to the
+// Quaternius UAL skeleton (CC0) and animated by its clips. Built from garment
+// pieces of public/models/avatar/avatar.glb (scripts/blender/build_avatar.py),
+// merged into ONE skinned mesh with ONE material per character.
+//
+// MODESTY RULE (no exceptions): there is no body mesh. A character is garment
+// pieces + head + hands only; every look covers neck to ankles and shoulders to
+// wrists (enforced by piecesFor). Most wear hijab. root stays invisible until the
+// character is fully built.
 
 import {
+  AnimationMixer,
   BufferAttribute,
-  CapsuleGeometry,
+  BufferGeometry,
   CylinderGeometry,
   Group,
-  LatheGeometry,
+  Matrix4,
   Mesh,
   MeshBasicMaterial,
-  MeshStandardMaterial,
-  PlaneGeometry,
-  SphereGeometry,
-  Vector2,
+  Quaternion,
+  Skeleton,
+  SkinnedMesh,
+  Sphere,
   Vector3,
+  type AnimationAction,
+  type Bone,
   type Object3D,
   type Texture,
-  type Material,
-  type Color,
-  Color as ThreeColor,
-  Matrix4,
-  type BufferGeometry,
 } from 'three'
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
-import { buildHair, buildHijab, fabric, type HairStyle, type HijabStyle } from './hijab'
-import { bakeVertexColors } from './bake'
-import type { OutfitStyle } from '../config/sections'
 import { blobShadow } from '../world/props'
-import { imageMat } from '../world/materials'
+import { avatarKit, cloneBones, mergedGeometry } from './avatar/kit'
+import { avatarMaterial, blankTexture, type AvatarMaterial } from './avatar/material'
+import { faceTexture } from './avatar/face'
+import { twoBoneIK } from './avatar/ik'
+import { PARTS, piecesFor, type AvatarOutfit, type HeadWear, type Part } from './avatar/pieces'
 
+export type { AvatarOutfit, HeadWear } from './avatar/pieces'
 export type Pose = 'idle' | 'handOnHip' | 'model' | 'clasped' | 'relaxed'
 
 /** What the game needs from any character. */
@@ -54,400 +59,264 @@ export interface Persona {
 
 export interface Look {
   skin: string
+  /** Face preset (see FACE_STYLES). */
+  face: number
+  outfit: AvatarOutfit
   top: string
   bottom: string
-  outfit: OutfitStyle
+  /** Trim: abaya band and cuffs, dress belt. */
+  trim: string
   shoes: string
-  head: { kind: 'hijab'; color: string; style: HijabStyle; accent?: string } | { kind: 'hair'; color: string; style: HairStyle }
+  head: HeadWear
   vest?: { color: string; logo: Texture | null }
   pose: Pose
   height?: number
 }
 
-const lathe = (pts: [number, number][], seg = 22, phiStart = 0, phiLen = Math.PI * 2) =>
-  new LatheGeometry(
-    pts.map(([r, y]) => new Vector2(r, y)),
-    seg,
-    phiStart,
-    phiLen,
-  )
-
-// Shared geometries — spine-local unless noted (spine origin = waist, y 0.95).
-const G = {
-  torso: lathe([
-    [0.001, 0.0],
-    [0.15, 0.0],
-    [0.145, 0.12],
-    [0.162, 0.28],
-    [0.17, 0.36],
-    [0.15, 0.43],
-    [0.06, 0.47],
-    [0.001, 0.47],
-  ]),
-  abaya: lathe([
-    [0.31, -0.93],
-    [0.275, -0.6],
-    [0.215, -0.22],
-    [0.17, 0.02],
-    [0.162, 0.2],
-    [0.175, 0.34],
-    [0.152, 0.43],
-    [0.06, 0.47],
-    [0.001, 0.47],
-  ]),
-  skirt: lathe([
-    [0.32, -0.9],
-    [0.27, -0.5],
-    [0.185, -0.08],
-    [0.152, 0.03],
-    [0.001, 0.03],
-  ]),
-  vest: lathe(
-    [
-      [0.158, -0.02],
-      [0.168, 0.14],
-      [0.18, 0.29],
-      [0.186, 0.36],
-      [0.162, 0.43],
-      [0.1, 0.465],
-    ],
-    20,
-    0.32,
-    Math.PI * 2 - 0.64,
-  ),
-  leg: new CapsuleGeometry(0.068, 0.72, 4, 10),
-  /** Wide-leg trousers: flared cylinder per leg. */
-  wideLeg: new CylinderGeometry(0.078, 0.112, 0.84, 12, 1),
-  upperArm: new CapsuleGeometry(0.046, 0.22, 4, 8),
-  foreArm: new CapsuleGeometry(0.04, 0.2, 4, 8),
-  hand: new SphereGeometry(0.042, 10, 8),
-  neck: new CylinderGeometry(0.045, 0.05, 0.12, 10),
-  head: new SphereGeometry(0.105, 20, 16),
-  eye: new SphereGeometry(0.0115, 8, 6),
-  glint: new SphereGeometry(0.0038, 6, 4),
-  brow: new CapsuleGeometry(0.0052, 0.026, 2, 6),
-  nose: new SphereGeometry(0.011, 8, 6),
-  lips: new SphereGeometry(0.016, 10, 6),
-  cheek: new SphereGeometry(0.017, 10, 6),
-  shoe: new SphereGeometry(0.06, 10, 6),
-  logo: new PlaneGeometry(0.1, 0.026),
-}
-
-const skinCache = new Map<string, MeshStandardMaterial>()
-function skinMat(c: string): MeshStandardMaterial {
-  let m = skinCache.get(c)
-  if (!m) skinCache.set(c, (m = new MeshStandardMaterial({ color: c, roughness: 0.62 })))
-  return m
-}
+/** The skeleton is ~1.98 m to the top of the big head; scaled to ~1.66 m. */
+const BASE_SCALE = 0.84
 const HITBOX = new CylinderGeometry(0.34, 0.34, 1.8, 8)
 const HIDDEN = new MeshBasicMaterial({ visible: false })
-const EYE_MAT = new MeshStandardMaterial({ color: '#2a1d22', roughness: 0.3 })
-const GLINT_MAT = new MeshStandardMaterial({ color: '#ffffff', roughness: 0.2 })
-const LIPS_MAT = new MeshStandardMaterial({ color: '#c4707a', roughness: 0.5 })
+const BOUNDS = new Sphere(new Vector3(0, 1.0, 0), 1.25)
+const TWO_PI = Math.PI * 2
 
-/** Cached plain colour material (merged into the vertex-coloured mesh by bake.ts). */
-const tintCache = new Map<string, MeshStandardMaterial>()
-function tint(c: string): MeshStandardMaterial {
-  let m = tintCache.get(c)
-  if (!m) tintCache.set(c, (m = new MeshStandardMaterial({ color: c, roughness: 0.7 })))
-  return m
+// Hand targets in skeleton space (Y up, +Z forward, the character's left is +X).
+const POSE_HANDS: Partial<Record<Pose, { l?: [Vector3, Vector3]; r?: [Vector3, Vector3] }>> = {
+  clasped: {
+    l: [new Vector3(0.035, 1.0, 0.17), new Vector3(0.45, 1.05, -0.35)],
+    r: [new Vector3(-0.035, 0.99, 0.17), new Vector3(-0.45, 1.05, -0.35)],
+  },
+  handOnHip: { l: [new Vector3(0.2, 1.02, 0.03), new Vector3(0.7, 1.3, -0.25)] },
+  model: { r: [new Vector3(-0.2, 1.02, 0.03), new Vector3(-0.7, 1.3, -0.25)] },
 }
-/** Skin shade mixed towards a colour (soft blush, nose shading). */
-function shade(skin: string, toward: string, k: number): string {
-  return `#${new ThreeColor(skin).lerp(new ThreeColor(toward), k).getHexString()}`
-}
+/** The library clips hold the arms a little wide for a bulkier body: tuck them in. */
+const ARM_TUCK = 0.14
+const WAVE_TARGET = new Vector3(-0.32, 1.78, 0.1)
+const WAVE_POLE = new Vector3(-0.8, 1.3, -0.1)
 
-interface Arm {
-  shoulder: Group
-  elbow: Group
-}
+const _v = new Vector3()
+const _v2 = new Vector3()
+const _q = new Quaternion()
+const _q2 = new Quaternion()
+const _m = new Matrix4()
+const _up = new Vector3(0, 1, 0)
 
-/**
- * The only character factory. Characters are procedural: clothing is part of the
- * same merged mesh as the body, so a character can never render without clothes.
- *
- * MODESTY RULE (no exceptions): every character is fully and modestly dressed —
- * abaya / long dress, or long sleeves with a long skirt or wide trousers. Only the
- * face and hands are skin; legs and neck are always covered. Most wear hijab.
- */
 export function createCharacter(look: Look, seed: number): Character {
   return new Character(look, seed)
+}
+
+/** Colours of every part for a look. */
+export function lookColors(look: Look): Record<Part, string> {
+  const hijab = look.head.kind === 'hijab' ? look.head.color : look.top
+  return {
+    face: look.skin,
+    skin: look.skin,
+    top: look.top,
+    bottom: look.bottom,
+    trim: look.trim,
+    shoes: look.shoes,
+    hijab,
+    accent: look.head.kind === 'hijab' ? (look.head.accent ?? hijab) : hijab,
+    hair: look.head.kind === 'hair' ? look.head.color : '#2b1d16',
+    vest: look.vest?.color ?? look.top,
+    logo: look.vest?.color ?? look.top,
+  }
 }
 
 export class Character implements Persona {
   readonly root = new Group()
   readonly look: Look
-  /** 0..1 blend of the walk cycle (avatar only). */
-  walk = 0
-  walkRate = 0
-  /** World point the head should turn towards (players nearby), or null. */
   lookTarget: Vector3 | null = null
-  waving = 0
-
-  private readonly body = new Group()
-  private readonly hips = new Group()
-  private readonly spine = new Group()
-  private readonly head = new Group()
-  private readonly legs: Group[] = []
-  private readonly armL: Arm
-  private readonly armR: Arm
-  private readonly topMat: MeshStandardMaterial
-  private readonly bottomMat: MeshStandardMaterial
-  private readonly phase: number
-  walkPhase = 0
+  walk = 0
+  walkRate = 1
   colorVersion = 0
+
+  private readonly mesh: SkinnedMesh | null = null
+  private readonly mat: AvatarMaterial | null = null
+  private readonly mixer: AnimationMixer | null = null
+  private readonly idle: AnimationAction | null = null
+  private readonly walkAction: AnimationAction | null = null
+  private readonly bones = new Map<string, Bone>()
+  private readonly phase: number
   private headYaw = 0
-  private readonly base: Record<string, number> = {}
-  private readonly recolor: (source: Material, color: Color) => void
+  private waving = 0
+  private time = 0
 
   constructor(look: Look, seed = Math.random() * 100) {
     this.look = look
     this.phase = seed
     // Never render while being assembled; shown only once fully dressed and merged.
     this.root.visible = false
-    const s = look.height ?? 1
-    this.root.scale.setScalar(s)
-    this.topMat = new MeshStandardMaterial({ color: look.top, roughness: 0.88 })
-    this.bottomMat = new MeshStandardMaterial({ color: look.bottom, roughness: 0.88 })
-    const skin = skinMat(look.skin)
-
-    this.root.add(this.body)
-    this.hips.position.y = 0.95
-    this.spine.position.y = 0.95
-    this.body.add(this.hips, this.spine)
-
-    // Legs (always present so the avatar can walk). Always clothed: wide trousers
-    // for 'pants', otherwise the bottoms colour under the long hem — never skin.
-    const wide = look.outfit === 'pants'
-    for (const side of [1, -1]) {
-      const pivot = new Group()
-      pivot.position.set(0.085 * side, 0, 0)
-      const leg = new Mesh(wide ? G.wideLeg : G.leg, this.bottomMat)
-      leg.position.y = wide ? -0.46 : -0.43
-      const shoe = new Mesh(G.shoe, fabric(look.shoes, 0.5))
-      shoe.scale.set(0.9, 0.55, 1.5)
-      shoe.position.set(0, -0.9, 0.035)
-      pivot.add(leg, shoe)
-      this.hips.add(pivot)
-      this.legs.push(pivot)
-    }
-
-    if (look.outfit === 'abaya') {
-      this.spine.add(this.mesh(G.abaya, this.topMat, 0.78))
-    } else {
-      this.spine.add(this.mesh(G.torso, this.topMat, 0.74))
-      if (look.outfit === 'skirt') this.hips.add(this.mesh(G.skirt, this.bottomMat, 0.8))
-    }
-
-    if (look.vest) {
-      const vest = this.mesh(G.vest, fabric(look.vest.color, 0.7), 0.78)
-      this.spine.add(vest)
-      if (look.vest.logo) {
-        const logo = new Mesh(G.logo, imageMat(look.vest.logo, { transparent: true }))
-        logo.position.set(0.085, 0.33, 0.138)
-        logo.rotation.y = 0.42
-        this.spine.add(logo)
-      }
-    }
-
-    // Neck + head. The neck is a turtleneck in the top colour (hijab drapes cover it too).
-    const neck = new Mesh(G.neck, this.topMat)
-    neck.position.y = 0.52
-    this.spine.add(neck)
-    this.head.position.y = 0.6
-    this.spine.add(this.head)
-    const headMesh = new Mesh(G.head, skin)
-    headMesh.scale.set(0.92, 1.12, 1)
-    headMesh.position.y = 0.04
-    this.head.add(headMesh)
-    this.face(skin.color.getHexString(), look.head.kind === 'hair' ? look.head.color : '#4a3428')
-
-    const wear =
-      look.head.kind === 'hijab' ? buildHijab(look.head.color, look.head.style, look.head.accent) : buildHair(look.head.color, look.head.style)
-    // Headwear meshes go straight onto the head / spine bones so they merge into
-    // those bones' meshes (2 fewer draw calls per character).
-    for (const m of [...wear.cap.children]) {
-      m.position.y += 0.04
-      this.head.add(m)
-    }
-    for (const m of [...wear.drape.children]) {
-      m.position.y += 0.46
-      this.spine.add(m)
-    }
-
-    // Arms (sleeves in the top colour, hands in skin)
-    this.armL = this.arm(1, this.topMat, skin)
-    this.armR = this.arm(-1, this.topMat, skin)
-
+    this.root.scale.setScalar(look.height ?? 1)
     this.root.add(blobShadow(0.9, 0.9, 0.9), this.hitbox)
-    this.recolor = bakeVertexColors(this.root, (m) => m === this.hitbox)
-    this.applyPose()
-    this.root.traverse((o) => {
-      o.matrixAutoUpdate = true
-    })
-    // Fully built: clothing and body are one merged mesh per bone now.
+
+    const kit = avatarKit()
+    if (!kit) return // model unavailable: nothing is ever drawn (never a partial body)
+
+    const pieces = piecesFor({ outfit: look.outfit, head: look.head, vest: !!look.vest, logo: !!look.vest?.logo })
+    const browColor = look.head.kind === 'hair' ? look.head.color : '#3a2a22'
+    this.mat = avatarMaterial(lookColors(look), faceTexture(look.face, browColor), look.vest?.logo ?? blankTexture())
+    const { root: rootBone, bones, byName } = cloneBones(kit)
+    this.bones = byName
+    const mesh = new SkinnedMesh(mergedGeometry(kit, pieces), this.mat)
+    mesh.add(rootBone)
+    mesh.bind(new Skeleton(bones, kit.boneInverses), kit.bindMatrix)
+    mesh.boundingSphere = BOUNDS
+    mesh.scale.setScalar(BASE_SCALE)
+    this.mesh = mesh
+    this.root.add(mesh)
+
+    this.mixer = new AnimationMixer(mesh)
+    const idleClip = kit.clips.get('Idle_Loop')
+    const walkClip = kit.clips.get(look.outfit === 'pants' ? 'Walk_Loop' : 'Walk_Modest') ?? kit.clips.get('Walk_Loop')
+    if (idleClip) {
+      this.idle = this.mixer.clipAction(idleClip)
+      this.idle.play()
+      this.idle.time = (seed * 0.37) % idleClip.duration
+    }
+    if (walkClip) {
+      this.walkAction = this.mixer.clipAction(walkClip)
+      this.walkAction.play()
+      this.walkAction.setEffectiveWeight(0)
+      this.walkAction.time = (seed * 0.61) % walkClip.duration
+    }
+    this.pose(0, 0)
+    // Fully built and dressed.
     this.root.visible = true
   }
 
-  /** Friendly stylised face: big soft eyes with a glint, soft brows, small nose, lips and blush. */
-  private face(skinHex: string, browColor: string): void {
-    const skin = `#${skinHex}`
-    const add = (geo: SphereGeometry | CapsuleGeometry, mat: MeshStandardMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number, rz = 0) => {
-      const m = new Mesh(geo, mat)
-      m.position.set(x, y, z)
-      m.scale.set(sx, sy, sz)
-      m.rotation.z = rz
-      this.head.add(m)
-    }
-    const brow = tint(browColor)
-    const blush = tint(shade(skin, '#ec7f98', 0.42))
-    for (const sx of [-1, 1]) {
-      add(G.eye, EYE_MAT, 0.036 * sx, 0.048, 0.094, 1.05, 0.95, 0.6)
-      add(G.glint, GLINT_MAT, 0.036 * sx + 0.004, 0.053, 0.1, 1, 1, 0.6)
-      add(G.brow, brow, 0.037 * sx, 0.074, 0.095, 1, 1, 0.5, Math.PI / 2 - sx * 0.12)
-      add(G.cheek, blush, 0.057 * sx, 0.022, 0.081, 1, 0.66, 0.35)
-    }
-    add(G.nose, tint(shade(skin, '#8a5a48', 0.12)), 0, 0.03, 0.103, 0.75, 1, 0.6)
-    add(G.lips, LIPS_MAT, 0, 0.004, 0.097, 1.1, 0.42, 0.5)
+  /** Walk-cycle phase (radians) of the walk clip, shared with the LOD shader. */
+  get walkPhase(): number {
+    const a = this.walkAction
+    if (!a) return 0
+    return (a.time / a.getClip().duration) * TWO_PI
   }
 
-  private mesh(geo: LatheGeometry, mat: MeshStandardMaterial, zScale: number): Mesh {
-    const m = new Mesh(geo, mat)
-    m.scale.z = zScale
-    return m
-  }
-
-  private arm(side: number, sleeve: MeshStandardMaterial, skin: MeshStandardMaterial): Arm {
-    const shoulder = new Group()
-    shoulder.position.set(0.19 * side, 0.42, 0)
-    const upper = new Mesh(G.upperArm, sleeve)
-    upper.position.y = -0.14
-    const elbow = new Group()
-    elbow.position.y = -0.29
-    const fore = new Mesh(G.foreArm, sleeve)
-    fore.position.y = -0.12
-    const hand = new Mesh(G.hand, skin)
-    hand.scale.set(0.8, 1.1, 0.6)
-    hand.position.y = -0.27
-    elbow.add(fore, hand)
-    shoulder.add(upper, elbow)
-    this.spine.add(shoulder)
-    return { shoulder, elbow }
-  }
-
-  private applyPose(): void {
-    const b = this.base
-    const set = (k: string, v: number) => (b[k] = v)
-    // defaults: relaxed arms
-    set('lz', 0.1)
-    set('lx', 0)
-    set('lez', 0)
-    set('lex', -0.15)
-    set('rz', -0.1)
-    set('rx', 0)
-    set('rez', 0)
-    set('rex', -0.15)
-    set('hipZ', 0)
-    set('headZ', 0)
-    set('bodyX', 0)
-    switch (this.look.pose) {
-      case 'handOnHip':
-        set('lz', 0.62)
-        set('lx', 0.12)
-        set('lez', -1.95)
-        set('lex', 0)
-        set('hipZ', 0.04)
-        set('headZ', 0.05)
-        break
-      case 'model':
-        set('rz', -0.62)
-        set('rx', 0.12)
-        set('rez', 1.95)
-        set('rex', 0)
-        set('lz', 0.16)
-        set('lex', -0.35)
-        set('hipZ', -0.06)
-        set('headZ', -0.08)
-        set('bodyX', 0.03)
-        break
-      case 'clasped':
-        set('lz', 0.05)
-        set('lx', -0.28)
-        set('lez', -0.55)
-        set('lex', -1.05)
-        set('rz', -0.05)
-        set('rx', -0.28)
-        set('rez', 0.55)
-        set('rex', -1.05)
-        break
-      case 'relaxed':
-        set('lz', 0.14)
-        set('rz', -0.08)
-        set('rex', -0.5)
-        set('headZ', 0.04)
-        break
-    }
-  }
-
-  /** Attach a prop (e.g. a shopping bag) to the right hand. */
-  holdInRightHand(obj: Object3D): void {
-    obj.position.set(0, -0.32, 0)
-    this.armR.elbow.add(obj)
-  }
-
-  /**
-   * Single static mesh of the whole character in its rest pose (vertex colours),
-   * for distant crowd LOD: one geometry, drawn in one batched call.
-   */
-  lodGeometry(): BufferGeometry | null {
-    const walk = this.walk
-    this.walk = 0
-    this.update(0, 0)
-    this.walk = walk
-    this.root.updateMatrixWorld(true)
-    const inv = new Matrix4().copy(this.root.matrixWorld).invert()
-    // Limbs that swing in the walk cycle: pivot (root space) and signed swing amplitude,
-    // matching update(): legs ±0.55 rad, arms ∓0.4 rad about X at the hip / shoulder.
-    const limbs: [Object3D, number][] = [
-      [this.legs[0], 0.55],
-      [this.legs[1], -0.55],
-      [this.armL.shoulder, -0.4],
-      [this.armR.shoulder, 0.4],
-    ]
-    const pivots = limbs.map(([o]) => new Vector3().setFromMatrixPosition(o.matrixWorld).applyMatrix4(inv))
-    const geos: BufferGeometry[] = []
-    this.root.traverse((o) => {
-      const m = o as Mesh
-      if (!m.isMesh || o === this.hitbox) return
-      const mat = m.material as MeshStandardMaterial
-      if (!mat.vertexColors) return
-      const g = m.geometry.clone().applyMatrix4(new Matrix4().multiplyMatrices(inv, m.matrixWorld))
-      let limb = -1
-      for (let p: Object3D | null = o; p && p !== this.root && limb < 0; p = p.parent) limb = limbs.findIndex(([l]) => l === p)
-      const swing = new Float32Array(g.attributes.position.count * 4)
-      if (limb >= 0) {
-        const pv = pivots[limb]
-        for (let i = 0; i < swing.length; i += 4) {
-          swing[i] = pv.x
-          swing[i + 1] = pv.y
-          swing[i + 2] = pv.z
-          swing[i + 3] = limbs[limb][1]
-        }
-      }
-      g.setAttribute('aSwing', new BufferAttribute(swing, 4))
-      geos.push(g)
-    })
-    return geos.length ? mergeGeometries(geos, false) : null
+  /** Walk clip speed: the old procedural cadence (4 + 1.6·rate rad/s) mapped onto the clip. */
+  private walkTimeScale(): number {
+    const a = this.walkAction
+    if (!a) return 1
+    return ((4 + this.walkRate * 1.6) / TWO_PI) * a.getClip().duration
   }
 
   stepWalk(dt: number): void {
-    if (this.walk > 0.01) this.walkPhase += dt * (4 + this.walkRate * 1.6)
+    const a = this.walkAction
+    if (!a || this.walk <= 0.01) return
+    const d = a.getClip().duration
+    a.time = (a.time + dt * this.walkTimeScale()) % d
+  }
+
+  update(dt: number, t: number): void {
+    this.time = t
+    this.pose(dt, t)
+  }
+
+  private pose(dt: number, t: number): void {
+    if (!this.mixer || !this.mesh) return
+    const w = Math.min(1, Math.max(0, this.walk))
+    this.idle?.setEffectiveWeight(1 - w)
+    if (this.walkAction) {
+      this.walkAction.setEffectiveWeight(w)
+      this.walkAction.timeScale = w > 0.01 ? this.walkTimeScale() : 0
+    }
+    this.mixer.update(dt)
+    this.mesh.updateMatrixWorld(true)
+    this.tuckArms()
+
+    // Pose: hands placed by IK while standing (fades out as she walks).
+    const still = 1 - w
+    const hands = POSE_HANDS[this.look.pose]
+    if (hands && still > 0.01) {
+      if (hands.l) this.reach('l', hands.l[0], hands.l[1], still)
+      if (hands.r && this.waving <= 0) this.reach('r', hands.r[0], hands.r[1], still)
+    }
+
+    // Greeting wave (right arm).
+    if (this.waving > 0) {
+      this.waving -= dt
+      const k = Math.min(1, this.waving * 2, (2.2 - this.waving) * 3)
+      _v2.copy(WAVE_TARGET)
+      _v2.x += Math.sin(t * 9) * 0.07
+      this.reach('r', _v2, WAVE_POLE, Math.max(0, k))
+    }
+
+    // Head: look at the target, otherwise a gentle drift.
+    const head = this.bones.get('Head')
+    if (head) {
+      let yaw = Math.sin(t * 0.37 + this.phase * 2) * 0.22 * still
+      if (this.lookTarget) {
+        const local = this.root.worldToLocal(_v.copy(this.lookTarget))
+        yaw = Math.max(-1.0, Math.min(1.0, Math.atan2(local.x, local.z)))
+      }
+      this.headYaw += (yaw - this.headYaw) * Math.min(1, dt * 3)
+      if (Math.abs(this.headYaw) > 1e-3) {
+        // Turn about the character's up axis, whatever the bone's local axes are.
+        head.getWorldQuaternion(_q)
+        this.root.getWorldQuaternion(_q2)
+        const upW = _v.copy(_up).applyQuaternion(_q2)
+        _q.premultiply(new Quaternion().setFromAxisAngle(upW, this.headYaw))
+        head.parent!.getWorldQuaternion(_q2)
+        head.quaternion.copy(_q2.invert().multiply(_q))
+        head.updateMatrixWorld(true)
+      }
+    }
+  }
+
+  /** Rotate each upper arm towards the body about the character's forward axis. */
+  private tuckArms(): void {
+    this.root.getWorldQuaternion(_q2)
+    const fwd = _v.set(0, 0, 1).applyQuaternion(_q2)
+    for (const [side, sign] of [['l', -1], ['r', 1]] as const) {
+      const up = this.bones.get(`upperarm_${side}`)
+      if (!up) continue
+      up.getWorldQuaternion(_q)
+      _q.premultiply(new Quaternion().setFromAxisAngle(fwd, sign * ARM_TUCK))
+      up.parent!.getWorldQuaternion(_q2)
+      up.quaternion.copy(_q2.invert().multiply(_q))
+      up.updateMatrixWorld(true)
+      this.root.getWorldQuaternion(_q2)
+    }
+  }
+
+  /** Two-bone IK of one arm onto a hand target given in skeleton space. */
+  private reach(side: 'l' | 'r', target: Vector3, pole: Vector3, weight: number): void {
+    const up = this.bones.get(`upperarm_${side}`)
+    const lo = this.bones.get(`lowerarm_${side}`)
+    const hand = this.bones.get(`hand_${side}`)
+    if (!up || !lo || !hand || !this.mesh) return
+    const mw = this.mesh.matrixWorld
+    twoBoneIK(up, lo, hand, _v.copy(target).applyMatrix4(mw), _v2.copy(pole).applyMatrix4(mw), weight)
+  }
+
+  /** Attach a prop (e.g. a shopping bag) to the right hand, hanging below it. */
+  holdInRightHand(obj: Object3D): void {
+    const hand = this.bones.get('hand_r')
+    if (!hand) {
+      obj.position.set(-0.3, 0.75, 0)
+      this.root.add(obj)
+      return
+    }
+    this.root.updateMatrixWorld(true)
+    // Desired world transform: upright (character's yaw), just below the hand.
+    hand.getWorldPosition(_v)
+    this.root.getWorldQuaternion(_q)
+    const s = this.root.getWorldScale(_v2).x
+    _v.y -= 0.02 * s
+    _m.compose(_v, _q, _v2.setScalar(s))
+    _m.premultiply(new Matrix4().copy(hand.matrixWorld).invert())
+    _m.decompose(obj.position, obj.quaternion, obj.scale)
+    hand.add(obj)
   }
 
   /** Recolour the outfit (e.g. to match the featured product). */
   setOutfitColors(top: string | null, bottom: string | null): void {
-    if (top) this.recolor(this.topMat, this.topMat.color.set(top))
-    if (bottom) this.recolor(this.bottomMat, this.bottomMat.color.set(bottom))
+    const pal = this.mat?.userData.palette
+    if (!pal) return
+    if (top) {
+      pal[PARTS.indexOf('top')].set(top)
+      if (this.look.head.kind === 'hair') pal[PARTS.indexOf('hijab')].set(top)
+    }
+    if (bottom) pal[PARTS.indexOf('bottom')].set(bottom)
     if (top || bottom) this.colorVersion++
   }
 
@@ -455,50 +324,86 @@ export class Character implements Persona {
     this.waving = 2.2
   }
 
-  update(dt: number, t: number): void {
-    const b = this.base
-    const ph = this.phase
-    const w = this.walk
+  /**
+   * The whole character in its standing pose as one static, vertex-coloured mesh
+   * (root space) for distant LODs; legs and arms carry `aSwing` pivots so the LOD
+   * walk shader can swing them.
+   */
+  lodGeometry(): BufferGeometry | null {
+    const mesh = this.mesh
+    const kitGeo = mesh?.geometry
+    if (!mesh || !kitGeo || !this.mat) return null
+    // Pose the rig standing still (then restore the walk blend).
+    const walk = this.walk
+    const wave = this.waving
+    this.walk = 0
+    this.waving = 0
+    this.pose(0, this.time)
+    this.walk = walk
+    this.waving = wave
+    this.root.updateMatrixWorld(true)
 
-    // Breathing + idle sway
-    const breathe = Math.sin(t * 1.7 + ph) * 0.008
-    this.spine.scale.set(1 + breathe * 0.5, 1 + breathe, 1 + breathe)
-    const sway = Math.sin(t * 0.6 + ph) * 0.025 * (1 - w)
-    this.body.rotation.z = b.hipZ + sway * 0.5
-    this.body.position.x = b.bodyX + sway * 0.06
-    this.spine.rotation.z = -sway * 0.6
-
-    // Walk cycle
-    this.stepWalk(dt)
-    const swing = Math.sin(this.walkPhase) * 0.55 * w
-    this.legs[0].rotation.x = swing
-    this.legs[1].rotation.x = -swing
-    this.body.position.y = Math.abs(Math.cos(this.walkPhase)) * 0.035 * w
-
-    const armSwing = Math.sin(this.walkPhase) * 0.4 * w
-    this.armL.shoulder.rotation.set(b.lx - armSwing, 0, b.lz)
-    this.armL.elbow.rotation.set(b.lex - w * 0.25, 0, b.lez)
-    this.armR.shoulder.rotation.set(b.rx + armSwing, 0, b.rz)
-    this.armR.elbow.rotation.set(b.rex - w * 0.25, 0, b.rez)
-
-    // Greeting wave (right arm)
-    if (this.waving > 0) {
-      this.waving -= dt
-      const k = Math.min(1, this.waving * 2, (2.2 - this.waving) * 3)
-      this.armR.shoulder.rotation.z = b.rz + (-2.5 - b.rz) * k
-      this.armR.shoulder.rotation.x = b.rx * (1 - k)
-      this.armR.elbow.rotation.z = (b.rez + Math.sin(t * 9) * 0.35 - 0.3) * k + b.rez * (1 - k)
-      this.armR.elbow.rotation.x = b.rex * (1 - k)
+    const pos = kitGeo.attributes.position
+    const part = kitGeo.attributes.part
+    const skinIndex = kitGeo.attributes.skinIndex
+    const skinWeight = kitGeo.attributes.skinWeight
+    const n = pos.count
+    const out = new Float32Array(n * 3)
+    const col = new Float32Array(n * 3)
+    const swing = new Float32Array(n * 4)
+    const toRoot = _m.copy(this.root.matrixWorld).invert().multiply(mesh.matrixWorld)
+    const pal = this.mat.userData.palette
+    const bones = mesh.skeleton.bones
+    const rootInv = new Matrix4().copy(this.root.matrixWorld).invert()
+    const pivot = (name: string) => {
+      const b = this.bones.get(name)
+      return b ? b.getWorldPosition(new Vector3()).applyMatrix4(rootInv) : new Vector3()
     }
-
-    // Head: look at target, otherwise drift
-    let yaw = Math.sin(t * 0.37 + ph * 2) * 0.25
-    if (this.lookTarget) {
-      const local = this.root.worldToLocal(this.lookTarget.clone())
-      yaw = Math.max(-1.0, Math.min(1.0, Math.atan2(local.x, local.z)))
+    const hipL = pivot('thigh_l')
+    const hipR = pivot('thigh_r')
+    const shL = pivot('upperarm_l')
+    const shR = pivot('upperarm_r')
+    const modest = this.look.outfit !== 'pants'
+    for (let i = 0; i < n; i++) {
+      mesh.getVertexPosition(i, _v).applyMatrix4(toRoot)
+      out[i * 3] = _v.x
+      out[i * 3 + 1] = _v.y
+      out[i * 3 + 2] = _v.z
+      const c = pal[Math.round(part.getX(i))]
+      col[i * 3] = c.r
+      col[i * 3 + 1] = c.g
+      col[i * 3 + 2] = c.b
+      // Dominant bone decides the limb.
+      let best = 0
+      let bw = -1
+      for (let k = 0; k < 4; k++) {
+        const wk = skinWeight.getComponent(i, k)
+        if (wk > bw) {
+          bw = wk
+          best = skinIndex.getComponent(i, k)
+        }
+      }
+      const name = bones[best]?.name ?? ''
+      let p: Vector3 | null = null
+      let amp = 0
+      if (/^(thigh|calf|foot|ball)_l/.test(name)) [p, amp] = [hipL, modest ? 0.32 : 0.55]
+      else if (/^(thigh|calf|foot|ball)_r/.test(name)) [p, amp] = [hipR, modest ? -0.32 : -0.55]
+      else if (/^(upperarm|lowerarm|hand)_l/.test(name)) [p, amp] = [shL, -0.4]
+      else if (/^(upperarm|lowerarm|hand)_r/.test(name)) [p, amp] = [shR, 0.4]
+      if (p) {
+        swing[i * 4] = p.x
+        swing[i * 4 + 1] = p.y
+        swing[i * 4 + 2] = p.z
+        swing[i * 4 + 3] = amp
+      }
     }
-    this.headYaw += (yaw - this.headYaw) * Math.min(1, dt * 3)
-    this.head.rotation.set(Math.sin(t * 0.5 + ph) * 0.03, this.headYaw, b.headZ)
+    const g = new BufferGeometry()
+    g.setAttribute('position', new BufferAttribute(out, 3))
+    g.setAttribute('color', new BufferAttribute(col, 3))
+    g.setAttribute('aSwing', new BufferAttribute(swing, 4))
+    if (kitGeo.index) g.setIndex(kitGeo.index.clone())
+    g.computeVertexNormals()
+    return g
   }
 
   /** Invisible capsule-ish proxy used for interaction raycasts (cheaper than the body meshes). */
