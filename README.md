@@ -1,4 +1,4 @@
-# 122 Mall — Virtual Community Mall
+# District 122 — Virtual Community Mall
 
 A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon" units, a Styling Studio and a lounge. Visitors walk the plaza and three wings, browse each brand's shop, play games that earn **122 Coins**, swap coins for brand discounts at each shop's rewards counter, chat with staff, and check out at the plaza cashier (mocked). It started as the Le Voile virtual store; Le Voile is now one tenant and keeps its real catalogue and its real baked boutique. It's frontend-only and builds to a static `dist/`. Data and checkout sit behind interfaces, so Shopify and a Laravel backend can replace the mocks later.
 

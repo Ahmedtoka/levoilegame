@@ -1,4 +1,4 @@
-// 122 Mall layout. Coordinates are metres, Y up. The entrance doors are on
+// District 122 layout. Coordinates are metres, Y up. The entrance doors are on
 // z = 0 and the mall extends towards -z:
 //
 //                       ┌──── NORTH WING ────┐

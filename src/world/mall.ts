@@ -491,7 +491,7 @@ export async function buildShell(
   exitSign.position.set(0, 3.9, -0.08)
   exitSign.rotation.y = Math.PI
   root.add(exitSign)
-  const thanks = new Mesh(new PlaneGeometry(8, 1.6), imageMat(labelSign('Thank you for visiting 122 Mall', 'شكراً لزيارتك ١٢٢ مول', { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
+  const thanks = new Mesh(new PlaneGeometry(8, 1.6), imageMat(labelSign('Thank you for visiting District 122', 'شكراً لزيارتك ديستريكت ١٢٢', { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
   thanks.position.set(0, 6.5, -0.08)
   thanks.rotation.y = Math.PI
   root.add(thanks)

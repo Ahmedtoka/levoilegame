@@ -159,7 +159,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   if (shop.kind === 'lounge' || !shop.section || !shop.style) {
     buildLounge(f, interior, loaders, ctx.kit ?? null, ctx.colliders)
     if (shop.amenity === 'lounge') {
-      const sign = new Mesh(new PlaneGeometry(4.2, 1.05), imageMat(labelSign('122 Lounge', 'استراحة ١٢٢', { bg: '#f4ede3', fg: '#6b4f35' })))
+      const sign = new Mesh(new PlaneGeometry(4.2, 1.05), imageMat(labelSign('District Lounge', 'استراحة ديستريكت', { bg: '#f4ede3', fg: '#6b4f35' })))
       sign.position.set(0, 4.55, 0.06)
       group.add(sign)
     }

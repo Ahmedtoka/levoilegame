@@ -277,7 +277,7 @@ export function lightboxBlade(section: Section, m: Monogram): CanvasTexture {
   return withLogo(canvasTexture(c), m.logo, (img) => paint(img))
 }
 
-/** Hoarding for an empty unit: "Coming Soon" over 122 Mall stripes. */
+/** Hoarding for an empty unit: "Coming Soon" over District 122 stripes. */
 export function comingSoonTexture(): CanvasTexture {
   const [c, g] = makeCanvas(1024, 320)
   g.fillStyle = '#efe6d8'
@@ -304,7 +304,7 @@ export function comingSoonTexture(): CanvasTexture {
   g.direction = 'rtl'
   g.fillStyle = '#5a4a3c'
   g.font = `700 48px ${BRAND.fontUi}`
-  g.fillText('قريباً في ١٢٢ مول', 512, 200)
+  g.fillText('قريباً في ديستريكت ١٢٢', 512, 200)
   return canvasTexture(c)
 }
 

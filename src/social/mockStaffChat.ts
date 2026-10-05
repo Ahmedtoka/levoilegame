@@ -1,4 +1,4 @@
-// Customer ↔ 122 Mall staff chat, simulated with keyword-based canned replies
+// Customer ↔ District 122 staff chat, simulated with keyword-based canned replies
 // in Egyptian Arabic / English. Staff can attach product cards (added to the
 // cart only when the customer approves); stylists send a full look.
 // Laravel + Reverb: replace with a private channel per conversation.
@@ -114,10 +114,10 @@ export class MockStaffChat implements StaffChatService {
     const sec = this.catalog.sections.find((s) => s.id === staff.sectionId)
     const hello: Reply =
       staff.role === 'stylist'
-        ? { ar: `أهلاً! أنا ${staff.name}، ستايلست في ١٢٢ مول ✨ قوليلي المناسبة وأنا أظبطلك لوك كامل: لبس + طرحة + إكسسوار.`, en: `Hi! I’m ${staff.name}, a 122 Mall stylist ✨ Tell me the occasion and I’ll put together a full look: outfit + hijab + accessory.` }
+        ? { ar: `أهلاً! أنا ${staff.name}، ستايلست في ديستريكت ١٢٢ ✨ قوليلي المناسبة وأنا أظبطلك لوك كامل: لبس + طرحة + إكسسوار.`, en: `Hi! I’m ${staff.name}, a District 122 stylist ✨ Tell me the occasion and I’ll put together a full look: outfit + hijab + accessory.` }
         : sec
           ? { ar: `أهلاً بيكي في قسم ${sec.titleAr}! أنا ${staff.name}، تحبي أساعدك في إيه؟`, en: `Welcome to ${sec.title}! I’m ${staff.name} — how can I help?` }
-          : { ar: `أهلاً بيكي في ١٢٢ مول! أنا ${staff.name}، محتاجة مساعدة في إيه؟`, en: `Welcome to 122 Mall! I’m ${staff.name} — what can I help you with?` }
+          : { ar: `أهلاً بيكي في ديستريكت ١٢٢! أنا ${staff.name}، محتاجة مساعدة في إيه؟`, en: `Welcome to District 122! I’m ${staff.name} — what can I help you with?` }
     this.push(staff.id, { from: 'staff', text: hello[lang] })
   }
 

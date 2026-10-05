@@ -1,4 +1,4 @@
-// Builds the 122 Mall catalogue: one Section per open brand. Le Voile keeps
+// Builds the District 122 catalogue: one Section per open brand. Le Voile keeps
 // its real catalogue (products.json, all its sections merged into one shop);
 // brands with a real catalogue in src/data/brands/<id>.json (scripts/fetch-brands.mjs)
 // get theirs merged the same way; the rest keep placeholder products with
@@ -155,7 +155,7 @@ function realBrandProducts(b: BrandDef, file: BrandCatalogFile): Product[] {
   })
 }
 
-/** Turns the Le Voile catalogue into the 122 Mall catalogue (one section per open brand). */
+/** Turns the Le Voile catalogue into the District 122 catalogue (one section per open brand). */
 export function buildMallCatalog(levoile: Catalog, brandFiles: Record<string, BrandCatalogFile> = {}): Catalog {
   levoileSections = levoile.sections
   brandSections.clear()

@@ -1,12 +1,12 @@
-// 122 Mall: the tenant brands and where each one sits. Plaza + 3 wings
+// District 122: the tenant brands and where each one sits. Plaza + 3 wings
 // (west, north, east); each wing has shops on both sides. Brand identity
 // (monogram colour, display, outfit) drives the shop's look until every
 // brand gets its own bespoke décor.
 
 import type { DisplayKind, OutfitStyle } from './sections'
 
-export const MALL_NAME = '122 Mall'
-export const MALL_NAME_AR = '١٢٢ مول'
+export const MALL_NAME = 'District 122'
+export const MALL_NAME_AR = 'ديستريكت ١٢٢'
 
 export type ProductKind = 'dress' | 'abaya' | 'blouse' | 'pants' | 'cardigan' | 'scarf' | 'bag' | 'shoes' | 'box'
 

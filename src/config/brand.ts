@@ -1,7 +1,7 @@
-// 122 Mall identity. `magenta` is the UI accent key used across the code
-// (kept from the Le Voile build); it now holds the 122 Mall plum.
+// District 122 identity. `magenta` is the UI accent key used across the code
+// (kept from the Le Voile build); it now holds the District 122 plum.
 export const BRAND = {
-  name: '122 Mall',
+  name: 'District 122',
   site: 'https://levoilestores.com',
   magenta: '#5b2b82',
   magentaDark: '#3e1c5c',

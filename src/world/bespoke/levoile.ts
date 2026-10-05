@@ -1,4 +1,4 @@
-// Le Voile's shop in 122 Mall: the real boutique design (EL_REBAT_Render.blend,
+// Le Voile's shop in District 122: the real boutique design (EL_REBAT_Render.blend,
 // baked into public/models/mall/store.glb) at real size inside its anchor unit
 // (12 × 16 m; the store is 10.4 × 15.3 m with its glass front at boutique z = +7.5).
 //

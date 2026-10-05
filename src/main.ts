@@ -70,7 +70,7 @@ async function boot(): Promise<void> {
   const provider = createProductProvider()
   try {
     levoileCatalog = await provider.loadCatalog()
-    // 122 Mall: one shop per brand (?boutique keeps the single Le Voile store).
+    // District 122: one shop per brand (?boutique keeps the single Le Voile store).
     catalog = new URLSearchParams(location.search).has('boutique')
       ? levoileCatalog
       : buildMallCatalog(levoileCatalog, await loadBrandCatalogs())

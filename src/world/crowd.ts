@@ -1,6 +1,6 @@
 // The simulated mall crowd: renders and walks the shoppers that the presence
 // source describes (browsing a shop, queueing at the cashier and leaving with
-// a 122 Mall bag, playing at the wheel / treasure hunting, sitting with a
+// a District 122 bag, playing at the wheel / treasure hunting, sitting with a
 // stylist, friends standing together).
 //
 // Performance (50 shoppers would be ~600 draw calls as full rigs):
@@ -596,7 +596,7 @@ const _frustum = new Frustum()
 const _sphere = new Sphere()
 const BAG_MAT = new MeshStandardMaterial({ color: BRAND.magenta, roughness: 0.6 })
 
-/** 122 Mall shopping bag: box + handle, one geometry (hangs below the hand). */
+/** District 122 shopping bag: box + handle, one geometry (hangs below the hand). */
 function bagGeometry(): BufferGeometry {
   const box = new BoxGeometry(0.26, 0.3, 0.1).translate(0, -0.2, 0)
   const handle = new TorusGeometry(0.06, 0.008, 4, 12, Math.PI).translate(0, -0.05, 0)

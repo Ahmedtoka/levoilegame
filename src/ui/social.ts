@@ -482,7 +482,7 @@ function mountClaim(root: HTMLElement, game: GameBridge): void {
       }
       render()
     } else if (step === 'otp') {
-      const user = await id.verify(phone, code, name || '122 Mall')
+      const user = await id.verify(phone, code, name || 'District 122')
       busy = false
       if (!user) {
         error = t('wrongCode', L)
@@ -615,7 +615,7 @@ function mountRewards(root: HTMLElement, game: GameBridge): void {
       }
       render()
     } else if (step === 'otp') {
-      const user = await id.verify(phone, code, name || '122 Mall')
+      const user = await id.verify(phone, code, name || 'District 122')
       busy = false
       if (!user) {
         error = t('wrongCode', L)

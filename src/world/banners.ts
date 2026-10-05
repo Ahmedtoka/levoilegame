@@ -253,7 +253,7 @@ function drawSlide(b: Banner, s: Slide | undefined): void {
     const sec = catalog().sections.find((x) => x.id === s.brandId)
     if (br && sec) {
       fabric(g, shade(br.color, 0.08), shade(br.color, -0.28))
-      txt(g, spaced('122 MALL'), cx, 84, 20, 'rgba(251,243,230,0.85)', 600, BRAND.fontLatin)
+      txt(g, spaced('DISTRICT 122'), cx, 84, 20, 'rgba(251,243,230,0.85)', 600, BRAND.fontLatin)
       const logo = br.logo ? image(br.logo, false) : null
       if (logo) {
         const [t, tg] = makeCanvas(logo.width, logo.height)
@@ -282,7 +282,7 @@ function drawSlide(b: Banner, s: Slide | undefined): void {
   }
   if (s?.kind === 'wheel') {
     fabric(g, '#fbf6ef', '#eadfce')
-    txt(g, spaced('122 MALL'), cx, 84, 20, '#8a6a46', 600, BRAND.fontLatin)
+    txt(g, spaced('DISTRICT 122'), cx, 84, 20, '#8a6a46', 600, BRAND.fontLatin)
     // A prize wheel: alternating plum / gold / cream segments with a bronze rim.
     const wy = 290
     const r = 128
@@ -321,7 +321,7 @@ function drawSlide(b: Banner, s: Slide | undefined): void {
   }
   // 122 Coins offer (also the fallback).
   fabric(g, '#5b2b82', '#2e1446')
-  txt(g, spaced('122 MALL'), cx, 84, 20, 'rgba(241,230,255,0.85)', 600, BRAND.fontLatin)
+  txt(g, spaced('DISTRICT 122'), cx, 84, 20, 'rgba(241,230,255,0.85)', 600, BRAND.fontLatin)
   const cy = 250
   const coin = g.createRadialGradient(cx - 30, cy - 34, 10, cx, cy, 104)
   coin.addColorStop(0, '#fff1c9')

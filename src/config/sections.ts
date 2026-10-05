@@ -48,7 +48,7 @@ export function brandTint(hex: string): string {
 }
 
 export function sectionStyle(id: string, index: number): SectionStyle {
-  // 122 Mall: tenant brands carry their own style.
+  // District 122: tenant brands carry their own style.
   const brand = brandById.get(id)
   if (brand) {
     const free = brand.kinds.length > 0 && !brand.kinds.some((k) => ['dress', 'abaya', 'blouse', 'pants', 'cardigan'].includes(k))

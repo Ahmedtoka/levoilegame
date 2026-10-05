@@ -218,8 +218,8 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
 
   // ------------------------------------------------------ directory board
   const rowsData = shops.map((s) => ({
-    name: s.kind === 'lounge' ? (s.amenity === 'studio' ? 'Styling Studio' : '122 Lounge') : (s.brand?.name ?? ''),
-    nameAr: s.kind === 'lounge' ? (s.amenity === 'studio' ? 'ستوديو الستايلينج' : 'استراحة ١٢٢') : (s.brand?.nameAr ?? ''),
+    name: s.kind === 'lounge' ? (s.amenity === 'studio' ? 'Styling Studio' : 'District Lounge') : (s.brand?.name ?? ''),
+    nameAr: s.kind === 'lounge' ? (s.amenity === 'studio' ? 'ستوديو الستايلينج' : 'استراحة ديستريكت') : (s.brand?.nameAr ?? ''),
     color: s.kind === 'shop' ? (s.brand?.color ?? '#ddd') : '#d8cbb8',
   }))
   const dirTex = wingDirectoryTexture(wing.def.nameEn, wing.def.nameAr, rowsData)

@@ -74,7 +74,7 @@ export function mountHud(root: HTMLElement, game: GameBridge): void {
     const muted = !(s.music || s.sound)
     topbar.innerHTML = `
       <div class="brand-chip">
-        <img src="${BRAND.logo}" alt="122 Mall" />
+        <img src="${BRAND.logo}" alt="District 122" />
         <span class="zone">${esc(zoneLabel(s.zone, L))}</span>
       </div>
       <div class="actions">

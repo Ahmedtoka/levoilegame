@@ -1,8 +1,8 @@
-# 122 Mall — Virtual Community Mall
+# District 122 — Virtual Community Mall
 
 A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon" units, plus a Styling Studio and a lounge. Visitors walk the plaza and three wings, browse each brand's shop, play games that earn **122 Coins**, swap coins for brand discounts at each shop's rewards counter, chat with staff, and check out at the plaza cashier (mocked). It started as the Le Voile virtual store; Le Voile is now one tenant and keeps its real catalogue. User docs: `README.md`. Future work: `ROADMAP.md`.
 
-## 122 Mall structure (branch `122-mall`)
+## District 122 structure (branch `122-mall`)
 
 - **Brands and slots:** `src/config/mall.ts`.
   - `BRANDS` holds name, Arabic name, monogram initials and colour, status (open / soon), display, outfit and placeholder product kinds.

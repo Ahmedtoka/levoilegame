@@ -1,6 +1,6 @@
 # Roadmap
 
-Current state: the 122 Mall is a frontend-only demo (plaza, three wings, 16 brands + 4 Coming Soon, Le Voile's real boutique, 122 Coins, simulated crowd). Next steps, roughly in order:
+Current state: the District 122 is a frontend-only demo (plaza, three wings, 16 brands + 4 Coming Soon, Le Voile's real boutique, 122 Coins, simulated crowd). Next steps, roughly in order:
 
 ## 1. Real catalogues per brand (Shopify per brand)
 - Replace the generated placeholder products (`src/data/mallCatalog.ts`) with one real data source per brand: a data file first, then a Shopify Storefront collection or store per brand (`ShopifyStorefrontProvider` already exists for Le Voile).
