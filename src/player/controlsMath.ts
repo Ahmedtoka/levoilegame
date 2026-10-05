@@ -11,6 +11,8 @@ interface V2 {
   z: number
 }
 
+/** Mouse look sensitivity (rad per px). */
+export const LOOK_SENS = 0.0022
 /** Look smoothing rate: the camera eases with 1 − exp(−dt·LOOK_RATE). */
 export const LOOK_RATE = 25
 /** Max floor distance (along the pick ray) for tap-to-walk. */

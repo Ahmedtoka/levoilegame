@@ -2,6 +2,7 @@
 // on the right half.
 
 import type { Input } from './input'
+import { LOOK_SENS, stickVector, touchLookSens } from './controlsMath'
 
 export class TouchControls {
   private readonly input: Input
@@ -60,8 +61,10 @@ export class TouchControls {
         dy = (dy / len) * this.radius
       }
       this.knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`
-      this.input.stick.x = dx / this.radius
-      this.input.stick.y = -dy / this.radius
+      // 8 px dead zone so a resting thumb doesn't drift (and doesn't cancel tap-to-walk).
+      const v = stickVector(dx, dy, this.radius)
+      this.input.stick.x = v.x
+      this.input.stick.y = v.y
       return
     }
     const l = this.looks.get(e.pointerId)
@@ -72,8 +75,10 @@ export class TouchControls {
     l.y = e.clientY
     l.moved += Math.abs(dx) + Math.abs(dy)
     if (this.input.enabled) {
-      this.input.lookDX += dx * 2.2
-      this.input.lookDY += dy * 2.2
+      // Sensitivity scales with screen width; the player multiplies by LOOK_SENS.
+      const gain = touchLookSens(window.innerWidth) / LOOK_SENS
+      this.input.lookDX += dx * gain
+      this.input.lookDY += dy * gain
     }
   }
 
