@@ -2,14 +2,17 @@
 // (corridor, shop boxes, ceilings). Wings are built in their own local frame.
 
 import {
+  Box3,
   BoxGeometry,
   CircleGeometry,
+  Frustum,
   Group,
   Matrix4,
   Mesh,
   MeshStandardMaterial,
   PlaneGeometry,
   RingGeometry,
+  Vector3,
   type Object3D,
 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
@@ -127,6 +130,19 @@ export async function buildShell(
     })
     reflector.rotation.x = -Math.PI / 2
     reflector.position.set(0, -0.002, -A / 2)
+    // The plane's bounding sphere (r ≈ 28 m) reaches deep into the wings, so it passes the
+    // frustum test even when the plaza floor is behind the camera. Only run the mirror pass
+    // when the floor's actual box is in view.
+    const floorBox = new Box3(new Vector3(-W, -0.01, -A), new Vector3(W, 0.01, 0))
+    const fr = new Frustum()
+    const pv = new Matrix4()
+    const pass = reflector.onBeforeRender
+    reflector.onBeforeRender = function (...args: Parameters<typeof pass>) {
+      const cam = args[2]
+      pv.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse)
+      fr.setFromProjectionMatrix(pv)
+      if (fr.intersectsBox(floorBox)) pass.apply(this, args)
+    }
     root.add(reflector)
     return reflector
   }
