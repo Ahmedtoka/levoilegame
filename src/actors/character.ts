@@ -3,6 +3,7 @@
 // varied by outfit silhouette, colours, hijab/hair style, vest and pose.
 
 import {
+  BufferAttribute,
   CapsuleGeometry,
   CylinderGeometry,
   Group,
@@ -41,6 +42,14 @@ export interface Persona {
   update(dt: number, t: number): void
   wave(): void
   setOutfitColors(top: string | null, bottom: string | null): void
+  /** Static LOD snapshot (vertex colours + `aSwing` for the LOD walk shader). */
+  lodGeometry(): BufferGeometry | null
+  /** Bumped whenever the outfit colours change (an LOD snapshot is then stale). */
+  readonly colorVersion: number
+  /** Walk-cycle phase in radians (shared by the rig and its LOD). */
+  readonly walkPhase: number
+  /** Advance the walk cycle without posing the rig (while it is drawn as an LOD). */
+  stepWalk(dt: number): void
 }
 
 export interface Look {
@@ -185,7 +194,8 @@ export class Character implements Persona {
   private readonly topMat: MeshStandardMaterial
   private readonly bottomMat: MeshStandardMaterial
   private readonly phase: number
-  private walkPhase = 0
+  walkPhase = 0
+  colorVersion = 0
   private headYaw = 0
   private readonly base: Record<string, number> = {}
   private readonly recolor: (source: Material, color: Color) => void
@@ -390,24 +400,55 @@ export class Character implements Persona {
    * for distant crowd LOD: one geometry, drawn in one batched call.
    */
   lodGeometry(): BufferGeometry | null {
+    const walk = this.walk
+    this.walk = 0
     this.update(0, 0)
+    this.walk = walk
     this.root.updateMatrixWorld(true)
     const inv = new Matrix4().copy(this.root.matrixWorld).invert()
+    // Limbs that swing in the walk cycle: pivot (root space) and signed swing amplitude,
+    // matching update(): legs ±0.55 rad, arms ∓0.4 rad about X at the hip / shoulder.
+    const limbs: [Object3D, number][] = [
+      [this.legs[0], 0.55],
+      [this.legs[1], -0.55],
+      [this.armL.shoulder, -0.4],
+      [this.armR.shoulder, 0.4],
+    ]
+    const pivots = limbs.map(([o]) => new Vector3().setFromMatrixPosition(o.matrixWorld).applyMatrix4(inv))
     const geos: BufferGeometry[] = []
     this.root.traverse((o) => {
       const m = o as Mesh
       if (!m.isMesh || o === this.hitbox) return
       const mat = m.material as MeshStandardMaterial
       if (!mat.vertexColors) return
-      geos.push(m.geometry.clone().applyMatrix4(new Matrix4().multiplyMatrices(inv, m.matrixWorld)))
+      const g = m.geometry.clone().applyMatrix4(new Matrix4().multiplyMatrices(inv, m.matrixWorld))
+      let limb = -1
+      for (let p: Object3D | null = o; p && p !== this.root && limb < 0; p = p.parent) limb = limbs.findIndex(([l]) => l === p)
+      const swing = new Float32Array(g.attributes.position.count * 4)
+      if (limb >= 0) {
+        const pv = pivots[limb]
+        for (let i = 0; i < swing.length; i += 4) {
+          swing[i] = pv.x
+          swing[i + 1] = pv.y
+          swing[i + 2] = pv.z
+          swing[i + 3] = limbs[limb][1]
+        }
+      }
+      g.setAttribute('aSwing', new BufferAttribute(swing, 4))
+      geos.push(g)
     })
     return geos.length ? mergeGeometries(geos, false) : null
+  }
+
+  stepWalk(dt: number): void {
+    if (this.walk > 0.01) this.walkPhase += dt * (4 + this.walkRate * 1.6)
   }
 
   /** Recolour the outfit (e.g. to match the featured product). */
   setOutfitColors(top: string | null, bottom: string | null): void {
     if (top) this.recolor(this.topMat, this.topMat.color.set(top))
     if (bottom) this.recolor(this.bottomMat, this.bottomMat.color.set(bottom))
+    if (top || bottom) this.colorVersion++
   }
 
   wave(): void {
@@ -428,7 +469,7 @@ export class Character implements Persona {
     this.spine.rotation.z = -sway * 0.6
 
     // Walk cycle
-    if (w > 0.01) this.walkPhase += dt * (4 + this.walkRate * 1.6)
+    this.stepWalk(dt)
     const swing = Math.sin(this.walkPhase) * 0.55 * w
     this.legs[0].rotation.x = swing
     this.legs[1].rotation.x = -swing
