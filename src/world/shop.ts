@@ -28,7 +28,7 @@ import { blobShadow, framedPlane, plant, slimPlant, v3 } from './props'
 import { bladeSign, comingSoonTexture, labelSign, logoTexture, priceTagTexture, shopFascia, type Monogram } from './signage'
 import type { Kit } from './kit'
 import type { DisplayKind } from '../config/sections'
-import { easelRow, loadCards, lookbookStand, registerCards } from './displays'
+import { cardPanel, easelRow, loadCards, lookbookStand, registerCards, type Card } from './displays'
 
 export interface ShopContext {
   root: Object3D
@@ -540,6 +540,21 @@ const FACE_IN = 0 // front faces the entrance (+z local)
 const FACE_PX = Math.PI / 2
 const FACE_NX = -Math.PI / 2
 
+/** Hanging rails of each free-standing rack piece (piece-local x, z centre; length along z). */
+const RACK_RAILS: Record<string, [number, number, number][]> = {
+  rack_1: [[-0.64, 0, 2.65], [0.64, 0, 2.65]],
+  rack_2: [[-0.64, -0.03, 2.05], [0.64, 0.03, 2.05]],
+  rack_3: [[-0.63, -0.1, 2.13], [0.63, 0.1, 2.13]],
+  rack_4: [[-0.63, -0.08, 2.11], [0.64, 0.08, 2.11]],
+  rack_5: [[-0.64, -0.04, 2.08], [0.64, 0.05, 2.08]],
+}
+/** Easel tops (piece-local): board rect centre/size and height, easel row start, count, spacing. */
+const EASEL_TOPS: Record<string, { board: [number, number, number, number, number]; row: [number, number]; surface: number; max: number; spacing: number }> = {
+  table: { board: [0, 0, 2.56, 1.66, 1.003], row: [-0.9, 0], surface: 1.006, max: 4, spacing: 0.6 },
+  gondola: { board: [0, 0, 1.61, 1.13, 0.883], row: [-0.5, 0.15], surface: 0.886, max: 3, spacing: 0.5 },
+}
+const BOARD = new MeshBasicMaterial({ color: '#efe6da' })
+
 function furnishWithKit(
   kit: Kit,
   ctx: ShopContext,
@@ -552,8 +567,65 @@ function furnishWithKit(
   mono?: Monogram,
 ): void {
   // No fake goods: fixtures drop the baked Le Voile garments/scarves (plants keep their foliage).
-  const put = (name: string, x: number, z: number, face: number, collide = true) =>
-    kit.place(name, interior, x, z, face, collide ? ctx.colliders : undefined, { hideSoft: name !== 'plant' && name !== 'pendant' })
+  // Products live on the fixtures: fixture k shows products from (3k) mod n, so
+  // every product appears several times (like stock on several rails).
+  let k = 0
+  const take = (cap: number): Product[] => {
+    const n = products.length
+    if (!n) return []
+    const start = (3 * k++) % n
+    return Array.from({ length: Math.min(cap, n) }, (_, i) => products[(start + i) % n])
+  }
+  const pctx = { interaction: ctx.interaction, loaders }
+  const cards: Card[] = []
+  const stock = (o: Object3D, name: string) => {
+    const info = kit.info[name]
+    const fx = info.front[0]
+    const fz = info.front[2]
+    const yaw = Math.atan2(fx, fz)
+    const added: Object3D[] = []
+    const bay = name.startsWith('hangbay') ? 0.26 : name.startsWith('scarfbay') ? 0.31 : null
+    if (bay !== null) {
+      // 3 cards on the bay front, in front of its shelf boards.
+      added.push(cardPanel(pctx, o, take(3), 3, 1, fx * bay, 1.55, fz * bay, yaw, 0.7)!)
+    } else if (name === 'reardisplay') {
+      // 3 × 2 grid in front of its hanging rail (the rail would cut across the top row).
+      added.push(cardPanel(pctx, o, take(6), 3, 2, 0.04, 1.6, 0.36, yaw, 0.78)!)
+    } else if (RACK_RAILS[name]) {
+      // Cards hanging under each rail, readable from both sides.
+      for (const [rx, rz, span] of RACK_RAILS[name]) {
+        const cw = (span - 0.3) / 3
+        added.push(cardPanel(pctx, o, take(3), 3, 1, rx, 1.8 - (cw * 1.5) / 2, rz, Math.PI / 2, cw, { doubleSided: true })!)
+      }
+    } else if (EASEL_TOPS[name]) {
+      const e = EASEL_TOPS[name]
+      const fr = f.batcher.frame(f.base.clone().multiply(o.matrix), ctx.colliders)
+      // A board over the top (the baked top still shows where the folded goods sat).
+      const [bx, bz, bw, bd, by] = e.board
+      fr.box(BOARD, bx, by, bz, bw, 0.006, bd)
+      const row = new Group()
+      row.position.set(e.row[0], 0, e.row[1])
+      o.add(row)
+      row.updateMatrix()
+      const rf = f.batcher.frame(f.base.clone().multiply(o.matrix).multiply(row.matrix), ctx.colliders)
+      cards.push(...easelRow(rf, row, take(e.max), e.surface, e.spacing))
+      added.push(row)
+    }
+    for (const a of added) {
+      if (!a) continue
+      a.traverse((c) => {
+        c.updateMatrix()
+        c.matrixAutoUpdate = false
+      })
+    }
+  }
+  // No fake goods: fixtures drop the baked Le Voile garments/scarves (plants keep their foliage).
+  const put = (name: string, x: number, z: number, face: number, collide = true) => {
+    const soft = name === 'plant' || name === 'pendant'
+    const o = kit.place(name, interior, x, z, face, collide ? ctx.colliders : undefined, { hideSoft: !soft })
+    if (o && !soft) stock(o, name)
+    return o
+  }
   const depthOf = (name: string) => kit.info[name]?.size[0] ?? 0.75
   const backRow = (names: string[]) =>
     names.forEach((n, i) => put(n, -3.95 + i * 2.62, BACK_Z + depthOf(n) / 2, FACE_IN))
@@ -566,7 +638,7 @@ function furnishWithKit(
   interior.add(stand)
   stand.updateMatrix()
   const standFrame = f.batcher.frame(f.base.clone().multiply(stand.matrix), ctx.colliders)
-  const cards = lookbookStand(standFrame, stand, section, products)
+  cards.push(...lookbookStand(standFrame, stand, section, products))
 
   switch (kind) {
     case 'rack':
@@ -604,16 +676,8 @@ function furnishWithKit(
       put('plant', 2.4, BACK_Z + 0.5, FACE_IN)
       put('table', 0, -10.4, FACE_IN)
       // Two gondolas with product easels.
-      ;[-2.0, 2.0].forEach((x, gi) => {
-        put('gondola', x, -6.6, FACE_IN)
-        const row = new Group()
-        row.position.set(x - 0.5, 0, -6.6 + 0.5)
-        interior.add(row)
-        row.updateMatrix()
-        const rf = f.batcher.frame(f.base.clone().multiply(row.matrix), ctx.colliders)
-        const subset = gi === 0 ? products.slice(0, 3) : products.slice(3)
-        cards.push(...easelRow(rf, row, subset, 0.96, 0.5))
-      })
+      put('gondola', -2.0, -6.6, FACE_IN)
+      put('gondola', 2.0, -6.6, FACE_IN)
       break
     }
   }
