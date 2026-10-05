@@ -38,6 +38,7 @@ import { buildLiveMall } from './world/liveMall'
 import { buildPlaza } from './world/plaza'
 import { buildDecals } from './world/decals'
 import { buildCorridor } from './world/corridor'
+import { updateBanners } from './world/banners'
 import { buildGlows } from './world/glow'
 import { buildAOStrips } from './world/aoStrips'
 import type { ScreenFeed, ScreenActions } from './world/screens'
@@ -223,6 +224,7 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   buildGlows(engine.scene, engine.quality.fancyDecor)
   game.updaters.push((dt) => {
     for (const fd of feeds) fd.update(dt, engine.camera)
+    updateBanners(dt, engine.camera)
   })
   progress(0.85)
 }

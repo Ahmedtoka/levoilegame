@@ -21,6 +21,7 @@ import { canvasTexture, loadImage, loadProductTexture, makeCanvas } from '../eng
 import { catalog } from '../state/store'
 import { doormatTexture, starInlayTexture, wayfindingTexture, wingDirectoryTexture } from './signage'
 import { ScreenFeed, registerScreen, screenMesh, type ScreenActions } from './screens'
+import { addBanner, bannerSlides } from './banners'
 
 export interface CorridorCtx {
   root: Object3D
@@ -169,6 +170,11 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
       feed.addScreen(m)
       registerScreen(ctx.interaction, m.children[0], feed, ctx.actions)
     }
+
+  // ------------------------------------------------------ fabric banners
+  // Two per wing over the islands, clear of the mid-wing wayfinding sign.
+  const wingSlides = bannerSlides(brandIds)
+  ;[1, rows - 1].forEach((r, i) => addBanner(group, wf, 0, BH - 0.3, -r * L, 0, BH, wingSlides, i * 3 + 1))
 
   // ---------------------------------------------------- storefront finishing
   for (const s of shops) {

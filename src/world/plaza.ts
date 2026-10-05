@@ -14,6 +14,7 @@ import { arcSeats, stageWatchSpots, type SeatPose } from './plazaMath'
 import { addContactShadow } from './decals'
 import { addCone } from './glow'
 import { ScreenFeed, registerScreen, screenMesh, type ScreenActions } from './screens'
+import { addBanner, bannerSlides } from './banners'
 import { BRANDS } from '../config/mall'
 import { catalog } from '../state/store'
 
@@ -117,6 +118,14 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
     colFeed.addScreen(m)
     registerScreen(ctx.interaction, m.children[0], colFeed, ctx.actions)
   }
+
+  // ------------------------------------------------------ fabric banners
+  // Four banners hang from the side coffer beams (bottom at 8.7 m), framing the stage.
+  const ids = openBrandIds()
+  ;[[-12, -13], [12, -13], [-12, -21], [12, -21]].forEach(([bx, bz], i) => {
+    const order = ids.slice(i * 2).concat(ids.slice(0, i * 2))
+    addBanner(ctx.root, f, bx, 8.3, bz, 0, 8.7, bannerSlides(order), i)
+  })
 
   return { feeds: [front, back, colFeed] }
 }
