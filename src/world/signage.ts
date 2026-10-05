@@ -441,3 +441,36 @@ export function drawProductCard(
     g.fillText(price, W / 2, PH + 104)
   }
 }
+
+/** 8-point marble star with a bronze ring, for the corridor floor (transparent outside the ring). */
+let starTex: CanvasTexture | null = null
+export function starInlayTexture(): CanvasTexture {
+  if (starTex) return starTex
+  const S = 512
+  const [c, g] = makeCanvas(S, S)
+  const cx = S / 2
+  g.fillStyle = '#efe7dc'
+  g.beginPath()
+  g.arc(cx, cx, 240, 0, Math.PI * 2)
+  g.fill()
+  g.fillStyle = '#d9c9b3'
+  g.beginPath()
+  for (let i = 0; i < 16; i++) {
+    const r = i % 2 ? 90 : 210
+    const a = (i / 16) * Math.PI * 2 - Math.PI / 2
+    g[i ? 'lineTo' : 'moveTo'](cx + Math.cos(a) * r, cx + Math.sin(a) * r)
+  }
+  g.closePath()
+  g.fill()
+  g.strokeStyle = '#b08a5c'
+  g.lineWidth = 14
+  g.beginPath()
+  g.arc(cx, cx, 238, 0, Math.PI * 2)
+  g.stroke()
+  g.lineWidth = 4
+  g.beginPath()
+  g.arc(cx, cx, 100, 0, Math.PI * 2)
+  g.stroke()
+  starTex = canvasTexture(c)
+  return starTex
+}

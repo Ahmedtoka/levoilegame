@@ -36,6 +36,7 @@ import { mountLookCard, mountSocial } from './ui/social'
 import { buildLiveMall } from './world/liveMall'
 import { buildPlaza } from './world/plaza'
 import { buildDecals } from './world/decals'
+import { buildCorridor } from './world/corridor'
 import { buildGlows } from './world/glow'
 import type { ScreenFeed, ScreenActions } from './world/screens'
 
@@ -210,6 +211,8 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   }
   const feeds: ScreenFeed[] = []
   feeds.push(...buildPlaza({ root: engine.scene, batcher, colliders, interaction: game.interaction, kit, actions }).feeds)
+  for (const w of layout.wings)
+    feeds.push(...buildCorridor({ root: engine.scene, batcher, colliders, interaction: game.interaction, kit, actions }, w, layout.shops.filter((s) => s.wing === w.id)).feeds)
   buildDecals(engine.scene)
   buildGlows(engine.scene, engine.quality.fancyDecor)
   game.updaters.push((dt) => {

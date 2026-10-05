@@ -191,15 +191,11 @@ export async function buildShell(
     group.rotation.y = wing.yaw
     root.add(group)
 
-    // Corridor floor + runner
+    // Corridor floor
     const floor = new Mesh(new PlaneGeometry(2 * B, len), new MeshStandardMaterial({ map: repeatTex(marble, (2 * B) / 4, len / 4), roughness: 0.22 }))
     floor.rotation.x = -Math.PI / 2
     floor.position.set(0, 0, -len / 2)
     group.add(floor)
-    const runner = new Mesh(new PlaneGeometry(2.6, len - 1), tintMat('#d8cbb8', 1, 0.6))
-    runner.rotation.x = -Math.PI / 2
-    runner.position.set(0, 0.004, -len / 2 - 0.5)
-    group.add(runner)
 
     // Corridor end and the header over the mouth.
     wall(wf, -B, -len - T, B, -len, 0, BH)
@@ -255,12 +251,8 @@ export async function buildShell(
       }
     })
 
-    // Corridor ceiling with light strips.
+    // Corridor ceiling (coves and pendants come from corridor.ts).
     wf.box(MAT.ceiling, 0, BH + 0.1, -len / 2, 2 * B, 0.2, len)
-    for (let z = -2; z > -len + 1; z -= 4) {
-      wf.box(MAT.lightPanel, -3, BH - 0.02, z - 1.5, 0.18, 0.04, 3)
-      wf.box(MAT.lightPanel, 3, BH - 0.02, z - 1.5, 0.18, 0.04, 3)
-    }
 
     // Wing name over the mouth (faces the plaza, local +Z).
     const sign = new Mesh(new PlaneGeometry(5, 1.25), imageMat(labelSign(wing.def.nameEn, wing.def.nameAr, { bg: '#f4ede3', fg: '#6b4f35', h: 256 })))
