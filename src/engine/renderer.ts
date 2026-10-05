@@ -37,7 +37,7 @@ export class Engine {
     container.appendChild(this.renderer.domElement)
     setMaxAnisotropy(this.renderer, this.quality.anisotropy)
 
-    this.camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.05, 140)
+    this.camera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.12, 140)
     this.scene.background = new Color('#ebe4da')
     this.scene.fog = new Fog('#ebe4da', 45, 120)
 

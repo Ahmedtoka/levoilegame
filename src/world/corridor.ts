@@ -83,7 +83,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   // ---------------------------------------------------------------- pendants
   for (let z = -3; z > -len + 1; z -= 6)
     for (const x of [-2.6, 2.6]) {
-      wf.cyl(MAT.brass, x, 4.3, z, 0.015, BH - 4.3)
+      wf.cyl(MAT.brass, x, 4.3, z, 0.022, BH - 4.3)
       wf.sphere(MAT.lightWarm, x, 4.3, z, 0.18)
       const p = w(x, z)
       addHalo(p.x, 4.3, p.z, 0.42)
@@ -91,8 +91,10 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
 
   // ---------------------------------------------------------- ceiling coves
   for (const s of [-1, 1]) {
-    wf.box(MAT.lightWarm, s * 5.7, BH - 0.05, -len / 2, 0.08, 0.06, len - 0.4)
-    wf.box(MAT.brass, s * 5.45, BH - 0.12, -len / 2, 0.05, 0.12, len - 0.4)
+    // Wide, flat recessed light band + a bronze fascia: thin slivers shimmered at distance.
+    // Flush against the wall: any gap between trim and wall shows a thin dark sliver of ceiling that shimmers.
+    wf.box(MAT.brass, s * (B - 0.08), BH - 0.1, -len / 2, 0.16, 0.2, len - 0.4)
+    wf.box(MAT.lightWarm, s * (B - 0.6), BH - 0.02, -len / 2, 0.88, 0.02, len - 0.4)
   }
 
   // ------------------------------------------------------- column screens

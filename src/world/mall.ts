@@ -199,7 +199,8 @@ export async function buildShell(
 
     // Corridor end and the header over the mouth.
     wall(wf, -B, -len - T, B, -len, 0, BH)
-    wall(wf, -B, -T, B, 0, BH, AH)
+    // Header over the mouth starts at the top of the corridor ceiling (no coplanar overlap → no flicker).
+    wall(wf, -B, -T, B, 0, BH + 0.2, AH)
 
     // Back wall of each unit (units can be deeper, e.g. anchor stores) and the
     // separators between units, as long as the deeper neighbour.
@@ -297,7 +298,18 @@ export async function buildShell(
   // Shop ceilings with square light panels, and their floors.
   for (const s of layout.shops) {
     const { x0, x1, z0, z1 } = s.rect
-    slab(x0, z0, x1, z1, SH)
+    // The slab's edges must never be coplanar with a wall face (that z-fights as a flickering dark
+    // band along the corridor). Push every edge 2 cm into the surrounding walls; the corridor-side
+    // edge goes 2 cm *inward*, i.e. inside the shopfront wall (which occupies the first 0.3 m).
+    const e = 0.02
+    const ex = s.entrance
+    slab(
+      Math.abs(ex.x - x0) < 0.01 ? x0 + e : x0 - e,
+      Math.abs(ex.z - z0) < 0.01 ? z0 + e : z0 - e,
+      Math.abs(ex.x - x1) < 0.01 ? x1 - e : x1 + e,
+      Math.abs(ex.z - z1) < 0.01 ? z1 - e : z1 + e,
+      SH,
+    )
     const along = x1 - x0 > z1 - z0
     for (let i = 0; i < 3; i++)
       for (let j = 0; j < 2; j++) {
