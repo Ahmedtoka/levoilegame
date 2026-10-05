@@ -29,16 +29,27 @@ const _s = new Sphere()
 const _v = new Vector3()
 const fasciaCache = new Map<string, CanvasTexture>()
 const imgCache = new Map<string, HTMLImageElement | HTMLCanvasElement | null>()
+const imgPending = new Map<string, Set<() => void>>()
 
 /** Image by URL (product photo / logo), null until loaded; `onLoad` asks for a redraw. */
 function img(url: string, onLoad: () => void, product = true): HTMLImageElement | HTMLCanvasElement | null {
+  const pending = imgPending.get(url)
+  if (pending) {
+    pending.add(onLoad)
+    return null
+  }
   if (imgCache.has(url)) return imgCache.get(url) ?? null
   imgCache.set(url, null)
+  const cbs = new Set<() => void>([onLoad])
+  imgPending.set(url, cbs)
   const p = product ? loadProductTexture(url, 512).then((r) => r.image as HTMLCanvasElement) : loadImage(url)
   p.then((i) => {
     imgCache.set(url, i)
-    onLoad()
-  }).catch(() => {})
+    imgPending.delete(url)
+    for (const cb of cbs) cb()
+  }).catch(() => {
+    imgPending.delete(url)
+  })
   return null
 }
 
@@ -172,6 +183,10 @@ export class ScreenFeed {
     const H = c.height
     const P = this.portrait
     const redraw = () => (this.dirty = true)
+    if (s?.kind === 'brand') {
+      const bid = s.brandId
+      if (!brandById.get(bid ?? '') || !catalog().sections.some((x) => x.id === bid)) s = null
+    }
     const grad = g.createLinearGradient(0, 0, W, H)
     if (!s || s.kind === 'flash' || s.kind === 'games' || s.kind === 'welcome') {
       grad.addColorStop(0, '#3e1c5c')

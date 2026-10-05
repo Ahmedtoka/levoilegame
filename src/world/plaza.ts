@@ -15,6 +15,7 @@ import { addContactShadow } from './decals'
 import { addCone } from './glow'
 import { ScreenFeed, registerScreen, screenMesh, type ScreenActions } from './screens'
 import { BRANDS } from '../config/mall'
+import { catalog } from '../state/store'
 
 export const STAGE = { x: 0, z: -21.5, screenZ: -22.9 } as const
 
@@ -31,6 +32,11 @@ export function stageSpots(): SeatPose[] {
   return stageWatchSpots(STAGE.x, STAGE.z, 11, 6, 0.5)
 }
 
+const openBrandIds = (): string[] => {
+  const have = new Set(catalog().sections.map((x) => x.id))
+  return BRANDS.filter((b) => b.status === 'open' && have.has(b.id)).map((b) => b.id)
+}
+
 export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   const f = ctx.batcher.frame(new Matrix4(), ctx.colliders)
   const oak = tintMat('#b98a5c', 1, 0.55)
@@ -44,7 +50,7 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   f.box(MAT.brass, sx, 0.425, sz + 2.27, 9.06, 0.06, 0.04)
   f.box(MAT.lightWarm, sx, 0.33, sz + 2.26, 8.6, 0.05, 0.02)
   f.block(cream, sx, 0, sz + 2.45, 7, 0.3, 0.4, { collide: true })
-  f.block(cream, sx, 0, sz + 2.8, 7, 0.15, 0.3, { collide: true })
+  f.block(cream, sx, 0, sz + 2.8, 7, 0.16, 0.3, { collide: true })
   addContactShadow(sx, sz, 10.5, 6.5)
 
   // ------------------------------------------------------- LED screen
@@ -52,8 +58,8 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   for (const px of [-3.7, 3.7]) f.block(MAT.brass, px, 0.45, sz2, 0.2, 6.2, 0.2)
   f.box(MAT.brass, sx, 4.47, sz2, 7.45, 4.35, 0.12)
   f.box(MAT.black, sx, 4.47, sz2, 7.3, 4.2, 0.18)
-  const front = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games', 'welcome'], brandIds: BRANDS.filter((b) => b.status === 'open').map((b) => b.id), portrait: false })
-  const back = new ScreenFeed({ kinds: ['brand'], brandIds: BRANDS.filter((b) => b.status === 'open').map((b) => b.id), portrait: false, interval: 4 })
+  const front = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games', 'welcome'], brandIds: openBrandIds(), portrait: false })
+  const back = new ScreenFeed({ kinds: ['brand'], brandIds: openBrandIds(), portrait: false, interval: 4 })
   const fm = screenMesh(front, 7, 3.94)
   fm.position.set(sx, 4.47, sz2 + 0.1)
   ctx.root.add(fm)
@@ -82,7 +88,7 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   }
 
   // ------------------------------------------------------- seating
-  for (const s of arcSeats(sx, sz, [6.5, 8, 9.5], (48 * Math.PI) / 180, 2, 0.9)) {
+  for (const s of arcSeats(sx, sz, [6.2, 7.6, 9], (48 * Math.PI) / 180, 2, 0.9)) {
     f.block(cream, s.x, 0, s.z, 0.86, 0.28, 0.55, { rotY: s.yaw, collide: true })
     f.block(plum, s.x, 0.28, s.z, 0.84, 0.13, 0.5, { rotY: s.yaw })
     f.block(MAT.brass, s.x, 0.0, s.z, 0.88, 0.04, 0.57, { rotY: s.yaw })
@@ -101,7 +107,7 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
 
   // ------------------------------------------------ plaza column screens
   // Columns at (±8, −6) and (±8, −28); the screen faces the plaza centre.
-  const colFeed = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games'], brandIds: BRANDS.filter((b) => b.status === 'open').map((b) => b.id), portrait: true })
+  const colFeed = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games'], brandIds: openBrandIds(), portrait: true })
   for (const [cx, cz] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) {
     const yaw = Math.atan2(sx - cx, sz - cz)
     const m = screenMesh(colFeed, 1.0, 1.78)

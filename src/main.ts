@@ -201,9 +201,6 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   buildCashierPerson(game, vestLogo, () => game.openCheckout())
   progress(0.8, '')
   await frame()
-  const live = buildLiveMall(game, shops, vestLogo)
-  game.updaters.push(mountLookCard(document.getElementById('ui')!, game, () => live.crowd?.focus ?? null))
-  Object.assign(game, { live })
   const actions: ScreenActions = {
     teleport: (id) => game.teleport(id),
     openProduct: (id) => store.getState().openProduct(id),
@@ -213,6 +210,9 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   feeds.push(...buildPlaza({ root: engine.scene, batcher, colliders, interaction: game.interaction, kit, actions }).feeds)
   for (const w of layout.wings)
     feeds.push(...buildCorridor({ root: engine.scene, batcher, colliders, interaction: game.interaction, kit, actions }, w, layout.shops.filter((s) => s.wing === w.id)).feeds)
+  const live = buildLiveMall(game, shops, vestLogo)
+  game.updaters.push(mountLookCard(document.getElementById('ui')!, game, () => live.crowd?.focus ?? null))
+  Object.assign(game, { live })
   buildDecals(engine.scene)
   buildGlows(engine.scene, engine.quality.fancyDecor)
   game.updaters.push((dt) => {

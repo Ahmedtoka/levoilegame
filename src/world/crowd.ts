@@ -343,7 +343,22 @@ export class Crowd {
     }
     if (ts >= 0 && ts !== fs) pts.push(this.local(this.shops[ts], 0, 1.8), this.local(this.shops[ts], 0, -1.6))
     pts.push(to)
-    return pts
+    // Detour around the plaza stage for any blocked plaza-to-plaza leg.
+    const at = this.game.layout.atrium
+    const inPlaza = (p: Pt) => p.x > at.x0 && p.x < at.x1 && p.z > at.z0 && p.z < at.z1
+    const out: Pt[] = []
+    let prev = from
+    for (const p of pts) {
+      if (inPlaza(prev) && inPlaza(p) && !this.clearLine(prev, p, 0.3)) {
+        const s = p.x < 0 ? -1 : 1
+        const d1 = { x: s * 7.5, z: -17 }
+        const d2 = { x: s * 7.5, z: -26 }
+        out.push(...(prev.z >= p.z ? [d1, d2] : [d2, d1]))
+      }
+      out.push(p)
+      prev = p
+    }
+    return out
   }
 
   private plan(a: Agent, teleport = false): void {

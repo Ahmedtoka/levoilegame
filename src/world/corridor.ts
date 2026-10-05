@@ -71,7 +71,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     wf.block(plum, 0, 0.3, z, 0.58, 0.13, 2.36)
     wf.block(MAT.brass, 0, 0, z, 0.66, 0.04, 2.44)
     for (const dz of [-1.9, 1.9]) {
-      if (!ctx.kit?.placeBatched('plant', wf, 0, z + dz, dz < 0 ? 0 : Math.PI, ctx.colliders)) {
+      if (!ctx.kit?.placeBatched('plant', wf, 0, z + dz, 0, ctx.colliders)) {
         wf.cyl(MAT.marbleTop, 0, 0, z + dz, 0.55, 0.55, { collide: true })
         plant(wf, 0, z + dz, 1.1, 90 + r * 2 + (dz < 0 ? 0 : 1))
       }
@@ -142,7 +142,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   }))
   const dirTex = wingDirectoryTexture(wing.def.nameEn, wing.def.nameAr, rowsData)
   wf.block(MAT.brass, -4.6, 0, -1.5, 1.32, 0.08, 0.3, { collide: true })
-  wf.box(cream, -4.6, 1.3, -1.5, 1.3, 2.36, 0.12)
+  wf.box(cream, -4.6, 1.3, -1.5, 1.3, 2.36, 0.12, { collide: true })
   for (const face of [0, Math.PI]) {
     const board = new Mesh(new PlaneGeometry(1.2, 2.2), imageMat(dirTex))
     board.position.set(-4.6, 1.3, -1.5 + (face ? -0.065 : 0.065))
