@@ -3,7 +3,7 @@ import type { CollisionWorld } from '../engine/colliders'
 import type { Input } from './input'
 import type { CameraView } from '../state/store'
 import type { Character } from '../actors/character'
-import { LOOK_SENS, angleDelta, ease, focusAngles, smoothLook, walkStep, yawToward, type WalkStatus } from './controlsMath'
+import { LOOK_SENS, angleDelta, ease, focusAngles, measuredVelocity, smoothLook, walkStep, yawToward, type WalkStatus } from './controlsMath'
 
 const WALK = 3.3
 const RUN = 6.2
@@ -28,6 +28,8 @@ export class Player {
   /** Called when a tap-to-walk ends (arrived, stalled or cancelled). */
   onWalkEnd: (status: WalkStatus | 'cancelled') => void = () => {}
   private bob = 0
+  /** Actual (post-collision) velocity of the last frame; drives the tap-to-walk stall check. */
+  private moved = { x: 0, z: 0 }
   private camDist = 3
   /** Look target fed by mouse/touch deltas; the camera eases towards it. */
   private targetYaw = 0
@@ -42,6 +44,7 @@ export class Player {
   teleport(x: number, z: number, yaw: number): void {
     this.pos.set(x, 0, z)
     this.vel.set(0, 0, 0)
+    this.moved = { x: 0, z: 0 }
     this.yaw = yaw
     this.pitch = -0.04
     this.syncLook()
@@ -104,6 +107,8 @@ export class Player {
     const { x, y, run } = active ? input.axes() : { x: 0, y: 0, run: false }
     // Any joystick / WASD input, or an overlay opening, cancels tap-to-walk.
     if (this.walk && (x || y || !active)) this.endWalk('cancelled')
+    // Looking around during a product focus hands control back to the user.
+    if (looking && this.focus) this.focus = null
 
     const s = Math.sin(this.yaw)
     const c = Math.cos(this.yaw)
@@ -115,7 +120,7 @@ export class Player {
 
     if (this.walk) {
       const w = this.walk
-      const r = walkStep(this.pos, this.vel, w, w.stall, dt)
+      const r = walkStep(this.pos, this.moved, w, w.stall, dt)
       if (r.status !== 'walking') this.endWalk(r.status)
       else {
         w.stall = r.stall
@@ -135,12 +140,15 @@ export class Player {
     this.vel.z += (tz - this.vel.z) * k
 
     // Sub-step so fast movement can't tunnel through thin walls.
+    const bx = this.pos.x
+    const bz = this.pos.z
     const steps = Math.max(1, Math.ceil((Math.hypot(this.vel.x, this.vel.z) * dt) / 0.12))
     for (let i = 0; i < steps; i++) {
       this.pos.x += (this.vel.x * dt) / steps
       this.pos.z += (this.vel.z * dt) / steps
       world.resolveCircle(this.pos, this.radius)
     }
+    this.moved = measuredVelocity({ x: bx, z: bz }, this.pos, dt)
     this.speed = Math.hypot(this.vel.x, this.vel.z)
     this.bob += dt * this.speed * 2.1
 

@@ -4,6 +4,7 @@ import {
   LOOK_RATE,
   STALL_TIME,
   focusAngles,
+  measuredVelocity,
   floorPoint,
   smoothLook,
   stickVector,
@@ -97,6 +98,33 @@ describe('walkStep', () => {
     expect(t).toBeLessThan(STALL_TIME + 0.15)
   })
 
+  it('stalls when blocked: commanded velocity but no actual displacement', () => {
+    // The player pushes into an obstacle; collisions keep the position fixed.
+    const pos = { x: 0, z: 0 }
+    const commanded = { x: 0, z: -3.3 }
+    let stall = 0
+    let status = 'walking'
+    let t = 0
+    while (status === 'walking' && t < 3) {
+      const before = { ...pos }
+      pos.x += commanded.x * 0.05
+      pos.z += commanded.z * 0.05
+      pos.x = before.x // resolveCircle pushes it back
+      pos.z = before.z
+      const r = walkStep(pos, measuredVelocity(before, pos, 0.05), target, stall, 0.05)
+      stall = r.stall
+      status = r.status
+      t += 0.05
+    }
+    expect(status).toBe('stalled')
+    expect(t).toBeLessThan(STALL_TIME + 0.1)
+  })
+
+  it('measures velocity from displacement', () => {
+    expect(measuredVelocity({ x: 0, z: 0 }, { x: 0.1, z: -0.2 }, 0.1)).toEqual({ x: 1, z: -2 })
+    expect(measuredVelocity({ x: 0, z: 0 }, { x: 1, z: 1 }, 0)).toEqual({ x: 0, z: 0 })
+  })
+
   it('resets the stall timer once progress resumes', () => {
     const r = walkStep({ x: 0, z: 0 }, { x: 0, z: -3 }, target, 0.9, 0.1)
     expect(r.status).toBe('walking')
@@ -131,10 +159,12 @@ describe('yawToward / focusAngles', () => {
 
 describe('touch helpers', () => {
   it('scales look sensitivity with screen width, clamped', () => {
-    expect(touchLookSens(390)).toBeCloseTo(0.0022 * 900 / 600, 9)
-    expect(touchLookSens(900)).toBeCloseTo(0.0022, 9)
-    expect(touchLookSens(1200)).toBeCloseTo(0.0022 * 900 / 1200, 9)
-    expect(touchLookSens(5000)).toBeGreaterThan(0.0022 * 900 / 5000)
+    // Base 0.00484 = the previous touch rate (controller ruling; the spec's 0.0022 was too slow).
+    expect(touchLookSens(390)).toBeCloseTo(0.00484 * 900 / 600, 9)
+    expect(touchLookSens(390)).toBeLessThanOrEqual(0.0073)
+    expect(touchLookSens(900)).toBeCloseTo(0.00484, 9)
+    expect(touchLookSens(1200)).toBeCloseTo(0.00484 * 900 / 1200, 9)
+    expect(touchLookSens(5000)).toBe(0.0024)
   })
 
   it('applies an 8 px joystick dead zone', () => {

@@ -53,7 +53,7 @@ export function floorPoint(origin: V3, dir: V3, maxDist = TAP_MAX_DIST): { x: nu
 export type WalkStatus = 'walking' | 'arrived' | 'stalled'
 
 /**
- * One frame of tap-to-walk: the direction and speed gain (0..1) to walk at,
+ * One frame of tap-to-walk (`vel` must be the measured, post-collision velocity): the direction and speed gain (0..1) to walk at,
  * the updated stall timer, and whether the walk is over.
  */
 export function walkStep(
@@ -98,7 +98,13 @@ export function angleDelta(a: number, b: number): number {
 
 /** Touch look sensitivity (rad per px), scaled by screen width. */
 export function touchLookSens(width: number): number {
-  return Math.min(0.0033, Math.max(0.0011, (0.0022 * 900) / Math.max(600, width)))
+  return Math.min(0.0073, Math.max(0.0024, (0.00484 * 900) / Math.max(600, width)))
+}
+
+/** Actual velocity from the post-collision displacement (what the stall logic must use). */
+export function measuredVelocity(before: V2, after: V2, dt: number): V2 {
+  if (dt <= 0) return { x: 0, z: 0 }
+  return { x: (after.x - before.x) / dt, z: (after.z - before.z) / dt }
 }
 
 /** Joystick vector from a knob offset (px): dead zone, clamped to the radius, y up = forward. */
