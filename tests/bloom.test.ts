@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { CustomBlending, MeshBasicMaterial, NormalBlending, OneFactor, ZeroFactor } from 'three'
+import { CustomBlending, Group, Matrix4, MeshBasicMaterial, MeshStandardMaterial, NormalBlending, OneFactor, ZeroFactor } from 'three'
 import { registerBloom, setBloomSources } from '../src/engine/bloom'
+import { isMirrored, markMirrored, MIRROR_LAYER } from '../src/engine/layers'
+import { Batcher, UNIT_BOX } from '../src/engine/batcher'
 
 describe('bloom sources', () => {
   it('write the mask (alpha = 1 − weight) while bloom is on and restore exactly when off', () => {
@@ -40,3 +42,19 @@ describe('bloom sources', () => {
   })
 })
 
+describe('mirror layer', () => {
+  it('puts batched geometry with a mirrored material on MIRROR_LAYER only', () => {
+    const wall = new MeshStandardMaterial()
+    const prop = new MeshStandardMaterial()
+    markMirrored(wall)
+    expect(isMirrored(wall)).toBe(true)
+    expect(isMirrored(prop)).toBe(false)
+    const b = new Batcher()
+    b.add(UNIT_BOX, wall, new Matrix4())
+    b.add(UNIT_BOX, prop, new Matrix4())
+    const [w, p] = b.build(new Group())
+    expect(w.layers.isEnabled(MIRROR_LAYER)).toBe(true)
+    expect(w.layers.isEnabled(0)).toBe(true)
+    expect(p.layers.isEnabled(MIRROR_LAYER)).toBe(false)
+  })
+})

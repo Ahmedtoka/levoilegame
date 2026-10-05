@@ -16,6 +16,7 @@ import {
   Vector3,
 } from 'three'
 import type { CollisionWorld } from './colliders'
+import { isMirrored, MIRROR_LAYER } from './layers'
 
 export const UNIT_BOX = new BoxGeometry(1, 1, 1)
 export const UNIT_CYL = new CylinderGeometry(0.5, 0.5, 1, 20)
@@ -53,6 +54,7 @@ export class Batcher {
       mesh.instanceMatrix.needsUpdate = true
       mesh.computeBoundingSphere()
       mesh.matrixAutoUpdate = false
+      if (isMirrored(b.mat)) mesh.layers.enable(MIRROR_LAYER)
       parent.add(mesh)
       out.push(mesh)
     }

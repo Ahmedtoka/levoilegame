@@ -5,7 +5,6 @@ import {
   Box3,
   BoxGeometry,
   CircleGeometry,
-  Frustum,
   Group,
   Matrix4,
   Mesh,
@@ -15,9 +14,8 @@ import {
   Vector3,
   type Object3D,
 } from 'three'
-import { Reflector } from 'three/addons/objects/Reflector.js'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
-import { MALL, type MallLayout, type Rect, type Wing } from '../config/layout'
+import { MALL, rectContains, type MallLayout, type Rect, type Wing } from '../config/layout'
 import { brandById } from '../config/mall'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
@@ -31,7 +29,9 @@ import { directoryTexture, labelSign, logoTexture, type DirectoryEntry } from '.
 import { addPool, setGlowsVisible } from './glow'
 import { aoCeilJunction, aoFloorJunction } from './aoStrips'
 import { addContactShadow } from './decals'
-import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, tintedPlane, tiledPlane } from './finish'
+import { FloorMirror, setFloorSeeThrough } from './floorMirror'
+import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, marbleCladMat, oakVeneerMat, tintedPlane, tiledPlane } from './finish'
+import { markMirrored, MIRROR_LAYER } from '../engine/layers'
 
 export interface ShellHandles {
   doors: { target: number; update(dt: number): void }
@@ -41,6 +41,9 @@ export interface ShellHandles {
 }
 
 const T = MALL.wallT
+
+/** Corridor floor reflection (High): fainter than the plaza's (opacity 0.8, tint #b8b0b4). */
+const CORRIDOR_MIRROR = { floorOpacity: 0.9, color: 0xa8a2a4, fadeIn: 0.45 }
 
 function floorPlane(r: Rect, mat: MeshStandardMaterial, y = 0): Mesh {
   const m = new Mesh(new PlaneGeometry(r.x1 - r.x0, r.z1 - r.z0), mat)
@@ -119,33 +122,21 @@ export async function buildShell(
   root.add(plazaFloor)
 
   // Reflection under the plaza floor (High quality only).
-  let reflector: Reflector | null = null
-  const makeReflector = () => {
-    if (reflector) return reflector
-    reflector = new Reflector(new PlaneGeometry(2 * W, A), {
-      textureWidth: Math.round(window.innerWidth * 0.5),
-      textureHeight: Math.round(window.innerHeight * 0.5),
-      color: 0xb8b0b4,
-      clipBias: 0.003,
-    })
-    reflector.rotation.x = -Math.PI / 2
-    reflector.position.set(0, -0.002, -A / 2)
-    // The plane's bounding sphere (r ≈ 28 m) reaches deep into the wings, so it passes the
-    // frustum test even when the plaza floor is behind the camera. Only run the mirror pass
-    // when the floor's actual box is in view.
-    const floorBox = new Box3(new Vector3(-W, -0.01, -A), new Vector3(W, 0.01, 0))
-    const fr = new Frustum()
-    const pv = new Matrix4()
-    const pass = reflector.onBeforeRender
-    reflector.onBeforeRender = function (...args: Parameters<typeof pass>) {
-      const cam = args[2]
-      pv.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse)
-      fr.setFromProjectionMatrix(pv)
-      if (fr.intersectsBox(floorBox)) pass.apply(this, args)
-    }
-    root.add(reflector)
-    return reflector
-  }
+  const plazaMirror = new FloorMirror({
+    parent: root,
+    width: 2 * W,
+    depth: A,
+    x: 0,
+    z: -A / 2,
+    worldBox: new Box3(new Vector3(-W, -0.01, -A), new Vector3(W, 0.01, 0)),
+    color: 0xb8b0b4,
+    scale: 0.5,
+    layer: 0,
+  })
+  // One mirror per corridor, created on first entry and only rendered while you are in that wing.
+  // They show the architecture and lights only (MIRROR_LAYER).
+  markMirrored(MAT.wall, MAT.wallWarm, MAT.trim, MAT.brass, MAT.ceiling, MAT.lightWarm, MAT.lightPanel, GYPSUM, oakVeneerMat(), marbleCladMat())
+  const wingMirrors: { rect: Rect; mirror: FloorMirror; mat: MeshStandardMaterial; fade: number }[] = []
 
   // Medallion with the mall logo, between the entrance and the stage seating.
   const mid = -A / 2
@@ -215,15 +206,35 @@ export async function buildShell(
     // with a darker 0.6 m band along both walls, split by a fine brass strip. Field and band
     // meet edge to edge (no overlapping coplanar faces).
     const band = 0.6
+    // Each wing gets its own instance of the floor material (same program and atlas), so its
+    // see-through state follows only its own mirror.
+    const floorMat = corridorFloorMat().clone()
     const floor = new Mesh(
       mergeGeometries([
         tintedPlane(tiledPlane(2 * (B - band), len, atlasPeriod(), B - band, len / 2), '#ffffff'),
         ...[-1, 1].map((sd) => tintedPlane(tiledPlane(band, len, atlasPeriod(band), 0, len / 2).translate(sd * (B - band / 2), 0, 0), '#a89c90')),
       ]),
-      corridorFloorMat(),
+      floorMat,
     )
     floor.position.set(0, 0, -len / 2)
     group.add(floor)
+    const r = wing.rect
+    wingMirrors.push({
+      rect: r,
+      mat: floorMat,
+      fade: 0,
+      mirror: new FloorMirror({
+        parent: group,
+        width: 2 * B,
+        depth: len,
+        x: 0,
+        z: -len / 2,
+        worldBox: new Box3(new Vector3(r.x0, -0.01, r.z0), new Vector3(r.x1, 0.01, r.z1)),
+        color: CORRIDOR_MIRROR.color,
+        scale: 0.5,
+        layer: MIRROR_LAYER,
+      }),
+    })
     for (const sd of [-1, 1]) wf.box(MAT.brass, sd * (B - band), 0.002, -len / 2, 0.03, 0.004, len - 0.02)
 
     // Corridor end and the header over the mouth.
@@ -511,17 +522,20 @@ export async function buildShell(
   const setQuality = (q: QualitySettings) => {
     setGlowsVisible(q.fancyDecor)
     shafts.visible = q.fancyDecor
-    if (q.reflections) {
-      makeReflector().visible = true
-      atriumFloorMat.transparent = true
-    } else {
-      if (reflector) reflector.visible = false
-      atriumFloorMat.transparent = false
-    }
+    // Off: mirrors are disposed (render targets released), not just hidden.
+    plazaMirror.setEnabled(q.reflections)
+    atriumFloorMat.transparent = q.reflections
     atriumFloorMat.needsUpdate = true
+    for (const w of wingMirrors) {
+      if (q.reflections) continue
+      w.mirror.setEnabled(false)
+      w.fade = 0
+      setFloorSeeThrough(w.mat, 1)
+    }
   }
   setQuality(quality)
   let reflectionsOn = quality.reflections
+  let lastT = performance.now()
 
   return {
     doors,
@@ -530,8 +544,24 @@ export async function buildShell(
       setQuality(q)
     },
     update: (px, pz) => {
+      const now = performance.now()
+      const dt = Math.min(0.1, (now - lastT) / 1000)
+      lastT = now
       // Only pay for the mirror pass while the plaza can be seen.
-      if (reflector) reflector.visible = reflectionsOn && Math.abs(px) < W + 26 && pz > -A - 26
+      plazaMirror.setVisible(reflectionsOn && Math.abs(px) < W + 26 && pz > -A - 26)
+      // Corridor mirrors: only the wing you are in; the reflection fades in as you enter.
+      let inWing = false
+      for (const w of wingMirrors) {
+        const inside = reflectionsOn && rectContains(w.rect, px, pz)
+        inWing ||= inside
+        if (inside && !w.mirror.enabled) w.mirror.setEnabled(true)
+        w.fade = inside ? Math.min(1, w.fade + dt / CORRIDOR_MIRROR.fadeIn) : 0
+        w.mirror.setVisible(inside)
+        setFloorSeeThrough(w.mat, 1 - (1 - CORRIDOR_MIRROR.floorOpacity) * w.fade)
+      }
+      // Seen from inside a wing, the distant plaza floor mirrors the architecture and lights
+      // only, so looking back never pays for two full mirror passes.
+      plazaMirror.setLayer(inWing ? MIRROR_LAYER : 0)
     },
   }
 }

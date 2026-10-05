@@ -22,6 +22,7 @@ import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
 import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
+import { MIRROR_LAYER } from '../engine/layers'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { discountPercent, displayImage, hasCutout, type Catalog, type Product, type Section } from '../data/types'
 import { formatPrice, t } from '../i18n/i18n'
@@ -337,6 +338,7 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   registerBloom(faceMat, BLOOM_WEIGHT.lightbox)
   const face = new Mesh(new PlaneGeometry(5.84, 1.36), faceMat)
   face.position.set(0, FASCIA_Y, 0.155)
+  face.layers.enable(MIRROR_LAYER)
   group.add(face)
   const hw = f.toWorld(0, FASCIA_Y, 0.012)
   addRectHalo(hw.x, hw.y, hw.z, 6.0 / 0.8, 1.5 / 0.62, shop.yaw, `#${new Color(mono.color).lerp(_white, 0.5).getHexString()}`)
@@ -353,6 +355,7 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   registerBloom(bladeMat, BLOOM_WEIGHT.lightbox)
   const blade = new Mesh(faces, bladeMat)
   blade.position.set(bx, 4.2, 1.0)
+  blade.layers.enable(MIRROR_LAYER)
   group.add(blade)
   f.box(MAT.brass, bx, 4.95, 0.01, 0.12, 0.34, 0.04) // wall plate
   f.bar(MAT.brass, v3(bx, 4.95, 0.02), v3(bx, 4.95, 1.68), 0.02) // arm
