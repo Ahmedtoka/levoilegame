@@ -93,13 +93,17 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
             <div class="chips">${p.sizes
               .map((sz) => `<button class="chip ${sz === size ? 'on' : ''}" data-action="size" data-v="${esc(sz)}">${esc(sz === FREE_SIZE ? t('freeSize', L) : sz)}</button>`)
               .join('')}</div>
-            <h3>${esc(t('color', L))}</h3>
+            ${
+              p.colors.length
+                ? `<h3>${esc(t('color', L))}</h3>
             <div class="chips">${p.colors
               .map(
                 (c) =>
                   `<button class="chip swatch ${c.name === color ? 'on' : ''}" data-action="color" data-v="${esc(c.name)}"><i style="background:${esc(c.hex)}"></i>${esc(L === 'ar' ? c.nameAr : c.name)}</button>`,
               )
-              .join('')}</div>
+              .join('')}</div>`
+                : ''
+            }
             <h3>${esc(t('quantity', L))}</h3>
             <div class="qty">
               <button data-action="qty" data-d="-1" aria-label="-">${ICONS.minus}</button>
@@ -108,10 +112,9 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
             </div>
             <div class="add-row">
               <button class="btn lg" data-action="add" ${adding ? 'disabled' : ''}>
-                ${adding ? ICONS.check + esc(t('added', L)) : ICONS.bag + esc(t('addToCart', L))}
+                ${adding ? ICONS.check + esc(t('added', L)) : needSize ? esc(t('chooseSize', L)) : ICONS.bag + esc(t('addToCart', L))}
               </button>
             </div>
-            ${needSize ? `<div class="todo-note" data-hint>${esc(t('size', L))}: ${esc(t('required', L))}</div>` : ''}
             <div style="margin-top:14px"><a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(t('viewOnSite', L))} ↗</a></div>
           </div>
         </div>
@@ -145,11 +148,13 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
     add: (b) => {
       if (!product || adding) return
       if (product.sizes.length > 1 && !size) {
+        audio.click()
+        veil.querySelector<HTMLElement>('[data-action=size]')?.focus()
         veil.querySelector('.chips')?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 260 })
         return
       }
       const s = store.getState()
-      s.addToCart({ productId: product.id, size: size || product.sizes[0], color: color || product.colors[0]?.name || '', qty })
+      s.addToCart({ productId: product.id, size: size || product.sizes[0] || '', color: color || product.colors[0]?.name || '', qty })
       audio.addToCart()
       flyToCart(veil.querySelector<HTMLImageElement>('.gallery .main'), b)
       s.showToast(`${t('added', s.lang)} · ${product.title}`)

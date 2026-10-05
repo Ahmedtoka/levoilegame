@@ -34,6 +34,7 @@ const STRINGS = {
   checkoutPrompt: { ar: 'ادفع عند الكاشير', en: 'Check out at the cashier' },
   leaveMall: { ar: 'اخرج من المول', en: 'Leave the mall' },
   addToCart: { ar: 'ضيف للسلة', en: 'Add to cart' },
+  chooseSize: { ar: 'اختار المقاس الأول', en: 'Choose a size' },
   added: { ar: 'اتضاف للسلة', en: 'Added to cart' },
   size: { ar: 'المقاس', en: 'Size' },
   color: { ar: 'اللون', en: 'Color' },
