@@ -103,5 +103,11 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
   requestAnimationFrame(draw)
 
   watch((s) => s.minimap, (on) => wrap.classList.toggle('off', !on))
-  watch((s) => s.phase, (p) => wrap.classList.toggle('hidden', p !== 'playing'))
+  // Hidden while an overlay (product sheet, cart, chat…) is open, so it never covers it.
+  const sync = () => {
+    const st = store.getState()
+    wrap.classList.toggle('hidden', st.phase !== 'playing' || !!st.overlay)
+  }
+  watch((s) => s.phase, sync)
+  watch((s) => s.overlay, sync)
 }
