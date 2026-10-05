@@ -28,6 +28,7 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - Its baked garments and scarves (`store_soft`) are hidden; only real products show: composed card panels on the wall bays, rails and rear display, plus easels.
   - The model preloads about 2.5 s after boot.
   - Brand logos: `BrandDef.logo` (shopfront + blade sign).
+- **Plaza/corridor finishing:** `plaza.ts` (stage + LED + seating), `corridor.ts` (per-wing finishing), `screens.ts`/`screenSlides.ts` (live screens, shared feeds), `decals.ts`/`glow.ts` (instanced contact shadows / additive glows, glows hidden on Low).
 - **Branding:** `BRAND` in `src/config/brand.ts`. The `magenta` key holds the 122 plum. Logos are `public/brand/122-logo*.svg`.
 
 ## Stack and key decisions

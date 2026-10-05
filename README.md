@@ -259,13 +259,17 @@ To trigger things on demand (dev / `?debug`): `lv.social.deals.nextFlash = 0`, `
   - only the nearest on-screen shoppers are full animated rigs (High 8 within 11 m, Medium 6 within 9 m, Low 4 within 7 m), and rigs beyond 8 m animate at a third of the rate;
   - every other visible shopper is a static LOD mesh drawn in **one `BatchedMesh` call**, plus one `InstancedMesh` for all their shadows;
   - shoppers off-screen, inside a culled shop, or (when you're in a shop) outside it are not drawn.
-- **Measured** (desktop, High tier, 1280×760, `?fps`; avg draw calls / fps):
+- **Measured** (desktop, High tier, 1280×760, headed Edge, `?nolock`; avg draw calls / fps, fps is noisy when other windows render):
 
-| Area | `?nodemo` | `?crowd=20` | `?crowd=30` | `?crowd=50` |
-|---|---|---|---|---|
-| Atrium | 133 / 45–57 | 191 / 61 | 191 / 55 | 212 / 40–54 |
-| Boulevard | 272 / 37–46 | 328 / 48 | 328 / 46 | 350 / 47 |
-| Inside a shop | 87 / 78–85 | 87 / 86 | 87 / 82 | 150 / 82 |
+| Area | `?nodemo` | `?crowd=30` | `?crowd=50` |
+|---|---|---|---|
+| Plaza (stage view) | 218 / 60 | 336 / 21* | 337 / 40 |
+| North wing | 306 / 54 | 366 / 55 | 360 / 35 |
+| West wing | 215 / 94 | 217 / 100 | 217 / 83 |
+| Inside a shop (Nourhan) | 190 / 47 | 233 / 38 | 248 / 37 |
+
+  \* single outlier run while another browser window was rendering. The crowd adds roughly 100 calls in the plaza and the north wing; the static world alone is within the 220 (plaza) and about 300 (wing) budgets.
+- **Plaza stage and corridor finishing:** the plaza has a stage with an LED wall, live screens and seating (`plaza.ts`). Each wing gets its own finishing in `corridor.ts`: floor inlays, islands with planters, pendant lights, ceiling coves, column screens, storefront frames, brand doormats, a wing portal, a directory board, wayfinding signs, an end-wall collage and wall shade. Screens share feeds (`screens.ts`, `screenSlides.ts`). Contact shadows and additive glows are instanced (`decals.ts`, `glow.ts`), and glows are hidden on Low.
 - **Lighting:** image-based lighting plus two lights, with blob shadows instead of shadow maps. The planar floor reflection is enabled on High only, and only while the atrium is in view.
 - **Textures:** product images load lazily per shop as you approach and are downscaled to 512 px (Low) or 1024 px.
 - **No WebGL:** a 2D catalogue fallback with links to the website.
