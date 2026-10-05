@@ -116,11 +116,12 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   // ------------------------------------------- wainscot, pilasters, wall AO
   // Oak-veneer wainscot (1.1 m) with a bronze cap rail on the solid wall either side
   // of each shop opening; pieces stop 2 cm short of the row boundary (inside the
-  // pilaster) and 4 cm into the opening's bronze frame.
+  // pilaster) and 4 cm into the opening's bronze frame. A branded shop has display windows
+  // over most of that wall (shop-local 3.2–5.5 m from its centre, see shop.ts WIN), so its
+  // wainscot only fills the two visible gaps: jamb → window post, window post → pilaster.
   const WH = 1.1
-  const wLen = 2.94
-  const wGeo = uvBox(0.03, WH, wLen, 1)
   const oak = oakVeneerMat()
+  const spans = (windowed: boolean): [number, number][] => (windowed ? [[3.04, 3.21], [5.49, 5.98]] : [[3.04, 5.98]])
   shops.forEach((s, k) => {
     const side = k % 2 === 0 ? -1 : 1
     const z1 = -Math.floor(k / 2) * L
@@ -128,13 +129,16 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     const zc = (z0 + z1) / 2
     const wx = side * B
     if (s.kind === 'shop') {
-      for (const pz of [zc + 3.04 + wLen / 2, zc - 3.04 - wLen / 2]) {
-        wf.custom(wGeo, oak, side * (B - 0.005), WH / 2, pz)
-        wf.box(MAT.brass, side * (B - 0.011), WH + 0.01, pz, 0.042, 0.04, wLen + 0.02)
-        // AO in front of the wainscot face (2 cm off the wall). Its 0.9 m wall band also
-        // takes over the old separate wall-shade quads (one draw call fewer).
-        aoFloorJunction(wx, pz - wLen / 2, wx, pz + wLen / 2, -side, 0, wf.base, 0.9, 0.5, 0.032)
-      }
+      for (const [a, b] of spans(!!s.brand))
+        for (const dir of [1, -1]) {
+          const wLen = b - a
+          const pz = zc + dir * (a + wLen / 2)
+          wf.custom(uvBox(0.03, WH, wLen, 1), oak, side * (B - 0.005), WH / 2, pz)
+          wf.box(MAT.brass, side * (B - 0.011), WH + 0.01, pz, 0.042, 0.04, wLen + 0.02)
+          // AO in front of the wainscot face (2 cm off the wall). Its 0.9 m wall band also
+          // takes over the old separate wall-shade quads (one draw call fewer).
+          aoFloorJunction(wx, pz - wLen / 2, wx, pz + wLen / 2, -side, 0, wf.base, 0.9, 0.5, 0.032)
+        }
     } else if (s.kind === 'soon') aoFloorJunction(wx, z0, wx, z1, -side, 0, wf.base)
   })
   aoFloorJunction(-B, -len, B, -len, 0, 1, wf.base)
@@ -148,23 +152,33 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     for (const side of [-1, 1]) {
       const z = -r * L
       wf.custom(pGeo, clad, side * (B - PD / 2 + 0.005), PH / 2 - 0.01, z)
-      wf.box(MAT.brass, side * (B - 0.045), 0.055, z, 0.11, 0.13, 0.84)
-      const fx = side * (B - PD - 0.012)
-      addAOStrip([fx, 0, z - 0.4], [fx, 0, z + 0.4], [0, 1, 0], 0.5, wf.base)
     }
 
   // ------------------------------------------------------- column screens
-  // Mounted on the pilasters at each row boundary, both sides; the bezel stands
-  // proud of the pilaster face (8 cm) so the screen is in front and clickable.
+  // A marble screen totem on each pilaster's corridor face (row boundaries, both sides).
+  // The display windows either side stand 0.6 m proud of the wall, so the totem brings the
+  // screen out to 0.67 m: it reads down the corridor instead of hiding in the alcove, and
+  // stays clickable. Brass skirt and cap, collider, floor AO along its front.
+  const SD = 0.62 // totem front, from the wall
+  const TH = 2.72
+  const tGeo = uvBox(SD - PD + 0.01, TH, 0.84, 1.6)
+  const tx = B - (PD - 0.01 + SD) / 2
   const brandIds = shops.filter((s) => s.kind === 'shop' && s.brand).map((s) => s.brand!.id)
   const feed = new ScreenFeed({ kinds: ['flash', 'brand'], brandIds, portrait: true })
   for (let r = 1; r < rows; r++)
     for (const side of [-1, 1]) {
       const z = -r * L
-      wf.box(MAT.brass, side * (B - 0.095), 1.9, z, 0.04, 1.36, 0.78)
-      wf.box(MAT.black, side * (B - 0.115), 1.9, z, 0.04, 1.31, 0.74)
+      wf.custom(tGeo, clad, side * tx, TH / 2, z)
+      wf.box(MAT.brass, side * tx, 0.065, z, SD - PD + 0.04, 0.13, 0.86)
+      wf.box(MAT.brass, side * tx, TH + 0.015, z, SD - PD + 0.04, 0.03, 0.86)
+      wf.collider(side * tx, z, SD - PD + 0.04, 0.86, TH)
+      const fx = side * (B - SD - 0.03)
+      addAOStrip([fx, 0, z - 0.43], [fx, 0, z + 0.43], [0, 1, 0], 0.5, wf.base)
+      // Bezel 5 mm into the totem face, black mask, screen: 6.6 cm beyond the window glass.
+      wf.box(MAT.brass, side * (B - SD - 0.015), 1.9, z, 0.04, 1.36, 0.78)
+      wf.box(MAT.black, side * (B - SD - 0.04), 1.9, z, 0.02, 1.31, 0.74)
       const m = screenMesh(feed, 0.7, 1.25)
-      m.position.set(side * (B - 0.145), 1.9, z)
+      m.position.set(side * (B - SD - 0.052), 1.9, z)
       m.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2
       group.add(m)
       feed.addScreen(m)
@@ -174,7 +188,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   // ------------------------------------------------------ fabric banners
   // Two per wing over the islands, clear of the mid-wing wayfinding sign.
   const wingSlides = bannerSlides(brandIds)
-  ;[1, rows - 1].forEach((r, i) => addBanner(group, wf, 0, BH - 0.3, -r * L, 0, BH, wingSlides, i * 3 + 1))
+  ;[...new Set([1, rows - 1])].filter((r) => r > 0).forEach((r, i) => addBanner(group, wf, 0, BH - 0.3, -r * L, 0, BH, wingSlides, i * 3 + 1))
 
   // ---------------------------------------------------- storefront finishing
   for (const s of shops) {
@@ -209,11 +223,14 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
     color: s.kind === 'shop' ? (s.brand?.color ?? '#ddd') : '#d8cbb8',
   }))
   const dirTex = wingDirectoryTexture(wing.def.nameEn, wing.def.nameAr, rowsData)
-  wf.block(MAT.brass, -4.6, 0, -1.5, 1.32, 0.08, 0.3, { collide: true })
-  wf.box(cream, -4.6, 1.3, -1.5, 1.3, 2.36, 0.12, { collide: true })
+  // Off the first left unit's display window (glass 0.6 m from the wall, x −5.4): the
+  // board's outer edge stays 1.15 m clear of it, so it no longer stands against the glass.
+  const DX = -3.6
+  wf.block(MAT.brass, DX, 0, -1.5, 1.32, 0.08, 0.3, { collide: true })
+  wf.box(cream, DX, 1.3, -1.5, 1.3, 2.36, 0.12, { collide: true })
   for (const face of [0, Math.PI]) {
     const board = new Mesh(new PlaneGeometry(1.2, 2.2), imageMat(dirTex))
-    board.position.set(-4.6, 1.3, -1.5 + (face ? -0.065 : 0.065))
+    board.position.set(DX, 1.3, -1.5 + (face ? -0.065 : 0.065))
     board.rotation.y = face
     group.add(board)
   }

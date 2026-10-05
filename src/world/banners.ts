@@ -13,8 +13,8 @@ import { catalog } from '../state/store'
 import { MAT } from './materials'
 import { v3 } from './props'
 
-export const BANNER_W = 1.2
-export const BANNER_H = 3.2
+const BANNER_W = 1.2
+const BANNER_H = 3.2
 const CW = 384
 const CH = 1024
 const INTERVAL = 16
@@ -88,7 +88,16 @@ export function addBanner(parent: Object3D, f: BatchFrame, x: number, yTop: numb
   const mesh = new Mesh(bannerGeometry(), new MeshBasicMaterial({ map: tex, color: '#f1eeea', toneMapped: false }))
   pivot.add(mesh)
   parent.add(pivot)
-  banners.push({ pivot, canvas, tex, slides, index: start % Math.max(1, slides.length), timer: (start * 2.7) % INTERVAL, phase: start * 1.9, dirty: true })
+  const banner: Banner = { pivot, canvas, tex, slides, index: start % Math.max(1, slides.length), timer: (start * 2.7) % INTERVAL, phase: start * 1.9, dirty: true }
+  banners.push(banner)
+  // Draw the first slide as soon as the fonts are in, not on first view: until then the
+  // canvas is black, and a banner can be seen (or reflected) before it is ever "in view".
+  void document.fonts.ready.then(() => {
+    if (!banner.dirty) return
+    banner.dirty = false
+    drawSlide(banner, banner.slides[banner.index])
+    banner.tex.needsUpdate = true
+  })
 }
 
 function visible(b: Banner, camera: Camera): boolean {

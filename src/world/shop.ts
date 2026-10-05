@@ -175,7 +175,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const products = section.productIds.map((id) => ctx.catalog.byId.get(id)).filter((p): p is Product => !!p)
 
   // ---------------------------------------------------------- storefront
-  if (mono) storefront(f, group, shop, section, mono, products, loaders)
+  if (mono) storefront(f, group, shop, section, mono, products, loaders, ctx.textureMax())
   else {
     const fascia = new Mesh(new PlaneGeometry(5.8, 1.45), imageMat(shopFascia(section, tint, mono)))
     fascia.position.set(0, 4.95, 0.03)
@@ -328,7 +328,7 @@ const _white = new Color('#ffffff')
  * opening. Static parts are batched; the textured faces are one mesh each
  * (the two blade faces and the two window products share a mesh).
  */
-function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Section, mono: Monogram, products: Product[], loaders: (() => Promise<unknown>)[]): void {
+function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Section, mono: Monogram, products: Product[], loaders: (() => Promise<unknown>)[], tm: number): void {
   const half = MALL.shopLen / 2
   const cream = tintMat('#f3ece4', 1, 0.8)
 
@@ -344,8 +344,11 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   addRectHalo(hw.x, hw.y, hw.z, 6.0 / 0.8, 1.5 / 0.62, shop.yaw, `#${new Color(mono.color).lerp(_white, 0.5).getHexString()}`)
 
   // Blade: 0.14 m bronze lightbox with a lit face each side (one mesh), hung from a wall bracket.
+  // It hangs over the outer display window: z 0.7–1.9 keeps it clear of the window header
+  // (z ≤ 0.64), whose underside is at the blade's bottom height.
   const bx = -half + 0.9
-  f.box(MAT.brass, bx, 4.2, 1.0, 0.14, 1.2, 1.2)
+  const bz = 1.3
+  f.box(MAT.brass, bx, 4.2, bz, 0.14, 1.2, 1.2)
   const faces = mergeGeometries([
     new PlaneGeometry(1.08, 1.08).rotateY(Math.PI / 2).translate(0.075, 0, 0),
     new PlaneGeometry(1.08, 1.08).rotateY(-Math.PI / 2).translate(-0.075, 0, 0),
@@ -354,27 +357,31 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   bladeMat.side = FrontSide
   registerBloom(bladeMat, BLOOM_WEIGHT.lightbox)
   const blade = new Mesh(faces, bladeMat)
-  blade.position.set(bx, 4.2, 1.0)
+  blade.position.set(bx, 4.2, bz)
   blade.layers.enable(MIRROR_LAYER)
   group.add(blade)
   f.box(MAT.brass, bx, 4.95, 0.01, 0.12, 0.34, 0.04) // wall plate
-  f.bar(MAT.brass, v3(bx, 4.95, 0.02), v3(bx, 4.95, 1.68), 0.02) // arm
+  f.bar(MAT.brass, v3(bx, 4.95, 0.02), v3(bx, 4.95, 1.98), 0.02) // arm
   f.bar(MAT.brass, v3(bx, 4.66, 0.02), v3(bx, 4.95, 0.46), 0.011) // brace
-  for (const hz of [0.52, 1.48]) f.bar(MAT.brass, v3(bx, 4.79, hz), v3(bx, 4.95, hz), 0.008) // hangers
+  for (const hz of [0.82, 1.78]) f.bar(MAT.brass, v3(bx, 4.79, hz), v3(bx, 4.95, hz), 0.008) // hangers
 
   // Display windows.
   const cx = (WIN.x0 + WIN.x1) / 2
   const vw = WIN.x1 - WIN.x0
   const gh = WIN.y1 - WIN.y0
+  // Glass stops 5 mm under the header and its side returns start 1 cm off the wall:
+  // no glass face is coplanar with the wall or the header.
+  const gg = gh - 0.005
+  const rz0 = 0.01
   const glass = windowGlass()
   for (const sx of [-1, 1]) {
     const x = sx * cx
     // Stone base (1 cm into the wall and below the floor), collider.
     f.box(cream, x, 0.145, WIN.z / 2 - 0.005, vw, 0.31, WIN.z + 0.01, { collide: true })
     // Glass: front pane + two side returns; bronze rails and corner posts.
-    f.box(glass, x, WIN.y0 + gh / 2, WIN.z, vw, gh, 0.012)
+    f.box(glass, x, WIN.y0 + gg / 2, WIN.z, vw, gg, 0.012)
     for (const ex of [WIN.x0, WIN.x1]) {
-      f.box(glass, sx * ex, WIN.y0 + gh / 2, WIN.z / 2, 0.012, gh, WIN.z)
+      f.box(glass, sx * ex, WIN.y0 + gg / 2, (rz0 + WIN.z) / 2, 0.012, gg, WIN.z - rz0)
       f.box(MAT.brass, sx * ex, WIN.y0 + gh / 2, WIN.z, 0.04, gh, 0.04)
       f.box(MAT.brass, sx * ex, WIN.y0 + 0.004, WIN.z / 2, 0.04, 0.048, WIN.z)
     }
@@ -389,12 +396,13 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
     f.box(MAT.brass, px, PLINTH_TOP - 0.01, 0.3, 0.74, 0.02, 0.42)
     f.box(MAT.lightWarm, px, PLINTH_TOP - 0.065, 0.502, 0.66, 0.025, 0.01)
     const cw = f.toWorld(px, WIN.y1 - 0.02, 0.3)
-    addCone(cw.x, cw.y, cw.z, WIN.y1 - PLINTH_TOP - 0.05, 0.42, 0, 0)
+    addCone(cw.x, cw.y, cw.z, WIN.y1 - PLINTH_TOP - 0.05, 0.26, 0, 0)
     // Contact shading where the base meets the floor.
     aoFloorJunction(sx * WIN.x0, WIN.z + 0.005, sx * WIN.x1, WIN.z + 0.005, 0, 1, f.base, 0.25, 0.4)
   }
 
-  // The two window products share one 1024² canvas (left half / right half) and one mesh.
+  // The two window products share one tm² canvas (left half / right half; tm = the tier's
+  // texture size, 512 on Low) and one mesh.
   // Prefer products with a clean cutout (they stand on the plinth like a mannequin).
   const rank = (p: Product) => (hasCutout(p) ? (p.modelOutfit ? 0 : 1) : 2)
   const picks = [...products].sort((a, b) => rank(a) - rank(b)).slice(0, 2)
@@ -405,7 +413,8 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
     for (let k = 0; k < uv.count; k++) uv.setX(k, uv.getX(k) * 0.5 + i * 0.5)
     return q
   })
-  const [c, g] = makeCanvas(1024, 1024)
+  const [c, g] = makeCanvas(tm, tm)
+  const k = tm / 1024 // drawing constants below are for a 1024 canvas
   const tex = canvasTexture(c)
   const mat = imageMat(tex)
   mat.side = FrontSide
@@ -416,25 +425,30 @@ function storefront(f: BatchFrame, group: Group, shop: ShopLayout, section: Sect
   loaders.push(() =>
     Promise.allSettled(
       picks.map((p, i) =>
-        loadProductTexture(displayImage(p), 1024).then(({ image }) => {
+        loadProductTexture(displayImage(p), tm).then(({ image }) => {
           const im = image as HTMLCanvasElement
-          const x0 = i * 512
+          const hw = tm / 2
+          const x0 = i * hw
           // A full-length cutout (tall once trimmed) stands on the plinth like a mannequin.
           const b = hasCutout(p) ? alphaBounds(im) : null
           if (b && b.h / b.w > 1.45) {
-            const sc = Math.min(480 / b.w, 1000 / b.h)
-            g.drawImage(im, b.x, b.y, b.w, b.h, x0 + (512 - b.w * sc) / 2, 1024 - b.h * sc, b.w * sc, b.h * sc)
+            const sc = Math.min((480 * k) / b.w, (1000 * k) / b.h)
+            g.drawImage(im, b.x, b.y, b.w, b.h, x0 + (hw - b.w * sc) / 2, tm - b.h * sc, b.w * sc, b.h * sc)
           } else {
-            // Otherwise a mounted print standing on the plinth.
-            const w = 440
-            const h = Math.min(620, (w * im.height) / im.width)
-            const y = 1024 - h - 24
+            // Otherwise a mounted print standing on the plinth; a tall image is narrowed, not squashed.
+            const maxW = 440 * k
+            const maxH = 620 * k
+            const ar = im.height / im.width
+            const w = maxW * ar > maxH ? maxH / ar : maxW
+            const h = w * ar
+            const y = tm - h - 24 * k
+            const mx = x0 + 36 * k + (maxW - w) / 2
             g.fillStyle = '#fbf8f4'
-            g.fillRect(x0 + 16, y - 24, w + 40, h + 48)
+            g.fillRect(mx - 20 * k, y - 24 * k, w + 40 * k, h + 48 * k)
             if (b) {
               const sc = Math.min(w / b.w, h / b.h)
-              g.drawImage(im, b.x, b.y, b.w, b.h, x0 + 36 + (w - b.w * sc) / 2, y + (h - b.h * sc) / 2, b.w * sc, b.h * sc)
-            } else g.drawImage(im, x0 + 36, y, w, h)
+              g.drawImage(im, b.x, b.y, b.w, b.h, mx + (w - b.w * sc) / 2, y + (h - b.h * sc) / 2, b.w * sc, b.h * sc)
+            } else g.drawImage(im, mx, y, w, h)
           }
         }),
       ),
