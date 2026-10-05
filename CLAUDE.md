@@ -12,7 +12,9 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 - **Catalogue:** `src/data/mallCatalog.ts`.
   - `buildMallCatalog()` makes one `Section` per open brand.
   - Le Voile merges its real `products.json` sections into one shop.
-  - Other brands get placeholder products with generated SVG photos. TODO: one real data file per brand.
+  - Other brands use their real catalogue from `src/data/brands/<brandId>.json` (lazy-loaded, sections merged into one shop; `brandSubsections()` keeps the store's own sections). A brand without a file falls back to placeholder products with generated SVG photos.
+  - Brand data comes from each brand's public Shopify store: `node scripts/fetch-brands.mjs [--only <id>] [--check]`. It writes sections from `scripts/brand-sections.json` (manual picks + Arabic titles; otherwise the header menu minus promo collections), 5–10 products per section (in stock first) and 2 photos each to `public/products/<brandId>--<collection>-NN/`, plus `<brandId>.remote.json` and `scripts/brand-scrape-report.json`.
+  - Then run `.venv/Scripts/python scripts/remove-bg.py --brands`, then `node scripts/fetch-brands.mjs --apply-cutouts` (QA thresholds; manual rejects in `scripts/brand-cutout-reject.json`), then `scripts/optimize-images.py`.
   - `?boutique` still walks the single Le Voile store with the original catalogue.
 - **Layout:** `src/config/layout.ts`.
   - A plaza (44 × 34 m, entrance at z = 0) with 3 wings.

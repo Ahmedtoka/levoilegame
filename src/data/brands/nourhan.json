@@ -1,0 +1,1161 @@
+{
+  "brandId": "nourhan",
+  "site": "https://nourhangado.com",
+  "sections": [
+    {
+      "id": "nourhan--dresses",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "nourhan--dresses-01",
+        "nourhan--dresses-02",
+        "nourhan--dresses-03",
+        "nourhan--dresses-04",
+        "nourhan--dresses-05"
+      ]
+    },
+    {
+      "id": "nourhan--sets",
+      "title": "Sets",
+      "titleAr": "أطقم",
+      "productIds": [
+        "nourhan--sets-01",
+        "nourhan--sets-02",
+        "nourhan--sets-03",
+        "nourhan--sets-04",
+        "nourhan--sets-05",
+        "nourhan--sets-06",
+        "nourhan--sets-07",
+        "nourhan--sets-08",
+        "nourhan--sets-09",
+        "nourhan--sets-10"
+      ]
+    },
+    {
+      "id": "nourhan--shirts-vests",
+      "title": "Shirts & vests",
+      "titleAr": "قمصان وفيستات",
+      "productIds": [
+        "nourhan--shirts-vests-01",
+        "nourhan--shirts-vests-02",
+        "nourhan--shirts-vests-03",
+        "nourhan--shirts-vests-04",
+        "nourhan--shirts-vests-05",
+        "nourhan--shirts-vests-06",
+        "nourhan--shirts-vests-07",
+        "nourhan--shirts-vests-08",
+        "nourhan--shirts-vests-09",
+        "nourhan--shirts-vests-10"
+      ]
+    },
+    {
+      "id": "nourhan--pants",
+      "title": "Pants",
+      "titleAr": "بناطيل",
+      "productIds": [
+        "nourhan--pants-01",
+        "nourhan--pants-02",
+        "nourhan--pants-03",
+        "nourhan--pants-04",
+        "nourhan--pants-05",
+        "nourhan--pants-06",
+        "nourhan--pants-07"
+      ]
+    },
+    {
+      "id": "nourhan--skirts",
+      "title": "Skirts",
+      "titleAr": "جيبات",
+      "productIds": [
+        "nourhan--skirts-01",
+        "nourhan--skirts-02",
+        "nourhan--skirts-03",
+        "nourhan--skirts-04",
+        "nourhan--skirts-05"
+      ]
+    },
+    {
+      "id": "nourhan--jackets-coats",
+      "title": "Jackets & coats",
+      "titleAr": "جواكت وبالطوهات",
+      "productIds": [
+        "nourhan--jackets-coats-01",
+        "nourhan--jackets-coats-02",
+        "nourhan--jackets-coats-03",
+        "nourhan--jackets-coats-04",
+        "nourhan--jackets-coats-05"
+      ]
+    },
+    {
+      "id": "nourhan--knitwear",
+      "title": "Knitwear",
+      "titleAr": "تريكو",
+      "productIds": [
+        "nourhan--knitwear-01",
+        "nourhan--knitwear-02",
+        "nourhan--knitwear-03"
+      ]
+    },
+    {
+      "id": "nourhan--cocktail-magazine",
+      "title": "Cocktail Magazine",
+      "titleAr": "كوكتيل ماجازين",
+      "productIds": [
+        "nourhan--cocktail-magazine-01",
+        "nourhan--cocktail-magazine-02",
+        "nourhan--cocktail-magazine-03",
+        "nourhan--cocktail-magazine-04",
+        "nourhan--cocktail-magazine-05"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "nourhan--dresses-01",
+      "handle": "tropical-dress",
+      "title": "Tropical  dress",
+      "price": 1295,
+      "compareAtPrice": 2590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--dresses-01/1.jpg",
+        "/products/nourhan--dresses-01/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--dresses",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/tropical-dress"
+    },
+    {
+      "id": "nourhan--dresses-02",
+      "handle": "moonlight-dress",
+      "title": "Moonlight dress",
+      "price": 2590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--dresses-02/1.jpg",
+        "/products/nourhan--dresses-02/2.jpg"
+      ],
+      "cutout": "/products/nourhan--dresses-02/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--dresses",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/moonlight-dress"
+    },
+    {
+      "id": "nourhan--dresses-03",
+      "handle": "sprinkles-dress",
+      "title": "Sprinkles dress",
+      "price": 1295,
+      "compareAtPrice": 2590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--dresses-03/1.jpg",
+        "/products/nourhan--dresses-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--dresses-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--dresses",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/sprinkles-dress"
+    },
+    {
+      "id": "nourhan--dresses-04",
+      "handle": "jungle-dress",
+      "title": "Jungle dress",
+      "price": 2425,
+      "compareAtPrice": 2690,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--dresses-04/1.jpg",
+        "/products/nourhan--dresses-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--dresses-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--dresses",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/jungle-dress"
+    },
+    {
+      "id": "nourhan--dresses-05",
+      "handle": "lava-dress",
+      "title": "Lava dress",
+      "price": 1885,
+      "compareAtPrice": 2690,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--dresses-05/1.jpg",
+        "/products/nourhan--dresses-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--dresses-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--dresses",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/lava-dress"
+    },
+    {
+      "id": "nourhan--sets-01",
+      "handle": "soleil-set",
+      "title": "Soleil set",
+      "price": 1395,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-01/1.jpg",
+        "/products/nourhan--sets-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/soleil-set"
+    },
+    {
+      "id": "nourhan--sets-02",
+      "handle": "azalea-set-in-yellow",
+      "title": "Azalea set in yellow",
+      "price": 1395,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-02/1.jpg",
+        "/products/nourhan--sets-02/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-02/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/azalea-set-in-yellow"
+    },
+    {
+      "id": "nourhan--sets-03",
+      "handle": "azalea-set-in-pink",
+      "title": "Azalea set in pink",
+      "price": 1395,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-03/1.jpg",
+        "/products/nourhan--sets-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/azalea-set-in-pink"
+    },
+    {
+      "id": "nourhan--sets-04",
+      "handle": "shore-set-in-light-blue",
+      "title": "Shore set in light blue",
+      "price": 1445,
+      "compareAtPrice": 2890,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-04/1.jpg",
+        "/products/nourhan--sets-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/shore-set-in-light-blue"
+    },
+    {
+      "id": "nourhan--sets-05",
+      "handle": "sunset-skirt",
+      "title": "Sunset skirt",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-05/1.jpg",
+        "/products/nourhan--sets-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/sunset-skirt"
+    },
+    {
+      "id": "nourhan--sets-06",
+      "handle": "berry-skirt-set",
+      "title": "Berry skirt set",
+      "price": 1145,
+      "compareAtPrice": 2290,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-06/1.jpg",
+        "/products/nourhan--sets-06/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-06/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/berry-skirt-set"
+    },
+    {
+      "id": "nourhan--sets-07",
+      "handle": "sandy-set",
+      "title": "Sandy set",
+      "price": 1295,
+      "compareAtPrice": 2590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-07/1.jpg",
+        "/products/nourhan--sets-07/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-07/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/sandy-set"
+    },
+    {
+      "id": "nourhan--sets-08",
+      "handle": "flake-set",
+      "title": "Flake set",
+      "price": 1475,
+      "compareAtPrice": 2950,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-08/1.jpg",
+        "/products/nourhan--sets-08/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-08/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/flake-set"
+    },
+    {
+      "id": "nourhan--sets-09",
+      "handle": "peace-set-in-blue",
+      "title": "Peace set in blue",
+      "price": 1250,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-09/1.jpg",
+        "/products/nourhan--sets-09/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-09/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/peace-set-in-blue"
+    },
+    {
+      "id": "nourhan--sets-10",
+      "handle": "bliss-set",
+      "title": "Bliss set",
+      "price": 1200,
+      "compareAtPrice": 2400,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--sets-10/1.jpg",
+        "/products/nourhan--sets-10/2.jpg"
+      ],
+      "cutout": "/products/nourhan--sets-10/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--sets",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/bliss-set"
+    },
+    {
+      "id": "nourhan--shirts-vests-01",
+      "handle": "eva-vest",
+      "title": "Eva vest",
+      "price": 745,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-01/1.jpg",
+        "/products/nourhan--shirts-vests-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-01/cutout.png",
+      "sizes": [
+        "XL",
+        "S/M"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/eva-vest"
+    },
+    {
+      "id": "nourhan--shirts-vests-02",
+      "handle": "grid-vest",
+      "title": "Grid vest",
+      "price": 745,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-02/1.jpg",
+        "/products/nourhan--shirts-vests-02/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/grid-vest"
+    },
+    {
+      "id": "nourhan--shirts-vests-03",
+      "handle": "waterfall-blouse",
+      "title": "Waterfall blouse",
+      "price": 895,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-03/1.jpg",
+        "/products/nourhan--shirts-vests-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/waterfall-blouse"
+    },
+    {
+      "id": "nourhan--shirts-vests-04",
+      "handle": "jasmine-shirt-in-yellow",
+      "title": "Jasmine shirt in yellow",
+      "price": 945,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-04/1.jpg",
+        "/products/nourhan--shirts-vests-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/jasmine-shirt-in-yellow"
+    },
+    {
+      "id": "nourhan--shirts-vests-05",
+      "handle": "jasmine-shirt-in-white",
+      "title": "Jasmine shirt in white",
+      "price": 945,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-05/1.jpg",
+        "/products/nourhan--shirts-vests-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/jasmine-shirt-in-white"
+    },
+    {
+      "id": "nourhan--shirts-vests-06",
+      "handle": "jasmine-shirt-in-pink",
+      "title": "Jasmine shirt in pink",
+      "price": 945,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-06/1.jpg",
+        "/products/nourhan--shirts-vests-06/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-06/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/jasmine-shirt-in-pink"
+    },
+    {
+      "id": "nourhan--shirts-vests-07",
+      "handle": "dunes-shirt-in-beige",
+      "title": "Dunes shirt in beige",
+      "price": 745,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-07/1.jpg",
+        "/products/nourhan--shirts-vests-07/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-07/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/dunes-shirt-in-beige"
+    },
+    {
+      "id": "nourhan--shirts-vests-08",
+      "handle": "cherry-blouse",
+      "title": "Cherry blouse",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-08/1.jpg",
+        "/products/nourhan--shirts-vests-08/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-08/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/cherry-blouse"
+    },
+    {
+      "id": "nourhan--shirts-vests-09",
+      "handle": "avocado-shirt",
+      "title": "Avocado shirt",
+      "price": 845,
+      "compareAtPrice": 1690,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-09/1.jpg",
+        "/products/nourhan--shirts-vests-09/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-09/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/avocado-shirt"
+    },
+    {
+      "id": "nourhan--shirts-vests-10",
+      "handle": "treasure-in-lilac",
+      "title": "Treasure Shirt in lilac",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--shirts-vests-10/1.jpg",
+        "/products/nourhan--shirts-vests-10/2.jpg"
+      ],
+      "cutout": "/products/nourhan--shirts-vests-10/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--shirts-vests",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/treasure-in-lilac"
+    },
+    {
+      "id": "nourhan--pants-01",
+      "handle": "echo-pants",
+      "title": "Echo pants",
+      "price": 895,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-01/1.jpg",
+        "/products/nourhan--pants-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/echo-pants"
+    },
+    {
+      "id": "nourhan--pants-02",
+      "handle": "canyon-pants",
+      "title": "Canyon pants",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-02/1.jpg",
+        "/products/nourhan--pants-02/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-02/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/canyon-pants"
+    },
+    {
+      "id": "nourhan--pants-03",
+      "handle": "bianca-pants",
+      "title": "Bianca pants",
+      "price": 845,
+      "compareAtPrice": 1690,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-03/1.jpg",
+        "/products/nourhan--pants-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/bianca-pants"
+    },
+    {
+      "id": "nourhan--pants-04",
+      "handle": "airy-pants-in-dark-blue",
+      "title": "Airy pants in dark blue",
+      "price": 895,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-04/1.jpg",
+        "/products/nourhan--pants-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/airy-pants-in-dark-blue"
+    },
+    {
+      "id": "nourhan--pants-05",
+      "handle": "airy-pants-in-light-blue",
+      "title": "Airy pants in light blue",
+      "price": 895,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-05/1.jpg",
+        "/products/nourhan--pants-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/airy-pants-in-light-blue"
+    },
+    {
+      "id": "nourhan--pants-06",
+      "handle": "daisy-pants",
+      "title": "Daisy pants",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-06/1.jpg",
+        "/products/nourhan--pants-06/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-06/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/daisy-pants"
+    },
+    {
+      "id": "nourhan--pants-07",
+      "handle": "theqa-balloon-pants-in-cashmere",
+      "title": "Theqa balloon pants in cashmere",
+      "price": 575,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--pants-07/1.jpg",
+        "/products/nourhan--pants-07/2.jpg"
+      ],
+      "cutout": "/products/nourhan--pants-07/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--pants",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/theqa-balloon-pants-in-cashmere"
+    },
+    {
+      "id": "nourhan--skirts-01",
+      "handle": "ivy-skirt",
+      "title": "Ivy skirt",
+      "price": 945,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--skirts-01/1.jpg",
+        "/products/nourhan--skirts-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--skirts-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--skirts",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/ivy-skirt"
+    },
+    {
+      "id": "nourhan--skirts-02",
+      "handle": "marigold-skirt",
+      "title": "Marigold skirt",
+      "price": 895,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--skirts-02/1.jpg",
+        "/products/nourhan--skirts-02/2.jpg"
+      ],
+      "cutout": "/products/nourhan--skirts-02/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--skirts",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/marigold-skirt"
+    },
+    {
+      "id": "nourhan--skirts-03",
+      "handle": "soul-skirt",
+      "title": "Soul skirt",
+      "price": 995,
+      "compareAtPrice": 1990,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--skirts-03/1.jpg",
+        "/products/nourhan--skirts-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--skirts-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--skirts",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/soul-skirt"
+    },
+    {
+      "id": "nourhan--skirts-04",
+      "handle": "cookies-skirt",
+      "title": "Cookies skirt",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--skirts-04/1.jpg",
+        "/products/nourhan--skirts-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--skirts-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--skirts",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/cookies-skirt"
+    },
+    {
+      "id": "nourhan--skirts-05",
+      "handle": "splash-skirt",
+      "title": "Splash skirt",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--skirts-05/1.jpg",
+        "/products/nourhan--skirts-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--skirts-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--skirts",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/splash-skirt"
+    },
+    {
+      "id": "nourhan--jackets-coats-01",
+      "handle": "kiarra-jacket",
+      "title": "Kiarra jacket",
+      "price": 1245,
+      "compareAtPrice": 2490,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--jackets-coats-01/1.jpg",
+        "/products/nourhan--jackets-coats-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--jackets-coats-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/kiarra-jacket"
+    },
+    {
+      "id": "nourhan--jackets-coats-02",
+      "handle": "storm-coat-in-turquoise",
+      "title": "Storm coat in turquoise",
+      "price": 1225,
+      "compareAtPrice": 2450,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--jackets-coats-02/1.jpg",
+        "/products/nourhan--jackets-coats-02/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/storm-coat-in-turquoise"
+    },
+    {
+      "id": "nourhan--jackets-coats-03",
+      "handle": "shade-jacket-in-baby-blue",
+      "title": "Shade jacket in baby blue",
+      "price": 1225,
+      "compareAtPrice": 2450,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--jackets-coats-03/1.jpg",
+        "/products/nourhan--jackets-coats-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--jackets-coats-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/shade-jacket-in-baby-blue"
+    },
+    {
+      "id": "nourhan--jackets-coats-04",
+      "handle": "shade-jacket-in-pink",
+      "title": "Shade jacket in pink",
+      "price": 1225,
+      "compareAtPrice": 2450,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--jackets-coats-04/1.jpg",
+        "/products/nourhan--jackets-coats-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--jackets-coats-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/shade-jacket-in-pink"
+    },
+    {
+      "id": "nourhan--jackets-coats-05",
+      "handle": "blossom-blazer",
+      "title": "Blossom Blazer",
+      "price": 995,
+      "compareAtPrice": 1990,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--jackets-coats-05/1.jpg",
+        "/products/nourhan--jackets-coats-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--jackets-coats-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/blossom-blazer"
+    },
+    {
+      "id": "nourhan--knitwear-01",
+      "handle": "misty-cardigan",
+      "title": "Misty cardigan",
+      "price": 1550,
+      "compareAtPrice": 2100,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--knitwear-01/1.jpg",
+        "/products/nourhan--knitwear-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--knitwear-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nourhan--knitwear",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/misty-cardigan"
+    },
+    {
+      "id": "nourhan--knitwear-02",
+      "handle": "snuggy-cardigan",
+      "title": "Snuggy cardigan",
+      "price": 1195,
+      "compareAtPrice": 2390,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--knitwear-02/1.jpg",
+        "/products/nourhan--knitwear-02/2.jpg"
+      ],
+      "cutout": "/products/nourhan--knitwear-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nourhan--knitwear",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/snuggy-cardigan"
+    },
+    {
+      "id": "nourhan--knitwear-03",
+      "handle": "cuddly-scarf",
+      "title": "Cuddly scarf",
+      "price": 910,
+      "compareAtPrice": 1300,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--knitwear-03/1.jpg",
+        "/products/nourhan--knitwear-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--knitwear-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nourhan--knitwear",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/cuddly-scarf"
+    },
+    {
+      "id": "nourhan--cocktail-magazine-01",
+      "handle": "swirly-skirt-set",
+      "title": "Swirly skirt set",
+      "price": 1885,
+      "compareAtPrice": 2690,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--cocktail-magazine-01/1.jpg",
+        "/products/nourhan--cocktail-magazine-01/2.jpg"
+      ],
+      "cutout": "/products/nourhan--cocktail-magazine-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--cocktail-magazine",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/swirly-skirt-set"
+    },
+    {
+      "id": "nourhan--cocktail-magazine-02",
+      "handle": "marine-shirt",
+      "title": "Marine shirt",
+      "price": 1390,
+      "compareAtPrice": 1990,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--cocktail-magazine-02/1.jpg",
+        "/products/nourhan--cocktail-magazine-02/2.jpg"
+      ],
+      "cutout": "/products/nourhan--cocktail-magazine-02/cutout.png",
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nourhan--cocktail-magazine",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/marine-shirt"
+    },
+    {
+      "id": "nourhan--cocktail-magazine-03",
+      "handle": "curly-pants",
+      "title": "Curly pants",
+      "price": 1255,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--cocktail-magazine-03/1.jpg",
+        "/products/nourhan--cocktail-magazine-03/2.jpg"
+      ],
+      "cutout": "/products/nourhan--cocktail-magazine-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--cocktail-magazine",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/curly-pants"
+    },
+    {
+      "id": "nourhan--cocktail-magazine-04",
+      "handle": "ruby-skirt",
+      "title": "Ruby skirt",
+      "price": 1255,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--cocktail-magazine-04/1.jpg",
+        "/products/nourhan--cocktail-magazine-04/2.jpg"
+      ],
+      "cutout": "/products/nourhan--cocktail-magazine-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--cocktail-magazine",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/ruby-skirt"
+    },
+    {
+      "id": "nourhan--cocktail-magazine-05",
+      "handle": "matcha-vest",
+      "title": "Matcha vest",
+      "price": 1045,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "/products/nourhan--cocktail-magazine-05/1.jpg",
+        "/products/nourhan--cocktail-magazine-05/2.jpg"
+      ],
+      "cutout": "/products/nourhan--cocktail-magazine-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nourhan--cocktail-magazine",
+      "modelOutfit": false,
+      "url": "https://nourhangado.com/products/matcha-vest"
+    }
+  ]
+}

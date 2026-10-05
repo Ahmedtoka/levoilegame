@@ -1,0 +1,7900 @@
+{
+  "model": "isnet-general-use",
+  "products": [
+    {
+      "id": "axis--tops-01",
+      "size": [
+        376,
+        1024
+      ],
+      "coverage": 0.2804,
+      "soft": 0.0379,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-02",
+      "size": [
+        565,
+        942
+      ],
+      "coverage": 0.3593,
+      "soft": 0.0477,
+      "edgeTouch": 0.0856,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-03",
+      "size": [
+        529,
+        1024
+      ],
+      "coverage": 0.3438,
+      "soft": 0.0272,
+      "edgeTouch": 0.08,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-04",
+      "size": [
+        768,
+        1024
+      ],
+      "coverage": 0.4967,
+      "soft": 0.1029,
+      "edgeTouch": 0.1137,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-05",
+      "size": [
+        473,
+        956
+      ],
+      "coverage": 0.3518,
+      "soft": 0.0679,
+      "edgeTouch": 0.0489,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-06",
+      "size": [
+        600,
+        1024
+      ],
+      "coverage": 0.4035,
+      "soft": 0.0288,
+      "edgeTouch": 0.1055,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-07",
+      "size": [
+        555,
+        903
+      ],
+      "coverage": 0.3618,
+      "soft": 0.0419,
+      "edgeTouch": 0.1047,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-08",
+      "size": [
+        465,
+        1024
+      ],
+      "coverage": 0.3488,
+      "soft": 0.0246,
+      "edgeTouch": 0.0811,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-09",
+      "size": [
+        568,
+        959
+      ],
+      "coverage": 0.3822,
+      "soft": 0.0281,
+      "edgeTouch": 0.0961,
+      "flags": []
+    },
+    {
+      "id": "axis--tops-10",
+      "size": [
+        765,
+        1024
+      ],
+      "coverage": 0.6393,
+      "soft": 0.7631,
+      "edgeTouch": 0.2493,
+      "flags": [
+        "soft/uncertain mask (76.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "axis--blouses-01",
+      "size": [
+        617,
+        1024
+      ],
+      "coverage": 0.4184,
+      "soft": 0.0253,
+      "edgeTouch": 0.1108,
+      "flags": []
+    },
+    {
+      "id": "axis--blouses-02",
+      "size": [
+        662,
+        1024
+      ],
+      "coverage": 0.5141,
+      "soft": 0.0241,
+      "edgeTouch": 0.1582,
+      "flags": []
+    },
+    {
+      "id": "axis--blouses-03",
+      "size": [
+        464,
+        1024
+      ],
+      "coverage": 0.3512,
+      "soft": 0.0991,
+      "edgeTouch": 0.0819,
+      "flags": []
+    },
+    {
+      "id": "axis--blouses-04",
+      "size": [
+        661,
+        1024
+      ],
+      "coverage": 0.5134,
+      "soft": 0.0224,
+      "edgeTouch": 0.1566,
+      "flags": []
+    },
+    {
+      "id": "axis--blouses-05",
+      "size": [
+        616,
+        1024
+      ],
+      "coverage": 0.4155,
+      "soft": 0.0433,
+      "edgeTouch": 0.1097,
+      "flags": []
+    },
+    {
+      "id": "axis--blouses-06",
+      "size": [
+        599,
+        1024
+      ],
+      "coverage": 0.4865,
+      "soft": 0.0703,
+      "edgeTouch": 0.102,
+      "flags": []
+    },
+    {
+      "id": "axis--blouses-07",
+      "size": [
+        658,
+        1024
+      ],
+      "coverage": 0.4958,
+      "soft": 0.117,
+      "edgeTouch": 0.1563,
+      "flags": []
+    },
+    {
+      "id": "axis--tees-01",
+      "size": [
+        711,
+        1024
+      ],
+      "coverage": 0.6814,
+      "soft": 0.1293,
+      "edgeTouch": 0.2072,
+      "flags": [
+        "soft/uncertain mask (12.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "axis--tees-02",
+      "size": [
+        702,
+        1024
+      ],
+      "coverage": 0.6008,
+      "soft": 0.4096,
+      "edgeTouch": 0.1016,
+      "flags": [
+        "soft/uncertain mask (41.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "axis--tees-03",
+      "size": [
+        653,
+        1024
+      ],
+      "coverage": 0.6084,
+      "soft": 0.092,
+      "edgeTouch": 0.2169,
+      "flags": []
+    },
+    {
+      "id": "axis--knitwear-01",
+      "size": [
+        819,
+        1024
+      ],
+      "coverage": 0.8575,
+      "soft": 0.1953,
+      "edgeTouch": 0.4707,
+      "flags": [
+        "soft/uncertain mask (19.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "axis--knitwear-02",
+      "size": [
+        628,
+        1024
+      ],
+      "coverage": 0.4208,
+      "soft": 0.0193,
+      "edgeTouch": 0.088,
+      "flags": []
+    },
+    {
+      "id": "axis--jackets-01",
+      "size": [
+        466,
+        1024
+      ],
+      "coverage": 0.4235,
+      "soft": 0.0308,
+      "edgeTouch": 0.1002,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--drsis-01",
+      "size": [
+        280,
+        934
+      ],
+      "coverage": 0.1237,
+      "soft": 0.0544,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--drsis-02",
+      "size": [
+        300,
+        1024
+      ],
+      "coverage": 0.2218,
+      "soft": 0.0607,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--drsis-03",
+      "size": [
+        349,
+        948
+      ],
+      "coverage": 0.1786,
+      "soft": 0.2487,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (24.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "bezravoga--shirts-01",
+      "size": [
+        418,
+        765
+      ],
+      "coverage": 0.1777,
+      "soft": 0.2046,
+      "edgeTouch": 0.0604,
+      "flags": [
+        "soft/uncertain mask (20.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "bezravoga--shirts-02",
+      "size": [
+        450,
+        793
+      ],
+      "coverage": 0.2105,
+      "soft": 0.0349,
+      "edgeTouch": 0.0689,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--shirts-03",
+      "size": [
+        409,
+        843
+      ],
+      "coverage": 0.1588,
+      "soft": 0.0434,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--shirts-04",
+      "size": [
+        399,
+        793
+      ],
+      "coverage": 0.1975,
+      "soft": 0.0375,
+      "edgeTouch": 0.0671,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--shirts-05",
+      "size": [
+        415,
+        825
+      ],
+      "coverage": 0.1942,
+      "soft": 0.0345,
+      "edgeTouch": 0.0517,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--shirts-06",
+      "size": [
+        492,
+        814
+      ],
+      "coverage": 0.2171,
+      "soft": 0.1798,
+      "edgeTouch": 0.0026,
+      "flags": [
+        "soft/uncertain mask (18.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "bezravoga--shirts-07",
+      "size": [
+        403,
+        868
+      ],
+      "coverage": 0.2175,
+      "soft": 0.0326,
+      "edgeTouch": 0.0612,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--shirts-08",
+      "size": [
+        433,
+        746
+      ],
+      "coverage": 0.1753,
+      "soft": 0.0414,
+      "edgeTouch": 0.0473,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--shirts-09",
+      "size": [
+        853,
+        909
+      ],
+      "coverage": 0.2042,
+      "soft": 0.8595,
+      "edgeTouch": 0.0285,
+      "flags": [
+        "soft/uncertain mask (85.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "bezravoga--shirts-10",
+      "size": [
+        703,
+        1024
+      ],
+      "coverage": 0.7125,
+      "soft": 0.0515,
+      "edgeTouch": 0.2132,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--set-01",
+      "size": [
+        266,
+        860
+      ],
+      "coverage": 0.1249,
+      "soft": 0.0432,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--set-02",
+      "size": [
+        429,
+        1024
+      ],
+      "coverage": 0.2961,
+      "soft": 0.0601,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--set-03",
+      "size": [
+        449,
+        1024
+      ],
+      "coverage": 0.2843,
+      "soft": 0.0743,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--set-04",
+      "size": [
+        415,
+        1024
+      ],
+      "coverage": 0.2661,
+      "soft": 0.0477,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--set-05",
+      "size": [
+        409,
+        1024
+      ],
+      "coverage": 0.2832,
+      "soft": 0.0362,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--pants-01",
+      "size": [
+        401,
+        1024
+      ],
+      "coverage": 0.2386,
+      "soft": 0.058,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--pants-02",
+      "size": [
+        594,
+        1024
+      ],
+      "coverage": 0.2308,
+      "soft": 0.0628,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--pants-03",
+      "size": [
+        318,
+        1024
+      ],
+      "coverage": 0.2251,
+      "soft": 0.0859,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--pants-04",
+      "size": [
+        648,
+        1024
+      ],
+      "coverage": 0.2205,
+      "soft": 0.0687,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--pants-05",
+      "size": [
+        535,
+        1024
+      ],
+      "coverage": 0.2491,
+      "soft": 0.041,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--pants-06",
+      "size": [
+        466,
+        1024
+      ],
+      "coverage": 0.3622,
+      "soft": 0.1834,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (18.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "bezravoga--pants-07",
+      "size": [
+        819,
+        1024
+      ],
+      "coverage": 0.3036,
+      "soft": 0.5461,
+      "edgeTouch": 0.258,
+      "flags": [
+        "soft/uncertain mask (54.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "bezravoga--pants-08",
+      "size": [
+        361,
+        864
+      ],
+      "coverage": 0.1769,
+      "soft": 0.0572,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--skirts-01",
+      "size": [
+        485,
+        1024
+      ],
+      "coverage": 0.276,
+      "soft": 0.0384,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--skirts-02",
+      "size": [
+        409,
+        1024
+      ],
+      "coverage": 0.283,
+      "soft": 0.0502,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--skirts-03",
+      "size": [
+        697,
+        1024
+      ],
+      "coverage": 0.3155,
+      "soft": 0.0379,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--skirts-04",
+      "size": [
+        462,
+        1024
+      ],
+      "coverage": 0.2885,
+      "soft": 0.042,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--skirts-05",
+      "size": [
+        581,
+        1024
+      ],
+      "coverage": 0.2678,
+      "soft": 0.0377,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--summer-collection-01",
+      "size": [
+        533,
+        1024
+      ],
+      "coverage": 0.4191,
+      "soft": 0.0506,
+      "edgeTouch": 0.065,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--summer-collection-02",
+      "size": [
+        370,
+        959
+      ],
+      "coverage": 0.2506,
+      "soft": 0.0269,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--summer-collection-03",
+      "size": [
+        470,
+        1024
+      ],
+      "coverage": 0.3697,
+      "soft": 0.0357,
+      "edgeTouch": 0.0542,
+      "flags": []
+    },
+    {
+      "id": "bezravoga--summer-collection-04",
+      "size": [
+        565,
+        1024
+      ],
+      "coverage": 0.4715,
+      "soft": 0.1313,
+      "edgeTouch": 0.0833,
+      "flags": [
+        "soft/uncertain mask (13.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dnd--dresses-01",
+      "size": [
+        427,
+        992
+      ],
+      "coverage": 0.222,
+      "soft": 0.0745,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--dresses-02",
+      "size": [
+        396,
+        932
+      ],
+      "coverage": 0.2327,
+      "soft": 0.071,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--dresses-03",
+      "size": [
+        348,
+        874
+      ],
+      "coverage": 0.2021,
+      "soft": 0.0827,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--dresses-04",
+      "size": [
+        388,
+        465
+      ],
+      "coverage": 0.1097,
+      "soft": 0.0914,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--dresses-05",
+      "size": [
+        472,
+        948
+      ],
+      "coverage": 0.2815,
+      "soft": 0.0461,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--shirts-01",
+      "size": [
+        519,
+        963
+      ],
+      "coverage": 0.3481,
+      "soft": 0.0491,
+      "edgeTouch": 0.0489,
+      "flags": []
+    },
+    {
+      "id": "dnd--shirts-02",
+      "size": [
+        381,
+        979
+      ],
+      "coverage": 0.2263,
+      "soft": 0.0695,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--shirts-03",
+      "size": [
+        649,
+        1024
+      ],
+      "coverage": 0.2969,
+      "soft": 0.2667,
+      "edgeTouch": 0.0978,
+      "flags": [
+        "soft/uncertain mask (26.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dnd--shirts-04",
+      "size": [
+        228,
+        487
+      ],
+      "coverage": 0.3856,
+      "soft": 0.0557,
+      "edgeTouch": 0.0926,
+      "flags": []
+    },
+    {
+      "id": "dnd--shirts-05",
+      "size": [
+        778,
+        1024
+      ],
+      "coverage": 0.426,
+      "soft": 0.0333,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--sets-01",
+      "size": [
+        314,
+        943
+      ],
+      "coverage": 0.1831,
+      "soft": 0.038,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--sets-02",
+      "size": [
+        396,
+        955
+      ],
+      "coverage": 0.2398,
+      "soft": 0.031,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--sets-03",
+      "size": [
+        362,
+        885
+      ],
+      "coverage": 0.2035,
+      "soft": 0.0863,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--sets-04",
+      "size": [
+        287,
+        862
+      ],
+      "coverage": 0.1699,
+      "soft": 0.0443,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--sets-05",
+      "size": [
+        313,
+        935
+      ],
+      "coverage": 0.1975,
+      "soft": 0.0683,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--vests-01",
+      "size": [
+        712,
+        1024
+      ],
+      "coverage": 0.4553,
+      "soft": 0.3117,
+      "edgeTouch": 0.1458,
+      "flags": [
+        "soft/uncertain mask (31.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dnd--vests-02",
+      "size": [
+        440,
+        1013
+      ],
+      "coverage": 0.2349,
+      "soft": 0.0511,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--vests-03",
+      "size": [
+        470,
+        842
+      ],
+      "coverage": 0.5379,
+      "soft": 0.2538,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (25.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dnd--vests-04",
+      "size": [
+        547,
+        1024
+      ],
+      "coverage": 0.5091,
+      "soft": 0.0813,
+      "edgeTouch": 0.0931,
+      "flags": []
+    },
+    {
+      "id": "dnd--vests-05",
+      "size": [
+        439,
+        748
+      ],
+      "coverage": 0.4066,
+      "soft": 0.0459,
+      "edgeTouch": 0.0136,
+      "flags": []
+    },
+    {
+      "id": "dnd--pants-01",
+      "size": [
+        791,
+        1024
+      ],
+      "coverage": 0.4211,
+      "soft": 0.0473,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--pants-02",
+      "size": [
+        350,
+        1024
+      ],
+      "coverage": 0.2361,
+      "soft": 0.0458,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--pants-03",
+      "size": [
+        566,
+        1024
+      ],
+      "coverage": 0.4206,
+      "soft": 0.041,
+      "edgeTouch": 0.0672,
+      "flags": []
+    },
+    {
+      "id": "dnd--pants-04",
+      "size": [
+        572,
+        1024
+      ],
+      "coverage": 0.5215,
+      "soft": 0.1044,
+      "edgeTouch": 0.1133,
+      "flags": []
+    },
+    {
+      "id": "dnd--pants-05",
+      "size": [
+        559,
+        997
+      ],
+      "coverage": 0.2725,
+      "soft": 0.0356,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--skirts-01",
+      "size": [
+        437,
+        1024
+      ],
+      "coverage": 0.2996,
+      "soft": 0.0383,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--skirts-02",
+      "size": [
+        378,
+        681
+      ],
+      "coverage": 0.5527,
+      "soft": 0.0536,
+      "edgeTouch": 0.0306,
+      "flags": []
+    },
+    {
+      "id": "dnd--skirts-03",
+      "size": [
+        597,
+        1024
+      ],
+      "coverage": 0.3343,
+      "soft": 0.0396,
+      "edgeTouch": 0.0169,
+      "flags": []
+    },
+    {
+      "id": "dnd--kimonos-01",
+      "size": [
+        694,
+        1024
+      ],
+      "coverage": 0.4877,
+      "soft": 0.4367,
+      "edgeTouch": 0.2278,
+      "flags": [
+        "soft/uncertain mask (43.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "dnd--kimonos-02",
+      "size": [
+        517,
+        1020
+      ],
+      "coverage": 0.3725,
+      "soft": 0.0262,
+      "edgeTouch": 0.0228,
+      "flags": []
+    },
+    {
+      "id": "dnd--blazer-01",
+      "size": [
+        701,
+        1024
+      ],
+      "coverage": 0.6151,
+      "soft": 0.0661,
+      "edgeTouch": 0.2158,
+      "flags": []
+    },
+    {
+      "id": "dnd--blazer-02",
+      "size": [
+        369,
+        1024
+      ],
+      "coverage": 0.2404,
+      "soft": 0.0466,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "dnd--blazer-03",
+      "size": [
+        632,
+        1024
+      ],
+      "coverage": 0.4887,
+      "soft": 0.0299,
+      "edgeTouch": 0.0886,
+      "flags": []
+    },
+    {
+      "id": "dnd--blazer-04",
+      "size": [
+        336,
+        772
+      ],
+      "coverage": 0.1231,
+      "soft": 0.0801,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-01",
+      "size": [
+        408,
+        917
+      ],
+      "coverage": 0.2939,
+      "soft": 0.2764,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (27.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "fashion-avenue--dresses-02",
+      "size": [
+        393,
+        881
+      ],
+      "coverage": 0.2986,
+      "soft": 0.0311,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-03",
+      "size": [
+        403,
+        1024
+      ],
+      "coverage": 0.2305,
+      "soft": 0.0412,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-04",
+      "size": [
+        296,
+        1001
+      ],
+      "coverage": 0.2415,
+      "soft": 0.0332,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-05",
+      "size": [
+        448,
+        923
+      ],
+      "coverage": 0.3494,
+      "soft": 0.0346,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-06",
+      "size": [
+        275,
+        869
+      ],
+      "coverage": 0.2482,
+      "soft": 0.0339,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-07",
+      "size": [
+        359,
+        913
+      ],
+      "coverage": 0.258,
+      "soft": 0.0411,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-08",
+      "size": [
+        407,
+        1007
+      ],
+      "coverage": 0.2736,
+      "soft": 0.0265,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-09",
+      "size": [
+        307,
+        983
+      ],
+      "coverage": 0.248,
+      "soft": 0.0344,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--dresses-10",
+      "size": [
+        340,
+        1024
+      ],
+      "coverage": 0.198,
+      "soft": 0.0312,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-01",
+      "size": [
+        386,
+        1024
+      ],
+      "coverage": 0.2566,
+      "soft": 0.0409,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-02",
+      "size": [
+        277,
+        956
+      ],
+      "coverage": 0.1894,
+      "soft": 0.062,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-03",
+      "size": [
+        603,
+        1024
+      ],
+      "coverage": 0.4209,
+      "soft": 0.028,
+      "edgeTouch": 0.0608,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-04",
+      "size": [
+        513,
+        1024
+      ],
+      "coverage": 0.4108,
+      "soft": 0.0618,
+      "edgeTouch": 0.0692,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-05",
+      "size": [
+        333,
+        958
+      ],
+      "coverage": 0.2043,
+      "soft": 0.0382,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-06",
+      "size": [
+        406,
+        1024
+      ],
+      "coverage": 0.3073,
+      "soft": 0.0316,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-07",
+      "size": [
+        342,
+        1024
+      ],
+      "coverage": 0.2145,
+      "soft": 0.0458,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-08",
+      "size": [
+        406,
+        1024
+      ],
+      "coverage": 0.2461,
+      "soft": 0.0344,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-09",
+      "size": [
+        445,
+        990
+      ],
+      "coverage": 0.2935,
+      "soft": 0.0459,
+      "edgeTouch": 0.0406,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-10",
+      "size": [
+        373,
+        964
+      ],
+      "coverage": 0.2143,
+      "soft": 0.0548,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-01",
+      "size": [
+        317,
+        1024
+      ],
+      "coverage": 0.2392,
+      "soft": 0.0509,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-02",
+      "size": [
+        297,
+        967
+      ],
+      "coverage": 0.1884,
+      "soft": 0.0455,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-03",
+      "size": [
+        345,
+        1024
+      ],
+      "coverage": 0.2185,
+      "soft": 0.0515,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-04",
+      "size": [
+        351,
+        921
+      ],
+      "coverage": 0.3141,
+      "soft": 0.0309,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-05",
+      "size": [
+        302,
+        1013
+      ],
+      "coverage": 0.2275,
+      "soft": 0.0277,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-06",
+      "size": [
+        313,
+        1024
+      ],
+      "coverage": 0.1858,
+      "soft": 0.037,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-07",
+      "size": [
+        376,
+        978
+      ],
+      "coverage": 0.2458,
+      "soft": 0.0289,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-08",
+      "size": [
+        363,
+        1024
+      ],
+      "coverage": 0.2039,
+      "soft": 0.0458,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-09",
+      "size": [
+        386,
+        1024
+      ],
+      "coverage": 0.2361,
+      "soft": 0.0776,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-10",
+      "size": [
+        336,
+        907
+      ],
+      "coverage": 0.2784,
+      "soft": 0.034,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-01",
+      "size": [
+        379,
+        1024
+      ],
+      "coverage": 0.2401,
+      "soft": 0.0224,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-02",
+      "size": [
+        344,
+        943
+      ],
+      "coverage": 0.1989,
+      "soft": 0.037,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-03",
+      "size": [
+        332,
+        1024
+      ],
+      "coverage": 0.2271,
+      "soft": 0.2261,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (22.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "fashion-avenue--bottoms-04",
+      "size": [
+        365,
+        1020
+      ],
+      "coverage": 0.2276,
+      "soft": 0.025,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-05",
+      "size": [
+        275,
+        959
+      ],
+      "coverage": 0.1998,
+      "soft": 0.0466,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-06",
+      "size": [
+        394,
+        1024
+      ],
+      "coverage": 0.2286,
+      "soft": 0.1288,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (12.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "fashion-avenue--bottoms-07",
+      "size": [
+        377,
+        977
+      ],
+      "coverage": 0.2262,
+      "soft": 0.039,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-08",
+      "size": [
+        376,
+        997
+      ],
+      "coverage": 0.2435,
+      "soft": 0.0521,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-09",
+      "size": [
+        336,
+        961
+      ],
+      "coverage": 0.1911,
+      "soft": 0.0534,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--bottoms-10",
+      "size": [
+        450,
+        1024
+      ],
+      "coverage": 0.3699,
+      "soft": 0.1175,
+      "edgeTouch": 0.0442,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-01",
+      "size": [
+        463,
+        923
+      ],
+      "coverage": 0.3562,
+      "soft": 0.035,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-02",
+      "size": [
+        398,
+        887
+      ],
+      "coverage": 0.292,
+      "soft": 0.0319,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-03",
+      "size": [
+        418,
+        921
+      ],
+      "coverage": 0.3497,
+      "soft": 0.4115,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (41.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-04",
+      "size": [
+        309,
+        923
+      ],
+      "coverage": 0.222,
+      "soft": 0.0575,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-05",
+      "size": [
+        331,
+        850
+      ],
+      "coverage": 0.2304,
+      "soft": 0.0929,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-06",
+      "size": [
+        377,
+        918
+      ],
+      "coverage": 0.3125,
+      "soft": 0.0289,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-07",
+      "size": [
+        411,
+        1024
+      ],
+      "coverage": 0.2642,
+      "soft": 0.0194,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-08",
+      "size": [
+        320,
+        914
+      ],
+      "coverage": 0.2582,
+      "soft": 0.0703,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-09",
+      "size": [
+        354,
+        923
+      ],
+      "coverage": 0.2841,
+      "soft": 0.0628,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-10",
+      "size": [
+        335,
+        906
+      ],
+      "coverage": 0.2545,
+      "soft": 0.0547,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-01",
+      "size": [
+        397,
+        947
+      ],
+      "coverage": 0.2352,
+      "soft": 0.0519,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-02",
+      "size": [
+        404,
+        978
+      ],
+      "coverage": 0.2658,
+      "soft": 0.0586,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-03",
+      "size": [
+        385,
+        963
+      ],
+      "coverage": 0.2238,
+      "soft": 0.1344,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (13.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "fashion-avenue--sets-04",
+      "size": [
+        384,
+        970
+      ],
+      "coverage": 0.2124,
+      "soft": 0.0672,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-05",
+      "size": [
+        434,
+        982
+      ],
+      "coverage": 0.2707,
+      "soft": 0.1008,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-06",
+      "size": [
+        403,
+        997
+      ],
+      "coverage": 0.2394,
+      "soft": 0.0509,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-07",
+      "size": [
+        335,
+        1024
+      ],
+      "coverage": 0.2018,
+      "soft": 0.0366,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-08",
+      "size": [
+        304,
+        955
+      ],
+      "coverage": 0.2172,
+      "soft": 0.0364,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-09",
+      "size": [
+        325,
+        987
+      ],
+      "coverage": 0.2323,
+      "soft": 0.0356,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "fashion-avenue--sets-10",
+      "size": [
+        416,
+        1024
+      ],
+      "coverage": 0.2286,
+      "soft": 0.0453,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--women-bags-01",
+      "size": [
+        898,
+        785
+      ],
+      "coverage": 0.2925,
+      "soft": 0.0363,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--women-bags-02",
+      "size": [
+        679,
+        681
+      ],
+      "coverage": 0.5102,
+      "soft": 0.0367,
+      "edgeTouch": 0.0426,
+      "flags": []
+    },
+    {
+      "id": "hashbag--women-bags-03",
+      "size": [
+        985,
+        688
+      ],
+      "coverage": 0.292,
+      "soft": 0.0372,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-01",
+      "size": [
+        591,
+        632
+      ],
+      "coverage": 0.3584,
+      "soft": 0.0227,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-02",
+      "size": [
+        361,
+        597
+      ],
+      "coverage": 0.2268,
+      "soft": 0.0163,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-03",
+      "size": [
+        720,
+        736
+      ],
+      "coverage": 0.3389,
+      "soft": 0.0417,
+      "edgeTouch": 0.0147,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-04",
+      "size": [
+        711,
+        569
+      ],
+      "coverage": 0.1914,
+      "soft": 0.4217,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (42.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "hashbag--thermal-05",
+      "size": [
+        486,
+        391
+      ],
+      "coverage": 0.151,
+      "soft": 0.0498,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-06",
+      "size": [
+        566,
+        692
+      ],
+      "coverage": 0.1435,
+      "soft": 0.2097,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (21.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "hashbag--thermal-07",
+      "size": [
+        356,
+        629
+      ],
+      "coverage": 0.1804,
+      "soft": 0.0527,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-08",
+      "size": [
+        704,
+        517
+      ],
+      "coverage": 0.2429,
+      "soft": 0.1411,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (14.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "hashbag--thermal-09",
+      "size": [
+        768,
+        616
+      ],
+      "coverage": 0.2903,
+      "soft": 0.0349,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-10",
+      "size": [
+        695,
+        912
+      ],
+      "coverage": 0.4011,
+      "soft": 0.0333,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-01",
+      "size": [
+        687,
+        978
+      ],
+      "coverage": 0.4076,
+      "soft": 0.0917,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-02",
+      "size": [
+        679,
+        669
+      ],
+      "coverage": 0.3562,
+      "soft": 0.0639,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-03",
+      "size": [
+        843,
+        577
+      ],
+      "coverage": 0.3691,
+      "soft": 0.0319,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-04",
+      "size": [
+        1024,
+        761
+      ],
+      "coverage": 0.484,
+      "soft": 0.0428,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-05",
+      "size": [
+        806,
+        792
+      ],
+      "coverage": 0.3446,
+      "soft": 0.0289,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-06",
+      "size": [
+        605,
+        944
+      ],
+      "coverage": 0.5291,
+      "soft": 0.0225,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-07",
+      "size": [
+        693,
+        825
+      ],
+      "coverage": 0.4545,
+      "soft": 0.0731,
+      "edgeTouch": 0.1086,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-08",
+      "size": [
+        756,
+        697
+      ],
+      "coverage": 0.5487,
+      "soft": 0.0889,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-09",
+      "size": [
+        476,
+        410
+      ],
+      "coverage": 0.2182,
+      "soft": 0.0468,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-10",
+      "size": [
+        632,
+        1024
+      ],
+      "coverage": 0.2678,
+      "soft": 0.0296,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--school-01",
+      "size": [
+        1024,
+        855
+      ],
+      "coverage": 0.4127,
+      "soft": 0.0358,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--school-02",
+      "size": [
+        425,
+        527
+      ],
+      "coverage": 0.1949,
+      "soft": 0.0249,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--school-03",
+      "size": [
+        423,
+        559
+      ],
+      "coverage": 0.2123,
+      "soft": 0.0225,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--school-04",
+      "size": [
+        389,
+        537
+      ],
+      "coverage": 0.1809,
+      "soft": 0.0279,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--school-05",
+      "size": [
+        481,
+        353
+      ],
+      "coverage": 0.1386,
+      "soft": 0.0318,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "hashbag--kids-01",
+      "size": [
+        392,
+        549
+      ],
+      "coverage": 0.1705,
+      "soft": 0.2164,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (21.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "hashbag--cross-bag-01",
+      "size": [
+        1024,
+        920
+      ],
+      "coverage": 0.4861,
+      "soft": 0.0569,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--dresses-01",
+      "size": [
+        450,
+        986
+      ],
+      "coverage": 0.2293,
+      "soft": 0.0373,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--dresses-02",
+      "size": [
+        443,
+        856
+      ],
+      "coverage": 0.2629,
+      "soft": 0.0394,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--dresses-03",
+      "size": [
+        475,
+        1024
+      ],
+      "coverage": 0.1787,
+      "soft": 0.0374,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-01",
+      "size": [
+        702,
+        901
+      ],
+      "coverage": 0.4954,
+      "soft": 0.0364,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-02",
+      "size": [
+        573,
+        1024
+      ],
+      "coverage": 0.4575,
+      "soft": 0.0633,
+      "edgeTouch": 0.1106,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-03",
+      "size": [
+        628,
+        1000
+      ],
+      "coverage": 0.4911,
+      "soft": 0.0311,
+      "edgeTouch": 0.1097,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-04",
+      "size": [
+        331,
+        990
+      ],
+      "coverage": 0.2138,
+      "soft": 0.2588,
+      "edgeTouch": 0.0222,
+      "flags": [
+        "soft/uncertain mask (25.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--shirts-05",
+      "size": [
+        533,
+        1024
+      ],
+      "coverage": 0.4446,
+      "soft": 0.0343,
+      "edgeTouch": 0.0775,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-06",
+      "size": [
+        510,
+        992
+      ],
+      "coverage": 0.4005,
+      "soft": 0.0342,
+      "edgeTouch": 0.0717,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-07",
+      "size": [
+        527,
+        1024
+      ],
+      "coverage": 0.46,
+      "soft": 0.0232,
+      "edgeTouch": 0.0767,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-08",
+      "size": [
+        635,
+        1024
+      ],
+      "coverage": 0.45,
+      "soft": 0.0402,
+      "edgeTouch": 0.0984,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-09",
+      "size": [
+        523,
+        986
+      ],
+      "coverage": 0.3675,
+      "soft": 0.041,
+      "edgeTouch": 0.0586,
+      "flags": []
+    },
+    {
+      "id": "jeno--shirts-10",
+      "size": [
+        496,
+        1024
+      ],
+      "coverage": 0.4204,
+      "soft": 0.0419,
+      "edgeTouch": 0.0664,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-01",
+      "size": [
+        373,
+        977
+      ],
+      "coverage": 0.2614,
+      "soft": 0.1221,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (12.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--sets-co-ords-02",
+      "size": [
+        356,
+        987
+      ],
+      "coverage": 0.2432,
+      "soft": 0.0402,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-03",
+      "size": [
+        353,
+        1024
+      ],
+      "coverage": 0.2932,
+      "soft": 0.0326,
+      "edgeTouch": 0.0156,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-04",
+      "size": [
+        324,
+        1024
+      ],
+      "coverage": 0.2581,
+      "soft": 0.0351,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-05",
+      "size": [
+        347,
+        940
+      ],
+      "coverage": 0.2223,
+      "soft": 0.0333,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-06",
+      "size": [
+        443,
+        979
+      ],
+      "coverage": 0.2624,
+      "soft": 0.0395,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-07",
+      "size": [
+        815,
+        919
+      ],
+      "coverage": 0.4625,
+      "soft": 0.1116,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-08",
+      "size": [
+        421,
+        838
+      ],
+      "coverage": 0.1748,
+      "soft": 0.0509,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-09",
+      "size": [
+        504,
+        1024
+      ],
+      "coverage": 0.4238,
+      "soft": 0.0314,
+      "edgeTouch": 0.0397,
+      "flags": []
+    },
+    {
+      "id": "jeno--sets-co-ords-10",
+      "size": [
+        571,
+        983
+      ],
+      "coverage": 0.2737,
+      "soft": 0.3571,
+      "edgeTouch": 0.0421,
+      "flags": [
+        "soft/uncertain mask (35.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--bottoms-01",
+      "size": [
+        480,
+        1024
+      ],
+      "coverage": 0.4003,
+      "soft": 0.2194,
+      "edgeTouch": 0.0044,
+      "flags": [
+        "soft/uncertain mask (21.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--bottoms-02",
+      "size": [
+        381,
+        967
+      ],
+      "coverage": 0.236,
+      "soft": 0.058,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--bottoms-03",
+      "size": [
+        528,
+        1024
+      ],
+      "coverage": 0.4058,
+      "soft": 0.1766,
+      "edgeTouch": 0.0917,
+      "flags": [
+        "soft/uncertain mask (17.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--bottoms-04",
+      "size": [
+        451,
+        1024
+      ],
+      "coverage": 0.4632,
+      "soft": 0.1234,
+      "edgeTouch": 0.0883,
+      "flags": [
+        "soft/uncertain mask (12.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--bottoms-05",
+      "size": [
+        386,
+        1024
+      ],
+      "coverage": 0.2648,
+      "soft": 0.0475,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--bottoms-06",
+      "size": [
+        312,
+        1024
+      ],
+      "coverage": 0.4898,
+      "soft": 0.0387,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--bottoms-07",
+      "size": [
+        349,
+        1024
+      ],
+      "coverage": 0.2288,
+      "soft": 0.0731,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--bottoms-08",
+      "size": [
+        363,
+        815
+      ],
+      "coverage": 0.1674,
+      "soft": 0.5251,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (52.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "jeno--bottoms-09",
+      "size": [
+        491,
+        656
+      ],
+      "coverage": 0.2432,
+      "soft": 0.0876,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--bottoms-10",
+      "size": [
+        538,
+        931
+      ],
+      "coverage": 0.1706,
+      "soft": 0.0773,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--denim-01",
+      "size": [
+        391,
+        1024
+      ],
+      "coverage": 0.277,
+      "soft": 0.0375,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--denim-02",
+      "size": [
+        338,
+        906
+      ],
+      "coverage": 0.1822,
+      "soft": 0.0395,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--denim-03",
+      "size": [
+        548,
+        1024
+      ],
+      "coverage": 0.4413,
+      "soft": 0.02,
+      "edgeTouch": 0.1339,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-01",
+      "size": [
+        679,
+        1024
+      ],
+      "coverage": 0.6168,
+      "soft": 0.1119,
+      "edgeTouch": 0.0753,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-02",
+      "size": [
+        387,
+        910
+      ],
+      "coverage": 0.2287,
+      "soft": 0.0518,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-03",
+      "size": [
+        439,
+        1024
+      ],
+      "coverage": 0.3008,
+      "soft": 0.0228,
+      "edgeTouch": 0.0318,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-04",
+      "size": [
+        461,
+        1018
+      ],
+      "coverage": 0.1837,
+      "soft": 0.0374,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-05",
+      "size": [
+        679,
+        1005
+      ],
+      "coverage": 0.5995,
+      "soft": 0.0247,
+      "edgeTouch": 0.1436,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-06",
+      "size": [
+        681,
+        897
+      ],
+      "coverage": 0.3798,
+      "soft": 0.0391,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-07",
+      "size": [
+        456,
+        1022
+      ],
+      "coverage": 0.3058,
+      "soft": 0.035,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-08",
+      "size": [
+        387,
+        1024
+      ],
+      "coverage": 0.2577,
+      "soft": 0.0503,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-09",
+      "size": [
+        599,
+        935
+      ],
+      "coverage": 0.2628,
+      "soft": 0.0599,
+      "edgeTouch": 0.0125,
+      "flags": []
+    },
+    {
+      "id": "jeno--cardigan-10",
+      "size": [
+        369,
+        1016
+      ],
+      "coverage": 0.2365,
+      "soft": 0.0376,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-01",
+      "size": [
+        625,
+        1024
+      ],
+      "coverage": 0.5002,
+      "soft": 0.0399,
+      "edgeTouch": 0.0986,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-02",
+      "size": [
+        576,
+        984
+      ],
+      "coverage": 0.4616,
+      "soft": 0.0177,
+      "edgeTouch": 0.0969,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-03",
+      "size": [
+        449,
+        903
+      ],
+      "coverage": 0.1852,
+      "soft": 0.0446,
+      "edgeTouch": 0.0197,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-04",
+      "size": [
+        362,
+        937
+      ],
+      "coverage": 0.2321,
+      "soft": 0.0381,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-05",
+      "size": [
+        672,
+        1024
+      ],
+      "coverage": 0.6746,
+      "soft": 0.0246,
+      "edgeTouch": 0.1747,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-06",
+      "size": [
+        685,
+        860
+      ],
+      "coverage": 0.3674,
+      "soft": 0.0464,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-07",
+      "size": [
+        422,
+        940
+      ],
+      "coverage": 0.2493,
+      "soft": 0.0403,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-08",
+      "size": [
+        702,
+        1003
+      ],
+      "coverage": 0.6757,
+      "soft": 0.0196,
+      "edgeTouch": 0.2206,
+      "flags": []
+    },
+    {
+      "id": "jeno--sweaters-09",
+      "size": [
+        338,
+        1024
+      ],
+      "coverage": 0.1823,
+      "soft": 0.0299,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-01",
+      "size": [
+        718,
+        1024
+      ],
+      "coverage": 0.6319,
+      "soft": 0.0189,
+      "edgeTouch": 0.1869,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-02",
+      "size": [
+        582,
+        899
+      ],
+      "coverage": 0.3729,
+      "soft": 0.0354,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-03",
+      "size": [
+        697,
+        859
+      ],
+      "coverage": 0.4742,
+      "soft": 0.0301,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-04",
+      "size": [
+        460,
+        930
+      ],
+      "coverage": 0.2265,
+      "soft": 0.0332,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-05",
+      "size": [
+        400,
+        974
+      ],
+      "coverage": 0.2489,
+      "soft": 0.0464,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-06",
+      "size": [
+        407,
+        967
+      ],
+      "coverage": 0.2682,
+      "soft": 0.0301,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-07",
+      "size": [
+        367,
+        917
+      ],
+      "coverage": 0.2073,
+      "soft": 0.0336,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-08",
+      "size": [
+        642,
+        795
+      ],
+      "coverage": 0.3851,
+      "soft": 0.0708,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-09",
+      "size": [
+        364,
+        932
+      ],
+      "coverage": 0.2012,
+      "soft": 0.1062,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "jeno--jackets-coats-10",
+      "size": [
+        368,
+        928
+      ],
+      "coverage": 0.2092,
+      "soft": 0.0534,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-01",
+      "size": [
+        443,
+        1018
+      ],
+      "coverage": 0.2406,
+      "soft": 0.0339,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-02",
+      "size": [
+        436,
+        1024
+      ],
+      "coverage": 0.2005,
+      "soft": 0.0348,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-03",
+      "size": [
+        350,
+        834
+      ],
+      "coverage": 0.218,
+      "soft": 0.0481,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-04",
+      "size": [
+        601,
+        1024
+      ],
+      "coverage": 0.4674,
+      "soft": 0.0495,
+      "edgeTouch": 0.1278,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-05",
+      "size": [
+        523,
+        1024
+      ],
+      "coverage": 0.4129,
+      "soft": 0.0865,
+      "edgeTouch": 0.1127,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-06",
+      "size": [
+        431,
+        936
+      ],
+      "coverage": 0.1699,
+      "soft": 0.0351,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-07",
+      "size": [
+        667,
+        1024
+      ],
+      "coverage": 0.5575,
+      "soft": 0.0477,
+      "edgeTouch": 0.1341,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-08",
+      "size": [
+        431,
+        1024
+      ],
+      "coverage": 0.1809,
+      "soft": 0.0394,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-09",
+      "size": [
+        603,
+        1024
+      ],
+      "coverage": 0.2931,
+      "soft": 0.0216,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--dresses-10",
+      "size": [
+        446,
+        1013
+      ],
+      "coverage": 0.2187,
+      "soft": 0.0296,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-01",
+      "size": [
+        434,
+        1024
+      ],
+      "coverage": 0.2004,
+      "soft": 0.0376,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-02",
+      "size": [
+        454,
+        1024
+      ],
+      "coverage": 0.2656,
+      "soft": 0.1887,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (18.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nanosh--sets-03",
+      "size": [
+        436,
+        1019
+      ],
+      "coverage": 0.2569,
+      "soft": 0.032,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-04",
+      "size": [
+        429,
+        1024
+      ],
+      "coverage": 0.2294,
+      "soft": 0.0524,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-05",
+      "size": [
+        447,
+        1007
+      ],
+      "coverage": 0.2604,
+      "soft": 0.0495,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-06",
+      "size": [
+        458,
+        1016
+      ],
+      "coverage": 0.2645,
+      "soft": 0.024,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-07",
+      "size": [
+        519,
+        897
+      ],
+      "coverage": 0.3463,
+      "soft": 0.0345,
+      "edgeTouch": 0.0358,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-08",
+      "size": [
+        540,
+        1024
+      ],
+      "coverage": 0.4225,
+      "soft": 0.2287,
+      "edgeTouch": 0.1167,
+      "flags": [
+        "soft/uncertain mask (22.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nanosh--sets-09",
+      "size": [
+        440,
+        1024
+      ],
+      "coverage": 0.2074,
+      "soft": 0.0497,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--sets-10",
+      "size": [
+        424,
+        1014
+      ],
+      "coverage": 0.2196,
+      "soft": 0.0316,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-01",
+      "size": [
+        457,
+        943
+      ],
+      "coverage": 0.3129,
+      "soft": 0.0407,
+      "edgeTouch": 0.0853,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-02",
+      "size": [
+        491,
+        974
+      ],
+      "coverage": 0.352,
+      "soft": 0.0206,
+      "edgeTouch": 0.0758,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-03",
+      "size": [
+        304,
+        903
+      ],
+      "coverage": 0.2016,
+      "soft": 0.032,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-04",
+      "size": [
+        589,
+        936
+      ],
+      "coverage": 0.4343,
+      "soft": 0.0374,
+      "edgeTouch": 0.1147,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-05",
+      "size": [
+        356,
+        945
+      ],
+      "coverage": 0.2232,
+      "soft": 0.0317,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-06",
+      "size": [
+        571,
+        1024
+      ],
+      "coverage": 0.5256,
+      "soft": 0.0411,
+      "edgeTouch": 0.1111,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-07",
+      "size": [
+        609,
+        972
+      ],
+      "coverage": 0.4335,
+      "soft": 0.098,
+      "edgeTouch": 0.0894,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-08",
+      "size": [
+        417,
+        959
+      ],
+      "coverage": 0.1785,
+      "soft": 0.0502,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-09",
+      "size": [
+        460,
+        1024
+      ],
+      "coverage": 0.2,
+      "soft": 0.0489,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--shirts-10",
+      "size": [
+        402,
+        1024
+      ],
+      "coverage": 0.2304,
+      "soft": 0.0522,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--blouses-01",
+      "size": [
+        489,
+        965
+      ],
+      "coverage": 0.3435,
+      "soft": 0.0244,
+      "edgeTouch": 0.0839,
+      "flags": []
+    },
+    {
+      "id": "nanosh--blouses-02",
+      "size": [
+        295,
+        837
+      ],
+      "coverage": 0.1669,
+      "soft": 0.0424,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-01",
+      "size": [
+        424,
+        1003
+      ],
+      "coverage": 0.2131,
+      "soft": 0.0348,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-02",
+      "size": [
+        459,
+        985
+      ],
+      "coverage": 0.2014,
+      "soft": 0.0343,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-03",
+      "size": [
+        399,
+        1024
+      ],
+      "coverage": 0.2188,
+      "soft": 0.0491,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-04",
+      "size": [
+        321,
+        1007
+      ],
+      "coverage": 0.1563,
+      "soft": 0.2229,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (22.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nanosh--pants-05",
+      "size": [
+        315,
+        1017
+      ],
+      "coverage": 0.2158,
+      "soft": 0.0552,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-06",
+      "size": [
+        418,
+        1007
+      ],
+      "coverage": 0.1891,
+      "soft": 0.0353,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-07",
+      "size": [
+        410,
+        1024
+      ],
+      "coverage": 0.2044,
+      "soft": 0.0768,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-08",
+      "size": [
+        404,
+        1024
+      ],
+      "coverage": 0.2105,
+      "soft": 0.0759,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-09",
+      "size": [
+        393,
+        1024
+      ],
+      "coverage": 0.2611,
+      "soft": 0.051,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--pants-10",
+      "size": [
+        518,
+        852
+      ],
+      "coverage": 0.3749,
+      "soft": 0.0601,
+      "edgeTouch": 0.0331,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-01",
+      "size": [
+        572,
+        1011
+      ],
+      "coverage": 0.394,
+      "soft": 0.0927,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-02",
+      "size": [
+        351,
+        928
+      ],
+      "coverage": 0.2037,
+      "soft": 0.029,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-03",
+      "size": [
+        366,
+        815
+      ],
+      "coverage": 0.1811,
+      "soft": 0.0429,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-04",
+      "size": [
+        352,
+        793
+      ],
+      "coverage": 0.1505,
+      "soft": 0.0467,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-05",
+      "size": [
+        325,
+        913
+      ],
+      "coverage": 0.1787,
+      "soft": 0.05,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-06",
+      "size": [
+        495,
+        811
+      ],
+      "coverage": 0.1881,
+      "soft": 0.4727,
+      "edgeTouch": 0.0011,
+      "flags": [
+        "soft/uncertain mask (47.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nanosh--skirts-07",
+      "size": [
+        396,
+        993
+      ],
+      "coverage": 0.1649,
+      "soft": 0.043,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--skirts-08",
+      "size": [
+        472,
+        1015
+      ],
+      "coverage": 0.2309,
+      "soft": 0.032,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--jackets-01",
+      "size": [
+        374,
+        946
+      ],
+      "coverage": 0.2448,
+      "soft": 0.0275,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--jackets-02",
+      "size": [
+        520,
+        907
+      ],
+      "coverage": 0.3671,
+      "soft": 0.0254,
+      "edgeTouch": 0.0964,
+      "flags": []
+    },
+    {
+      "id": "nanosh--jackets-03",
+      "size": [
+        436,
+        1024
+      ],
+      "coverage": 0.226,
+      "soft": 0.0654,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--jackets-04",
+      "size": [
+        416,
+        929
+      ],
+      "coverage": 0.2293,
+      "soft": 0.0289,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-01",
+      "size": [
+        406,
+        1024
+      ],
+      "coverage": 0.1873,
+      "soft": 0.0515,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-02",
+      "size": [
+        431,
+        1024
+      ],
+      "coverage": 0.2576,
+      "soft": 0.0293,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-03",
+      "size": [
+        365,
+        1024
+      ],
+      "coverage": 0.2248,
+      "soft": 0.0351,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-04",
+      "size": [
+        351,
+        1024
+      ],
+      "coverage": 0.2359,
+      "soft": 0.0288,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-05",
+      "size": [
+        295,
+        943
+      ],
+      "coverage": 0.1677,
+      "soft": 0.056,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-06",
+      "size": [
+        345,
+        908
+      ],
+      "coverage": 0.1924,
+      "soft": 0.271,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (27.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nanosh--bags-07",
+      "size": [
+        411,
+        1017
+      ],
+      "coverage": 0.183,
+      "soft": 0.0596,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-08",
+      "size": [
+        391,
+        1024
+      ],
+      "coverage": 0.2219,
+      "soft": 0.0458,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-09",
+      "size": [
+        430,
+        1024
+      ],
+      "coverage": 0.2342,
+      "soft": 0.0391,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nanosh--bags-10",
+      "size": [
+        475,
+        1024
+      ],
+      "coverage": 0.2722,
+      "soft": 0.031,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--dresses-1-01",
+      "size": [
+        386,
+        874
+      ],
+      "coverage": 0.2187,
+      "soft": 0.0305,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--dresses-1-02",
+      "size": [
+        386,
+        961
+      ],
+      "coverage": 0.2684,
+      "soft": 0.0488,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--dresses-1-03",
+      "size": [
+        335,
+        895
+      ],
+      "coverage": 0.2192,
+      "soft": 0.0388,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--dresses-1-04",
+      "size": [
+        514,
+        789
+      ],
+      "coverage": 0.237,
+      "soft": 0.1121,
+      "edgeTouch": 0.0072,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--dresses-1-05",
+      "size": [
+        296,
+        802
+      ],
+      "coverage": 0.149,
+      "soft": 0.034,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-01",
+      "size": [
+        433,
+        834
+      ],
+      "coverage": 0.2025,
+      "soft": 0.031,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-02",
+      "size": [
+        399,
+        869
+      ],
+      "coverage": 0.1663,
+      "soft": 0.0523,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-03",
+      "size": [
+        353,
+        896
+      ],
+      "coverage": 0.198,
+      "soft": 0.0493,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-04",
+      "size": [
+        831,
+        1024
+      ],
+      "coverage": 0.3996,
+      "soft": 0.2496,
+      "edgeTouch": 0.0805,
+      "flags": [
+        "soft/uncertain mask (25.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "noha-collection--set-05",
+      "size": [
+        371,
+        1024
+      ],
+      "coverage": 0.1849,
+      "soft": 0.0345,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-06",
+      "size": [
+        615,
+        944
+      ],
+      "coverage": 0.2673,
+      "soft": 0.0445,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-07",
+      "size": [
+        340,
+        862
+      ],
+      "coverage": 0.2157,
+      "soft": 0.0387,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-08",
+      "size": [
+        352,
+        819
+      ],
+      "coverage": 0.1913,
+      "soft": 0.0658,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--set-09",
+      "size": [
+        361,
+        884
+      ],
+      "coverage": 0.2144,
+      "soft": 0.1074,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-01",
+      "size": [
+        815,
+        1024
+      ],
+      "coverage": 0.2631,
+      "soft": 0.8083,
+      "edgeTouch": 0.079,
+      "flags": [
+        "soft/uncertain mask (80.8% semi-transparent)"
+      ]
+    },
+    {
+      "id": "noha-collection--shirt-02",
+      "size": [
+        526,
+        968
+      ],
+      "coverage": 0.394,
+      "soft": 0.0333,
+      "edgeTouch": 0.095,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-03",
+      "size": [
+        735,
+        1024
+      ],
+      "coverage": 0.4024,
+      "soft": 0.0941,
+      "edgeTouch": 0.0692,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-04",
+      "size": [
+        358,
+        1024
+      ],
+      "coverage": 0.1796,
+      "soft": 0.0488,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-05",
+      "size": [
+        338,
+        935
+      ],
+      "coverage": 0.2069,
+      "soft": 0.0652,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-06",
+      "size": [
+        443,
+        957
+      ],
+      "coverage": 0.256,
+      "soft": 0.0456,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-07",
+      "size": [
+        681,
+        989
+      ],
+      "coverage": 0.4738,
+      "soft": 0.0505,
+      "edgeTouch": 0.1178,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-08",
+      "size": [
+        720,
+        1004
+      ],
+      "coverage": 0.4519,
+      "soft": 0.0771,
+      "edgeTouch": 0.0872,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-09",
+      "size": [
+        462,
+        929
+      ],
+      "coverage": 0.2082,
+      "soft": 0.0388,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--shirt-10",
+      "size": [
+        547,
+        950
+      ],
+      "coverage": 0.2811,
+      "soft": 0.0414,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-01",
+      "size": [
+        511,
+        1024
+      ],
+      "coverage": 0.3814,
+      "soft": 0.1173,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-02",
+      "size": [
+        464,
+        1024
+      ],
+      "coverage": 0.2577,
+      "soft": 0.0779,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-03",
+      "size": [
+        683,
+        1024
+      ],
+      "coverage": 0.497,
+      "soft": 0.0647,
+      "edgeTouch": 0.0975,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-04",
+      "size": [
+        584,
+        1024
+      ],
+      "coverage": 0.3235,
+      "soft": 0.2138,
+      "edgeTouch": 0.0011,
+      "flags": [
+        "soft/uncertain mask (21.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "noha-collection--pants-05",
+      "size": [
+        618,
+        957
+      ],
+      "coverage": 0.5096,
+      "soft": 0.0365,
+      "edgeTouch": 0.0978,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-06",
+      "size": [
+        608,
+        1024
+      ],
+      "coverage": 0.4524,
+      "soft": 0.0297,
+      "edgeTouch": 0.1172,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-07",
+      "size": [
+        501,
+        965
+      ],
+      "coverage": 0.2788,
+      "soft": 0.0974,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--pants-08",
+      "size": [
+        513,
+        917
+      ],
+      "coverage": 0.3556,
+      "soft": 0.1543,
+      "edgeTouch": 0.0406,
+      "flags": [
+        "soft/uncertain mask (15.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-01",
+      "size": [
+        404,
+        999
+      ],
+      "coverage": 0.2745,
+      "soft": 0.0265,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-02",
+      "size": [
+        372,
+        960
+      ],
+      "coverage": 0.239,
+      "soft": 0.0308,
+      "edgeTouch": 0.0314,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-03",
+      "size": [
+        727,
+        1024
+      ],
+      "coverage": 0.4217,
+      "soft": 0.1458,
+      "edgeTouch": 0.1146,
+      "flags": [
+        "soft/uncertain mask (14.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-04",
+      "size": [
+        445,
+        943
+      ],
+      "coverage": 0.1879,
+      "soft": 0.0965,
+      "edgeTouch": 0.0125,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-05",
+      "size": [
+        540,
+        1023
+      ],
+      "coverage": 0.3532,
+      "soft": 0.0825,
+      "edgeTouch": 0.0646,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-06",
+      "size": [
+        603,
+        868
+      ],
+      "coverage": 0.2367,
+      "soft": 0.2752,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (27.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-07",
+      "size": [
+        493,
+        917
+      ],
+      "coverage": 0.3011,
+      "soft": 0.0318,
+      "edgeTouch": 0.0282,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-08",
+      "size": [
+        386,
+        828
+      ],
+      "coverage": 0.199,
+      "soft": 0.0367,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--vests-01",
+      "size": [
+        392,
+        946
+      ],
+      "coverage": 0.2003,
+      "soft": 0.0375,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--coastal-collection-01",
+      "size": [
+        768,
+        1024
+      ],
+      "coverage": 0.5112,
+      "soft": 0.075,
+      "edgeTouch": 0.1619,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--coastal-collection-02",
+      "size": [
+        672,
+        970
+      ],
+      "coverage": 0.4143,
+      "soft": 0.0142,
+      "edgeTouch": 0.0921,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--coastal-collection-03",
+      "size": [
+        1000,
+        1024
+      ],
+      "coverage": 0.635,
+      "soft": 0.0811,
+      "edgeTouch": 0.1951,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--coastal-collection-04",
+      "size": [
+        323,
+        810
+      ],
+      "coverage": 0.1308,
+      "soft": 0.0761,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--coastal-collection-05",
+      "size": [
+        768,
+        1024
+      ],
+      "coverage": 0.7533,
+      "soft": 0.0187,
+      "edgeTouch": 0.3606,
+      "flags": []
+    },
+    {
+      "id": "noha-collection--coastal-collection-06",
+      "size": [
+        498,
+        693
+      ],
+      "coverage": 0.2225,
+      "soft": 0.1853,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (18.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--dresses-01",
+      "size": [
+        445,
+        1024
+      ],
+      "coverage": 0.3152,
+      "soft": 0.4042,
+      "edgeTouch": 0.0108,
+      "flags": [
+        "soft/uncertain mask (40.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--dresses-02",
+      "size": [
+        358,
+        1001
+      ],
+      "coverage": 0.2626,
+      "soft": 0.0444,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--dresses-03",
+      "size": [
+        373,
+        879
+      ],
+      "coverage": 0.1845,
+      "soft": 0.0409,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--dresses-04",
+      "size": [
+        455,
+        962
+      ],
+      "coverage": 0.2805,
+      "soft": 0.0501,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--dresses-05",
+      "size": [
+        429,
+        1024
+      ],
+      "coverage": 0.3125,
+      "soft": 0.0348,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-01",
+      "size": [
+        340,
+        957
+      ],
+      "coverage": 0.2364,
+      "soft": 0.2326,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (23.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--sets-02",
+      "size": [
+        359,
+        1024
+      ],
+      "coverage": 0.2718,
+      "soft": 0.0525,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-03",
+      "size": [
+        368,
+        929
+      ],
+      "coverage": 0.2011,
+      "soft": 0.0383,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-04",
+      "size": [
+        382,
+        1004
+      ],
+      "coverage": 0.2827,
+      "soft": 0.0307,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-05",
+      "size": [
+        508,
+        1024
+      ],
+      "coverage": 0.4805,
+      "soft": 0.0477,
+      "edgeTouch": 0.0072,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-06",
+      "size": [
+        382,
+        1014
+      ],
+      "coverage": 0.2454,
+      "soft": 0.0425,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-07",
+      "size": [
+        426,
+        1014
+      ],
+      "coverage": 0.2452,
+      "soft": 0.0568,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-08",
+      "size": [
+        614,
+        674
+      ],
+      "coverage": 0.1687,
+      "soft": 0.1575,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (15.8% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--sets-09",
+      "size": [
+        352,
+        903
+      ],
+      "coverage": 0.1989,
+      "soft": 0.0361,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--sets-10",
+      "size": [
+        459,
+        960
+      ],
+      "coverage": 0.2292,
+      "soft": 0.0409,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-01",
+      "size": [
+        652,
+        1024
+      ],
+      "coverage": 0.564,
+      "soft": 0.0286,
+      "edgeTouch": 0.1019,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-02",
+      "size": [
+        604,
+        905
+      ],
+      "coverage": 0.2576,
+      "soft": 0.3699,
+      "edgeTouch": 0.0175,
+      "flags": [
+        "soft/uncertain mask (37.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--shirts-vests-03",
+      "size": [
+        565,
+        889
+      ],
+      "coverage": 0.3541,
+      "soft": 0.0423,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-04",
+      "size": [
+        670,
+        1024
+      ],
+      "coverage": 0.5273,
+      "soft": 0.0292,
+      "edgeTouch": 0.1106,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-05",
+      "size": [
+        529,
+        1017
+      ],
+      "coverage": 0.4089,
+      "soft": 0.0294,
+      "edgeTouch": 0.0931,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-06",
+      "size": [
+        543,
+        974
+      ],
+      "coverage": 0.4115,
+      "soft": 0.0288,
+      "edgeTouch": 0.0914,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-07",
+      "size": [
+        574,
+        1024
+      ],
+      "coverage": 0.4949,
+      "soft": 0.0294,
+      "edgeTouch": 0.1189,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-08",
+      "size": [
+        580,
+        1022
+      ],
+      "coverage": 0.4876,
+      "soft": 0.0445,
+      "edgeTouch": 0.1219,
+      "flags": []
+    },
+    {
+      "id": "nourhan--shirts-vests-09",
+      "size": [
+        544,
+        1024
+      ],
+      "coverage": 0.4306,
+      "soft": 0.1485,
+      "edgeTouch": 0.0339,
+      "flags": [
+        "soft/uncertain mask (14.8% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--shirts-vests-10",
+      "size": [
+        614,
+        1019
+      ],
+      "coverage": 0.4565,
+      "soft": 0.1277,
+      "edgeTouch": 0.1236,
+      "flags": [
+        "soft/uncertain mask (12.8% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--pants-01",
+      "size": [
+        721,
+        1023
+      ],
+      "coverage": 0.4268,
+      "soft": 0.0388,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--pants-02",
+      "size": [
+        522,
+        1024
+      ],
+      "coverage": 0.4107,
+      "soft": 0.1079,
+      "edgeTouch": 0.0106,
+      "flags": []
+    },
+    {
+      "id": "nourhan--pants-03",
+      "size": [
+        447,
+        1024
+      ],
+      "coverage": 0.4079,
+      "soft": 0.045,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--pants-04",
+      "size": [
+        522,
+        1024
+      ],
+      "coverage": 0.5616,
+      "soft": 0.02,
+      "edgeTouch": 0.1275,
+      "flags": []
+    },
+    {
+      "id": "nourhan--pants-05",
+      "size": [
+        550,
+        1024
+      ],
+      "coverage": 0.5828,
+      "soft": 0.0556,
+      "edgeTouch": 0.1161,
+      "flags": []
+    },
+    {
+      "id": "nourhan--pants-06",
+      "size": [
+        586,
+        1024
+      ],
+      "coverage": 0.4991,
+      "soft": 0.0518,
+      "edgeTouch": 0.1483,
+      "flags": []
+    },
+    {
+      "id": "nourhan--pants-07",
+      "size": [
+        363,
+        1024
+      ],
+      "coverage": 0.3031,
+      "soft": 0.0458,
+      "edgeTouch": 0.0414,
+      "flags": []
+    },
+    {
+      "id": "nourhan--skirts-01",
+      "size": [
+        706,
+        948
+      ],
+      "coverage": 0.4464,
+      "soft": 0.0371,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--skirts-02",
+      "size": [
+        498,
+        1024
+      ],
+      "coverage": 0.3246,
+      "soft": 0.1114,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--skirts-03",
+      "size": [
+        382,
+        971
+      ],
+      "coverage": 0.2331,
+      "soft": 0.0602,
+      "edgeTouch": 0.0108,
+      "flags": []
+    },
+    {
+      "id": "nourhan--skirts-04",
+      "size": [
+        664,
+        968
+      ],
+      "coverage": 0.2579,
+      "soft": 0.0857,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--skirts-05",
+      "size": [
+        316,
+        972
+      ],
+      "coverage": 0.2113,
+      "soft": 0.0509,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--jackets-coats-01",
+      "size": [
+        620,
+        1011
+      ],
+      "coverage": 0.4687,
+      "soft": 0.0158,
+      "edgeTouch": 0.1067,
+      "flags": []
+    },
+    {
+      "id": "nourhan--jackets-coats-02",
+      "size": [
+        444,
+        866
+      ],
+      "coverage": 0.1962,
+      "soft": 0.1719,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (17.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--jackets-coats-03",
+      "size": [
+        562,
+        1019
+      ],
+      "coverage": 0.4145,
+      "soft": 0.1183,
+      "edgeTouch": 0.1125,
+      "flags": []
+    },
+    {
+      "id": "nourhan--jackets-coats-04",
+      "size": [
+        445,
+        927
+      ],
+      "coverage": 0.2315,
+      "soft": 0.0581,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--jackets-coats-05",
+      "size": [
+        510,
+        964
+      ],
+      "coverage": 0.4002,
+      "soft": 0.1292,
+      "edgeTouch": 0.0908,
+      "flags": [
+        "soft/uncertain mask (12.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--knitwear-01",
+      "size": [
+        331,
+        971
+      ],
+      "coverage": 0.2263,
+      "soft": 0.0392,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--knitwear-02",
+      "size": [
+        426,
+        951
+      ],
+      "coverage": 0.231,
+      "soft": 0.1653,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (16.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--knitwear-03",
+      "size": [
+        338,
+        940
+      ],
+      "coverage": 0.2136,
+      "soft": 0.034,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--cocktail-magazine-01",
+      "size": [
+        304,
+        905
+      ],
+      "coverage": 0.1969,
+      "soft": 0.0352,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--cocktail-magazine-02",
+      "size": [
+        476,
+        970
+      ],
+      "coverage": 0.3402,
+      "soft": 0.2508,
+      "edgeTouch": 0.0675,
+      "flags": [
+        "soft/uncertain mask (25.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "nourhan--cocktail-magazine-03",
+      "size": [
+        642,
+        1024
+      ],
+      "coverage": 0.4581,
+      "soft": 0.0969,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--cocktail-magazine-04",
+      "size": [
+        386,
+        972
+      ],
+      "coverage": 0.2608,
+      "soft": 0.0543,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "nourhan--cocktail-magazine-05",
+      "size": [
+        668,
+        1024
+      ],
+      "coverage": 0.5087,
+      "soft": 0.1023,
+      "edgeTouch": 0.0656,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-01",
+      "size": [
+        380,
+        992
+      ],
+      "coverage": 0.1941,
+      "soft": 0.0368,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-02",
+      "size": [
+        364,
+        1024
+      ],
+      "coverage": 0.2405,
+      "soft": 0.0473,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-03",
+      "size": [
+        342,
+        1024
+      ],
+      "coverage": 0.2271,
+      "soft": 0.0287,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-04",
+      "size": [
+        333,
+        1021
+      ],
+      "coverage": 0.1812,
+      "soft": 0.0377,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-05",
+      "size": [
+        404,
+        902
+      ],
+      "coverage": 0.1927,
+      "soft": 0.1323,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (13.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--dresses-06",
+      "size": [
+        465,
+        1024
+      ],
+      "coverage": 0.2774,
+      "soft": 0.0603,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-07",
+      "size": [
+        399,
+        1010
+      ],
+      "coverage": 0.2298,
+      "soft": 0.3164,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (31.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--dresses-08",
+      "size": [
+        563,
+        956
+      ],
+      "coverage": 0.2737,
+      "soft": 0.0293,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-09",
+      "size": [
+        355,
+        1010
+      ],
+      "coverage": 0.251,
+      "soft": 0.0321,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--dresses-10",
+      "size": [
+        317,
+        919
+      ],
+      "coverage": 0.2012,
+      "soft": 0.0421,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-01",
+      "size": [
+        549,
+        1024
+      ],
+      "coverage": 0.412,
+      "soft": 0.0155,
+      "edgeTouch": 0.1214,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-02",
+      "size": [
+        322,
+        1024
+      ],
+      "coverage": 0.2033,
+      "soft": 0.0352,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-03",
+      "size": [
+        322,
+        1024
+      ],
+      "coverage": 0.2037,
+      "soft": 0.039,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-04",
+      "size": [
+        377,
+        1014
+      ],
+      "coverage": 0.2078,
+      "soft": 0.0501,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-05",
+      "size": [
+        523,
+        978
+      ],
+      "coverage": 0.4095,
+      "soft": 0.0291,
+      "edgeTouch": 0.0931,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-06",
+      "size": [
+        572,
+        1024
+      ],
+      "coverage": 0.4924,
+      "soft": 0.0246,
+      "edgeTouch": 0.1025,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-07",
+      "size": [
+        718,
+        1024
+      ],
+      "coverage": 0.4192,
+      "soft": 0.0442,
+      "edgeTouch": 0.0921,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-08",
+      "size": [
+        348,
+        1024
+      ],
+      "coverage": 0.2048,
+      "soft": 0.0474,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-09",
+      "size": [
+        399,
+        1024
+      ],
+      "coverage": 0.2819,
+      "soft": 0.1176,
+      "edgeTouch": 0.0764,
+      "flags": []
+    },
+    {
+      "id": "pistage--shirts-blouses-10",
+      "size": [
+        525,
+        972
+      ],
+      "coverage": 0.2105,
+      "soft": 0.266,
+      "edgeTouch": 0.0167,
+      "flags": [
+        "soft/uncertain mask (26.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--trousers-01",
+      "size": [
+        448,
+        972
+      ],
+      "coverage": 0.2322,
+      "soft": 0.0405,
+      "edgeTouch": 0.0092,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-02",
+      "size": [
+        322,
+        1024
+      ],
+      "coverage": 0.2033,
+      "soft": 0.0352,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-03",
+      "size": [
+        549,
+        1024
+      ],
+      "coverage": 0.412,
+      "soft": 0.0155,
+      "edgeTouch": 0.1214,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-04",
+      "size": [
+        626,
+        782
+      ],
+      "coverage": 0.4002,
+      "soft": 0.0297,
+      "edgeTouch": 0.1133,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-05",
+      "size": [
+        675,
+        1024
+      ],
+      "coverage": 0.3511,
+      "soft": 0.0228,
+      "edgeTouch": 0.1013,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-06",
+      "size": [
+        819,
+        1024
+      ],
+      "coverage": 0.4081,
+      "soft": 0.0332,
+      "edgeTouch": 0.0874,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-07",
+      "size": [
+        363,
+        968
+      ],
+      "coverage": 0.2034,
+      "soft": 0.0359,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-08",
+      "size": [
+        414,
+        1024
+      ],
+      "coverage": 0.2479,
+      "soft": 0.0361,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--trousers-09",
+      "size": [
+        265,
+        880
+      ],
+      "coverage": 0.1171,
+      "soft": 0.3152,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (31.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--trousers-10",
+      "size": [
+        362,
+        1024
+      ],
+      "coverage": 0.2378,
+      "soft": 0.1055,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-01",
+      "size": [
+        334,
+        974
+      ],
+      "coverage": 0.1867,
+      "soft": 0.0314,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-02",
+      "size": [
+        312,
+        974
+      ],
+      "coverage": 0.1823,
+      "soft": 0.0331,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-03",
+      "size": [
+        317,
+        1005
+      ],
+      "coverage": 0.1899,
+      "soft": 0.043,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-04",
+      "size": [
+        383,
+        972
+      ],
+      "coverage": 0.1942,
+      "soft": 0.1212,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (12.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--skirts-05",
+      "size": [
+        479,
+        1004
+      ],
+      "coverage": 0.3317,
+      "soft": 0.0315,
+      "edgeTouch": 0.079,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-06",
+      "size": [
+        321,
+        874
+      ],
+      "coverage": 0.158,
+      "soft": 0.0572,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-07",
+      "size": [
+        568,
+        1024
+      ],
+      "coverage": 0.2512,
+      "soft": 0.8171,
+      "edgeTouch": 0.082,
+      "flags": [
+        "soft/uncertain mask (81.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--skirts-08",
+      "size": [
+        448,
+        1024
+      ],
+      "coverage": 0.0603,
+      "soft": 0.8712,
+      "edgeTouch": 0.0278,
+      "flags": [
+        "low coverage (6.0%)",
+        "soft/uncertain mask (87.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--skirts-09",
+      "size": [
+        594,
+        1024
+      ],
+      "coverage": 0.4911,
+      "soft": 0.0805,
+      "edgeTouch": 0.0786,
+      "flags": []
+    },
+    {
+      "id": "pistage--skirts-10",
+      "size": [
+        691,
+        1024
+      ],
+      "coverage": 0.4743,
+      "soft": 0.2691,
+      "edgeTouch": 0.015,
+      "flags": [
+        "soft/uncertain mask (26.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--demin-01",
+      "size": [
+        426,
+        1010
+      ],
+      "coverage": 0.3068,
+      "soft": 0.0555,
+      "edgeTouch": 0.0292,
+      "flags": []
+    },
+    {
+      "id": "pistage--demin-02",
+      "size": [
+        567,
+        1024
+      ],
+      "coverage": 0.4267,
+      "soft": 0.134,
+      "edgeTouch": 0.1036,
+      "flags": [
+        "soft/uncertain mask (13.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--demin-03",
+      "size": [
+        636,
+        1024
+      ],
+      "coverage": 0.4909,
+      "soft": 0.1741,
+      "edgeTouch": 0.0653,
+      "flags": [
+        "soft/uncertain mask (17.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--demin-04",
+      "size": [
+        480,
+        1024
+      ],
+      "coverage": 0.4535,
+      "soft": 0.0397,
+      "edgeTouch": 0.0875,
+      "flags": []
+    },
+    {
+      "id": "pistage--demin-05",
+      "size": [
+        465,
+        1024
+      ],
+      "coverage": 0.4125,
+      "soft": 0.0592,
+      "edgeTouch": 0.1064,
+      "flags": []
+    },
+    {
+      "id": "pistage--demin-06",
+      "size": [
+        455,
+        1024
+      ],
+      "coverage": 0.3156,
+      "soft": 0.8501,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (85.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--demin-07",
+      "size": [
+        562,
+        1024
+      ],
+      "coverage": 0.3442,
+      "soft": 0.2312,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (23.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--demin-08",
+      "size": [
+        636,
+        1017
+      ],
+      "coverage": 0.3747,
+      "soft": 0.0325,
+      "edgeTouch": 0.1245,
+      "flags": []
+    },
+    {
+      "id": "pistage--demin-09",
+      "size": [
+        1024,
+        1024
+      ],
+      "coverage": 0.3608,
+      "soft": 0.155,
+      "edgeTouch": 0.0535,
+      "flags": [
+        "soft/uncertain mask (15.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--demin-10",
+      "size": [
+        683,
+        1024
+      ],
+      "coverage": 0.8634,
+      "soft": 0.3714,
+      "edgeTouch": 0.3575,
+      "flags": [
+        "soft/uncertain mask (37.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--jackets-01",
+      "size": [
+        509,
+        1013
+      ],
+      "coverage": 0.4047,
+      "soft": 0.0178,
+      "edgeTouch": 0.0999,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-02",
+      "size": [
+        588,
+        1024
+      ],
+      "coverage": 0.4718,
+      "soft": 0.1078,
+      "edgeTouch": 0.1133,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-03",
+      "size": [
+        609,
+        1024
+      ],
+      "coverage": 0.4857,
+      "soft": 0.0198,
+      "edgeTouch": 0.1211,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-04",
+      "size": [
+        468,
+        877
+      ],
+      "coverage": 0.3074,
+      "soft": 0.0238,
+      "edgeTouch": 0.0586,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-05",
+      "size": [
+        521,
+        915
+      ],
+      "coverage": 0.3365,
+      "soft": 0.0261,
+      "edgeTouch": 0.0787,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-06",
+      "size": [
+        565,
+        984
+      ],
+      "coverage": 0.3871,
+      "soft": 0.0199,
+      "edgeTouch": 0.0819,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-07",
+      "size": [
+        299,
+        731
+      ],
+      "coverage": 0.1454,
+      "soft": 0.05,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-08",
+      "size": [
+        387,
+        983
+      ],
+      "coverage": 0.1937,
+      "soft": 0.0321,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-09",
+      "size": [
+        608,
+        1024
+      ],
+      "coverage": 0.487,
+      "soft": 0.0138,
+      "edgeTouch": 0.0989,
+      "flags": []
+    },
+    {
+      "id": "pistage--jackets-10",
+      "size": [
+        720,
+        947
+      ],
+      "coverage": 0.3794,
+      "soft": 0.159,
+      "edgeTouch": 0.1728,
+      "flags": [
+        "soft/uncertain mask (15.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--sets-01",
+      "size": [
+        563,
+        1024
+      ],
+      "coverage": 0.4274,
+      "soft": 0.0214,
+      "edgeTouch": 0.1042,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-02",
+      "size": [
+        663,
+        1024
+      ],
+      "coverage": 0.5105,
+      "soft": 0.0212,
+      "edgeTouch": 0.1081,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-03",
+      "size": [
+        573,
+        1024
+      ],
+      "coverage": 0.5074,
+      "soft": 0.0211,
+      "edgeTouch": 0.1194,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-04",
+      "size": [
+        529,
+        1017
+      ],
+      "coverage": 0.4416,
+      "soft": 0.0191,
+      "edgeTouch": 0.1211,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-05",
+      "size": [
+        526,
+        1024
+      ],
+      "coverage": 0.4279,
+      "soft": 0.0179,
+      "edgeTouch": 0.1047,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-06",
+      "size": [
+        694,
+        1024
+      ],
+      "coverage": 0.5288,
+      "soft": 0.0156,
+      "edgeTouch": 0.1056,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-07",
+      "size": [
+        600,
+        1024
+      ],
+      "coverage": 0.4719,
+      "soft": 0.0374,
+      "edgeTouch": 0.1558,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-08",
+      "size": [
+        421,
+        1024
+      ],
+      "coverage": 0.3383,
+      "soft": 0.0633,
+      "edgeTouch": 0.0775,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-09",
+      "size": [
+        504,
+        1024
+      ],
+      "coverage": 0.3991,
+      "soft": 0.0245,
+      "edgeTouch": 0.1047,
+      "flags": []
+    },
+    {
+      "id": "pistage--sets-10",
+      "size": [
+        475,
+        1013
+      ],
+      "coverage": 0.448,
+      "soft": 0.0721,
+      "edgeTouch": 0.0344,
+      "flags": []
+    },
+    {
+      "id": "pistage--hijab-scarfs-01",
+      "size": [
+        636,
+        1020
+      ],
+      "coverage": 0.1771,
+      "soft": 0.1015,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--hijab-scarfs-02",
+      "size": [
+        687,
+        756
+      ],
+      "coverage": 0.2177,
+      "soft": 0.4988,
+      "edgeTouch": 0.1208,
+      "flags": [
+        "soft/uncertain mask (49.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--hijab-scarfs-03",
+      "size": [
+        688,
+        1024
+      ],
+      "coverage": 0.5525,
+      "soft": 0.3666,
+      "edgeTouch": 0.202,
+      "flags": [
+        "soft/uncertain mask (36.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--hijab-scarfs-04",
+      "size": [
+        659,
+        1024
+      ],
+      "coverage": 0.2085,
+      "soft": 0.7495,
+      "edgeTouch": 0.0397,
+      "flags": [
+        "soft/uncertain mask (74.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--hijab-scarfs-05",
+      "size": [
+        785,
+        791
+      ],
+      "coverage": 0.4124,
+      "soft": 0.0757,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--hijab-scarfs-06",
+      "size": [
+        855,
+        1024
+      ],
+      "coverage": 0.3208,
+      "soft": 0.3869,
+      "edgeTouch": 0.068,
+      "flags": [
+        "soft/uncertain mask (38.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--hijab-scarfs-07",
+      "size": [
+        468,
+        975
+      ],
+      "coverage": 0.2579,
+      "soft": 0.0678,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "pistage--hijab-scarfs-08",
+      "size": [
+        708,
+        941
+      ],
+      "coverage": 0.2803,
+      "soft": 0.1674,
+      "edgeTouch": 0.0385,
+      "flags": [
+        "soft/uncertain mask (16.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "pistage--hijab-scarfs-09",
+      "size": [
+        499,
+        1023
+      ],
+      "coverage": 0.275,
+      "soft": 0.0667,
+      "edgeTouch": 0.0046,
+      "flags": []
+    },
+    {
+      "id": "pistage--hijab-scarfs-10",
+      "size": [
+        543,
+        988
+      ],
+      "coverage": 0.4126,
+      "soft": 0.0165,
+      "edgeTouch": 0.1313,
+      "flags": []
+    },
+    {
+      "id": "promax--probar-01",
+      "size": [
+        964,
+        379
+      ],
+      "coverage": 0.2595,
+      "soft": 0.0908,
+      "edgeTouch": 0.0086,
+      "flags": []
+    },
+    {
+      "id": "promax--probar-02",
+      "size": [
+        836,
+        612
+      ],
+      "coverage": 0.3407,
+      "soft": 0.3233,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (32.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "promax--probar-03",
+      "size": [
+        890,
+        465
+      ],
+      "coverage": 0.3125,
+      "soft": 0.0601,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--probar-04",
+      "size": [
+        820,
+        630
+      ],
+      "coverage": 0.1222,
+      "soft": 0.2456,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (24.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "promax--probar-05",
+      "size": [
+        1024,
+        325
+      ],
+      "coverage": 0.2144,
+      "soft": 0.1881,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (18.8% semi-transparent)"
+      ]
+    },
+    {
+      "id": "promax--probar-06",
+      "size": [
+        873,
+        397
+      ],
+      "coverage": 0.2189,
+      "soft": 0.0547,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--procup-01",
+      "size": [
+        772,
+        566
+      ],
+      "coverage": 0.3184,
+      "soft": 0.0343,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--procup-02",
+      "size": [
+        802,
+        602
+      ],
+      "coverage": 0.2172,
+      "soft": 0.0447,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--procup-03",
+      "size": [
+        816,
+        529
+      ],
+      "coverage": 0.2329,
+      "soft": 0.0291,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--procup-04",
+      "size": [
+        829,
+        552
+      ],
+      "coverage": 0.2809,
+      "soft": 0.0517,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--procup-05",
+      "size": [
+        692,
+        436
+      ],
+      "coverage": 0.147,
+      "soft": 0.24,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (24.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "promax--procup-06",
+      "size": [
+        496,
+        432
+      ],
+      "coverage": 0.1736,
+      "soft": 0.0293,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--prospread-01",
+      "size": [
+        987,
+        574
+      ],
+      "coverage": 0.26,
+      "soft": 0.2213,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (22.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "promax--energy-bar-01",
+      "size": [
+        438,
+        987
+      ],
+      "coverage": 0.2546,
+      "soft": 0.0254,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--energy-bar-02",
+      "size": [
+        417,
+        959
+      ],
+      "coverage": 0.2372,
+      "soft": 0.0212,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--energy-bar-03",
+      "size": [
+        450,
+        991
+      ],
+      "coverage": 0.2705,
+      "soft": 0.0166,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--energy-bar-04",
+      "size": [
+        422,
+        944
+      ],
+      "coverage": 0.2379,
+      "soft": 0.0207,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--bundles-01",
+      "size": [
+        901,
+        630
+      ],
+      "coverage": 0.2999,
+      "soft": 0.0399,
+      "edgeTouch": 0.0053,
+      "flags": []
+    },
+    {
+      "id": "promax--bundles-02",
+      "size": [
+        970,
+        497
+      ],
+      "coverage": 0.378,
+      "soft": 0.0363,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "promax--bundles-03",
+      "size": [
+        1024,
+        611
+      ],
+      "coverage": 0.453,
+      "soft": 0.0509,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-01",
+      "size": [
+        765,
+        937
+      ],
+      "coverage": 0.3312,
+      "soft": 0.2657,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (26.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--bags-02",
+      "size": [
+        798,
+        852
+      ],
+      "coverage": 0.2538,
+      "soft": 0.0318,
+      "edgeTouch": 0.0305,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-03",
+      "size": [
+        618,
+        949
+      ],
+      "coverage": 0.2426,
+      "soft": 0.0404,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-04",
+      "size": [
+        777,
+        857
+      ],
+      "coverage": 0.2709,
+      "soft": 0.3529,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (35.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--bags-05",
+      "size": [
+        800,
+        888
+      ],
+      "coverage": 0.2773,
+      "soft": 0.0214,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-06",
+      "size": [
+        777,
+        857
+      ],
+      "coverage": 0.2709,
+      "soft": 0.3529,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (35.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--bags-07",
+      "size": [
+        397,
+        912
+      ],
+      "coverage": 0.1679,
+      "soft": 0.0614,
+      "edgeTouch": 0.0064,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-08",
+      "size": [
+        780,
+        877
+      ],
+      "coverage": 0.2623,
+      "soft": 0.0548,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-09",
+      "size": [
+        800,
+        750
+      ],
+      "coverage": 0.3013,
+      "soft": 0.0513,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--bags-10",
+      "size": [
+        809,
+        660
+      ],
+      "coverage": 0.2992,
+      "soft": 0.1033,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--clutches-01",
+      "size": [
+        864,
+        978
+      ],
+      "coverage": 0.6132,
+      "soft": 0.1186,
+      "edgeTouch": 0.287,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--clutches-02",
+      "size": [
+        821,
+        1024
+      ],
+      "coverage": 0.6075,
+      "soft": 0.1906,
+      "edgeTouch": 0.198,
+      "flags": [
+        "soft/uncertain mask (19.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--clutches-03",
+      "size": [
+        619,
+        1024
+      ],
+      "coverage": 0.3278,
+      "soft": 0.2161,
+      "edgeTouch": 0.06,
+      "flags": [
+        "soft/uncertain mask (21.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--clutches-04",
+      "size": [
+        676,
+        371
+      ],
+      "coverage": 0.2142,
+      "soft": 0.1113,
+      "edgeTouch": 0.0322,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--clutches-05",
+      "size": [
+        619,
+        1024
+      ],
+      "coverage": 0.3278,
+      "soft": 0.2161,
+      "edgeTouch": 0.06,
+      "flags": [
+        "soft/uncertain mask (21.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-01",
+      "size": [
+        689,
+        632
+      ],
+      "coverage": 0.0908,
+      "soft": 0.66,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (66.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-02",
+      "size": [
+        298,
+        367
+      ],
+      "coverage": 0.0957,
+      "soft": 0.0396,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-03",
+      "size": [
+        628,
+        1024
+      ],
+      "coverage": 0.405,
+      "soft": 0.2514,
+      "edgeTouch": 0.0397,
+      "flags": [
+        "soft/uncertain mask (25.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-04",
+      "size": [
+        786,
+        1024
+      ],
+      "coverage": 0.576,
+      "soft": 0.2187,
+      "edgeTouch": 0.1378,
+      "flags": [
+        "soft/uncertain mask (21.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-05",
+      "size": [
+        780,
+        801
+      ],
+      "coverage": 0.305,
+      "soft": 0.0888,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-01",
+      "size": [
+        683,
+        1024
+      ],
+      "coverage": 0.4327,
+      "soft": 0.1001,
+      "edgeTouch": 0.0447,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-02",
+      "size": [
+        577,
+        1024
+      ],
+      "coverage": 0.5982,
+      "soft": 0.1036,
+      "edgeTouch": 0.1466,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-03",
+      "size": [
+        645,
+        727
+      ],
+      "coverage": 0.2269,
+      "soft": 0.0479,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-04",
+      "size": [
+        559,
+        1024
+      ],
+      "coverage": 0.4081,
+      "soft": 0.0483,
+      "edgeTouch": 0.088,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-05",
+      "size": [
+        733,
+        780
+      ],
+      "coverage": 0.2382,
+      "soft": 0.0773,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-06",
+      "size": [
+        553,
+        1024
+      ],
+      "coverage": 0.2498,
+      "soft": 0.2947,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (29.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--shirts-01",
+      "size": [
+        519,
+        876
+      ],
+      "coverage": 0.3451,
+      "soft": 0.048,
+      "edgeTouch": 0.0517,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--shirts-02",
+      "size": [
+        455,
+        918
+      ],
+      "coverage": 0.3007,
+      "soft": 0.0706,
+      "edgeTouch": 0.0672,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--shirts-03",
+      "size": [
+        503,
+        946
+      ],
+      "coverage": 0.3812,
+      "soft": 0.0404,
+      "edgeTouch": 0.0733,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--shirts-04",
+      "size": [
+        525,
+        1024
+      ],
+      "coverage": 0.3688,
+      "soft": 0.127,
+      "edgeTouch": 0.0489,
+      "flags": [
+        "soft/uncertain mask (12.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--shirts-05",
+      "size": [
+        610,
+        895
+      ],
+      "coverage": 0.3831,
+      "soft": 0.0742,
+      "edgeTouch": 0.0644,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--summer-vibes-01",
+      "size": [
+        653,
+        547
+      ],
+      "coverage": 0.2021,
+      "soft": 0.4006,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (40.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--summer-vibes-02",
+      "size": [
+        781,
+        843
+      ],
+      "coverage": 0.3125,
+      "soft": 0.0267,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--summer-vibes-03",
+      "size": [
+        711,
+        902
+      ],
+      "coverage": 0.2038,
+      "soft": 0.042,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--summer-vibes-04",
+      "size": [
+        724,
+        849
+      ],
+      "coverage": 0.2959,
+      "soft": 0.1098,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "rwan-designs--summer-vibes-05",
+      "size": [
+        929,
+        878
+      ],
+      "coverage": 0.3522,
+      "soft": 0.2968,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (29.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--accessories-01",
+      "size": [
+        247,
+        959
+      ],
+      "coverage": 0.0611,
+      "soft": 0.1514,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (6.1%)",
+        "soft/uncertain mask (15.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "rwan-designs--accessories-02",
+      "size": [
+        841,
+        798
+      ],
+      "coverage": 0.2107,
+      "soft": 0.1582,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (15.8% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--chiffon-printed-01",
+      "size": [
+        495,
+        881
+      ],
+      "coverage": 0.3233,
+      "soft": 0.026,
+      "edgeTouch": 0.0856,
+      "flags": []
+    },
+    {
+      "id": "scarfest--chiffon-printed-02",
+      "size": [
+        667,
+        983
+      ],
+      "coverage": 0.4893,
+      "soft": 0.3825,
+      "edgeTouch": 0.2133,
+      "flags": [
+        "soft/uncertain mask (38.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--chiffon-printed-03",
+      "size": [
+        370,
+        899
+      ],
+      "coverage": 0.2341,
+      "soft": 0.1331,
+      "edgeTouch": 0.0408,
+      "flags": [
+        "soft/uncertain mask (13.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--chiffon-printed-04",
+      "size": [
+        653,
+        912
+      ],
+      "coverage": 0.267,
+      "soft": 0.4803,
+      "edgeTouch": 0.0856,
+      "flags": [
+        "soft/uncertain mask (48.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--chiffon-printed-05",
+      "size": [
+        408,
+        941
+      ],
+      "coverage": 0.2583,
+      "soft": 0.0473,
+      "edgeTouch": 0.0625,
+      "flags": []
+    },
+    {
+      "id": "scarfest--chiffon-printed-06",
+      "size": [
+        409,
+        944
+      ],
+      "coverage": 0.3151,
+      "soft": 0.02,
+      "edgeTouch": 0.075,
+      "flags": []
+    },
+    {
+      "id": "scarfest--chiffon-printed-07",
+      "size": [
+        511,
+        930
+      ],
+      "coverage": 0.3654,
+      "soft": 0.0231,
+      "edgeTouch": 0.0833,
+      "flags": []
+    },
+    {
+      "id": "scarfest--chiffon-printed-08",
+      "size": [
+        476,
+        899
+      ],
+      "coverage": 0.3096,
+      "soft": 0.0238,
+      "edgeTouch": 0.0733,
+      "flags": []
+    },
+    {
+      "id": "scarfest--chiffon-printed-09",
+      "size": [
+        661,
+        894
+      ],
+      "coverage": 0.3624,
+      "soft": 0.2005,
+      "edgeTouch": 0.0872,
+      "flags": [
+        "soft/uncertain mask (20.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--chiffon-printed-10",
+      "size": [
+        453,
+        940
+      ],
+      "coverage": 0.2787,
+      "soft": 0.3395,
+      "edgeTouch": 0.0681,
+      "flags": [
+        "soft/uncertain mask (33.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-printed-01",
+      "size": [
+        453,
+        948
+      ],
+      "coverage": 0.3425,
+      "soft": 0.1108,
+      "edgeTouch": 0.0658,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-printed-02",
+      "size": [
+        479,
+        924
+      ],
+      "coverage": 0.3212,
+      "soft": 0.0403,
+      "edgeTouch": 0.0689,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-printed-03",
+      "size": [
+        538,
+        944
+      ],
+      "coverage": 0.3938,
+      "soft": 0.0494,
+      "edgeTouch": 0.0744,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-printed-04",
+      "size": [
+        420,
+        901
+      ],
+      "coverage": 0.2818,
+      "soft": 0.0233,
+      "edgeTouch": 0.0619,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-printed-05",
+      "size": [
+        415,
+        957
+      ],
+      "coverage": 0.1801,
+      "soft": 0.1728,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (17.3% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-printed-06",
+      "size": [
+        384,
+        979
+      ],
+      "coverage": 0.2895,
+      "soft": 0.023,
+      "edgeTouch": 0.0575,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-printed-07",
+      "size": [
+        285,
+        534
+      ],
+      "coverage": 0.3586,
+      "soft": 0.491,
+      "edgeTouch": 0.091,
+      "flags": [
+        "soft/uncertain mask (49.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-printed-08",
+      "size": [
+        563,
+        955
+      ],
+      "coverage": 0.2331,
+      "soft": 0.2616,
+      "edgeTouch": 0.0061,
+      "flags": [
+        "soft/uncertain mask (26.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-printed-09",
+      "size": [
+        438,
+        920
+      ],
+      "coverage": 0.3013,
+      "soft": 0.2119,
+      "edgeTouch": 0.0769,
+      "flags": [
+        "soft/uncertain mask (21.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-printed-10",
+      "size": [
+        599,
+        901
+      ],
+      "coverage": 0.3099,
+      "soft": 0.0501,
+      "edgeTouch": 0.0731,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-plain-01",
+      "size": [
+        374,
+        982
+      ],
+      "coverage": 0.2419,
+      "soft": 0.0317,
+      "edgeTouch": 0.0676,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-plain-02",
+      "size": [
+        721,
+        898
+      ],
+      "coverage": 0.2749,
+      "soft": 0.8569,
+      "edgeTouch": 0.1324,
+      "flags": [
+        "soft/uncertain mask (85.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-plain-03",
+      "size": [
+        615,
+        956
+      ],
+      "coverage": 0.4455,
+      "soft": 0.0205,
+      "edgeTouch": 0.1039,
+      "flags": []
+    },
+    {
+      "id": "scarfest--modal-plain-04",
+      "size": [
+        720,
+        871
+      ],
+      "coverage": 0.4789,
+      "soft": 0.1214,
+      "edgeTouch": 0.1317,
+      "flags": [
+        "soft/uncertain mask (12.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--modal-plain-05",
+      "size": [
+        543,
+        972
+      ],
+      "coverage": 0.3597,
+      "soft": 0.016,
+      "edgeTouch": 0.0803,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-01",
+      "size": [
+        447,
+        875
+      ],
+      "coverage": 0.3,
+      "soft": 0.0908,
+      "edgeTouch": 0.0811,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-02",
+      "size": [
+        433,
+        899
+      ],
+      "coverage": 0.3048,
+      "soft": 0.0181,
+      "edgeTouch": 0.0811,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-03",
+      "size": [
+        363,
+        883
+      ],
+      "coverage": 0.2424,
+      "soft": 0.0374,
+      "edgeTouch": 0.0633,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-04",
+      "size": [
+        531,
+        901
+      ],
+      "coverage": 0.3457,
+      "soft": 0.0255,
+      "edgeTouch": 0.0764,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-05",
+      "size": [
+        489,
+        895
+      ],
+      "coverage": 0.2944,
+      "soft": 0.0737,
+      "edgeTouch": 0.0767,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-06",
+      "size": [
+        511,
+        869
+      ],
+      "coverage": 0.3124,
+      "soft": 0.0686,
+      "edgeTouch": 0.0864,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-07",
+      "size": [
+        508,
+        902
+      ],
+      "coverage": 0.3022,
+      "soft": 0.0603,
+      "edgeTouch": 0.0617,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-08",
+      "size": [
+        453,
+        875
+      ],
+      "coverage": 0.3119,
+      "soft": 0.0181,
+      "edgeTouch": 0.0933,
+      "flags": []
+    },
+    {
+      "id": "scarfest--cotton-jill-09",
+      "size": [
+        453,
+        906
+      ],
+      "coverage": 0.3051,
+      "soft": 0.156,
+      "edgeTouch": 0.0781,
+      "flags": [
+        "soft/uncertain mask (15.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--cotton-jill-10",
+      "size": [
+        503,
+        848
+      ],
+      "coverage": 0.3124,
+      "soft": 0.114,
+      "edgeTouch": 0.0969,
+      "flags": []
+    },
+    {
+      "id": "scarfest--kuwaiti-01",
+      "size": [
+        546,
+        869
+      ],
+      "coverage": 0.3283,
+      "soft": 0.0213,
+      "edgeTouch": 0.0742,
+      "flags": []
+    },
+    {
+      "id": "scarfest--kuwaiti-02",
+      "size": [
+        584,
+        873
+      ],
+      "coverage": 0.2992,
+      "soft": 0.1973,
+      "edgeTouch": 0.0711,
+      "flags": [
+        "soft/uncertain mask (19.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--kuwaiti-03",
+      "size": [
+        613,
+        963
+      ],
+      "coverage": 0.3589,
+      "soft": 0.0328,
+      "edgeTouch": 0.0636,
+      "flags": []
+    },
+    {
+      "id": "scarfest--kuwaiti-04",
+      "size": [
+        509,
+        854
+      ],
+      "coverage": 0.3015,
+      "soft": 0.1355,
+      "edgeTouch": 0.085,
+      "flags": [
+        "soft/uncertain mask (13.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--kuwaiti-05",
+      "size": [
+        684,
+        938
+      ],
+      "coverage": 0.3476,
+      "soft": 0.0523,
+      "edgeTouch": 0.0706,
+      "flags": []
+    },
+    {
+      "id": "scarfest--kuwaiti-06",
+      "size": [
+        436,
+        897
+      ],
+      "coverage": 0.2528,
+      "soft": 0.3386,
+      "edgeTouch": 0.0775,
+      "flags": [
+        "soft/uncertain mask (33.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--kuwaiti-07",
+      "size": [
+        635,
+        875
+      ],
+      "coverage": 0.3052,
+      "soft": 0.3898,
+      "edgeTouch": 0.0644,
+      "flags": [
+        "soft/uncertain mask (39.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--raffield-01",
+      "size": [
+        446,
+        1002
+      ],
+      "coverage": 0.3099,
+      "soft": 0.1011,
+      "edgeTouch": 0.0653,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-02",
+      "size": [
+        525,
+        935
+      ],
+      "coverage": 0.2352,
+      "soft": 0.0622,
+      "edgeTouch": 0.0056,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-03",
+      "size": [
+        540,
+        896
+      ],
+      "coverage": 0.3321,
+      "soft": 0.0284,
+      "edgeTouch": 0.0594,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-04",
+      "size": [
+        582,
+        886
+      ],
+      "coverage": 0.3603,
+      "soft": 0.0396,
+      "edgeTouch": 0.0547,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-05",
+      "size": [
+        533,
+        927
+      ],
+      "coverage": 0.2374,
+      "soft": 0.0292,
+      "edgeTouch": 0.0675,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-06",
+      "size": [
+        394,
+        949
+      ],
+      "coverage": 0.2649,
+      "soft": 0.0201,
+      "edgeTouch": 0.0639,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-07",
+      "size": [
+        511,
+        882
+      ],
+      "coverage": 0.3295,
+      "soft": 0.0559,
+      "edgeTouch": 0.0722,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-08",
+      "size": [
+        523,
+        918
+      ],
+      "coverage": 0.2871,
+      "soft": 0.0751,
+      "edgeTouch": 0.0311,
+      "flags": []
+    },
+    {
+      "id": "scarfest--raffield-09",
+      "size": [
+        551,
+        763
+      ],
+      "coverage": 0.2356,
+      "soft": 0.0663,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "scarfest--brooch-01",
+      "size": [
+        258,
+        263
+      ],
+      "coverage": 0.0586,
+      "soft": 0.1521,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (5.9%)",
+        "soft/uncertain mask (15.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-02",
+      "size": [
+        464,
+        285
+      ],
+      "coverage": 0.06,
+      "soft": 0.4008,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (6.0%)",
+        "soft/uncertain mask (40.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-03",
+      "size": [
+        414,
+        250
+      ],
+      "coverage": 0.061,
+      "soft": 0.3141,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (6.1%)",
+        "soft/uncertain mask (31.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-04",
+      "size": [
+        418,
+        326
+      ],
+      "coverage": 0.0607,
+      "soft": 0.446,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (6.1%)",
+        "soft/uncertain mask (44.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-05",
+      "size": [
+        321,
+        310
+      ],
+      "coverage": 0.0572,
+      "soft": 0.2465,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (5.7%)",
+        "soft/uncertain mask (24.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-06",
+      "size": [
+        348,
+        321
+      ],
+      "coverage": 0.0723,
+      "soft": 0.2605,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (7.2%)",
+        "soft/uncertain mask (26.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-07",
+      "size": [
+        360,
+        281
+      ],
+      "coverage": 0.0597,
+      "soft": 0.477,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (6.0%)",
+        "soft/uncertain mask (47.7% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-08",
+      "size": [
+        359,
+        257
+      ],
+      "coverage": 0.0506,
+      "soft": 0.4499,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (5.1%)",
+        "soft/uncertain mask (45.0% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-09",
+      "size": [
+        440,
+        382
+      ],
+      "coverage": 0.0922,
+      "soft": 0.5063,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (50.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "scarfest--brooch-10",
+      "size": [
+        341,
+        452
+      ],
+      "coverage": 0.0631,
+      "soft": 0.3322,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (6.3%)",
+        "soft/uncertain mask (33.2% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-01",
+      "size": [
+        901,
+        771
+      ],
+      "coverage": 0.526,
+      "soft": 0.0383,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-02",
+      "size": [
+        872,
+        723
+      ],
+      "coverage": 0.4819,
+      "soft": 0.1389,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (13.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-03",
+      "size": [
+        911,
+        756
+      ],
+      "coverage": 0.5216,
+      "soft": 0.0243,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-04",
+      "size": [
+        934,
+        771
+      ],
+      "coverage": 0.5812,
+      "soft": 0.0361,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-05",
+      "size": [
+        916,
+        771
+      ],
+      "coverage": 0.3325,
+      "soft": 0.335,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (33.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-06",
+      "size": [
+        689,
+        537
+      ],
+      "coverage": 0.2998,
+      "soft": 0.0274,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-07",
+      "size": [
+        678,
+        526
+      ],
+      "coverage": 0.2952,
+      "soft": 0.0735,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-08",
+      "size": [
+        878,
+        747
+      ],
+      "coverage": 0.5045,
+      "soft": 0.0228,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-09",
+      "size": [
+        950,
+        771
+      ],
+      "coverage": 0.3317,
+      "soft": 0.3143,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (31.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-10",
+      "size": [
+        832,
+        713
+      ],
+      "coverage": 0.4874,
+      "soft": 0.0223,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-01",
+      "size": [
+        898,
+        771
+      ],
+      "coverage": 0.5075,
+      "soft": 0.0155,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-02",
+      "size": [
+        894,
+        771
+      ],
+      "coverage": 0.4941,
+      "soft": 0.0495,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-03",
+      "size": [
+        899,
+        771
+      ],
+      "coverage": 0.5054,
+      "soft": 0.0451,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-04",
+      "size": [
+        896,
+        771
+      ],
+      "coverage": 0.5085,
+      "soft": 0.0365,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-05",
+      "size": [
+        887,
+        771
+      ],
+      "coverage": 0.4962,
+      "soft": 0.0785,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-06",
+      "size": [
+        887,
+        771
+      ],
+      "coverage": 0.504,
+      "soft": 0.0809,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-07",
+      "size": [
+        895,
+        771
+      ],
+      "coverage": 0.5064,
+      "soft": 0.047,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-08",
+      "size": [
+        898,
+        771
+      ],
+      "coverage": 0.5094,
+      "soft": 0.0364,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-09",
+      "size": [
+        876,
+        771
+      ],
+      "coverage": 0.5083,
+      "soft": 0.035,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-10",
+      "size": [
+        899,
+        771
+      ],
+      "coverage": 0.5017,
+      "soft": 0.0481,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-01",
+      "size": [
+        914,
+        771
+      ],
+      "coverage": 0.5388,
+      "soft": 0.0209,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-02",
+      "size": [
+        914,
+        771
+      ],
+      "coverage": 0.5397,
+      "soft": 0.0235,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-03",
+      "size": [
+        964,
+        771
+      ],
+      "coverage": 0.5799,
+      "soft": 0.0178,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-04",
+      "size": [
+        676,
+        549
+      ],
+      "coverage": 0.3018,
+      "soft": 0.1406,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (14.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-05",
+      "size": [
+        916,
+        767
+      ],
+      "coverage": 0.5328,
+      "soft": 0.0529,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-06",
+      "size": [
+        877,
+        771
+      ],
+      "coverage": 0.2297,
+      "soft": 0.7048,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (70.5% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-07",
+      "size": [
+        899,
+        771
+      ],
+      "coverage": 0.5269,
+      "soft": 0.0166,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-08",
+      "size": [
+        873,
+        758
+      ],
+      "coverage": 0.513,
+      "soft": 0.0242,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-09",
+      "size": [
+        908,
+        767
+      ],
+      "coverage": 0.5438,
+      "soft": 0.0297,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-10",
+      "size": [
+        916,
+        770
+      ],
+      "coverage": 0.5473,
+      "soft": 0.0211,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-sandals-01",
+      "size": [
+        694,
+        680
+      ],
+      "coverage": 0.3778,
+      "soft": 0.0196,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-sandals-02",
+      "size": [
+        638,
+        587
+      ],
+      "coverage": 0.3034,
+      "soft": 0.0207,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-sandals-03",
+      "size": [
+        666,
+        633
+      ],
+      "coverage": 0.3461,
+      "soft": 0.0229,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-sandals-04",
+      "size": [
+        678,
+        636
+      ],
+      "coverage": 0.3473,
+      "soft": 0.0234,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-sandals-05",
+      "size": [
+        772,
+        708
+      ],
+      "coverage": 0.4128,
+      "soft": 0.053,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--women-sandals-06",
+      "size": [
+        618,
+        569
+      ],
+      "coverage": 0.2693,
+      "soft": 0.0357,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-01",
+      "size": [
+        857,
+        721
+      ],
+      "coverage": 0.4794,
+      "soft": 0.0211,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-02",
+      "size": [
+        890,
+        755
+      ],
+      "coverage": 0.5184,
+      "soft": 0.0327,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-03",
+      "size": [
+        924,
+        765
+      ],
+      "coverage": 0.5448,
+      "soft": 0.0207,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-04",
+      "size": [
+        836,
+        696
+      ],
+      "coverage": 0.4987,
+      "soft": 0.0192,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-05",
+      "size": [
+        842,
+        703
+      ],
+      "coverage": 0.3379,
+      "soft": 0.2339,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (23.4% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-06",
+      "size": [
+        920,
+        767
+      ],
+      "coverage": 0.5314,
+      "soft": 0.0373,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-07",
+      "size": [
+        872,
+        723
+      ],
+      "coverage": 0.4819,
+      "soft": 0.1389,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (13.9% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-08",
+      "size": [
+        924,
+        771
+      ],
+      "coverage": 0.5435,
+      "soft": 0.0533,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-09",
+      "size": [
+        862,
+        738
+      ],
+      "coverage": 0.5016,
+      "soft": 0.0192,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-10",
+      "size": [
+        896,
+        747
+      ],
+      "coverage": 0.4941,
+      "soft": 0.105,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-01",
+      "size": [
+        898,
+        771
+      ],
+      "coverage": 0.5075,
+      "soft": 0.0155,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-02",
+      "size": [
+        876,
+        771
+      ],
+      "coverage": 0.5083,
+      "soft": 0.035,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-03",
+      "size": [
+        879,
+        771
+      ],
+      "coverage": 0.5003,
+      "soft": 0.0334,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-04",
+      "size": [
+        899,
+        771
+      ],
+      "coverage": 0.5017,
+      "soft": 0.0481,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-05",
+      "size": [
+        887,
+        771
+      ],
+      "coverage": 0.504,
+      "soft": 0.0809,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-06",
+      "size": [
+        895,
+        771
+      ],
+      "coverage": 0.5064,
+      "soft": 0.047,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-07",
+      "size": [
+        899,
+        771
+      ],
+      "coverage": 0.5054,
+      "soft": 0.0451,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-08",
+      "size": [
+        887,
+        771
+      ],
+      "coverage": 0.4962,
+      "soft": 0.0785,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-09",
+      "size": [
+        897,
+        771
+      ],
+      "coverage": 0.501,
+      "soft": 0.0378,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-10",
+      "size": [
+        894,
+        771
+      ],
+      "coverage": 0.4941,
+      "soft": 0.0495,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-01",
+      "size": [
+        843,
+        756
+      ],
+      "coverage": 0.4631,
+      "soft": 0.0172,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-02",
+      "size": [
+        841,
+        739
+      ],
+      "coverage": 0.4414,
+      "soft": 0.0165,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-03",
+      "size": [
+        782,
+        680
+      ],
+      "coverage": 0.3867,
+      "soft": 0.0245,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-04",
+      "size": [
+        939,
+        740
+      ],
+      "coverage": 0.5343,
+      "soft": 0.0332,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-05",
+      "size": [
+        895,
+        745
+      ],
+      "coverage": 0.507,
+      "soft": 0.1263,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (12.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-06",
+      "size": [
+        795,
+        700
+      ],
+      "coverage": 0.4002,
+      "soft": 0.0219,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-07",
+      "size": [
+        771,
+        730
+      ],
+      "coverage": 0.2739,
+      "soft": 0.2259,
+      "edgeTouch": 0.0,
+      "flags": [
+        "soft/uncertain mask (22.6% semi-transparent)"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-08",
+      "size": [
+        904,
+        754
+      ],
+      "coverage": 0.5105,
+      "soft": 0.0252,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-09",
+      "size": [
+        876,
+        728
+      ],
+      "coverage": 0.4877,
+      "soft": 0.0444,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-10",
+      "size": [
+        832,
+        740
+      ],
+      "coverage": 0.4336,
+      "soft": 0.0461,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-01",
+      "size": [
+        889,
+        726
+      ],
+      "coverage": 0.5097,
+      "soft": 0.0163,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-02",
+      "size": [
+        511,
+        455
+      ],
+      "coverage": 0.204,
+      "soft": 0.0241,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-03",
+      "size": [
+        507,
+        488
+      ],
+      "coverage": 0.2057,
+      "soft": 0.025,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-04",
+      "size": [
+        997,
+        651
+      ],
+      "coverage": 0.4673,
+      "soft": 0.1118,
+      "edgeTouch": 0.0408,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-05",
+      "size": [
+        542,
+        467
+      ],
+      "coverage": 0.1939,
+      "soft": 0.0274,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-06",
+      "size": [
+        587,
+        444
+      ],
+      "coverage": 0.1988,
+      "soft": 0.0293,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-07",
+      "size": [
+        572,
+        506
+      ],
+      "coverage": 0.2557,
+      "soft": 0.0219,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-08",
+      "size": [
+        521,
+        473
+      ],
+      "coverage": 0.2143,
+      "soft": 0.0222,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-09",
+      "size": [
+        618,
+        548
+      ],
+      "coverage": 0.2993,
+      "soft": 0.0586,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "slip-and-go--winter-collection-10",
+      "size": [
+        561,
+        522
+      ],
+      "coverage": 0.2373,
+      "soft": 0.0208,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-01",
+      "size": [
+        356,
+        842
+      ],
+      "coverage": 0.1348,
+      "soft": 0.0449,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-02",
+      "size": [
+        491,
+        1003
+      ],
+      "coverage": 0.3066,
+      "soft": 0.0386,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-03",
+      "size": [
+        356,
+        842
+      ],
+      "coverage": 0.1348,
+      "soft": 0.0449,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-04",
+      "size": [
+        574,
+        938
+      ],
+      "coverage": 0.3686,
+      "soft": 0.0847,
+      "edgeTouch": 0.1057,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-05",
+      "size": [
+        571,
+        922
+      ],
+      "coverage": 0.3093,
+      "soft": 0.0388,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-06",
+      "size": [
+        864,
+        906
+      ],
+      "coverage": 0.3042,
+      "soft": 0.5007,
+      "edgeTouch": 0.0514,
+      "flags": [
+        "soft/uncertain mask (50.1% semi-transparent)"
+      ]
+    },
+    {
+      "id": "the-cause-wear--summer-collection-07",
+      "size": [
+        617,
+        971
+      ],
+      "coverage": 0.3603,
+      "soft": 0.0548,
+      "edgeTouch": 0.0934,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-08",
+      "size": [
+        522,
+        743
+      ],
+      "coverage": 0.1565,
+      "soft": 0.0616,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-09",
+      "size": [
+        276,
+        667
+      ],
+      "coverage": 0.0917,
+      "soft": 0.0514,
+      "edgeTouch": 0.0,
+      "flags": []
+    },
+    {
+      "id": "the-cause-wear--summer-collection-10",
+      "size": [
+        313,
+        624
+      ],
+      "coverage": 0.0799,
+      "soft": 0.0624,
+      "edgeTouch": 0.0,
+      "flags": [
+        "low coverage (8.0%)"
+      ]
+    }
+  ],
+  "failures": []
+}

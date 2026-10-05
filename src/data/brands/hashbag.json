@@ -1,0 +1,1196 @@
+{
+  "brandId": "hashbag",
+  "site": "https://hashbag-eg.com",
+  "sections": [
+    {
+      "id": "hashbag--women-bags",
+      "title": "Women Bags",
+      "titleAr": "شنط حريمي",
+      "productIds": [
+        "hashbag--women-bags-01",
+        "hashbag--women-bags-02",
+        "hashbag--women-bags-03"
+      ]
+    },
+    {
+      "id": "hashbag--thermal",
+      "title": "Thermal",
+      "titleAr": "شنط حافظة للحرارة",
+      "productIds": [
+        "hashbag--thermal-01",
+        "hashbag--thermal-02",
+        "hashbag--thermal-03",
+        "hashbag--thermal-04",
+        "hashbag--thermal-05",
+        "hashbag--thermal-06",
+        "hashbag--thermal-07",
+        "hashbag--thermal-08",
+        "hashbag--thermal-09",
+        "hashbag--thermal-10"
+      ]
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag",
+      "title": "Thermal and Cool Bag",
+      "titleAr": "شنط حرارة وتبريد",
+      "productIds": [
+        "hashbag--thermal-and-cool-bag-01",
+        "hashbag--thermal-and-cool-bag-02",
+        "hashbag--thermal-and-cool-bag-03",
+        "hashbag--thermal-and-cool-bag-04",
+        "hashbag--thermal-and-cool-bag-05",
+        "hashbag--thermal-and-cool-bag-06",
+        "hashbag--thermal-and-cool-bag-07",
+        "hashbag--thermal-and-cool-bag-08",
+        "hashbag--thermal-and-cool-bag-09",
+        "hashbag--thermal-and-cool-bag-10"
+      ]
+    },
+    {
+      "id": "hashbag--school",
+      "title": "School",
+      "titleAr": "شنط مدرسة",
+      "productIds": [
+        "hashbag--school-01",
+        "hashbag--school-02",
+        "hashbag--school-03",
+        "hashbag--school-04",
+        "hashbag--school-05"
+      ]
+    },
+    {
+      "id": "hashbag--kids",
+      "title": "Kids",
+      "titleAr": "أطفال",
+      "productIds": [
+        "hashbag--kids-01"
+      ]
+    },
+    {
+      "id": "hashbag--cross-bag",
+      "title": "Cross Bag",
+      "titleAr": "كروس باج",
+      "productIds": [
+        "hashbag--cross-bag-01"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "hashbag--women-bags-01",
+      "handle": "large-leather-hand-bag_-lv-patterned-bag",
+      "title": "Large Leather Hand Bag_ LV Patterned",
+      "price": 650,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--women-bags-01/1.jpg",
+        "/products/hashbag--women-bags-01/2.jpg"
+      ],
+      "cutout": "/products/hashbag--women-bags-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "hashbag--women-bags",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/large-leather-hand-bag_-lv-patterned-bag"
+    },
+    {
+      "id": "hashbag--women-bags-02",
+      "handle": "capotine-bag",
+      "title": "Capotine Bag",
+      "price": 400,
+      "compareAtPrice": 450,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--women-bags-02/1.jpg",
+        "/products/hashbag--women-bags-02/2.jpg"
+      ],
+      "cutout": "/products/hashbag--women-bags-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Liliac",
+          "nameAr": "Liliac",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "hashbag--women-bags",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/capotine-bag"
+    },
+    {
+      "id": "hashbag--women-bags-03",
+      "handle": "gucci-handbag",
+      "title": "Gucci Handbag",
+      "price": 650,
+      "compareAtPrice": 700,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--women-bags-03/1.jpg",
+        "/products/hashbag--women-bags-03/2.jpg"
+      ],
+      "cutout": "/products/hashbag--women-bags-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "hashbag--women-bags",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/gucci-handbag"
+    },
+    {
+      "id": "hashbag--thermal-01",
+      "handle": "hashbag-thermal-lunch-bag-6-liters-22-15-19-cm",
+      "title": "HashBag Thermal Lunch Bag – 6 Liters  (22 × 15 × 19 cm)",
+      "price": 150,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-01/1.jpg",
+        "/products/hashbag--thermal-01/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/hashbag-thermal-lunch-bag-6-liters-22-15-19-cm"
+    },
+    {
+      "id": "hashbag--thermal-02",
+      "handle": "gel-ice-pack-400-ml",
+      "title": "Gel Ice Pack 400 ml",
+      "price": 150,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-02/1.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/gel-ice-pack-400-ml"
+    },
+    {
+      "id": "hashbag--thermal-03",
+      "handle": "lux-thermal-sandwich-bag-22-27-cm",
+      "title": "Lux Thermal Sandwich Bag – 22 × 27 cm",
+      "price": 60,
+      "compareAtPrice": 75,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-03/1.jpg",
+        "/products/hashbag--thermal-03/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/lux-thermal-sandwich-bag-22-27-cm"
+    },
+    {
+      "id": "hashbag--thermal-04",
+      "handle": "thermal-sandwich-bag-22-27-cm",
+      "title": "Thermal Sandwich Bag – 22 × 27 cm",
+      "price": 30,
+      "compareAtPrice": 35,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-04/1.jpg",
+        "/products/hashbag--thermal-04/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-sandwich-bag-22-27-cm"
+    },
+    {
+      "id": "hashbag--thermal-05",
+      "handle": "4l-insulated-lunch-box-bag",
+      "title": "4L Insulated Lunch Box Bag ( w 22cm x h 19cm x d 9cm )",
+      "price": 350,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-05/1.jpg",
+        "/products/hashbag--thermal-05/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-05/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Navy Blue",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/4l-insulated-lunch-box-bag"
+    },
+    {
+      "id": "hashbag--thermal-06",
+      "handle": "thermal-lunch-bag-6l",
+      "title": "Thermal Lunch Bag – 6L (15 × 24 × 22 cm)",
+      "price": 425,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-06/1.jpg",
+        "/products/hashbag--thermal-06/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-06/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "White & Sky Blue",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White Multi",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Navy Blue",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "BluePink Multi",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "White & Navy",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-lunch-bag-6l"
+    },
+    {
+      "id": "hashbag--thermal-07",
+      "handle": "waterproof-cool-bag-1-5l",
+      "title": "Waterproof Cool Bag – 1.5L 33× 13",
+      "price": 225,
+      "compareAtPrice": 250,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-07/1.jpg",
+        "/products/hashbag--thermal-07/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-07/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Wine Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/waterproof-cool-bag-1-5l"
+    },
+    {
+      "id": "hashbag--thermal-08",
+      "handle": "tray-thermal-bag",
+      "title": "Tray Thermal Bag 45-40-cm",
+      "price": 350,
+      "compareAtPrice": 400,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-08/1.jpg",
+        "/products/hashbag--thermal-08/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-08/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Wine red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/tray-thermal-bag"
+    },
+    {
+      "id": "hashbag--thermal-09",
+      "handle": "thermal-bag-9-l",
+      "title": "Thermal bag from Bagz  9 L 27 ×18 × 18",
+      "price": 575,
+      "compareAtPrice": 675,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-09/1.jpg",
+        "/products/hashbag--thermal-09/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-09/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Dark blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag-9-l"
+    },
+    {
+      "id": "hashbag--thermal-10",
+      "handle": "hashbag-thermal-delivery-bag-48l-capacity",
+      "title": "HashBag Thermal Bag – 48L Capacity (40 × 40 × 30)",
+      "price": 950,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-10/1.jpg",
+        "/products/hashbag--thermal-10/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-10/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Dark gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "hashbag--thermal",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/hashbag-thermal-delivery-bag-48l-capacity"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-01",
+      "handle": "waterproof-brown-kitchen-apron",
+      "title": "Waterproof Kitchen Apron with Towel",
+      "price": 230,
+      "compareAtPrice": 250,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-01/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-01/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Light Grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/waterproof-brown-kitchen-apron"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-02",
+      "handle": "thermal-bag-30l",
+      "title": "Thermal Bag - 30L (40 × 26 × 29)",
+      "price": 550,
+      "compareAtPrice": 650,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-02/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-02/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Dark gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Light Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag-30l"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-03",
+      "handle": "thermal-bag-for-5-l",
+      "title": "Thermal bag for 5 L (20, 20, 16 cm)",
+      "price": 375,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-03/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-03/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-03/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Light Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag-for-5-l"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-04",
+      "handle": "thermal-and-cool-bag16l",
+      "title": "Thermal and Cool Bag(16L ) 30, 19, 29",
+      "price": 600,
+      "compareAtPrice": 700,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-04/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-04/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-04/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-and-cool-bag16l"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-05",
+      "handle": "thermal-bag26l",
+      "title": "Thermal Bag(26L) 34x 23x 31cm",
+      "price": 900,
+      "compareAtPrice": 950,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-05/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-05/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-05/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag26l"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-06",
+      "handle": "thermal-bag-13l-capacity",
+      "title": "Thermal Bag - 13L  (20x 25x 26)",
+      "price": 400,
+      "compareAtPrice": 450,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-06/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-06/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-06/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Wine Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag-13l-capacity"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-07",
+      "handle": "thermal-bag",
+      "title": "Dual-Tone Thermal Bag - 4L (18x 18x 13)",
+      "price": 300,
+      "compareAtPrice": 350,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-07/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-07/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-07/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Dark gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-08",
+      "handle": "thermal-bag-15-l-wooded",
+      "title": "15L Thermal Bag – Multi-Pattern Design (34x20x23 cm)",
+      "price": 475,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-08/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-08/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-08/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Hot pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Dark gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Light Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Pink summer",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag-15-l-wooded"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-09",
+      "handle": "thermal-bag-7-liter",
+      "title": "Double Thermal bag 7 Liter (25 x 15 x 21.5 h)",
+      "price": 450,
+      "compareAtPrice": 500,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-09/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-09/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-09/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Hot pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/thermal-bag-7-liter"
+    },
+    {
+      "id": "hashbag--thermal-and-cool-bag-10",
+      "handle": "cool-bag-2-5-l-linen",
+      "title": "Cool bag 2.5 L Linen 10 ,34 Cm",
+      "price": 275,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--thermal-and-cool-bag-10/1.jpg",
+        "/products/hashbag--thermal-and-cool-bag-10/2.jpg"
+      ],
+      "cutout": "/products/hashbag--thermal-and-cool-bag-10/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "hashbag--thermal-and-cool-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/cool-bag-2-5-l-linen"
+    },
+    {
+      "id": "hashbag--school-01",
+      "handle": "cheerful-backpack-for-your-child-preschool-stage",
+      "title": "Cheerful Backpack for Child - Preschool Stage (28 • 25 • 8 )cm",
+      "price": 375,
+      "compareAtPrice": 400,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--school-01/1.jpg",
+        "/products/hashbag--school-01/2.jpg"
+      ],
+      "cutout": "/products/hashbag--school-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "hashbag--school",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/cheerful-backpack-for-your-child-preschool-stage"
+    },
+    {
+      "id": "hashbag--school-02",
+      "handle": "stitch-kids-backpack-3d",
+      "title": "Stitch Kids Backpack   3D ( 28 x 25 x 6 cm )",
+      "price": 375,
+      "compareAtPrice": 400,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--school-02/1.jpg",
+        "/products/hashbag--school-02/2.jpg"
+      ],
+      "cutout": "/products/hashbag--school-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Dark blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Pink x purple",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Pink lilo stitch",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Blue lilo stitch",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "hashbag--school",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/stitch-kids-backpack-3d"
+    },
+    {
+      "id": "hashbag--school-03",
+      "handle": "ocean-pearl-princess-backpack",
+      "title": "Ocean Pearl Princess Backpack 33x25x6 cm",
+      "price": 375,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--school-03/1.jpg"
+      ],
+      "cutout": "/products/hashbag--school-03/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "hashbag--school",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/ocean-pearl-princess-backpack"
+    },
+    {
+      "id": "hashbag--school-04",
+      "handle": "happy-elephant-adventure-backpack",
+      "title": "Happy Elephant Adventure Backpack 30x25x6 cm",
+      "price": 375,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--school-04/1.jpg"
+      ],
+      "cutout": "/products/hashbag--school-04/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "hashbag--school",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/happy-elephant-adventure-backpack"
+    },
+    {
+      "id": "hashbag--school-05",
+      "handle": "m-design-secure-lunch-box-1-1l",
+      "title": "M-Design Secure Lunch Box",
+      "price": 330,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--school-05/1.jpg",
+        "/products/hashbag--school-05/2.jpg"
+      ],
+      "cutout": "/products/hashbag--school-05/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "fushia",
+          "nameAr": "fushia",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Petrol Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        }
+      ],
+      "section": "hashbag--school",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/m-design-secure-lunch-box-1-1l"
+    },
+    {
+      "id": "hashbag--kids-01",
+      "handle": "sweet-kitty-dream-backpack",
+      "title": "Sweet Kitty Dream Backpack 33x25x6 cm",
+      "price": 375,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--kids-01/1.jpg"
+      ],
+      "cutout": "/products/hashbag--kids-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "hashbag--kids",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/sweet-kitty-dream-backpack"
+    },
+    {
+      "id": "hashbag--cross-bag-01",
+      "handle": "leather-crossbody-bag",
+      "title": "Leather Crossbody Bag",
+      "price": 250,
+      "compareAtPrice": 280,
+      "currency": "EGP",
+      "images": [
+        "/products/hashbag--cross-bag-01/1.jpg",
+        "/products/hashbag--cross-bag-01/2.jpg"
+      ],
+      "cutout": "/products/hashbag--cross-bag-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Camel",
+          "nameAr": "جملي",
+          "hex": "#b98a5a"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "hashbag--cross-bag",
+      "modelOutfit": false,
+      "url": "https://hashbag-eg.com/products/leather-crossbody-bag"
+    }
+  ]
+}

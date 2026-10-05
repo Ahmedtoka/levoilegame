@@ -1,0 +1,1289 @@
+{
+  "brandId": "scarfest",
+  "site": "https://scarfestfashion.com",
+  "sections": [
+    {
+      "id": "scarfest--chiffon-printed",
+      "title": "Chiffon Printed",
+      "titleAr": "شيفون مطبوع",
+      "productIds": [
+        "scarfest--chiffon-printed-01",
+        "scarfest--chiffon-printed-02",
+        "scarfest--chiffon-printed-03",
+        "scarfest--chiffon-printed-04",
+        "scarfest--chiffon-printed-05",
+        "scarfest--chiffon-printed-06",
+        "scarfest--chiffon-printed-07",
+        "scarfest--chiffon-printed-08",
+        "scarfest--chiffon-printed-09",
+        "scarfest--chiffon-printed-10"
+      ]
+    },
+    {
+      "id": "scarfest--modal-printed",
+      "title": "Modal Printed",
+      "titleAr": "مودال مطبوع",
+      "productIds": [
+        "scarfest--modal-printed-01",
+        "scarfest--modal-printed-02",
+        "scarfest--modal-printed-03",
+        "scarfest--modal-printed-04",
+        "scarfest--modal-printed-05",
+        "scarfest--modal-printed-06",
+        "scarfest--modal-printed-07",
+        "scarfest--modal-printed-08",
+        "scarfest--modal-printed-09",
+        "scarfest--modal-printed-10"
+      ]
+    },
+    {
+      "id": "scarfest--modal-plain",
+      "title": "Modal Plain",
+      "titleAr": "مودال سادة",
+      "productIds": [
+        "scarfest--modal-plain-01",
+        "scarfest--modal-plain-02",
+        "scarfest--modal-plain-03",
+        "scarfest--modal-plain-04",
+        "scarfest--modal-plain-05"
+      ]
+    },
+    {
+      "id": "scarfest--cotton-jill",
+      "title": "Cotton Jill",
+      "titleAr": "قطن جيل",
+      "productIds": [
+        "scarfest--cotton-jill-01",
+        "scarfest--cotton-jill-02",
+        "scarfest--cotton-jill-03",
+        "scarfest--cotton-jill-04",
+        "scarfest--cotton-jill-05",
+        "scarfest--cotton-jill-06",
+        "scarfest--cotton-jill-07",
+        "scarfest--cotton-jill-08",
+        "scarfest--cotton-jill-09",
+        "scarfest--cotton-jill-10"
+      ]
+    },
+    {
+      "id": "scarfest--kuwaiti",
+      "title": "Kuwaiti",
+      "titleAr": "كويتي",
+      "productIds": [
+        "scarfest--kuwaiti-01",
+        "scarfest--kuwaiti-02",
+        "scarfest--kuwaiti-03",
+        "scarfest--kuwaiti-04",
+        "scarfest--kuwaiti-05",
+        "scarfest--kuwaiti-06",
+        "scarfest--kuwaiti-07"
+      ]
+    },
+    {
+      "id": "scarfest--raffield",
+      "title": "Ruffield",
+      "titleAr": "كشكشة",
+      "productIds": [
+        "scarfest--raffield-01",
+        "scarfest--raffield-02",
+        "scarfest--raffield-03",
+        "scarfest--raffield-04",
+        "scarfest--raffield-05",
+        "scarfest--raffield-06",
+        "scarfest--raffield-07",
+        "scarfest--raffield-08",
+        "scarfest--raffield-09"
+      ]
+    },
+    {
+      "id": "scarfest--brooch",
+      "title": "Brooch",
+      "titleAr": "بروشات",
+      "productIds": [
+        "scarfest--brooch-01",
+        "scarfest--brooch-02",
+        "scarfest--brooch-03",
+        "scarfest--brooch-04",
+        "scarfest--brooch-05",
+        "scarfest--brooch-06",
+        "scarfest--brooch-07",
+        "scarfest--brooch-08",
+        "scarfest--brooch-09",
+        "scarfest--brooch-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "scarfest--chiffon-printed-01",
+      "handle": "blue-serenity-chiffon-printed",
+      "title": "Blue Serenity - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-01/1.jpg",
+        "/products/scarfest--chiffon-printed-01/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/blue-serenity-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-02",
+      "handle": "vintage-rouge-chiffon-printed",
+      "title": "Vintage Rouge - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-02/1.jpg",
+        "/products/scarfest--chiffon-printed-02/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/vintage-rouge-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-03",
+      "handle": "azure-lines-chiffon-printed",
+      "title": "Azure Lines - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-03/1.jpg",
+        "/products/scarfest--chiffon-printed-03/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/azure-lines-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-04",
+      "handle": "signature-monogram-chiffon-printed",
+      "title": "Signature Monogram - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-04/1.jpg",
+        "/products/scarfest--chiffon-printed-04/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/signature-monogram-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-05",
+      "handle": "blue-blossom-chiffon-printed",
+      "title": "Blue Blossom - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-05/1.jpg",
+        "/products/scarfest--chiffon-printed-05/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/blue-blossom-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-06",
+      "handle": "midnight-meadow-chiffon-printed",
+      "title": "Midnight Meadow - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-06/1.jpg",
+        "/products/scarfest--chiffon-printed-06/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/midnight-meadow-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-07",
+      "handle": "pastel-ornament-chiffon-printed",
+      "title": "Pastel Ornament - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-07/1.jpg",
+        "/products/scarfest--chiffon-printed-07/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/pastel-ornament-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-08",
+      "handle": "midnight-paisley-chiffon-printed",
+      "title": "Midnight Paisley - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-08/1.jpg",
+        "/products/scarfest--chiffon-printed-08/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/midnight-paisley-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-09",
+      "handle": "sea-mist-chiffon-printed",
+      "title": "Sea Mist - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-09/1.jpg",
+        "/products/scarfest--chiffon-printed-09/2.jpg"
+      ],
+      "cutout": "/products/scarfest--chiffon-printed-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/sea-mist-chiffon-printed"
+    },
+    {
+      "id": "scarfest--chiffon-printed-10",
+      "handle": "winter-serenity-chiffon-printed",
+      "title": "Winter Serenity - Chiffon Printed",
+      "price": 185,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--chiffon-printed-10/1.jpg",
+        "/products/scarfest--chiffon-printed-10/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--chiffon-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/winter-serenity-chiffon-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-01",
+      "handle": "vintage-tile-modal-printed",
+      "title": "Vintage Tile - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-01/1.jpg",
+        "/products/scarfest--modal-printed-01/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/vintage-tile-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-02",
+      "handle": "vintage-meadow-modal-printed",
+      "title": "Vintage Meadow - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-02/1.jpg",
+        "/products/scarfest--modal-printed-02/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/vintage-meadow-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-03",
+      "handle": "modal-printed",
+      "title": "Botanical Border - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-03/1.jpg",
+        "/products/scarfest--modal-printed-03/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-04",
+      "handle": "olive-waves-modal-printed",
+      "title": "Olive Waves - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-04/1.jpg",
+        "/products/scarfest--modal-printed-04/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/olive-waves-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-05",
+      "handle": "black-polka-dot",
+      "title": "Black Polka Dot - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-05/1.jpg",
+        "/products/scarfest--modal-printed-05/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/black-polka-dot"
+    },
+    {
+      "id": "scarfest--modal-printed-06",
+      "handle": "watercolor-bloom-modal-printed",
+      "title": "Watercolor Bloom - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-06/1.jpg",
+        "/products/scarfest--modal-printed-06/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/watercolor-bloom-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-07",
+      "handle": "abstract-multicolor-modal-printed",
+      "title": "Abstract Multicolor - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-07/1.jpg",
+        "/products/scarfest--modal-printed-07/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/abstract-multicolor-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-08",
+      "handle": "black-floral",
+      "title": "Black Floral - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-08/1.jpg",
+        "/products/scarfest--modal-printed-08/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/black-floral"
+    },
+    {
+      "id": "scarfest--modal-printed-09",
+      "handle": "ocean-blue-modal-printed",
+      "title": "Ocean Blue - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-09/1.jpg",
+        "/products/scarfest--modal-printed-09/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/ocean-blue-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-printed-10",
+      "handle": "desert-lace-modal-printed",
+      "title": "Desert Lace - Modal Printed",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-printed-10/1.jpg",
+        "/products/scarfest--modal-printed-10/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-printed-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-printed",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/desert-lace-modal-printed"
+    },
+    {
+      "id": "scarfest--modal-plain-01",
+      "handle": "dusty-rose-modal-plain",
+      "title": "Dusty Rose - Modal plain",
+      "price": 200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-plain-01/1.jpg",
+        "/products/scarfest--modal-plain-01/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-plain-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "scarfest--modal-plain",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/dusty-rose-modal-plain"
+    },
+    {
+      "id": "scarfest--modal-plain-02",
+      "handle": "colors-modal-plain",
+      "title": "Colors - Modal Plain",
+      "price": 200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-plain-02/1.jpg",
+        "/products/scarfest--modal-plain-02/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Dark Forest Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Dusty Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Taupe Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Dusty Rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Charcoal Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Mocha Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "scarfest--modal-plain",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/colors-modal-plain"
+    },
+    {
+      "id": "scarfest--modal-plain-03",
+      "handle": "sand-beige-modal-plain",
+      "title": "Sand Beige - Modal Plain",
+      "price": 200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-plain-03/1.jpg",
+        "/products/scarfest--modal-plain-03/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-plain-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-plain",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/sand-beige-modal-plain"
+    },
+    {
+      "id": "scarfest--modal-plain-04",
+      "handle": "ivory-modal-plain",
+      "title": "Ivory - Modal Plain",
+      "price": 200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-plain-04/1.jpg",
+        "/products/scarfest--modal-plain-04/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-plain-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-plain",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/ivory-modal-plain"
+    },
+    {
+      "id": "scarfest--modal-plain-05",
+      "handle": "smoky-grey-modal-plain",
+      "title": "Smoky Grey - Modal Plain",
+      "price": 200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--modal-plain-05/1.jpg",
+        "/products/scarfest--modal-plain-05/2.jpg"
+      ],
+      "cutout": "/products/scarfest--modal-plain-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--modal-plain",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/smoky-grey-modal-plain"
+    },
+    {
+      "id": "scarfest--cotton-jill-01",
+      "handle": "soft-sand-cotton-jill",
+      "title": "Soft Sand - Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-01/1.jpg",
+        "/products/scarfest--cotton-jill-01/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Warm Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/soft-sand-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-02",
+      "handle": "mocha-taupe-cotton-jill",
+      "title": "Mocha Taupe - Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-02/1.jpg",
+        "/products/scarfest--cotton-jill-02/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/mocha-taupe-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-03",
+      "handle": "storm-gray-cotton-jill",
+      "title": "Storm Gray – Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-03/1.jpg",
+        "/products/scarfest--cotton-jill-03/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-03/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Storm Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/storm-gray-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-04",
+      "handle": "slate-blue-cotton-jill",
+      "title": "Slate Blue – Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-04/1.jpg",
+        "/products/scarfest--cotton-jill-04/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-04/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Slate Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/slate-blue-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-05",
+      "handle": "classic-navy-cotton-jill",
+      "title": "Classic Navy – Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-05/1.jpg",
+        "/products/scarfest--cotton-jill-05/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/classic-navy-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-06",
+      "handle": "jet-black-cotton-jill",
+      "title": "Jet Black – Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-06/1.jpg",
+        "/products/scarfest--cotton-jill-06/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/jet-black-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-07",
+      "handle": "brown-cotton-jill",
+      "title": "Brown – Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-07/1.jpg",
+        "/products/scarfest--cotton-jill-07/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/brown-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-08",
+      "handle": "berry-cotton-jill",
+      "title": "Berry - Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-08/1.jpg",
+        "/products/scarfest--cotton-jill-08/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-08/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Deep Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/berry-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-09",
+      "handle": "warm-almond-cotton-jill",
+      "title": "Warm Almond - Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-09/1.jpg",
+        "/products/scarfest--cotton-jill-09/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-09/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/warm-almond-cotton-jill"
+    },
+    {
+      "id": "scarfest--cotton-jill-10",
+      "handle": "mulberry-plum-cotton-jill",
+      "title": "Mulberry Plum – Cotton Jill with bandana",
+      "price": 225,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--cotton-jill-10/1.jpg",
+        "/products/scarfest--cotton-jill-10/2.jpg"
+      ],
+      "cutout": "/products/scarfest--cotton-jill-10/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Mulberry Plum",
+          "nameAr": "Mulberry Plum",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "scarfest--cotton-jill",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/mulberry-plum-cotton-jill"
+    },
+    {
+      "id": "scarfest--kuwaiti-01",
+      "handle": "mushroom-taupe-kuwaiti",
+      "title": "Mushroom Taupe – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-01/1.jpg",
+        "/products/scarfest--kuwaiti-01/2.jpg"
+      ],
+      "cutout": "/products/scarfest--kuwaiti-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/mushroom-taupe-kuwaiti"
+    },
+    {
+      "id": "scarfest--kuwaiti-02",
+      "handle": "midnight-navy-kuwaiti",
+      "title": "Midnight Navy – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-02/1.jpg",
+        "/products/scarfest--kuwaiti-02/2.jpg"
+      ],
+      "cutout": "/products/scarfest--kuwaiti-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/midnight-navy-kuwaiti"
+    },
+    {
+      "id": "scarfest--kuwaiti-03",
+      "handle": "midnight-black-kuwaiti",
+      "title": "Midnight Black – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-03/1.jpg",
+        "/products/scarfest--kuwaiti-03/2.jpg"
+      ],
+      "cutout": "/products/scarfest--kuwaiti-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/midnight-black-kuwaiti"
+    },
+    {
+      "id": "scarfest--kuwaiti-04",
+      "handle": "misty-lilac-kuwaiti",
+      "title": "Misty Lilac – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-04/1.jpg",
+        "/products/scarfest--kuwaiti-04/2.jpg"
+      ],
+      "cutout": "/products/scarfest--kuwaiti-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/misty-lilac-kuwaiti"
+    },
+    {
+      "id": "scarfest--kuwaiti-05",
+      "handle": "vanilla-cream-kuwaiti",
+      "title": "Vanilla Cream – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-05/1.jpg",
+        "/products/scarfest--kuwaiti-05/2.jpg"
+      ],
+      "cutout": "/products/scarfest--kuwaiti-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/vanilla-cream-kuwaiti"
+    },
+    {
+      "id": "scarfest--kuwaiti-06",
+      "handle": "pure-white",
+      "title": "Pure White – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-06/1.jpg",
+        "/products/scarfest--kuwaiti-06/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/pure-white"
+    },
+    {
+      "id": "scarfest--kuwaiti-07",
+      "handle": "fuchsia-bloom-kuwaiti",
+      "title": "Fuchsia Bloom – Kuwaiti with bandana",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--kuwaiti-07/1.jpg",
+        "/products/scarfest--kuwaiti-07/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--kuwaiti",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/fuchsia-bloom-kuwaiti"
+    },
+    {
+      "id": "scarfest--raffield-01",
+      "handle": "dusty-mauve-raffield",
+      "title": "Dusty Mauve – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-01/1.jpg",
+        "/products/scarfest--raffield-01/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/dusty-mauve-raffield"
+    },
+    {
+      "id": "scarfest--raffield-02",
+      "handle": "charcoal-gray-raffield",
+      "title": "Charcoal Gray – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-02/1.jpg",
+        "/products/scarfest--raffield-02/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/charcoal-gray-raffield"
+    },
+    {
+      "id": "scarfest--raffield-03",
+      "handle": "sand-taupe-raffield",
+      "title": "Sand Taupe – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-03/1.jpg",
+        "/products/scarfest--raffield-03/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/sand-taupe-raffield"
+    },
+    {
+      "id": "scarfest--raffield-04",
+      "handle": "sand-beige-raffield",
+      "title": "Sand Beige – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-04/1.jpg",
+        "/products/scarfest--raffield-04/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/sand-beige-raffield"
+    },
+    {
+      "id": "scarfest--raffield-05",
+      "handle": "taupe-gray-raffield",
+      "title": "Taupe Gray – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-05/1.jpg",
+        "/products/scarfest--raffield-05/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/taupe-gray-raffield"
+    },
+    {
+      "id": "scarfest--raffield-06",
+      "handle": "heather-gray-raffield",
+      "title": "Heather Gray – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-06/1.jpg",
+        "/products/scarfest--raffield-06/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/heather-gray-raffield"
+    },
+    {
+      "id": "scarfest--raffield-07",
+      "handle": "olive-green-raffield",
+      "title": "Olive Green – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-07/1.jpg",
+        "/products/scarfest--raffield-07/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/olive-green-raffield"
+    },
+    {
+      "id": "scarfest--raffield-08",
+      "handle": "golden-camel-raffield",
+      "title": "Golden Camel – Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-08/1.jpg",
+        "/products/scarfest--raffield-08/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/golden-camel-raffield"
+    },
+    {
+      "id": "scarfest--raffield-09",
+      "handle": "sage-mist-raffield",
+      "title": "Sage Mist - Ruffield",
+      "price": 450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--raffield-09/1.jpg",
+        "/products/scarfest--raffield-09/2.jpg"
+      ],
+      "cutout": "/products/scarfest--raffield-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--raffield",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/sage-mist-raffield"
+    },
+    {
+      "id": "scarfest--brooch-01",
+      "handle": "ruby-ladybug-brooch",
+      "title": "Ruby Ladybug - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-01/1.jpg"
+      ],
+      "cutout": "/products/scarfest--brooch-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/ruby-ladybug-brooch"
+    },
+    {
+      "id": "scarfest--brooch-02",
+      "handle": "sapphire-butterfly-brooch",
+      "title": "Sapphire Butterfly - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-02/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/sapphire-butterfly-brooch"
+    },
+    {
+      "id": "scarfest--brooch-03",
+      "handle": "midnight-butterfly-brooch",
+      "title": "Midnight Butterfly - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-03/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/midnight-butterfly-brooch"
+    },
+    {
+      "id": "scarfest--brooch-04",
+      "handle": "pearl-bee-brooch",
+      "title": "Pearl Bee - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-04/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/pearl-bee-brooch"
+    },
+    {
+      "id": "scarfest--brooch-05",
+      "handle": "crystal-swan-brooch",
+      "title": "Crystal Swan - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-05/1.jpg"
+      ],
+      "cutout": "/products/scarfest--brooch-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/crystal-swan-brooch"
+    },
+    {
+      "id": "scarfest--brooch-06",
+      "handle": "emerald-fish-brooch",
+      "title": "Emerald Fish - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-06/1.jpg"
+      ],
+      "cutout": "/products/scarfest--brooch-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/emerald-fish-brooch"
+    },
+    {
+      "id": "scarfest--brooch-07",
+      "handle": "royal-peacock-brooch",
+      "title": "Royal Peacock - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-07/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/royal-peacock-brooch"
+    },
+    {
+      "id": "scarfest--brooch-08",
+      "handle": "royal-bee-brooch",
+      "title": "Royal Bee - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-08/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/royal-bee-brooch"
+    },
+    {
+      "id": "scarfest--brooch-09",
+      "handle": "amber-butterfly-brooch",
+      "title": "Amber Butterfly - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-09/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/amber-butterfly-brooch"
+    },
+    {
+      "id": "scarfest--brooch-10",
+      "handle": "crystal-bloom-brooch",
+      "title": "Crystal Bloom - Brooch",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/scarfest--brooch-10/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "scarfest--brooch",
+      "modelOutfit": false,
+      "url": "https://scarfestfashion.com/products/crystal-bloom-brooch"
+    }
+  ]
+}

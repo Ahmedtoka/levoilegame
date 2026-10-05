@@ -1,0 +1,1244 @@
+{
+  "brandId": "bezravoga",
+  "site": "https://bezravoga-eg.com",
+  "sections": [
+    {
+      "id": "bezravoga--drsis",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "bezravoga--drsis-01",
+        "bezravoga--drsis-02",
+        "bezravoga--drsis-03"
+      ]
+    },
+    {
+      "id": "bezravoga--shirts",
+      "title": "Shirts",
+      "titleAr": "قمصان",
+      "productIds": [
+        "bezravoga--shirts-01",
+        "bezravoga--shirts-02",
+        "bezravoga--shirts-03",
+        "bezravoga--shirts-04",
+        "bezravoga--shirts-05",
+        "bezravoga--shirts-06",
+        "bezravoga--shirts-07",
+        "bezravoga--shirts-08",
+        "bezravoga--shirts-09",
+        "bezravoga--shirts-10"
+      ]
+    },
+    {
+      "id": "bezravoga--set",
+      "title": "Sets",
+      "titleAr": "أطقم",
+      "productIds": [
+        "bezravoga--set-01",
+        "bezravoga--set-02",
+        "bezravoga--set-03",
+        "bezravoga--set-04",
+        "bezravoga--set-05"
+      ]
+    },
+    {
+      "id": "bezravoga--pants",
+      "title": "Pants",
+      "titleAr": "بناطيل",
+      "productIds": [
+        "bezravoga--pants-01",
+        "bezravoga--pants-02",
+        "bezravoga--pants-03",
+        "bezravoga--pants-04",
+        "bezravoga--pants-05",
+        "bezravoga--pants-06",
+        "bezravoga--pants-07",
+        "bezravoga--pants-08"
+      ]
+    },
+    {
+      "id": "bezravoga--skirts",
+      "title": "Skirts",
+      "titleAr": "جيبات",
+      "productIds": [
+        "bezravoga--skirts-01",
+        "bezravoga--skirts-02",
+        "bezravoga--skirts-03",
+        "bezravoga--skirts-04",
+        "bezravoga--skirts-05"
+      ]
+    },
+    {
+      "id": "bezravoga--summer-collection",
+      "title": "Summer Collection",
+      "titleAr": "كولكشن الصيف",
+      "productIds": [
+        "bezravoga--summer-collection-01",
+        "bezravoga--summer-collection-02",
+        "bezravoga--summer-collection-03",
+        "bezravoga--summer-collection-04"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "bezravoga--drsis-01",
+      "handle": "liora-linen-dress",
+      "title": "Liora Linen Dress",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--drsis-01/1.jpg",
+        "/products/bezravoga--drsis-01/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--drsis-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        }
+      ],
+      "section": "bezravoga--drsis",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/liora-linen-dress"
+    },
+    {
+      "id": "bezravoga--drsis-02",
+      "handle": "hekaya-dress-_-white",
+      "title": "Hekaya Dress _ White",
+      "price": 530,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--drsis-02/1.jpg",
+        "/products/bezravoga--drsis-02/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--drsis-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--drsis",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/hekaya-dress-_-white"
+    },
+    {
+      "id": "bezravoga--drsis-03",
+      "handle": "orla-dress-_-white",
+      "title": "Orla-Dress _ White",
+      "price": 1100,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--drsis-03/1.jpg",
+        "/products/bezravoga--drsis-03/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--drsis-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--drsis",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/orla-dress-_-white"
+    },
+    {
+      "id": "bezravoga--shirts-01",
+      "handle": "contrast-stripe-shirt",
+      "title": "Contrast Stripe Shirt",
+      "price": 550,
+      "compareAtPrice": 1100,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-01/1.jpg",
+        "/products/bezravoga--shirts-01/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/contrast-stripe-shirt"
+    },
+    {
+      "id": "bezravoga--shirts-02",
+      "handle": "ruffle-tie-neck-blouse",
+      "title": "Ruffle Tie-Neck Blouse",
+      "price": 425,
+      "compareAtPrice": 850,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-02/1.jpg",
+        "/products/bezravoga--shirts-02/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/ruffle-tie-neck-blouse"
+    },
+    {
+      "id": "bezravoga--shirts-03",
+      "handle": "relaxed-crop-top",
+      "title": "Relaxed Crop Top",
+      "price": 400,
+      "compareAtPrice": 800,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-03/1.jpg",
+        "/products/bezravoga--shirts-03/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Dark Taupe",
+          "nameAr": "توب",
+          "hex": "#8a7a6a"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/relaxed-crop-top"
+    },
+    {
+      "id": "bezravoga--shirts-04",
+      "handle": "luna-ribbed-rayon-shirt",
+      "title": "Luna Ribbed Rayon Shirt",
+      "price": 575,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-04/1.jpg",
+        "/products/bezravoga--shirts-04/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Oliv",
+          "nameAr": "Oliv",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/luna-ribbed-rayon-shirt"
+    },
+    {
+      "id": "bezravoga--shirts-05",
+      "handle": "turkish-satin-floral-shirt",
+      "title": "Turkish Satin Floral Shirt",
+      "price": 550,
+      "compareAtPrice": 1100,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-05/1.jpg",
+        "/products/bezravoga--shirts-05/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-05/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Dark Taupe",
+          "nameAr": "توب",
+          "hex": "#8a7a6a"
+        },
+        {
+          "name": "Sage",
+          "nameAr": "سيج",
+          "hex": "#9aae94"
+        },
+        {
+          "name": "Deep Plum",
+          "nameAr": "Deep Plum",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/turkish-satin-floral-shirt"
+    },
+    {
+      "id": "bezravoga--shirts-06",
+      "handle": "terra-linen-shirt",
+      "title": "Terra Linen Shirt",
+      "price": 700,
+      "compareAtPrice": 1400,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-06/1.jpg",
+        "/products/bezravoga--shirts-06/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-06/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Mocha",
+          "nameAr": "موكا",
+          "hex": "#7a5a46"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/terra-linen-shirt"
+    },
+    {
+      "id": "bezravoga--shirts-07",
+      "handle": "ruffle-blouse",
+      "title": "Ruffle Blouse",
+      "price": 600,
+      "compareAtPrice": 1200,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-07/1.jpg",
+        "/products/bezravoga--shirts-07/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-07/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/ruffle-blouse"
+    },
+    {
+      "id": "bezravoga--shirts-08",
+      "handle": "feather-touch-blouse",
+      "title": "Feather Touch Blouse",
+      "price": 575,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-08/1.jpg",
+        "/products/bezravoga--shirts-08/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-08/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/feather-touch-blouse"
+    },
+    {
+      "id": "bezravoga--shirts-09",
+      "handle": "bloom-cotton-chiffon-shirt",
+      "title": "Bloom Cotton Chiffon Shirt",
+      "price": 575,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-09/1.jpg",
+        "/products/bezravoga--shirts-09/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Taupe Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/bloom-cotton-chiffon-shirt"
+    },
+    {
+      "id": "bezravoga--shirts-10",
+      "handle": "ruffle-tie-blouse",
+      "title": "Ruffle Tie Blouse",
+      "price": 575,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--shirts-10/1.jpg",
+        "/products/bezravoga--shirts-10/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--shirts-10/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Crimson Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Mocha Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Taupe Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "white",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Liget Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "bezravoga--shirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/ruffle-tie-blouse"
+    },
+    {
+      "id": "bezravoga--set-01",
+      "handle": "ivory-linen-set",
+      "title": "Ivory Linen Set",
+      "price": 950,
+      "compareAtPrice": 1900,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--set-01/1.jpg",
+        "/products/bezravoga--set-01/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--set-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Mocha",
+          "nameAr": "موكا",
+          "hex": "#7a5a46"
+        },
+        {
+          "name": "Oliv",
+          "nameAr": "Oliv",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Rust",
+          "nameAr": "صدئي",
+          "hex": "#a8502a"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "bezravoga--set",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/ivory-linen-set"
+    },
+    {
+      "id": "bezravoga--set-02",
+      "handle": "cozy-set-white",
+      "title": "Cozy Set-White",
+      "price": 925,
+      "compareAtPrice": 1155,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--set-02/1.jpg",
+        "/products/bezravoga--set-02/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--set-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--set",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/cozy-set-white"
+    },
+    {
+      "id": "bezravoga--set-03",
+      "handle": "cozy-set-mustard",
+      "title": "Cozy Set-mustard",
+      "price": 925,
+      "compareAtPrice": 1155,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--set-03/1.jpg",
+        "/products/bezravoga--set-03/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--set-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--set",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/cozy-set-mustard"
+    },
+    {
+      "id": "bezravoga--set-04",
+      "handle": "cozy-set-liget-beige",
+      "title": "Cozy Set-Liget Beige",
+      "price": 925,
+      "compareAtPrice": 1155,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--set-04/1.jpg",
+        "/products/bezravoga--set-04/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--set-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--set",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/cozy-set-liget-beige"
+    },
+    {
+      "id": "bezravoga--set-05",
+      "handle": "cozy-set-beige",
+      "title": "Cozy Set - Beige",
+      "price": 925,
+      "compareAtPrice": 1155,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--set-05/1.jpg",
+        "/products/bezravoga--set-05/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--set-05/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--set",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/cozy-set-beige"
+    },
+    {
+      "id": "bezravoga--pants-01",
+      "handle": "sleek-fit-pants_mint-green",
+      "title": "Sleek Fit Pants_Mint Green",
+      "price": 480,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-01/1.jpg",
+        "/products/bezravoga--pants-01/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/sleek-fit-pants_mint-green"
+    },
+    {
+      "id": "bezravoga--pants-02",
+      "handle": "sleek-fit-pants_fuchsia",
+      "title": "Sleek Fit Pants_Fuchsia",
+      "price": 480,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-02/1.jpg",
+        "/products/bezravoga--pants-02/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/sleek-fit-pants_fuchsia"
+    },
+    {
+      "id": "bezravoga--pants-03",
+      "handle": "sleek-fit-pants_orange",
+      "title": "Sleek Fit Pants_Orange",
+      "price": 480,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-03/1.jpg",
+        "/products/bezravoga--pants-03/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/sleek-fit-pants_orange"
+    },
+    {
+      "id": "bezravoga--pants-04",
+      "handle": "sleek-fit-pants_black",
+      "title": "Sleek Fit Pants_Black",
+      "price": 480,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-04/1.jpg",
+        "/products/bezravoga--pants-04/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/sleek-fit-pants_black"
+    },
+    {
+      "id": "bezravoga--pants-05",
+      "handle": "striped-pants-black",
+      "title": "Striped Pants - black",
+      "price": 750,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-05/1.jpg",
+        "/products/bezravoga--pants-05/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-05/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/striped-pants-black"
+    },
+    {
+      "id": "bezravoga--pants-06",
+      "handle": "striped-pants",
+      "title": "Striped Pants",
+      "price": 750,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-06/1.jpg",
+        "/products/bezravoga--pants-06/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-06/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/striped-pants"
+    },
+    {
+      "id": "bezravoga--pants-07",
+      "handle": "side-button-linen-pants",
+      "title": "Side Button Linen Pants",
+      "price": 550,
+      "compareAtPrice": 1100,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-07/1.jpg",
+        "/products/bezravoga--pants-07/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        }
+      ],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/side-button-linen-pants"
+    },
+    {
+      "id": "bezravoga--pants-08",
+      "handle": "relaxed-wide-leg-pants",
+      "title": "Relaxed Wide-Leg Pants",
+      "price": 500,
+      "compareAtPrice": 1000,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--pants-08/1.jpg",
+        "/products/bezravoga--pants-08/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--pants-08/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Dark Taupe",
+          "nameAr": "توب",
+          "hex": "#8a7a6a"
+        }
+      ],
+      "section": "bezravoga--pants",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/relaxed-wide-leg-pants"
+    },
+    {
+      "id": "bezravoga--skirts-01",
+      "handle": "wrap-skirt-_-black",
+      "title": "Wrap Skirt _ Black",
+      "price": 600,
+      "compareAtPrice": 760,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--skirts-01/1.jpg",
+        "/products/bezravoga--skirts-01/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--skirts-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--skirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/wrap-skirt-_-black"
+    },
+    {
+      "id": "bezravoga--skirts-02",
+      "handle": "wrap-skirt-_-white",
+      "title": "Wrap Skirt _ White",
+      "price": 600,
+      "compareAtPrice": 760,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--skirts-02/1.jpg",
+        "/products/bezravoga--skirts-02/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--skirts-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--skirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/wrap-skirt-_-white"
+    },
+    {
+      "id": "bezravoga--skirts-03",
+      "handle": "wrap-skirt-_dark-beige",
+      "title": "Wrap Skirt _Dark Beige",
+      "price": 600,
+      "compareAtPrice": 760,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--skirts-03/1.jpg",
+        "/products/bezravoga--skirts-03/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--skirts-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--skirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/wrap-skirt-_dark-beige"
+    },
+    {
+      "id": "bezravoga--skirts-04",
+      "handle": "wrap-skirt-_-beige",
+      "title": "Wrap Skirt _ Beige",
+      "price": 600,
+      "compareAtPrice": 760,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--skirts-04/1.jpg",
+        "/products/bezravoga--skirts-04/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--skirts-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--skirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/wrap-skirt-_-beige"
+    },
+    {
+      "id": "bezravoga--skirts-05",
+      "handle": "wrap-skirt",
+      "title": "Wrap Skirt _ Royal Blue",
+      "price": 600,
+      "compareAtPrice": 760,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--skirts-05/1.jpg",
+        "/products/bezravoga--skirts-05/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--skirts-05/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--skirts",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/wrap-skirt"
+    },
+    {
+      "id": "bezravoga--summer-collection-01",
+      "handle": "essential-chemise-mint-green",
+      "title": "Essential Chemise - Mint green",
+      "price": 750,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--summer-collection-01/1.jpg",
+        "/products/bezravoga--summer-collection-01/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--summer-collection-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--summer-collection",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/essential-chemise-mint-green"
+    },
+    {
+      "id": "bezravoga--summer-collection-02",
+      "handle": "orla-dress-_-black",
+      "title": "Orla-Dress _ Black",
+      "price": 1100,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--summer-collection-02/1.jpg",
+        "/products/bezravoga--summer-collection-02/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--summer-collection-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--summer-collection",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/orla-dress-_-black"
+    },
+    {
+      "id": "bezravoga--summer-collection-03",
+      "handle": "essential-chemise-black",
+      "title": "Essential Chemise-Black",
+      "price": 750,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--summer-collection-03/1.jpg",
+        "/products/bezravoga--summer-collection-03/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--summer-collection-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--summer-collection",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/essential-chemise-black"
+    },
+    {
+      "id": "bezravoga--summer-collection-04",
+      "handle": "essential-chemise-white",
+      "title": "Essential Chemise-White",
+      "price": 750,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/bezravoga--summer-collection-04/1.jpg",
+        "/products/bezravoga--summer-collection-04/2.jpg"
+      ],
+      "cutout": "/products/bezravoga--summer-collection-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "bezravoga--summer-collection",
+      "modelOutfit": false,
+      "url": "https://bezravoga-eg.com/products/essential-chemise-white"
+    }
+  ]
+}

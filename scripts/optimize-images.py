@@ -15,6 +15,10 @@ FORCE = "--force" in sys.argv
 # Products whose cut-out failed QA (cutout is null) never use it: skip those files.
 _cat = json.loads((ROOT.parent.parent / "src" / "data" / "products.json").read_text(encoding="utf8"))
 NO_CUTOUT = {p["id"] for p in _cat["products"] if p["cutout"] is None}
+# 122 Mall brand catalogues (scripts/fetch-brands.mjs) likewise.
+for _f in (ROOT.parent.parent / "src" / "data" / "brands").glob("*.json"):
+    if not _f.name.endswith(".remote.json"):
+        NO_CUTOUT |= {p["id"] for p in json.loads(_f.read_text(encoding="utf8"))["products"] if p["cutout"] is None}
 
 
 def save(src: Path, dst: Path, size: int, quality: int, alpha: bool) -> None:

@@ -1,0 +1,1847 @@
+{
+  "brandId": "nanosh",
+  "site": "https://nanoushboutique.com",
+  "sections": [
+    {
+      "id": "nanosh--dresses",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "nanosh--dresses-01",
+        "nanosh--dresses-02",
+        "nanosh--dresses-03",
+        "nanosh--dresses-04",
+        "nanosh--dresses-05",
+        "nanosh--dresses-06",
+        "nanosh--dresses-07",
+        "nanosh--dresses-08",
+        "nanosh--dresses-09",
+        "nanosh--dresses-10"
+      ]
+    },
+    {
+      "id": "nanosh--sets",
+      "title": "sets",
+      "titleAr": "أطقم",
+      "productIds": [
+        "nanosh--sets-01",
+        "nanosh--sets-02",
+        "nanosh--sets-03",
+        "nanosh--sets-04",
+        "nanosh--sets-05",
+        "nanosh--sets-06",
+        "nanosh--sets-07",
+        "nanosh--sets-08",
+        "nanosh--sets-09",
+        "nanosh--sets-10"
+      ]
+    },
+    {
+      "id": "nanosh--shirts",
+      "title": "Shirts",
+      "titleAr": "قمصان",
+      "productIds": [
+        "nanosh--shirts-01",
+        "nanosh--shirts-02",
+        "nanosh--shirts-03",
+        "nanosh--shirts-04",
+        "nanosh--shirts-05",
+        "nanosh--shirts-06",
+        "nanosh--shirts-07",
+        "nanosh--shirts-08",
+        "nanosh--shirts-09",
+        "nanosh--shirts-10"
+      ]
+    },
+    {
+      "id": "nanosh--blouses",
+      "title": "Blouses",
+      "titleAr": "بلوزات",
+      "productIds": [
+        "nanosh--blouses-01",
+        "nanosh--blouses-02"
+      ]
+    },
+    {
+      "id": "nanosh--pants",
+      "title": "Pants",
+      "titleAr": "بناطيل",
+      "productIds": [
+        "nanosh--pants-01",
+        "nanosh--pants-02",
+        "nanosh--pants-03",
+        "nanosh--pants-04",
+        "nanosh--pants-05",
+        "nanosh--pants-06",
+        "nanosh--pants-07",
+        "nanosh--pants-08",
+        "nanosh--pants-09",
+        "nanosh--pants-10"
+      ]
+    },
+    {
+      "id": "nanosh--skirts",
+      "title": "skirts",
+      "titleAr": "جيبات",
+      "productIds": [
+        "nanosh--skirts-01",
+        "nanosh--skirts-02",
+        "nanosh--skirts-03",
+        "nanosh--skirts-04",
+        "nanosh--skirts-05",
+        "nanosh--skirts-06",
+        "nanosh--skirts-07",
+        "nanosh--skirts-08"
+      ]
+    },
+    {
+      "id": "nanosh--jackets",
+      "title": "Coats",
+      "titleAr": "جواكت",
+      "productIds": [
+        "nanosh--jackets-01",
+        "nanosh--jackets-02",
+        "nanosh--jackets-03",
+        "nanosh--jackets-04"
+      ]
+    },
+    {
+      "id": "nanosh--bags",
+      "title": "New Arrival",
+      "titleAr": "شنط",
+      "productIds": [
+        "nanosh--bags-01",
+        "nanosh--bags-02",
+        "nanosh--bags-03",
+        "nanosh--bags-04",
+        "nanosh--bags-05",
+        "nanosh--bags-06",
+        "nanosh--bags-07",
+        "nanosh--bags-08",
+        "nanosh--bags-09",
+        "nanosh--bags-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "nanosh--dresses-01",
+      "handle": "flora-linen-dress-1",
+      "title": "Flora Linen Dress",
+      "price": 2075,
+      "compareAtPrice": 4150,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-01/1.jpg",
+        "/products/nanosh--dresses-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-01/cutout.png",
+      "sizes": [
+        "M",
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/flora-linen-dress-1"
+    },
+    {
+      "id": "nanosh--dresses-02",
+      "handle": "playful-dress-copy",
+      "title": "Playful dress",
+      "price": 2040,
+      "compareAtPrice": 3400,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-02/1.jpg",
+        "/products/nanosh--dresses-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/playful-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-03",
+      "handle": "radiance-dress-copy",
+      "title": "Radiance Dress",
+      "price": 2520,
+      "compareAtPrice": 4200,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-03/1.jpg",
+        "/products/nanosh--dresses-03/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/radiance-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-04",
+      "handle": "vera-dress-copy",
+      "title": "Vera Dress",
+      "price": 2350,
+      "compareAtPrice": 4700,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-04/1.jpg",
+        "/products/nanosh--dresses-04/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-04/cutout.png",
+      "sizes": [
+        "S/M",
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/vera-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-05",
+      "handle": "tropics-dress-copy",
+      "title": "Tropics Dress",
+      "price": 2000,
+      "compareAtPrice": 3900,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-05/1.jpg",
+        "/products/nanosh--dresses-05/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/tropics-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-06",
+      "handle": "vista-dress-copy",
+      "title": "Vista Dress",
+      "price": 3840,
+      "compareAtPrice": 4800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-06/1.jpg",
+        "/products/nanosh--dresses-06/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-06/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/vista-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-07",
+      "handle": "amber-dress-copy",
+      "title": "Amber Dress",
+      "price": 3920,
+      "compareAtPrice": 4900,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-07/1.jpg",
+        "/products/nanosh--dresses-07/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-07/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/amber-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-08",
+      "handle": "stamp-dress-copy",
+      "title": "Stamp Dress",
+      "price": 2000,
+      "compareAtPrice": 4000,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-08/1.jpg",
+        "/products/nanosh--dresses-08/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/stamp-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-09",
+      "handle": "the-samba-dress-copy",
+      "title": "The Samba Dress",
+      "price": 2700,
+      "compareAtPrice": 5950,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-09/1.jpg",
+        "/products/nanosh--dresses-09/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-09/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/the-samba-dress-copy"
+    },
+    {
+      "id": "nanosh--dresses-10",
+      "handle": "savannah-dress-1",
+      "title": "Savannah Dress",
+      "price": 2200,
+      "compareAtPrice": 4400,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--dresses-10/1.jpg",
+        "/products/nanosh--dresses-10/2.jpg"
+      ],
+      "cutout": "/products/nanosh--dresses-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--dresses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/savannah-dress-1"
+    },
+    {
+      "id": "nanosh--sets-01",
+      "handle": "glowy-set-1",
+      "title": "Glowy set",
+      "price": 3840,
+      "compareAtPrice": 4800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-01/1.jpg",
+        "/products/nanosh--sets-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/glowy-set-1"
+    },
+    {
+      "id": "nanosh--sets-02",
+      "handle": "palm-set-1",
+      "title": "Palm Set",
+      "price": 2640,
+      "compareAtPrice": 3300,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-02/1.jpg",
+        "/products/nanosh--sets-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/palm-set-1"
+    },
+    {
+      "id": "nanosh--sets-03",
+      "handle": "flora-set-1",
+      "title": "Flora Set",
+      "price": 4160,
+      "compareAtPrice": 5200,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-03/1.jpg",
+        "/products/nanosh--sets-03/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/flora-set-1"
+    },
+    {
+      "id": "nanosh--sets-04",
+      "handle": "bloom-set-1",
+      "title": "Bloom Set",
+      "price": 4640,
+      "compareAtPrice": 5800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-04/1.jpg",
+        "/products/nanosh--sets-04/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-04/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/bloom-set-1"
+    },
+    {
+      "id": "nanosh--sets-05",
+      "handle": "ruffle-set-2",
+      "title": "Ruffle Set",
+      "price": 5440,
+      "compareAtPrice": 6800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-05/1.jpg",
+        "/products/nanosh--sets-05/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/ruffle-set-2"
+    },
+    {
+      "id": "nanosh--sets-06",
+      "handle": "tiered-set-1",
+      "title": "Tiered Set",
+      "price": 5440,
+      "compareAtPrice": 6800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-06/1.jpg",
+        "/products/nanosh--sets-06/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-06/cutout.png",
+      "sizes": [
+        "One Size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/tiered-set-1"
+    },
+    {
+      "id": "nanosh--sets-07",
+      "handle": "ethereal-set-copy",
+      "title": "Ethereal Set",
+      "price": 1700,
+      "compareAtPrice": 3500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-07/1.jpg",
+        "/products/nanosh--sets-07/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-07/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        }
+      ],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/ethereal-set-copy"
+    },
+    {
+      "id": "nanosh--sets-08",
+      "handle": "bella-jumpsuit-copy",
+      "title": "Bella Jumpsuit",
+      "price": 3960,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-08/1.jpg",
+        "/products/nanosh--sets-08/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-08/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        }
+      ],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/bella-jumpsuit-copy"
+    },
+    {
+      "id": "nanosh--sets-09",
+      "handle": "fold-set-copy",
+      "title": "Fold Set",
+      "price": 2016,
+      "compareAtPrice": 5400,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-09/1.jpg",
+        "/products/nanosh--sets-09/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-09/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/fold-set-copy"
+    },
+    {
+      "id": "nanosh--sets-10",
+      "handle": "papyrus-set-copy",
+      "title": "Papyrus Set",
+      "price": 2000,
+      "compareAtPrice": 4400,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--sets-10/1.jpg",
+        "/products/nanosh--sets-10/2.jpg"
+      ],
+      "cutout": "/products/nanosh--sets-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--sets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/papyrus-set-copy"
+    },
+    {
+      "id": "nanosh--shirts-01",
+      "handle": "ease-shirt",
+      "title": "Ease Shirt",
+      "price": 1440,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-01/1.jpg",
+        "/products/nanosh--shirts-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/ease-shirt"
+    },
+    {
+      "id": "nanosh--shirts-02",
+      "handle": "shift-collar-shirt-black",
+      "title": "Shift Collar Shirt",
+      "price": 1440,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-02/1.jpg",
+        "/products/nanosh--shirts-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/shift-collar-shirt-black"
+    },
+    {
+      "id": "nanosh--shirts-03",
+      "handle": "fold-shirt-black",
+      "title": "Fold Shirt",
+      "price": 1440,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-03/1.jpg",
+        "/products/nanosh--shirts-03/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-03/cutout.png",
+      "sizes": [
+        "S/M",
+        "M/L"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/fold-shirt-black"
+    },
+    {
+      "id": "nanosh--shirts-04",
+      "handle": "the-arc-shirt",
+      "title": "The Arc Shirt",
+      "price": 2250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-04/1.jpg",
+        "/products/nanosh--shirts-04/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-04/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/the-arc-shirt"
+    },
+    {
+      "id": "nanosh--shirts-05",
+      "handle": "shield-jacket",
+      "title": "Shield Shirt",
+      "price": 1440,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-05/1.jpg",
+        "/products/nanosh--shirts-05/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-05/cutout.png",
+      "sizes": [
+        "S/M",
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/shield-jacket"
+    },
+    {
+      "id": "nanosh--shirts-06",
+      "handle": "plain-shirt",
+      "title": "Plain Shirt",
+      "price": 1280,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-06/1.jpg",
+        "/products/nanosh--shirts-06/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/plain-shirt"
+    },
+    {
+      "id": "nanosh--shirts-07",
+      "handle": "float-shirt",
+      "title": "Float Shirt",
+      "price": 2250,
+      "compareAtPrice": 2850,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-07/1.jpg",
+        "/products/nanosh--shirts-07/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-07/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/float-shirt"
+    },
+    {
+      "id": "nanosh--shirts-08",
+      "handle": "pastel-shirt-1",
+      "title": "Pastel Shirt",
+      "price": 1900,
+      "compareAtPrice": 3700,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-08/1.jpg",
+        "/products/nanosh--shirts-08/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-08/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/pastel-shirt-1"
+    },
+    {
+      "id": "nanosh--shirts-09",
+      "handle": "boho-eye-shirt-1",
+      "title": "Boho Eye Shirt",
+      "price": 1900,
+      "compareAtPrice": 3700,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-09/1.jpg",
+        "/products/nanosh--shirts-09/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-09/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Light Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/boho-eye-shirt-1"
+    },
+    {
+      "id": "nanosh--shirts-10",
+      "handle": "ripple-shirt-1",
+      "title": "Ripple Shirt",
+      "price": 2280,
+      "compareAtPrice": 2850,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--shirts-10/1.jpg",
+        "/products/nanosh--shirts-10/2.jpg"
+      ],
+      "cutout": "/products/nanosh--shirts-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "nanosh--shirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/ripple-shirt-1"
+    },
+    {
+      "id": "nanosh--blouses-01",
+      "handle": "sculpt-blouse-wine-red",
+      "title": "Sculpt Blouse",
+      "price": 3320,
+      "compareAtPrice": 4150,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--blouses-01/1.jpg",
+        "/products/nanosh--blouses-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--blouses-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Winered",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "nanosh--blouses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/sculpt-blouse-wine-red"
+    },
+    {
+      "id": "nanosh--blouses-02",
+      "handle": "royal-blouse",
+      "title": "Royal Blouse",
+      "price": 2920,
+      "compareAtPrice": 3650,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--blouses-02/1.jpg",
+        "/products/nanosh--blouses-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--blouses-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "nanosh--blouses",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/royal-blouse"
+    },
+    {
+      "id": "nanosh--pants-01",
+      "handle": "voluminous-pants-copy",
+      "title": "Voluminous pants",
+      "price": 2800,
+      "compareAtPrice": 3500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-01/1.jpg",
+        "/products/nanosh--pants-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/voluminous-pants-copy"
+    },
+    {
+      "id": "nanosh--pants-02",
+      "handle": "swing-pants-copy",
+      "title": "Swing Pants",
+      "price": 2480,
+      "compareAtPrice": 3100,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-02/1.jpg",
+        "/products/nanosh--pants-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Off White",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        }
+      ],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/swing-pants-copy"
+    },
+    {
+      "id": "nanosh--pants-03",
+      "handle": "urban-denim-copy",
+      "title": "Urban Denim",
+      "price": 3700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-03/1.jpg",
+        "/products/nanosh--pants-03/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-03/cutout.png",
+      "sizes": [
+        "M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/urban-denim-copy"
+    },
+    {
+      "id": "nanosh--pants-04",
+      "handle": "monochrome-pants-copy",
+      "title": "Monochrome Pants",
+      "price": 2200,
+      "compareAtPrice": 2750,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-04/1.jpg",
+        "/products/nanosh--pants-04/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-04/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/monochrome-pants-copy"
+    },
+    {
+      "id": "nanosh--pants-05",
+      "handle": "arc-pant-copy",
+      "title": "Arc Pant",
+      "price": 2520,
+      "compareAtPrice": 3150,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-05/1.jpg",
+        "/products/nanosh--pants-05/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/arc-pant-copy"
+    },
+    {
+      "id": "nanosh--pants-06",
+      "handle": "iconic-denim",
+      "title": "Iconic Denim",
+      "price": 3800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-06/1.jpg",
+        "/products/nanosh--pants-06/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-06/cutout.png",
+      "sizes": [
+        "M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/iconic-denim"
+    },
+    {
+      "id": "nanosh--pants-07",
+      "handle": "leopard-pants",
+      "title": "Leopard Pants",
+      "price": 2800,
+      "compareAtPrice": 3500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-07/1.jpg",
+        "/products/nanosh--pants-07/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-07/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/leopard-pants"
+    },
+    {
+      "id": "nanosh--pants-08",
+      "handle": "polka-pants",
+      "title": "Polka Pants",
+      "price": 2800,
+      "compareAtPrice": 3500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-08/1.jpg",
+        "/products/nanosh--pants-08/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-08/cutout.png",
+      "sizes": [
+        "One Size"
+      ],
+      "colors": [],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/polka-pants"
+    },
+    {
+      "id": "nanosh--pants-09",
+      "handle": "lune-pants",
+      "title": "Lune Pants",
+      "price": 2240,
+      "compareAtPrice": 2800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-09/1.jpg",
+        "/products/nanosh--pants-09/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-09/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/lune-pants"
+    },
+    {
+      "id": "nanosh--pants-10",
+      "handle": "puffy-pants",
+      "title": "Puffy Pants",
+      "price": 2000,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--pants-10/1.jpg",
+        "/products/nanosh--pants-10/2.jpg"
+      ],
+      "cutout": "/products/nanosh--pants-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "nanosh--pants",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/puffy-pants"
+    },
+    {
+      "id": "nanosh--skirts-01",
+      "handle": "drift-skirt",
+      "title": "Drift Skirt",
+      "price": 1920,
+      "compareAtPrice": 2400,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-01/1.jpg",
+        "/products/nanosh--skirts-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-01/cutout.png",
+      "sizes": [
+        "S/M",
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/drift-skirt"
+    },
+    {
+      "id": "nanosh--skirts-02",
+      "handle": "echo-skirt-navy",
+      "title": "Echo Skirt",
+      "price": 2240,
+      "compareAtPrice": 2800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-02/1.jpg",
+        "/products/nanosh--skirts-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colors": [
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/echo-skirt-navy"
+    },
+    {
+      "id": "nanosh--skirts-03",
+      "handle": "swing-skirt",
+      "title": "Swing Skirt",
+      "price": 1480,
+      "compareAtPrice": 1850,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-03/1.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-03/cutout.png",
+      "sizes": [
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/swing-skirt"
+    },
+    {
+      "id": "nanosh--skirts-04",
+      "handle": "glow-skirt",
+      "title": "Glow Skirt",
+      "price": 2040,
+      "compareAtPrice": 2550,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-04/1.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-04/cutout.png",
+      "sizes": [
+        "M/L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/glow-skirt"
+    },
+    {
+      "id": "nanosh--skirts-05",
+      "handle": "squares-blue-skirts",
+      "title": "Squares Blue Skirts",
+      "price": 2000,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-05/1.jpg",
+        "/products/nanosh--skirts-05/2.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-05/cutout.png",
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/squares-blue-skirts"
+    },
+    {
+      "id": "nanosh--skirts-06",
+      "handle": "curvy-skirt",
+      "title": "Curvy Skirt",
+      "price": 1500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-06/1.jpg",
+        "/products/nanosh--skirts-06/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "M",
+        "L"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/curvy-skirt"
+    },
+    {
+      "id": "nanosh--skirts-07",
+      "handle": "denim-skort",
+      "title": "Denim Skirt",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-07/1.jpg",
+        "/products/nanosh--skirts-07/2.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-07/cutout.png",
+      "sizes": [
+        "S/M",
+        "M/L",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/denim-skort"
+    },
+    {
+      "id": "nanosh--skirts-08",
+      "handle": "wave-skirt-1",
+      "title": "Wave Skirt",
+      "price": 2340,
+      "compareAtPrice": 3900,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--skirts-08/1.jpg",
+        "/products/nanosh--skirts-08/2.jpg"
+      ],
+      "cutout": "/products/nanosh--skirts-08/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--skirts",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/wave-skirt-1"
+    },
+    {
+      "id": "nanosh--jackets-01",
+      "handle": "flow-coat",
+      "title": "Flow Coat",
+      "price": 3900,
+      "compareAtPrice": 5200,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--jackets-01/1.jpg",
+        "/products/nanosh--jackets-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--jackets-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--jackets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/flow-coat"
+    },
+    {
+      "id": "nanosh--jackets-02",
+      "handle": "urban-fringe-jacket-beige",
+      "title": "Urban Fringe Jacket",
+      "price": 2960,
+      "compareAtPrice": 3700,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--jackets-02/1.jpg",
+        "/products/nanosh--jackets-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--jackets-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        }
+      ],
+      "section": "nanosh--jackets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/urban-fringe-jacket-beige"
+    },
+    {
+      "id": "nanosh--jackets-03",
+      "handle": "moof-jacket",
+      "title": "Moof Jacket",
+      "price": 4600,
+      "compareAtPrice": 5750,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--jackets-03/1.jpg",
+        "/products/nanosh--jackets-03/2.jpg"
+      ],
+      "cutout": "/products/nanosh--jackets-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "nanosh--jackets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/moof-jacket"
+    },
+    {
+      "id": "nanosh--jackets-04",
+      "handle": "dotted-cardigan",
+      "title": "Dotted Cardigan",
+      "price": 3900,
+      "compareAtPrice": 5200,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--jackets-04/1.jpg",
+        "/products/nanosh--jackets-04/2.jpg"
+      ],
+      "cutout": "/products/nanosh--jackets-04/cutout.png",
+      "sizes": [
+        "One Size"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "nanosh--jackets",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/dotted-cardigan"
+    },
+    {
+      "id": "nanosh--bags-01",
+      "handle": "luxe-set",
+      "title": "Luxe set",
+      "price": 2680,
+      "compareAtPrice": 3350,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-01/1.jpg",
+        "/products/nanosh--bags-01/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/luxe-set"
+    },
+    {
+      "id": "nanosh--bags-02",
+      "handle": "nova-set",
+      "title": "Nova Set",
+      "price": 3360,
+      "compareAtPrice": 4200,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-02/1.jpg",
+        "/products/nanosh--bags-02/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "dusty pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Coffee Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        }
+      ],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/nova-set"
+    },
+    {
+      "id": "nanosh--bags-03",
+      "handle": "ivory-skirt",
+      "title": "Ivory Skirt",
+      "price": 1400,
+      "compareAtPrice": 2800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-03/1.jpg",
+        "/products/nanosh--bags-03/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/ivory-skirt"
+    },
+    {
+      "id": "nanosh--bags-04",
+      "handle": "aura-set",
+      "title": "Aura Set",
+      "price": 2250,
+      "compareAtPrice": 4500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-04/1.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-04/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/aura-set"
+    },
+    {
+      "id": "nanosh--bags-05",
+      "handle": "frame-top",
+      "title": "Frame Top",
+      "price": 2520,
+      "compareAtPrice": 3150,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-05/1.jpg",
+        "/products/nanosh--bags-05/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/frame-top"
+    },
+    {
+      "id": "nanosh--bags-06",
+      "handle": "vista-set",
+      "title": "Vista Set",
+      "price": 2560,
+      "compareAtPrice": 3200,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-06/1.jpg",
+        "/products/nanosh--bags-06/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-06/cutout.png",
+      "sizes": [
+        "M/L"
+      ],
+      "colors": [],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/vista-set"
+    },
+    {
+      "id": "nanosh--bags-07",
+      "handle": "disco-shorts-copy",
+      "title": "Disco Shorts",
+      "price": 1700,
+      "compareAtPrice": 2950,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-07/1.jpg",
+        "/products/nanosh--bags-07/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-07/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/disco-shorts-copy"
+    },
+    {
+      "id": "nanosh--bags-08",
+      "handle": "blossom-set-copy",
+      "title": "Blossom Set",
+      "price": 3000,
+      "compareAtPrice": 5500,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-08/1.jpg",
+        "/products/nanosh--bags-08/2.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-08/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Light Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/blossom-set-copy"
+    },
+    {
+      "id": "nanosh--bags-09",
+      "handle": "mist-set-1",
+      "title": "Mist Set",
+      "price": 2000,
+      "compareAtPrice": 3800,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-09/1.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-09/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/mist-set-1"
+    },
+    {
+      "id": "nanosh--bags-10",
+      "handle": "coastal-dress-1",
+      "title": "Coastal Dress",
+      "price": 2200,
+      "compareAtPrice": 4000,
+      "currency": "EGP",
+      "images": [
+        "/products/nanosh--bags-10/1.jpg"
+      ],
+      "cutout": "/products/nanosh--bags-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "nanosh--bags",
+      "modelOutfit": false,
+      "url": "https://nanoushboutique.com/products/coastal-dress-1"
+    }
+  ]
+}

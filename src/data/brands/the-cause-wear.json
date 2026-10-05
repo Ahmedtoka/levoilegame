@@ -1,0 +1,281 @@
+{
+  "brandId": "the-cause-wear",
+  "site": "https://thecauseweareg.com",
+  "sections": [
+    {
+      "id": "the-cause-wear--summer-collection",
+      "title": "SUMMER COLLECTION",
+      "titleAr": "كولكشن الصيف",
+      "productIds": [
+        "the-cause-wear--summer-collection-01",
+        "the-cause-wear--summer-collection-02",
+        "the-cause-wear--summer-collection-03",
+        "the-cause-wear--summer-collection-04",
+        "the-cause-wear--summer-collection-05",
+        "the-cause-wear--summer-collection-06",
+        "the-cause-wear--summer-collection-07",
+        "the-cause-wear--summer-collection-08",
+        "the-cause-wear--summer-collection-09",
+        "the-cause-wear--summer-collection-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "the-cause-wear--summer-collection-01",
+      "handle": "yellow-skate-dog-t-shirt",
+      "title": "YELLOW SKATE DOG T-SHIRT",
+      "price": 240,
+      "compareAtPrice": 300,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-01/1.jpg",
+        "/products/the-cause-wear--summer-collection-01/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-01/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/yellow-skate-dog-t-shirt"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-02",
+      "handle": "beach-vibes-t-shirt",
+      "title": "BABY BLUE BEACH VIBES T-SHIRT",
+      "price": 240,
+      "compareAtPrice": 300,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-02/1.jpg",
+        "/products/the-cause-wear--summer-collection-02/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-02/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/beach-vibes-t-shirt"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-03",
+      "handle": "straight-striped-pants",
+      "title": "STRAIGHT STRIPED PANTS",
+      "price": 280,
+      "compareAtPrice": 350,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-03/1.jpg",
+        "/products/the-cause-wear--summer-collection-03/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-03/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/straight-striped-pants"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-04",
+      "handle": "striped-shorts",
+      "title": "STRIPED SHORTS",
+      "price": 240,
+      "compareAtPrice": 300,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-04/1.jpg",
+        "/products/the-cause-wear--summer-collection-04/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-04/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/striped-shorts"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-05",
+      "handle": "grey-striped-swimsuit",
+      "title": "GREY STRIPED SWIMSUIT",
+      "price": 360,
+      "compareAtPrice": 450,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-05/1.jpg",
+        "/products/the-cause-wear--summer-collection-05/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-05/cutout.png",
+      "sizes": [
+        "3-6 months",
+        "6-9 months",
+        "9-12 months",
+        "18-24 months",
+        "12-18 months"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/grey-striped-swimsuit"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-06",
+      "handle": "pajama-set",
+      "title": "BABY PAJAMA SET",
+      "price": 600,
+      "compareAtPrice": 750,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-06/1.jpg",
+        "/products/the-cause-wear--summer-collection-06/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "3-6 months",
+        "6-9 months",
+        "9-12 months",
+        "18-24 months",
+        "12-18 months"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/pajama-set"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-07",
+      "handle": "orange-tiger-t-shirt",
+      "title": "ORANGE TIGER T-SHIRT",
+      "price": 240,
+      "compareAtPrice": 300,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-07/1.jpg",
+        "/products/the-cause-wear--summer-collection-07/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-07/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/orange-tiger-t-shirt"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-08",
+      "handle": "polo-set",
+      "title": "POLO SET",
+      "price": 600,
+      "compareAtPrice": 750,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-08/1.jpg",
+        "/products/the-cause-wear--summer-collection-08/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-08/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/polo-set"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-09",
+      "handle": "whale-swim-shorts",
+      "title": "WHALE SWIM SHORTS",
+      "price": 280,
+      "compareAtPrice": 350,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-09/1.jpg",
+        "/products/the-cause-wear--summer-collection-09/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-09/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/whale-swim-shorts"
+    },
+    {
+      "id": "the-cause-wear--summer-collection-10",
+      "handle": "hands-swim-shorts",
+      "title": "HANDS SWIM SHORTS",
+      "price": 280,
+      "compareAtPrice": 350,
+      "currency": "EGP",
+      "images": [
+        "/products/the-cause-wear--summer-collection-10/1.jpg",
+        "/products/the-cause-wear--summer-collection-10/2.jpg"
+      ],
+      "cutout": "/products/the-cause-wear--summer-collection-10/cutout.png",
+      "sizes": [
+        "2-3 years",
+        "3-4 years",
+        "4-5 years",
+        "5-6 years",
+        "6-7 years",
+        "7-8 years",
+        "9-10 years"
+      ],
+      "colors": [],
+      "section": "the-cause-wear--summer-collection",
+      "modelOutfit": false,
+      "url": "https://thecauseweareg.com/products/hands-swim-shorts"
+    }
+  ]
+}

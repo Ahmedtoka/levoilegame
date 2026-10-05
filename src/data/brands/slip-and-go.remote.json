@@ -1,0 +1,3716 @@
+{
+  "brandId": "slip-and-go",
+  "site": "https://slipngo.co",
+  "sections": [
+    {
+      "id": "slip-and-go--printed-women-flip-flops",
+      "title": "Printed Women Flip flops",
+      "titleAr": "شباشب حريمي مطبوعة",
+      "productIds": [
+        "slip-and-go--printed-women-flip-flops-01",
+        "slip-and-go--printed-women-flip-flops-02",
+        "slip-and-go--printed-women-flip-flops-03",
+        "slip-and-go--printed-women-flip-flops-04",
+        "slip-and-go--printed-women-flip-flops-05",
+        "slip-and-go--printed-women-flip-flops-06",
+        "slip-and-go--printed-women-flip-flops-07",
+        "slip-and-go--printed-women-flip-flops-08",
+        "slip-and-go--printed-women-flip-flops-09",
+        "slip-and-go--printed-women-flip-flops-10"
+      ]
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops",
+      "title": "Women Basic Flip flops",
+      "titleAr": "شباشب حريمي بيسك",
+      "productIds": [
+        "slip-and-go--women-basic-flip-flops-01",
+        "slip-and-go--women-basic-flip-flops-02",
+        "slip-and-go--women-basic-flip-flops-03",
+        "slip-and-go--women-basic-flip-flops-04",
+        "slip-and-go--women-basic-flip-flops-05",
+        "slip-and-go--women-basic-flip-flops-06",
+        "slip-and-go--women-basic-flip-flops-07",
+        "slip-and-go--women-basic-flip-flops-08",
+        "slip-and-go--women-basic-flip-flops-09",
+        "slip-and-go--women-basic-flip-flops-10"
+      ]
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops",
+      "title": "Accessorized Women’s Flip‑Flops",
+      "titleAr": "شباشب حريمي بإكسسوار",
+      "productIds": [
+        "slip-and-go--accessorized-women-s-flip-flops-01",
+        "slip-and-go--accessorized-women-s-flip-flops-02",
+        "slip-and-go--accessorized-women-s-flip-flops-03",
+        "slip-and-go--accessorized-women-s-flip-flops-04",
+        "slip-and-go--accessorized-women-s-flip-flops-05",
+        "slip-and-go--accessorized-women-s-flip-flops-06",
+        "slip-and-go--accessorized-women-s-flip-flops-07",
+        "slip-and-go--accessorized-women-s-flip-flops-08",
+        "slip-and-go--accessorized-women-s-flip-flops-09",
+        "slip-and-go--accessorized-women-s-flip-flops-10"
+      ]
+    },
+    {
+      "id": "slip-and-go--women-sandals",
+      "title": "Women Sandals",
+      "titleAr": "صنادل حريمي",
+      "productIds": [
+        "slip-and-go--women-sandals-01",
+        "slip-and-go--women-sandals-02",
+        "slip-and-go--women-sandals-03",
+        "slip-and-go--women-sandals-04",
+        "slip-and-go--women-sandals-05",
+        "slip-and-go--women-sandals-06"
+      ]
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops",
+      "title": "Men Printed Flip Flops",
+      "titleAr": "شباشب رجالي مطبوعة",
+      "productIds": [
+        "slip-and-go--men-printed-flip-flops-01",
+        "slip-and-go--men-printed-flip-flops-02",
+        "slip-and-go--men-printed-flip-flops-03",
+        "slip-and-go--men-printed-flip-flops-04",
+        "slip-and-go--men-printed-flip-flops-05",
+        "slip-and-go--men-printed-flip-flops-06",
+        "slip-and-go--men-printed-flip-flops-07",
+        "slip-and-go--men-printed-flip-flops-08",
+        "slip-and-go--men-printed-flip-flops-09",
+        "slip-and-go--men-printed-flip-flops-10"
+      ]
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops",
+      "title": "Men Basic Flip Flops",
+      "titleAr": "شباشب رجالي بيسك",
+      "productIds": [
+        "slip-and-go--men-basic-flip-flops-01",
+        "slip-and-go--men-basic-flip-flops-02",
+        "slip-and-go--men-basic-flip-flops-03",
+        "slip-and-go--men-basic-flip-flops-04",
+        "slip-and-go--men-basic-flip-flops-05",
+        "slip-and-go--men-basic-flip-flops-06",
+        "slip-and-go--men-basic-flip-flops-07",
+        "slip-and-go--men-basic-flip-flops-08",
+        "slip-and-go--men-basic-flip-flops-09",
+        "slip-and-go--men-basic-flip-flops-10"
+      ]
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops",
+      "title": "Printed Kids Flip Flops",
+      "titleAr": "شباشب أطفال",
+      "productIds": [
+        "slip-and-go--printed-kids-flip-flops-01",
+        "slip-and-go--printed-kids-flip-flops-02",
+        "slip-and-go--printed-kids-flip-flops-03",
+        "slip-and-go--printed-kids-flip-flops-04",
+        "slip-and-go--printed-kids-flip-flops-05",
+        "slip-and-go--printed-kids-flip-flops-06",
+        "slip-and-go--printed-kids-flip-flops-07",
+        "slip-and-go--printed-kids-flip-flops-08",
+        "slip-and-go--printed-kids-flip-flops-09",
+        "slip-and-go--printed-kids-flip-flops-10"
+      ]
+    },
+    {
+      "id": "slip-and-go--winter-collection",
+      "title": "Winter Collection",
+      "titleAr": "كولكشن الشتا",
+      "productIds": [
+        "slip-and-go--winter-collection-01",
+        "slip-and-go--winter-collection-02",
+        "slip-and-go--winter-collection-03",
+        "slip-and-go--winter-collection-04",
+        "slip-and-go--winter-collection-05",
+        "slip-and-go--winter-collection-06",
+        "slip-and-go--winter-collection-07",
+        "slip-and-go--winter-collection-08",
+        "slip-and-go--winter-collection-09",
+        "slip-and-go--winter-collection-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "slip-and-go--printed-women-flip-flops-01",
+      "handle": "leopard-premium-women-comfort-slipper",
+      "title": "Leopard Premium Women Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3495-copy-2048x1462.webp?v=1751798374",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3512-3-copy.webp?v=1751798374"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/leopard-premium-women-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-02",
+      "handle": "mickey-face-premium-women-s-comfort-slipper",
+      "title": "Mickey Face Premium Women's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8166-e1743684189992.webp?v=1753554462",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8169.webp?v=1753832281"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/mickey-face-premium-women-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-03",
+      "handle": "flamingo-premium-women-s-comfort-slipper-2",
+      "title": "Flamingo Premium Women's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8285-e1743690167589.webp?v=1751676872",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8289.webp?v=1753831927"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/flamingo-premium-women-s-comfort-slipper-2"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-04",
+      "handle": "snake-premium-women-comfort-slipper",
+      "title": "Snake Premium Women Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3493-copy-2048x1462.webp?v=1751681511",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3518-7-copy-2048x1462.webp?v=1751681509"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/snake-premium-women-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-05",
+      "handle": "zebra-premium-women-comfort-slipper",
+      "title": "Zebra Premium Women Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Zebra-2048x1462.webp?v=1751673311",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3517-6-copy.webp?v=1751673310"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/zebra-premium-women-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-06",
+      "handle": "printed-flip-flop-seaside",
+      "title": "FLIP FLOP Women’s Slipper -SEASIDE",
+      "price": 500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A0707_result.jpg?v=1776347705",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A0820_result.jpg?v=1776347705"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/printed-flip-flop-seaside"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-07",
+      "handle": "french-print",
+      "title": "FRENCH PRINT",
+      "price": 500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A0709_result.jpg?v=1776348267",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A0761-2_result.jpg?v=1776348267"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/french-print"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-08",
+      "handle": "minnie-mouse-premium-women-s-comfort-slipper-3",
+      "title": "Minnie Mouse Premium Women's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8185-e1743690150858.webp?v=1751684498",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8189_1.webp?v=1753832293"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/minnie-mouse-premium-women-s-comfort-slipper-3"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-09",
+      "handle": "cow-premium-women-comfort-slipper",
+      "title": "Cow Premium Women Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3499-copy-2048x1462.webp?v=1751587126",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3515-4-copy.webp?v=1751587125"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/cow-premium-women-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-women-flip-flops-10",
+      "handle": "flamingo-premium-women-s-comfort-slipper-3",
+      "title": "Flamingo Premium Women's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8276-e1743690227446.webp?v=1751680579",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8279.webp?v=1753831975"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-women-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/flamingo-premium-women-s-comfort-slipper-3"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-01",
+      "handle": "midnight-black-premium-womens-comfort-slipper",
+      "title": "Midnight Black Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Black-slipper094-e1743688822870.webp?v=1754756493",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Black-slipper093.webp?v=1754756493"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Red / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Navy",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Yellow / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/midnight-black-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-02",
+      "handle": "royal-purple-premium-kids-comfort-slipper",
+      "title": "Royal Purple Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-Purple-668.webp?v=1754258902",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-Purple-665.webp?v=1754257197"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Purple",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/royal-purple-premium-kids-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-03",
+      "handle": "red-premium-womens-comfort-slipper",
+      "title": "Red Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-0003.webp?v=1753554420",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-0005.webp?v=1753554420"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Red",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/red-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-04",
+      "handle": "rose-pink-premium-womens-comfort-slipper",
+      "title": "Rose Pink Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Rose-218.webp?v=1754318971",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Rose-215.webp?v=1754317921"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Purple",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/rose-pink-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-05",
+      "handle": "platinum-gray-premium-women-s-comfort-slipper",
+      "title": "Platinum Gray Premium Women’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Gray-slipper069.webp?v=1753554468",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Gray-slipper066.webp?v=1753554468"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Orange",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/platinum-gray-premium-women-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-06",
+      "handle": "cloud-white-premium-womens-comfort-slipper",
+      "title": "Cloud White Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-White-516-e1743685576367.webp?v=1753554435",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-White-515.webp?v=1753554435"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/cloud-white-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-07",
+      "handle": "natural-olive-green-premium-womens-comfort-slipper",
+      "title": "Natural Olive Green Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-olivegreen-1118.webp?v=1753554492",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-olivegreen-1115.webp?v=1753554492"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Olive",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Orange",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Purple",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/natural-olive-green-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-08",
+      "handle": "wild-fuchsia-premium-womens-comfort-slipper",
+      "title": "Wild Fuchsia Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-fuchsia-0973.webp?v=1755004180",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-fuchsia-0970.webp?v=1754306241"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Purple",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/wild-fuchsia-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-09",
+      "handle": "deep-navy-blue-premium-womens-comfort-slipper",
+      "title": "Deep Navy Blue Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-navy-blue-808.webp?v=1754995399",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-navy-blue-805.webp?v=1753554360"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Red / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "White / Navy",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/deep-navy-blue-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--women-basic-flip-flops-10",
+      "handle": "bright-blue-premium-womens-comfort-slipper",
+      "title": "Bright Blue Premium Women's Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Blue-slipper068.webp?v=1753554381",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Blue-slipper070.webp?v=1753554381"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Blue",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink / White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White / Fuchsia",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "slip-and-go--women-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/bright-blue-premium-womens-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-01",
+      "handle": "premium-women-s-elegant-slipper-2",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 1049,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2805-copy-2-2048x1462.webp?v=1754756583",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2918-copy.-copy.webp?v=1754756583"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-2"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-02",
+      "handle": "premium-women-s-elegant-slipper-1",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 1049,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2859-copy-2048x1462_1.webp?v=1754756585",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2857-copy.webp?v=1754756585"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-1"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-03",
+      "handle": "premium-women-s-elegant-slipper-3",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 1049,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3492-copy-2048x1462.webp?v=1754756581",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3511-2-copy.webp?v=1754756581"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38  - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-3"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-04",
+      "handle": "basic-big-accessories-tail",
+      "title": "Tail BASIC",
+      "price": 1000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A0705_result.jpg?v=1776349034",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A0838_result.jpg?v=1776349035"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/basic-big-accessories-tail"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-05",
+      "handle": "premium-women-s-elegant-slipper-4",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 1049,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2812-copy-1.webp?v=1754756580",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2936-251-copy.webp?v=1754756580"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-4"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-06",
+      "handle": "premium-women-s-elegant-slipper-7",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 999,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2825-copy-2048x1462.webp?v=1751799140",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2934-231-copy.webp?v=1753832594"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-7"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-07",
+      "handle": "butterfly-premium-women-s-elegant-slipper",
+      "title": "Butterfly Premium Women’s Elegant Slipper",
+      "price": 1049,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2826-copy-2048x1462.webp?v=1751796606",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2915-61-copy.webp?v=1753832557"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/butterfly-premium-women-s-elegant-slipper"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-08",
+      "handle": "premium-women-s-elegant-slipper-6",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 999,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2816-copy-1-2048x1462.webp?v=1754756577",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2931-20-copy.webp?v=1754756577"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-6"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-09",
+      "handle": "evil-eye-premium-women-s-comfort-slipper-3",
+      "title": "Evil Eye Premium Women’s Comfort Slipper",
+      "price": 649,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8100-e1743690314620.webp?v=1751684741",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8103.webp?v=1753832527"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/evil-eye-premium-women-s-comfort-slipper-3"
+    },
+    {
+      "id": "slip-and-go--accessorized-women-s-flip-flops-10",
+      "handle": "premium-women-s-elegant-slipper-5",
+      "title": "Premium Women’s Elegant Slipper",
+      "price": 999,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2815-copy.webp?v=1754756579",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A2916-71-copy.webp?v=1754756579"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [],
+      "section": "slip-and-go--accessorized-women-s-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/premium-women-s-elegant-slipper-5"
+    },
+    {
+      "id": "slip-and-go--women-sandals-01",
+      "handle": "arizona-women-s-sandals",
+      "title": "Arizona Women’s Sandals",
+      "price": 1200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6715_0_result.jpg?v=1779389596",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6762-2_result.jpg?v=1779389596"
+      ],
+      "cutout": null,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        }
+      ],
+      "section": "slip-and-go--women-sandals",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/arizona-women-s-sandals"
+    },
+    {
+      "id": "slip-and-go--women-sandals-02",
+      "handle": "arizona-women-s-sandals-1",
+      "title": "Arizona Women’s Sandals",
+      "price": 1200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6695_result.jpg?v=1779389622",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6754-2_result.jpg?v=1779389622"
+      ],
+      "cutout": null,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Vanilla Latte",
+          "nameAr": "Vanilla Latte",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "slip-and-go--women-sandals",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/arizona-women-s-sandals-1"
+    },
+    {
+      "id": "slip-and-go--women-sandals-03",
+      "handle": "arizona-women-s-sandals-2",
+      "title": "Arizona Women’s Sandals",
+      "price": 1200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6698_0_result.jpg?v=1779389693",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3359-9_result.jpg?v=1779389693"
+      ],
+      "cutout": null,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Camel",
+          "nameAr": "جملي",
+          "hex": "#b98a5a"
+        },
+        {
+          "name": "Brown Snake",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Black Snake",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "slip-and-go--women-sandals",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/arizona-women-s-sandals-2"
+    },
+    {
+      "id": "slip-and-go--women-sandals-04",
+      "handle": "arizona-women-s-sandals-3",
+      "title": "Arizona Women’s Sandals",
+      "price": 1200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6708_result.jpg?v=1779389666",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3356-1_result.jpg?v=1779389667"
+      ],
+      "cutout": null,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "slip-and-go--women-sandals",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/arizona-women-s-sandals-3"
+    },
+    {
+      "id": "slip-and-go--women-sandals-05",
+      "handle": "dripz-women-s-sandals",
+      "title": "Dripz Women’s Sandals",
+      "price": 400,
+      "compareAtPrice": 800,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7249copy.webp?v=1755271992",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7264-2copy.webp?v=1755271992"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "slip-and-go--women-sandals",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/dripz-women-s-sandals"
+    },
+    {
+      "id": "slip-and-go--women-sandals-06",
+      "handle": "sash-sandals",
+      "title": "Sash Women’s sandals",
+      "price": 1200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6657.jpg?v=1779392488",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/275A6661.jpg?v=1779392488"
+      ],
+      "cutout": null,
+      "sizes": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "slip-and-go--women-sandals",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/sash-sandals"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-01",
+      "handle": "dog-premium-men-s-comfort-slipper",
+      "title": "Dog Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8053-e1743684629759.webp?v=1753554446",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8051-2048x1462.webp?v=1753829605"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/dog-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-02",
+      "handle": "snoopy-premium-men-s-comfort-slipper-2",
+      "title": "Snoopy Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8316-e1743682446401.webp?v=1753554448",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8319-2048x1462.webp?v=1753832217"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/snoopy-premium-men-s-comfort-slipper-2"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-03",
+      "handle": "super-man-flash-premium-men-s-comfort-slipper",
+      "title": "Super Man & Flash Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8346-e1743682837554.webp?v=1753554450",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8349.webp?v=1753829350"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/super-man-flash-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-04",
+      "handle": "batman-premium-men-s-comfort-slipper-1",
+      "title": "Batman Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8020-e1743684556334.webp?v=1753554451",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8024-2048x1462.webp?v=1753829556"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/batman-premium-men-s-comfort-slipper-1"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-05",
+      "handle": "looney-tunes-premium-men-s-comfort-slipper",
+      "title": "Looney Tunes Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8150-e1743684057466_1.webp?v=1753554453",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8154-2048x1462.webp?v=1753831787"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/looney-tunes-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-06",
+      "handle": "skull-premium-men-s-comfort-slipper",
+      "title": "Skull Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8270-e1743683326472.webp?v=1753554445",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8274.webp?v=1753554445"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/skull-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-07",
+      "handle": "mickey-face-premium-men-s-comfort-slipper",
+      "title": "Mickey Face Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8166-e1743684189992.webp?v=1753554462",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8169.webp?v=1753832281"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/mickey-face-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-08",
+      "handle": "batman-premium-men-s-comfort-slipper",
+      "title": "Batman Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8015-e1743684535757_2.webp?v=1753554513",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8019_2.webp?v=1753827924"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 -41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/batman-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-09",
+      "handle": "simpsons-premium-men-s-comfort-slipper-5",
+      "title": "Simpsons Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8250-e1743685004334_1.webp?v=1753554447",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8254_1.webp?v=1753828198"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/simpsons-premium-men-s-comfort-slipper-5"
+    },
+    {
+      "id": "slip-and-go--men-printed-flip-flops-10",
+      "handle": "donald-duck-premium-men-s-comfort-slipper-3",
+      "title": "Donald Duck Premium Men's Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8060-e1743684645213_1.webp?v=1753554456",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8064-2048x1462.webp?v=1753828112"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47",
+        "48 - 49"
+      ],
+      "colors": [],
+      "section": "slip-and-go--men-printed-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/donald-duck-premium-men-s-comfort-slipper-3"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-01",
+      "handle": "midnight-black-premium-men-s-comfort-slipper",
+      "title": "Midnight Black Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Black-slipper094-e1743688822870.webp?v=1754756493",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Black-slipper093.webp?v=1754756493"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Red / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Navy",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Yellow / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/midnight-black-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-02",
+      "handle": "deep-navy-blue-premium-men-s-comfort-slipper",
+      "title": "Deep Navy Blue Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-navy-blue-808.webp?v=1754995399",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-navy-blue-805.webp?v=1753554360"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Red / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "White / Navy",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/deep-navy-blue-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-03",
+      "handle": "sunshine-yellow-premium-men-s-comfort-slipper",
+      "title": "Sunshine Yellow Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Yellow-slipper019.webp?v=1753779189",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Yellow-slipper016.webp?v=1753779189"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Yellow / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/sunshine-yellow-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-04",
+      "handle": "bright-blue-premium-men-s-comfort-slipper",
+      "title": "Bright Blue Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Blue-slipper068.webp?v=1753554381",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Blue-slipper070.webp?v=1753554381"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Blue",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/bright-blue-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-05",
+      "handle": "cloud-white-premium-men-s-comfort-slipper-1",
+      "title": "Cloud White Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-White-516-e1743685576367.webp?v=1753554435",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-White-515.webp?v=1753554435"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/cloud-white-premium-men-s-comfort-slipper-1"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-06",
+      "handle": "natural-olive-green-premium-men-s-comfort-slipper",
+      "title": "Natural Olive Green Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-olivegreen-1118.webp?v=1753554492",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-olivegreen-1115.webp?v=1753554492"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Olive",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Orange",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Purple",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/natural-olive-green-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-07",
+      "handle": "red-premium-men-s-comfort-slipper",
+      "title": "Red Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-0003.webp?v=1753554420",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-0005.webp?v=1753554420"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Red",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Red / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/red-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-08",
+      "handle": "platinum-gray-premium-men-s-comfort-slipper",
+      "title": "Platinum Gray Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Gray-slipper069.webp?v=1753554468",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Gray-slipper066.webp?v=1753554468"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Orange",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/platinum-gray-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-09",
+      "handle": "electric-orange-premium-men-s-comfort-slipper-1",
+      "title": "Electric Orange Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Orange-slipper009.webp?v=1755440269",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/slipgo-Orange-slipper006.webp?v=1753554397"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "White / Orange",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "White / Grey",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/electric-orange-premium-men-s-comfort-slipper-1"
+    },
+    {
+      "id": "slip-and-go--men-basic-flip-flops-10",
+      "handle": "royal-purple-premium-men-s-comfort-slipper",
+      "title": "Royal Purple Premium Men’s Comfort Slipper",
+      "price": 299,
+      "compareAtPrice": 399,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-Purple-668.webp?v=1754258902",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipngo-Slipper-Purple-665.webp?v=1754257197"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45",
+        "46 - 47"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White / Green",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Purple",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Turquoise",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "White / Yellow",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "slip-and-go--men-basic-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/royal-purple-premium-men-s-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-01",
+      "handle": "sonic-premium-kids-comfort-slipper",
+      "title": "Sonic Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9093-e1743688038218.webp?v=1751891414",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9090.webp?v=1751891413"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/sonic-premium-kids-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-02",
+      "handle": "frozen-premium-kids-comfort-slipper-1",
+      "title": "Frozen Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9038-e1743688053420.webp?v=1751891771",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9035.webp?v=1751891770"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/frozen-premium-kids-comfort-slipper-1"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-03",
+      "handle": "barbie-premium-kids-comfort-slipper",
+      "title": "Barbie Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9008-e1743687669736.webp?v=1751891666",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9005.webp?v=1753829323"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/barbie-premium-kids-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-04",
+      "handle": "spider-man-premium-kids-comfort-slipper",
+      "title": "Spider Man Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8330-e1743682759830.webp?v=1753554461",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8334.webp?v=1753829374"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/spider-man-premium-kids-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-05",
+      "handle": "minnie-mouse-premium-kids-comfort-slipper-1",
+      "title": "Minnie Mouse Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8180-e1743688505568.webp?v=1751682978",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8184-2048x1463.webp?v=1753832264"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/minnie-mouse-premium-kids-comfort-slipper-1"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-06",
+      "handle": "batman-premium-kids-comfort-slipper-2",
+      "title": "Batman Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9014-e1743687861447.webp?v=1751885100",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9010-2048x1494.webp?v=1751885100"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/batman-premium-kids-comfort-slipper-2"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-07",
+      "handle": "minnie-mouse-premium-kids-comfort-slipper-2",
+      "title": "Minnie Mouse Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8195-e1743688431651.webp?v=1751681519",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8199.webp?v=1753832188"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/minnie-mouse-premium-kids-comfort-slipper-2"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-08",
+      "handle": "stitch-premium-kids-comfort-slipper",
+      "title": "Stitch Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8340-e1743688244478.webp?v=1754756770",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8344.webp?v=1754756770"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/stitch-premium-kids-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-09",
+      "handle": "stitch-premium-kids-comfort-slipper-1",
+      "title": "Stitch Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8335-e1743684030828.webp?v=1753554574",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/Slipgo-Slipper-Print-8339.webp?v=1753831965"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 - 29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/stitch-premium-kids-comfort-slipper-1"
+    },
+    {
+      "id": "slip-and-go--printed-kids-flip-flops-10",
+      "handle": "spiderman-premium-kids-comfort-slipper",
+      "title": "Spiderman Premium Kids Comfort Slipper",
+      "price": 375,
+      "compareAtPrice": 499,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9099-e1743687062987.webp?v=1751884702",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/SlipGo-Slipper-Kids-Printed9095.webp?v=1753829473"
+      ],
+      "cutout": null,
+      "sizes": [
+        "28 -29",
+        "30 - 31",
+        "32 - 33",
+        "34 - 35"
+      ],
+      "colors": [],
+      "section": "slip-and-go--printed-kids-flip-flops",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/spiderman-premium-kids-comfort-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-01",
+      "handle": "ultra-light-slip-on",
+      "title": "Ultra-Light Slip On",
+      "price": 1750,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3700.webp?v=1763494867",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A3701.webp?v=1763494866"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41",
+        "42 - 43",
+        "44 - 45"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/ultra-light-slip-on"
+    },
+    {
+      "id": "slip-and-go--winter-collection-02",
+      "handle": "caveman-slipper",
+      "title": "Caveman Slipper",
+      "price": 550,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7174_result.jpg?v=1766921949",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7175.jpg?v=1767443821"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/caveman-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-03",
+      "handle": "postive-vibes-slipper",
+      "title": "Postive Vibes Slipper",
+      "price": 550,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7178_result.jpg?v=1767443942",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7207_result.jpg?v=1767443942"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/postive-vibes-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-04",
+      "handle": "snowflake-slipper",
+      "title": "SNOWFLAKE SLIPPER",
+      "price": 700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7219-2_result.jpg?v=1768998848",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7219_result.jpg?v=1768998848"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/snowflake-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-05",
+      "handle": "jingle-slipper",
+      "title": "JINGLE SLIPPER",
+      "price": 850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7169_result.jpg?v=1766342081",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7217_result.jpg?v=1766342081"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/jingle-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-06",
+      "handle": "redish-slipper",
+      "title": "REDISH SLIPPER",
+      "price": 490,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7172_result.jpg?v=1766342516",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7216-2_result.jpg?v=1766342516"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/redish-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-07",
+      "handle": "donald-slipper",
+      "title": "Donald Slipper",
+      "price": 590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7166_result.jpg?v=1766343714",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7168_result.jpg?v=1766343714"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/donald-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-08",
+      "handle": "pooh-slipper",
+      "title": "Pooh Slipper",
+      "price": 590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7182_result.jpg?v=1766343853",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7183_result.jpg?v=1766343853"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/pooh-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-09",
+      "handle": "mickey-mouse-slipper",
+      "title": "Mickey Mouse Slipper",
+      "price": 590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7184_result.jpg?v=1766346148",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7185_result.jpg?v=1766346183"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/mickey-mouse-slipper"
+    },
+    {
+      "id": "slip-and-go--winter-collection-10",
+      "handle": "snoopy-slipper",
+      "title": "Snoopy Slipper",
+      "price": 590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7176_result.jpg?v=1766346309",
+        "https://cdn.shopify.com/s/files/1/0953/1644/3412/files/6S3A7177_result.jpg?v=1766346308"
+      ],
+      "cutout": null,
+      "sizes": [
+        "36 - 37",
+        "38 - 39",
+        "40 - 41"
+      ],
+      "colors": [],
+      "section": "slip-and-go--winter-collection",
+      "modelOutfit": false,
+      "url": "https://slipngo.co/products/snoopy-slipper"
+    }
+  ]
+}

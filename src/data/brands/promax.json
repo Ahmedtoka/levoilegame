@@ -1,0 +1,419 @@
+{
+  "brandId": "promax",
+  "site": "https://promax.market",
+  "sections": [
+    {
+      "id": "promax--probar",
+      "title": "ProBar",
+      "titleAr": "بروبار",
+      "productIds": [
+        "promax--probar-01",
+        "promax--probar-02",
+        "promax--probar-03",
+        "promax--probar-04",
+        "promax--probar-05",
+        "promax--probar-06"
+      ]
+    },
+    {
+      "id": "promax--procup",
+      "title": "ProCup",
+      "titleAr": "بروكب",
+      "productIds": [
+        "promax--procup-01",
+        "promax--procup-02",
+        "promax--procup-03",
+        "promax--procup-04",
+        "promax--procup-05",
+        "promax--procup-06"
+      ]
+    },
+    {
+      "id": "promax--prospread",
+      "title": "ProSpread",
+      "titleAr": "بروسبريد",
+      "productIds": [
+        "promax--prospread-01"
+      ]
+    },
+    {
+      "id": "promax--energy-bar",
+      "title": "Energy Bar",
+      "titleAr": "إنرجي بار",
+      "productIds": [
+        "promax--energy-bar-01",
+        "promax--energy-bar-02",
+        "promax--energy-bar-03",
+        "promax--energy-bar-04"
+      ]
+    },
+    {
+      "id": "promax--bundles",
+      "title": "Bundles",
+      "titleAr": "باندلز",
+      "productIds": [
+        "promax--bundles-01",
+        "promax--bundles-02",
+        "promax--bundles-03"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "promax--probar-01",
+      "handle": "probar-chocolate",
+      "title": "ProBar Chocolate",
+      "price": 90,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--probar-01/1.jpg",
+        "/products/promax--probar-01/2.jpg"
+      ],
+      "cutout": "/products/promax--probar-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--probar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/probar-chocolate"
+    },
+    {
+      "id": "promax--probar-02",
+      "handle": "probar-blueberry",
+      "title": "ProBar Blueberry",
+      "price": 90,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--probar-02/1.jpg",
+        "/products/promax--probar-02/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "promax--probar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/probar-blueberry"
+    },
+    {
+      "id": "promax--probar-03",
+      "handle": "probar-coffee",
+      "title": "ProBar Coffee",
+      "price": 90,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--probar-03/1.jpg",
+        "/products/promax--probar-03/2.jpg"
+      ],
+      "cutout": "/products/promax--probar-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--probar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/probar-coffee"
+    },
+    {
+      "id": "promax--probar-04",
+      "handle": "probar-peanut-butter",
+      "title": "ProBar Peanut Butter",
+      "price": 90,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--probar-04/1.jpg",
+        "/products/promax--probar-04/2.jpg"
+      ],
+      "cutout": "/products/promax--probar-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--probar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/probar-peanut-butter"
+    },
+    {
+      "id": "promax--probar-05",
+      "handle": "probar-coconut-almond",
+      "title": "ProBar Coconut Almond",
+      "price": 90,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--probar-05/1.jpg",
+        "/products/promax--probar-05/2.jpg"
+      ],
+      "cutout": "/products/promax--probar-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--probar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/probar-coconut-almond"
+    },
+    {
+      "id": "promax--probar-06",
+      "handle": "probar-cookies",
+      "title": "ProBar Cookies",
+      "price": 90,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--probar-06/1.jpg",
+        "/products/promax--probar-06/2.jpg"
+      ],
+      "cutout": "/products/promax--probar-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--probar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/probar-cookies"
+    },
+    {
+      "id": "promax--procup-01",
+      "handle": "procup-chocolate",
+      "title": "ProCup Chocolate",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--procup-01/1.jpg",
+        "/products/promax--procup-01/2.jpg"
+      ],
+      "cutout": "/products/promax--procup-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--procup",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/procup-chocolate"
+    },
+    {
+      "id": "promax--procup-02",
+      "handle": "procup-honey",
+      "title": "ProCup Honey",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--procup-02/1.jpg",
+        "/products/promax--procup-02/2.jpg"
+      ],
+      "cutout": "/products/promax--procup-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--procup",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/procup-honey"
+    },
+    {
+      "id": "promax--procup-03",
+      "handle": "procup-coffee",
+      "title": "ProCup Coffee",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--procup-03/1.jpg",
+        "/products/promax--procup-03/2.jpg"
+      ],
+      "cutout": "/products/promax--procup-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--procup",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/procup-coffee"
+    },
+    {
+      "id": "promax--procup-04",
+      "handle": "procup-vanilla-ice-cream",
+      "title": "ProCup Vanilla Ice Cream",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--procup-04/1.jpg",
+        "/products/promax--procup-04/2.jpg"
+      ],
+      "cutout": "/products/promax--procup-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--procup",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/procup-vanilla-ice-cream"
+    },
+    {
+      "id": "promax--procup-05",
+      "handle": "procup-cookies-cream",
+      "title": "ProCup Cookies & Cream",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--procup-05/1.jpg",
+        "/products/promax--procup-05/2.jpg"
+      ],
+      "cutout": "/products/promax--procup-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--procup",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/procup-cookies-cream"
+    },
+    {
+      "id": "promax--procup-06",
+      "handle": "procup-pistachio-dubai",
+      "title": "ProCup Pistachio Dubai",
+      "price": 135,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--procup-06/1.jpg",
+        "/products/promax--procup-06/2.jpg"
+      ],
+      "cutout": "/products/promax--procup-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--procup",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/procup-pistachio-dubai"
+    },
+    {
+      "id": "promax--prospread-01",
+      "handle": "pronuts-peanut-butter",
+      "title": "ProNuts Peanut Butter",
+      "price": 100,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--prospread-01/1.jpg",
+        "/products/promax--prospread-01/2.jpg"
+      ],
+      "cutout": "/products/promax--prospread-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--prospread",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/pronuts-peanut-butter"
+    },
+    {
+      "id": "promax--energy-bar-01",
+      "handle": "energybar-chocolate",
+      "title": "Energy Bar Chocolate",
+      "price": 60,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--energy-bar-01/1.jpg"
+      ],
+      "cutout": "/products/promax--energy-bar-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--energy-bar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/energybar-chocolate"
+    },
+    {
+      "id": "promax--energy-bar-02",
+      "handle": "energybar-dates",
+      "title": "Energy Bar Dates",
+      "price": 60,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--energy-bar-02/1.jpg"
+      ],
+      "cutout": "/products/promax--energy-bar-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--energy-bar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/energybar-dates"
+    },
+    {
+      "id": "promax--energy-bar-03",
+      "handle": "energybar-coconut",
+      "title": "Energy Bar Coconut",
+      "price": 60,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--energy-bar-03/1.jpg"
+      ],
+      "cutout": "/products/promax--energy-bar-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--energy-bar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/energybar-coconut"
+    },
+    {
+      "id": "promax--energy-bar-04",
+      "handle": "energybar-fruits",
+      "title": "Energy Bar Fruits",
+      "price": 60,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--energy-bar-04/1.jpg"
+      ],
+      "cutout": "/products/promax--energy-bar-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--energy-bar",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/energybar-fruits"
+    },
+    {
+      "id": "promax--bundles-01",
+      "handle": "chocolate-trio",
+      "title": "Chocolate Trio",
+      "price": 250,
+      "compareAtPrice": 285,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--bundles-01/1.jpg",
+        "/products/promax--bundles-01/2.jpg"
+      ],
+      "cutout": "/products/promax--bundles-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--bundles",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/chocolate-trio"
+    },
+    {
+      "id": "promax--bundles-02",
+      "handle": "coffee-lover",
+      "title": "Coffee Lover",
+      "price": 500,
+      "compareAtPrice": 585,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--bundles-02/1.jpg",
+        "/products/promax--bundles-02/2.jpg"
+      ],
+      "cutout": "/products/promax--bundles-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--bundles",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/coffee-lover"
+    },
+    {
+      "id": "promax--bundles-03",
+      "handle": "the-taste-box",
+      "title": "The Taste Box",
+      "price": 1250,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/promax--bundles-03/1.jpg",
+        "/products/promax--bundles-03/2.jpg"
+      ],
+      "cutout": "/products/promax--bundles-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "promax--bundles",
+      "modelOutfit": false,
+      "url": "https://promax.market/products/the-taste-box"
+    }
+  ]
+}

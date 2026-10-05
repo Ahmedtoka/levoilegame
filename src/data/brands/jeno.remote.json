@@ -1,0 +1,2104 @@
+{
+  "brandId": "jeno",
+  "site": "https://jenodesignseg.com",
+  "sections": [
+    {
+      "id": "jeno--dresses",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "jeno--dresses-01",
+        "jeno--dresses-02",
+        "jeno--dresses-03"
+      ]
+    },
+    {
+      "id": "jeno--shirts",
+      "title": "Shirts & blouses",
+      "titleAr": "قمصان",
+      "productIds": [
+        "jeno--shirts-01",
+        "jeno--shirts-02",
+        "jeno--shirts-03",
+        "jeno--shirts-04",
+        "jeno--shirts-05",
+        "jeno--shirts-06",
+        "jeno--shirts-07",
+        "jeno--shirts-08",
+        "jeno--shirts-09",
+        "jeno--shirts-10"
+      ]
+    },
+    {
+      "id": "jeno--sets-co-ords",
+      "title": "Sets / co-ords",
+      "titleAr": "أطقم",
+      "productIds": [
+        "jeno--sets-co-ords-01",
+        "jeno--sets-co-ords-02",
+        "jeno--sets-co-ords-03",
+        "jeno--sets-co-ords-04",
+        "jeno--sets-co-ords-05",
+        "jeno--sets-co-ords-06",
+        "jeno--sets-co-ords-07",
+        "jeno--sets-co-ords-08",
+        "jeno--sets-co-ords-09",
+        "jeno--sets-co-ords-10"
+      ]
+    },
+    {
+      "id": "jeno--bottoms",
+      "title": "Bottoms",
+      "titleAr": "بناطيل وجيبات",
+      "productIds": [
+        "jeno--bottoms-01",
+        "jeno--bottoms-02",
+        "jeno--bottoms-03",
+        "jeno--bottoms-04",
+        "jeno--bottoms-05",
+        "jeno--bottoms-06",
+        "jeno--bottoms-07",
+        "jeno--bottoms-08",
+        "jeno--bottoms-09",
+        "jeno--bottoms-10"
+      ]
+    },
+    {
+      "id": "jeno--denim",
+      "title": "Denim",
+      "titleAr": "دنيم",
+      "productIds": [
+        "jeno--denim-01",
+        "jeno--denim-02",
+        "jeno--denim-03"
+      ]
+    },
+    {
+      "id": "jeno--cardigan",
+      "title": "Cardigan",
+      "titleAr": "كارديجان",
+      "productIds": [
+        "jeno--cardigan-01",
+        "jeno--cardigan-02",
+        "jeno--cardigan-03",
+        "jeno--cardigan-04",
+        "jeno--cardigan-05",
+        "jeno--cardigan-06",
+        "jeno--cardigan-07",
+        "jeno--cardigan-08",
+        "jeno--cardigan-09",
+        "jeno--cardigan-10"
+      ]
+    },
+    {
+      "id": "jeno--sweaters",
+      "title": "SWEATERS",
+      "titleAr": "سويترات",
+      "productIds": [
+        "jeno--sweaters-01",
+        "jeno--sweaters-02",
+        "jeno--sweaters-03",
+        "jeno--sweaters-04",
+        "jeno--sweaters-05",
+        "jeno--sweaters-06",
+        "jeno--sweaters-07",
+        "jeno--sweaters-08",
+        "jeno--sweaters-09"
+      ]
+    },
+    {
+      "id": "jeno--jackets-coats",
+      "title": "JACKETS / COATS",
+      "titleAr": "جواكت وبالطوهات",
+      "productIds": [
+        "jeno--jackets-coats-01",
+        "jeno--jackets-coats-02",
+        "jeno--jackets-coats-03",
+        "jeno--jackets-coats-04",
+        "jeno--jackets-coats-05",
+        "jeno--jackets-coats-06",
+        "jeno--jackets-coats-07",
+        "jeno--jackets-coats-08",
+        "jeno--jackets-coats-09",
+        "jeno--jackets-coats-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "jeno--dresses-01",
+      "handle": "flowy-linen-tee-dress-2",
+      "title": "Flowy linen tee dress",
+      "price": 900,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/WhatsAppImage2025-08-01at2.08.44AM_1.jpg?v=1754056367",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/WhatsApp_Image_2025-08-01_at_2.08.46_AM.jpg?v=1754056367"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small - medium",
+        "Large-x large"
+      ],
+      "colors": [
+        {
+          "name": "Indigo",
+          "nameAr": "نيلي",
+          "hex": "#3a3f7a"
+        }
+      ],
+      "section": "jeno--dresses",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/flowy-linen-tee-dress-2"
+    },
+    {
+      "id": "jeno--dresses-02",
+      "handle": "florist-dress",
+      "title": "florist dress",
+      "price": 750,
+      "compareAtPrice": 1500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/DSC06256.jpg?v=1721692501",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/DSC06258.jpg?v=1721692502"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [],
+      "section": "jeno--dresses",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/florist-dress"
+    },
+    {
+      "id": "jeno--dresses-03",
+      "handle": "flowy-linen-tee-dress-3",
+      "title": "Flowy linen tee dress",
+      "price": 900,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/WhatsAppImage2025-08-01at2.08.43AM.jpg?v=1754056367"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small - medium",
+        "Large-x large"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--dresses",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/flowy-linen-tee-dress-3"
+    },
+    {
+      "id": "jeno--shirts-01",
+      "handle": "untitled-jul2_19-39-01",
+      "title": "Luster Blouse",
+      "price": 1500,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/C6A71548-6585-4454-88F0-F42F8B1F7944.jpg?v=1784746257",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-644_result.jpg?v=1783255574"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/untitled-jul2_19-39-01"
+    },
+    {
+      "id": "jeno--shirts-02",
+      "handle": "tie-blouse",
+      "title": "Tie Blouse",
+      "price": 1000,
+      "compareAtPrice": 1350,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-753_result.jpg?v=1783255269",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-729_result.jpg?v=1783255330"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Babyblue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Aubergine",
+          "nameAr": "Aubergine",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/tie-blouse"
+    },
+    {
+      "id": "jeno--shirts-03",
+      "handle": "studded-linen-shirt",
+      "title": "Studded linen shirt",
+      "price": 1300,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/2170BC7D-E46A-49E2-95D7-374BC406DB87.jpg?v=1780097666",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/3AD2442F-1678-4A21-85C2-253360A87F82.jpg?v=1780097666"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/studded-linen-shirt"
+    },
+    {
+      "id": "jeno--shirts-04",
+      "handle": "polka-dots-poplin-shirt",
+      "title": "Polka dots poplin shirt",
+      "price": 1000,
+      "compareAtPrice": 1750,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/112E4503-52DC-4B5F-95D4-2AD34517375F.jpg?v=1780093651",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/DB97BADE-872F-48E4-8A21-97A1E0840882.jpg?v=1780093651"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Off white",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/polka-dots-poplin-shirt"
+    },
+    {
+      "id": "jeno--shirts-05",
+      "handle": "ruched-back-shirt-black-1",
+      "title": "Ruched back shirt - Black",
+      "price": 1000,
+      "compareAtPrice": 1450,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/1D57A358-3EFB-4DEA-A808-40C3DCDD825E.jpg?v=1778543140",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/4D083153-91F2-4502-80B8-0FE6CE442FA7.jpg?v=1778543140"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/ruched-back-shirt-black-1"
+    },
+    {
+      "id": "jeno--shirts-06",
+      "handle": "ruched-back-shirt-yellow",
+      "title": "Ruched back shirt - yellow",
+      "price": 1000,
+      "compareAtPrice": 1450,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/B2DE6F1C-E5BA-4561-808A-E63020958717.jpg?v=1778543811",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/DB7DBDF5-E3FC-4430-B1A2-0F97D7481958.jpg?v=1778543811"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/ruched-back-shirt-yellow"
+    },
+    {
+      "id": "jeno--shirts-07",
+      "handle": "ruched-back-shirt-beige",
+      "title": "Ruched back shirt - beige",
+      "price": 1000,
+      "compareAtPrice": 1450,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/93864666-897D-45E3-9D48-07B11F5E2017.jpg?v=1778544087",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/1153286B-6958-4463-87FF-F1B65897573B.jpg?v=1778544086"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/ruched-back-shirt-beige"
+    },
+    {
+      "id": "jeno--shirts-08",
+      "handle": "untitled-apr13_12-18",
+      "title": "Waistline poplin shirt",
+      "price": 1000,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/987A6213-B31C-448E-8007-7A776F8B35B3.jpg?v=1776207209",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/E5108F8A-0480-42D0-80CA-FCE1D3FBCF22.jpg?v=1778553436"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/untitled-apr13_12-18"
+    },
+    {
+      "id": "jeno--shirts-09",
+      "handle": "petal-flory-blouse",
+      "title": "Petal flory blouse",
+      "price": 2400,
+      "compareAtPrice": 2600,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/2C4FDB3C-8589-47B9-8149-B0573AE96809.jpg?v=1778553709",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/3881CF8A-5C10-46AC-BCD9-7C3C94B1F862.jpg?v=1778553709"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "cafe",
+          "nameAr": "cafe",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Emerald green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/petal-flory-blouse"
+    },
+    {
+      "id": "jeno--shirts-10",
+      "handle": "summary-shirt",
+      "title": "Oversized Light Shirt",
+      "price": 800,
+      "compareAtPrice": 1250,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/39188F85-7293-4ACD-8A0C-2392EE3DA9A2.jpg?v=1778550715",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/B2D637DC-EC56-4333-A0F3-347E33748A7B.jpg?v=1778550715"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Mint",
+          "nameAr": "مِنت",
+          "hex": "#a8d8c0"
+        },
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Emerald green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Maroon",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "jeno--shirts",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/summary-shirt"
+    },
+    {
+      "id": "jeno--sets-co-ords-01",
+      "handle": "the-icon-stripe-set-brown",
+      "title": "The Icon Stripe Set - Brown",
+      "price": 1850,
+      "compareAtPrice": 2850,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/B89608E9-4092-4454-AFA0-667D1C03401B.jpg?v=1780092933",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/A063D6F4-302C-4571-8768-4E31E3401696.jpg?v=1780092933"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Brown striped",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-icon-stripe-set-brown"
+    },
+    {
+      "id": "jeno--sets-co-ords-02",
+      "handle": "the-icon-stripe-set-baby-blue",
+      "title": "The Icon Stripe Set - baby blue",
+      "price": 1850,
+      "compareAtPrice": 2850,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/55A702D1-65A7-4D19-8EFA-926E7F7387EA.jpg?v=1780092619",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/D9A75721-4A2C-4FDA-8252-E3000E7E304C.jpg?v=1780092619"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-icon-stripe-set-baby-blue"
+    },
+    {
+      "id": "jeno--sets-co-ords-03",
+      "handle": "pleats-cotton-set-white",
+      "title": "Pleats cotton set - white",
+      "price": 1800,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/6B0881E4-C8DC-447A-9679-74E0CFF7E768.jpg?v=1778693644",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/FF68F038-5C16-4FCD-A65F-F2ECB45B608C.jpg?v=1778693644"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/pleats-cotton-set-white"
+    },
+    {
+      "id": "jeno--sets-co-ords-04",
+      "handle": "pleats-cotton-set-baby-blue",
+      "title": "Pleats cotton set - baby blue",
+      "price": 1800,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/AB0F52BD-7170-4467-A076-66DC6A50A096.jpg?v=1778690390",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/AA9E032C-ED2A-4C92-AAD8-44D6FB19A630.jpg?v=1778690390"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - XL"
+      ],
+      "colors": [
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/pleats-cotton-set-baby-blue"
+    },
+    {
+      "id": "jeno--sets-co-ords-05",
+      "handle": "copy-unfinished-cotton-set",
+      "title": "Unfinished cotton set - mint",
+      "price": 1800,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/7A362EB4-F7AC-417A-BA67-61FD48185F42.jpg?v=1778627732",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/FC4982F3-65BA-43B9-87CC-0286A06E1BF0.jpg?v=1778627732"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small - medium",
+        "Large-x large"
+      ],
+      "colors": [
+        {
+          "name": "Mint",
+          "nameAr": "مِنت",
+          "hex": "#a8d8c0"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/copy-unfinished-cotton-set"
+    },
+    {
+      "id": "jeno--sets-co-ords-06",
+      "handle": "unfinished-cotton-set-1",
+      "title": "Unfinished cotton set - beige",
+      "price": 1800,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/818A410C-F02A-4208-B331-3CBFA09631B0.jpg?v=1778627844",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/AD50F3DC-8A3C-43D6-8C8B-6BF9E0D170EC.jpg?v=1778627844"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small - medium",
+        "Large-x large"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/unfinished-cotton-set-1"
+    },
+    {
+      "id": "jeno--sets-co-ords-07",
+      "handle": "description-chic-womens-2-piece-pleated-blouse-and-wide-leg-pants-chic-womens-2-piece-pleated-blouse-and-wide-leg-pants-captivating-styles-for-every-occasion",
+      "title": "Asymmetric summary set",
+      "price": 1000,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/FTM04473.jpg?v=1752542902",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/FTM04562.jpg?v=1752542902"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small - medium",
+        "Large-x large"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "lavander",
+          "nameAr": "lavander",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Mint",
+          "nameAr": "مِنت",
+          "hex": "#a8d8c0"
+        },
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/description-chic-womens-2-piece-pleated-blouse-and-wide-leg-pants-chic-womens-2-piece-pleated-blouse-and-wide-leg-pants-captivating-styles-for-every-occasion"
+    },
+    {
+      "id": "jeno--sets-co-ords-08",
+      "handle": "crinkle-set",
+      "title": "Crinkle set in beige",
+      "price": 1800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/rn-image_picker_lib_temp_6e29e433-f9b0-461b-8e7e-f581ff091d8e.jpg?v=1752277947",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/rn-image_picker_lib_temp_10e3ff3d-ca3b-4f96-b48d-ec6cec5bcf07.jpg?v=1752277947"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small- medium",
+        "Large - x large"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/crinkle-set"
+    },
+    {
+      "id": "jeno--sets-co-ords-09",
+      "handle": "stone-washed-studs-set",
+      "title": "Navy blue Stone washed studs set",
+      "price": 1500,
+      "compareAtPrice": 2650,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/A9DDE17D-EEA2-4CF2-9CD7-AB2D8A55E303.jpg?v=1764026258",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/D8A06E6A-7BE9-48BC-9AF5-C7DA011CB74D.jpg?v=1764018006"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Babyblue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/stone-washed-studs-set"
+    },
+    {
+      "id": "jeno--sets-co-ords-10",
+      "handle": "grey-stone-washed-studs-set",
+      "title": "Grey stone washed studs set",
+      "price": 1500,
+      "compareAtPrice": 2650,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/A7441520-0434-41CE-ACE6-39DC449E0C7B.jpg?v=1764026214",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/1D0127A4-E45D-40A1-93BD-0113C136C277.jpg?v=1764017792"
+      ],
+      "cutout": null,
+      "sizes": [
+        "L - xl",
+        "S - M"
+      ],
+      "colors": [],
+      "section": "jeno--sets-co-ords",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/grey-stone-washed-studs-set"
+    },
+    {
+      "id": "jeno--bottoms-01",
+      "handle": "pleated-tie-waisted-linen-pants-black",
+      "title": "Pleated tie-waisted linen pants - black",
+      "price": 1000,
+      "compareAtPrice": 1750,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/E41370A7-A172-44A2-94FA-6683CF44DE10.jpg?v=1778726966",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/76968DFE-1D70-444E-AB73-99472BEE02B5.jpg?v=1778726967"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/pleated-tie-waisted-linen-pants-black"
+    },
+    {
+      "id": "jeno--bottoms-02",
+      "handle": "pleated-tie-waisted-linen-pants-off-white",
+      "title": "Pleated tie-waisted linen pants - off white",
+      "price": 1000,
+      "compareAtPrice": 1750,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG-4620.jpg?v=1778727740",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG-4621.jpg?v=1778728105"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Off white",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/pleated-tie-waisted-linen-pants-off-white"
+    },
+    {
+      "id": "jeno--bottoms-03",
+      "handle": "pleated-tie-waisted-linen-pants-beige",
+      "title": "Pleated tie-waisted linen pants - beige",
+      "price": 1000,
+      "compareAtPrice": 1750,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG-4616.jpg?v=1778727468",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG-4618.jpg?v=1778727467"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/pleated-tie-waisted-linen-pants-beige"
+    },
+    {
+      "id": "jeno--bottoms-04",
+      "handle": "pleated-tie-waisted-linen-pants-olive",
+      "title": "pleated tie-waisted linen pants - olive",
+      "price": 1000,
+      "compareAtPrice": 1750,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/EDA0CA8D-70F1-4F70-B354-EF7D9D43F7C7.jpg?v=1778726447",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/3DA9489D-BD65-45A1-B993-B504BE90E956.jpg?v=1778726447"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/pleated-tie-waisted-linen-pants-olive"
+    },
+    {
+      "id": "jeno--bottoms-05",
+      "handle": "untitled-apr12_01-41",
+      "title": "Wrapline gabardeen pants",
+      "price": 1350,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/0CFDDE94-326B-4FE0-A245-4F00C51776DF.jpg?v=1778545217",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/7D650A34-A328-44D5-8A64-ABF7032B0540.jpg?v=1778545217"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Medium",
+        "Large",
+        "X-Large"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Beigee",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/untitled-apr12_01-41"
+    },
+    {
+      "id": "jeno--bottoms-06",
+      "handle": "blue-acid-wash-crossed-waist-wide-leg-jeans",
+      "title": "Blue Acid Wash Crossed Waist Wide Leg Jeans",
+      "price": 1000,
+      "compareAtPrice": 1650,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/FABB3979-B9ED-4023-9E54-68846D782B83.jpg?v=1765392903",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/78BF09F5-9F32-4C45-9A77-80C5F2A26BB7.jpg?v=1765392313"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Medium",
+        "Large",
+        "X-Large"
+      ],
+      "colors": [],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/blue-acid-wash-crossed-waist-wide-leg-jeans"
+    },
+    {
+      "id": "jeno--bottoms-07",
+      "handle": "grey-acid-wash-crossed-waist-wide-leg-jeans",
+      "title": "Grey Acid Wash Crossed Waist Wide Leg Jeans",
+      "price": 1000,
+      "compareAtPrice": 1650,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/F041ECDE-BB81-4854-B798-00D675E3A9FB.jpg?v=1765392774",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/32A137F6-E690-41D5-8699-FA27F8CEB45D.jpg?v=1765392774"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Medium",
+        "Large",
+        "X-Large"
+      ],
+      "colors": [],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/grey-acid-wash-crossed-waist-wide-leg-jeans"
+    },
+    {
+      "id": "jeno--bottoms-08",
+      "handle": "gabardine-pants",
+      "title": "Gabardine wide leg pants",
+      "price": 900,
+      "compareAtPrice": 1400,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/B9D8B8B7-B968-4FEA-BD41-F903EF7862D0.png?v=1763773198",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/98351D46-E8E4-49EC-89A1-8983FCD10CBD.png?v=1763773198"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Small - medium",
+        "Large - x large"
+      ],
+      "colors": [
+        {
+          "name": "Off white",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        },
+        {
+          "name": "Camel",
+          "nameAr": "جملي",
+          "hex": "#b98a5a"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/gabardine-pants"
+    },
+    {
+      "id": "jeno--bottoms-09",
+      "handle": "flowery-wrap-skirt",
+      "title": "Linen wrap skirt",
+      "price": 600,
+      "compareAtPrice": 1200,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/rn-image_picker_lib_temp_9ec2c7a8-eb96-417f-9590-111b0d8167b6.jpg?v=1721691293",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/rn-image_picker_lib_temp_42abf218-4224-4d62-9bfe-c8a235b62e79.jpg?v=1721691294"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/flowery-wrap-skirt"
+    },
+    {
+      "id": "jeno--bottoms-10",
+      "handle": "linen-pants",
+      "title": "Linen pants in white",
+      "price": 1000,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/WhatsApp_Image_2025-08-01_at_2.06.39_AM_1.jpg?v=1754060000",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/WhatsApp_Image_2025-08-01_at_2.06.38_AM.jpg?v=1754060000"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L/XL"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "jeno--bottoms",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/linen-pants"
+    },
+    {
+      "id": "jeno--denim-01",
+      "handle": "textured-denim-jacket",
+      "title": "Textured denim jacket",
+      "price": 1500,
+      "compareAtPrice": 2200,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/730DF759-8067-4373-8141-2A4F12332EB1.jpg?v=1778542562",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/4575B498-5CD3-4775-BF79-7FC6D9236112.jpg?v=1778542562"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Light denim",
+          "nameAr": "جينز",
+          "hex": "#4a6a90"
+        },
+        {
+          "name": "Denim blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "jeno--denim",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/textured-denim-jacket"
+    },
+    {
+      "id": "jeno--denim-02",
+      "handle": "denim-trench-coat-navy",
+      "title": "Denim trench coat - NAVY",
+      "price": 2600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-699.jpg?v=1767142829",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-706.jpg?v=1767142829"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [],
+      "section": "jeno--denim",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/denim-trench-coat-navy"
+    },
+    {
+      "id": "jeno--denim-03",
+      "handle": "denim-trench-coat-black",
+      "title": "Denim trench coat - BLACK",
+      "price": 2600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-673.jpg?v=1767233202",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-683.jpg?v=1767233202"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [],
+      "section": "jeno--denim",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/denim-trench-coat-black"
+    },
+    {
+      "id": "jeno--cardigan-01",
+      "handle": "studded-asymmetric-cardigan",
+      "title": "Studded asymmetric cardigan",
+      "price": 900,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/B97D2E72-03E7-4BE5-B696-A6763C0CF1CC.jpg?v=1778957253",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/A35C4F46-A214-4633-8CEA-419CC6A612F8.jpg?v=1778957253"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Mint",
+          "nameAr": "مِنت",
+          "hex": "#a8d8c0"
+        },
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Beigee",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Havan",
+          "nameAr": "هافان",
+          "hex": "#8a6a4a"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/studded-asymmetric-cardigan"
+    },
+    {
+      "id": "jeno--cardigan-02",
+      "handle": "leopard-cardigan",
+      "title": "Leopard cardigan",
+      "price": 500,
+      "compareAtPrice": 750,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/rn-image_picker_lib_temp_56371c6a-6752-4e56-9624-267e0ea31266.jpg?v=1724325534",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/rn-image_picker_lib_temp_dbdb68c1-9d68-42d8-8294-6e94229f50b5.jpg?v=1724325533"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Leopard",
+          "nameAr": "Leopard",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/leopard-cardigan"
+    },
+    {
+      "id": "jeno--cardigan-03",
+      "handle": "asymmetrical-knit-cardigan-brown",
+      "title": "Asymmetrical knit cardigan",
+      "price": 1950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/A759B11F-63A5-41B2-AA56-5792A62E94EA.jpg?v=1767233777",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/4C8F3399-BC59-4125-A841-10B1BA42F029.jpg?v=1767233777"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Offwhite",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/asymmetrical-knit-cardigan-brown"
+    },
+    {
+      "id": "jeno--cardigan-04",
+      "handle": "satin-plisse-ruffle-cardigan",
+      "title": "Satin Plissé ruffle cardigan",
+      "price": 750,
+      "compareAtPrice": 1300,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG_7456.jpg?v=1743928496",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG_7449.jpg?v=1743928496"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Foushia",
+          "nameAr": "Foushia",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Semon",
+          "nameAr": "Semon",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/satin-plisse-ruffle-cardigan"
+    },
+    {
+      "id": "jeno--cardigan-05",
+      "handle": "unfinished-milton-cardigan-olive",
+      "title": "Unfinished Milton cardigan - OLIVE",
+      "price": 1700,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1174.jpg?v=1767275987",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1178.jpg?v=1767275986"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/unfinished-milton-cardigan-olive"
+    },
+    {
+      "id": "jeno--cardigan-06",
+      "handle": "untitled-nov13_17-21",
+      "title": "Unfinished Milton cardigan - BLACK",
+      "price": 1700,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1239.jpg?v=1767276380",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1241.jpg?v=1767276380"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/untitled-nov13_17-21"
+    },
+    {
+      "id": "jeno--cardigan-07",
+      "handle": "cut-out-fringes-cardigan-3",
+      "title": "Cut out fringes cardigan",
+      "price": 1200,
+      "compareAtPrice": 1550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-819.jpg?v=1767277317",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-808.jpg?v=1767277317"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/cut-out-fringes-cardigan-3"
+    },
+    {
+      "id": "jeno--cardigan-08",
+      "handle": "cut-out-fringes-cardigan-2",
+      "title": "Cut out fringes cardigan - HAVAN",
+      "price": 1200,
+      "compareAtPrice": 1550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-761.jpg?v=1767279934",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-802.jpg?v=1767279933"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Camel",
+          "nameAr": "جملي",
+          "hex": "#b98a5a"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/cut-out-fringes-cardigan-2"
+    },
+    {
+      "id": "jeno--cardigan-09",
+      "handle": "cut-out-fringes-cardigan",
+      "title": "Cut out fringes cardigan - BROWN",
+      "price": 1200,
+      "compareAtPrice": 1550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-777.jpg?v=1767280531",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-787.jpg?v=1767280531"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/cut-out-fringes-cardigan"
+    },
+    {
+      "id": "jeno--cardigan-10",
+      "handle": "fringes",
+      "title": "Cut out fringes cardigan",
+      "price": 1200,
+      "compareAtPrice": 1550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG-0512.jpg?v=1731334036",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG-0513.jpg?v=1731334036"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "jeno--cardigan",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/fringes"
+    },
+    {
+      "id": "jeno--sweaters-01",
+      "handle": "asymmetric-top-copy",
+      "title": "Asymmetric top",
+      "price": 1400,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/AE8DC202-9C78-4E2D-A8CA-A44D6D9075DE.jpg?v=1763213903",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/2B2AC593-F655-4571-89B9-749A287D2B7D.jpg?v=1763213902"
+      ],
+      "cutout": null,
+      "sizes": [
+        "L - xl",
+        "S - M"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Indigo",
+          "nameAr": "نيلي",
+          "hex": "#3a3f7a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/asymmetric-top-copy"
+    },
+    {
+      "id": "jeno--sweaters-02",
+      "handle": "rhinestone-whisper-hoodie-olive",
+      "title": "Rhinestone Whisper Hoodie - olive",
+      "price": 1500,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-263.jpg?v=1767393938",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-254.jpg?v=1767393938"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/rhinestone-whisper-hoodie-olive"
+    },
+    {
+      "id": "jeno--sweaters-03",
+      "handle": "rhinestone-whisper-hoodie-black",
+      "title": "Rhinestone Whisper Hoodie - black",
+      "price": 1500,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-285.jpg?v=1767394389",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-278.jpg?v=1767394389"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/rhinestone-whisper-hoodie-black"
+    },
+    {
+      "id": "jeno--sweaters-04",
+      "handle": "rhinestone-whisper-hoodie-brown",
+      "title": "Rhinestone Whisper Hoodie - brown",
+      "price": 1500,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-227.jpg?v=1767394484",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/0FB6B1EF-778B-4B31-B22D-B62A169EBCD8.jpg?v=1767394484"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/rhinestone-whisper-hoodie-brown"
+    },
+    {
+      "id": "jeno--sweaters-05",
+      "handle": "untitled-jan2_15-39",
+      "title": "Rhinestone Whisper Hoodie - beige",
+      "price": 1500,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/D9434475-65D1-49BE-9227-541C73C17C42.jpg?v=1767361244",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/18D085EE-0E1B-4F96-B37C-7B232E551760.jpg?v=1767361244"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/untitled-jan2_15-39"
+    },
+    {
+      "id": "jeno--sweaters-06",
+      "handle": "loom-knit-zip-sweater",
+      "title": "Loom Knit Zip Sweater",
+      "price": 1800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/23F9F6D3-2E8D-45BF-9E33-5EEF0715B39C.jpg?v=1767397142",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/E74B284B-9C0A-4D75-A0C4-19EB51B252D0.jpg?v=1767397142"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/loom-knit-zip-sweater"
+    },
+    {
+      "id": "jeno--sweaters-07",
+      "handle": "studded-knit-top-pink",
+      "title": "Studded knit top - PINK",
+      "price": 1600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1308.jpg?v=1767275624",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1299.jpg?v=1767275624"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/studded-knit-top-pink"
+    },
+    {
+      "id": "jeno--sweaters-08",
+      "handle": "studded-knit-top",
+      "title": "Studded knit top - pistachio",
+      "price": 1600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1315_71e11e85-dbde-48f9-93db-ae49a7ece27d.jpg?v=1767275760",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-1336.jpg?v=1767275760"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Pistachio",
+          "nameAr": "Pistachio",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/studded-knit-top"
+    },
+    {
+      "id": "jeno--sweaters-09",
+      "handle": "color-block-sweatshirt",
+      "title": "Color Block Sweatshirt",
+      "price": 350,
+      "compareAtPrice": 850,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG_4620.jpg?v=1706096399",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/IMG_4621.jpg?v=1706096398"
+      ],
+      "cutout": null,
+      "sizes": [
+        "free size"
+      ],
+      "colors": [
+        {
+          "name": "Black and Yellow",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Black and Blue",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "jeno--sweaters",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/color-block-sweatshirt"
+    },
+    {
+      "id": "jeno--jackets-coats-01",
+      "handle": "leopard-wool-jacket",
+      "title": "Leopard wool jacket",
+      "price": 1500,
+      "compareAtPrice": 1850,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-553.jpg?v=1767360327",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-543.jpg?v=1767360327"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/leopard-wool-jacket"
+    },
+    {
+      "id": "jeno--jackets-coats-02",
+      "handle": "faux-fur-jacket",
+      "title": "Faux fur jacket",
+      "price": 2100,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-507.jpg?v=1767398606",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-492.jpg?v=1767398606"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/faux-fur-jacket"
+    },
+    {
+      "id": "jeno--jackets-coats-03",
+      "handle": "asymmetrical-coat",
+      "title": "Asymmetrical coat",
+      "price": 1700,
+      "compareAtPrice": 2200,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/CD520089-4A00-46F5-B322-892AC706353C.jpg?v=1767310479",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/605C20ED-A372-4ED2-A1EA-F9ED133C7390.jpg?v=1767310478"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/asymmetrical-coat"
+    },
+    {
+      "id": "jeno--jackets-coats-04",
+      "handle": "the-vela-wrap-coat-burgundy",
+      "title": "THE VELA WRAP COAT - BURGUNDY",
+      "price": 2850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-348.jpg?v=1767090661",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-359.jpg?v=1767090661"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-vela-wrap-coat-burgundy"
+    },
+    {
+      "id": "jeno--jackets-coats-05",
+      "handle": "the-vela-wrap-coat-beige",
+      "title": "THE VELA WRAP COAT - BEIGE",
+      "price": 2850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/62130B0E-F990-4951-A17B-E37273AF22CC.jpg?v=1766524768",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-403.jpg?v=1767090842"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-vela-wrap-coat-beige"
+    },
+    {
+      "id": "jeno--jackets-coats-06",
+      "handle": "the-vela-wrap-coat-grey",
+      "title": "THE VELA WRAP COAT - GREY",
+      "price": 2850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-371.jpg?v=1767090442",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-374.jpg?v=1767090442"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-vela-wrap-coat-grey"
+    },
+    {
+      "id": "jeno--jackets-coats-07",
+      "handle": "the-vela-wrap-coat-emerald-green",
+      "title": "THE VELA WRAP COAT - EMERALD GREEN",
+      "price": 2850,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-418.jpg?v=1767091167",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-420.jpg?v=1767091168"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-vela-wrap-coat-emerald-green"
+    },
+    {
+      "id": "jeno--jackets-coats-08",
+      "handle": "teddy-leather-jacket-havan",
+      "title": "Teddy leather jacket - HAVAN",
+      "price": 1900,
+      "compareAtPrice": 2550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-587.jpg?v=1767110723",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-615.jpg?v=1767110723"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/teddy-leather-jacket-havan"
+    },
+    {
+      "id": "jeno--jackets-coats-09",
+      "handle": "the-leather-teddy-jacket-black",
+      "title": "Teddy leather jacket- BLACK",
+      "price": 1900,
+      "compareAtPrice": 2550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-556.jpg?v=1767111631",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-571.jpg?v=1767111631"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/the-leather-teddy-jacket-black"
+    },
+    {
+      "id": "jeno--jackets-coats-10",
+      "handle": "teddy-leather-jacket-brown",
+      "title": "Teddy leather jacket - BROWN",
+      "price": 1900,
+      "compareAtPrice": 2550,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-594.jpg?v=1767110901",
+        "https://cdn.shopify.com/s/files/1/0674/6285/6922/files/Jeno-604.jpg?v=1767110901"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S - M",
+        "L - xl"
+      ],
+      "colors": [],
+      "section": "jeno--jackets-coats",
+      "modelOutfit": false,
+      "url": "https://jenodesignseg.com/products/teddy-leather-jacket-brown"
+    }
+  ]
+}

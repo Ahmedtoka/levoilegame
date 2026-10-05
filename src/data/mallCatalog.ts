@@ -1,12 +1,38 @@
 // Builds the 122 Mall catalogue: one Section per open brand. Le Voile keeps
 // its real catalogue (products.json, all its sections merged into one shop);
-// every other brand gets placeholder products with generated SVG photos until
-// its real data file arrives.
-// TODO(brands): load public/brands/<id>/products.json per brand when available.
+// brands with a real catalogue in src/data/brands/<id>.json (scripts/fetch-brands.mjs)
+// get theirs merged the same way; the rest keep placeholder products with
+// generated SVG photos.
 
 import { BRANDS, type BrandDef, type ProductKind } from '../config/mall'
 import { DEFAULT_APPAREL_SIZES, DEFAULT_COLOR, FREE_SIZE } from './defaults'
 import type { Catalog, Product, Section } from './types'
+
+/** A brand's real catalogue as written by scripts/fetch-brands.mjs. */
+export interface BrandCatalogFile {
+  brandId: string
+  site: string
+  sections: Section[]
+  products: Product[]
+}
+
+// Lazy chunks: the brand catalogues only load when the mall boots.
+const BRAND_FILES = import.meta.glob<BrandCatalogFile>(['./brands/*.json', '!./brands/*.remote.json'], { import: 'default' })
+
+/** Loads every brand catalogue file, keyed by brand id (a file that fails is skipped). */
+export async function loadBrandCatalogs(): Promise<Record<string, BrandCatalogFile>> {
+  const out: Record<string, BrandCatalogFile> = {}
+  await Promise.all(
+    Object.values(BRAND_FILES).map((load) =>
+      load()
+        .then((file) => {
+          out[file.brandId] = file
+        })
+        .catch((err) => console.warn('Brand catalogue failed to load', err)),
+    ),
+  )
+  return out
+}
 
 const NAMES: Record<ProductKind, string[]> = {
   dress: ['Flow Maxi Dress', 'Pleated Midi Dress', 'Linen Shirt Dress', 'Satin Wrap Dress', 'Tiered Maxi Dress'],
@@ -109,15 +135,38 @@ export function levoileSubsections(): Section[] {
   return levoileSections
 }
 
+const brandSections = new Map<string, Section[]>()
+/** A brand's own sections (from its store's collections); empty for placeholder brands. */
+export function brandSubsections(brandId: string): Section[] {
+  return brandId === 'levoile' ? levoileSections : (brandSections.get(brandId) ?? [])
+}
+
+const APPAREL_KINDS: ProductKind[] = ['dress', 'abaya', 'blouse', 'pants', 'cardigan']
+
+/** A brand's real products as one shop; apparel brands get showcase models from the first cut-out pieces. */
+function realBrandProducts(b: BrandDef, file: BrandCatalogFile): Product[] {
+  brandSections.set(b.id, file.sections)
+  const apparel = b.kinds.some((k) => APPAREL_KINDS.includes(k))
+  let models = 0
+  return file.products.map((p) => {
+    const model = apparel && p.cutout !== null && models < 2
+    if (model) models++
+    return { ...p, section: b.id, modelOutfit: model }
+  })
+}
+
 /** Turns the Le Voile catalogue into the 122 Mall catalogue (one section per open brand). */
-export function buildMallCatalog(levoile: Catalog): Catalog {
+export function buildMallCatalog(levoile: Catalog, brandFiles: Record<string, BrandCatalogFile> = {}): Catalog {
   levoileSections = levoile.sections
+  brandSections.clear()
   const products: Product[] = []
   const sections: Section[] = []
   for (const b of BRANDS) {
     if (b.status !== 'open') continue
     let list: Product[]
-    if (b.realCatalog) {
+    const file = brandFiles[b.id]
+    if (file?.products.length) list = realBrandProducts(b, file)
+    else if (b.realCatalog) {
       // All Le Voile sections become one shop; keep its showcase models (max 3).
       let models = 0
       list = levoile.products.map((p) => {

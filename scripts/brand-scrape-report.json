@@ -1,0 +1,1080 @@
+{
+  "the-cause-wear": {
+    "brandId": "the-cause-wear",
+    "myshopify": "https://f5qabu-7i.myshopify.com",
+    "site": "https://thecauseweareg.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "winter-collection",
+        "title": "WINTER COLLECTION",
+        "titleAr": "كولكشن الشتا",
+        "products": 0
+      },
+      {
+        "handle": "summer-collection",
+        "title": "SUMMER COLLECTION",
+        "titleAr": "كولكشن الصيف",
+        "products": 10
+      },
+      {
+        "handle": "kids",
+        "title": "KIDS",
+        "titleAr": "أطفال",
+        "products": 0
+      },
+      {
+        "handle": "baby-winter",
+        "title": "BABY winter",
+        "titleAr": "بيبي",
+        "products": 0
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "winter-collection: only 0 products",
+      "kids: only 0 products",
+      "baby-winter: only 0 products"
+    ],
+    "menu": [
+      "sale",
+      "summer-collection",
+      "baby-winter",
+      "pajama-set",
+      "baby-swimsuit",
+      "summer-kids",
+      "t-shirts",
+      "swim-shorts",
+      "bottoms",
+      "sets",
+      "baby",
+      "best-picks"
+    ]
+  },
+  "dnd": {
+    "brandId": "dnd",
+    "myshopify": "https://9a2ddd-b9.myshopify.com",
+    "site": "https://dnd-design.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 5
+      },
+      {
+        "handle": "shirts",
+        "title": "Shirts",
+        "titleAr": "قمصان",
+        "products": 5
+      },
+      {
+        "handle": "sets",
+        "title": "Sets",
+        "titleAr": "أطقم",
+        "products": 5
+      },
+      {
+        "handle": "vests",
+        "title": "VESTS",
+        "titleAr": "فيستات",
+        "products": 5
+      },
+      {
+        "handle": "pants",
+        "title": "Pants",
+        "titleAr": "بناطيل",
+        "products": 5
+      },
+      {
+        "handle": "skirts",
+        "title": "Skirts",
+        "titleAr": "جيبات",
+        "products": 3
+      },
+      {
+        "handle": "kimonos",
+        "title": "Kimonos",
+        "titleAr": "كيمونو",
+        "products": 2
+      },
+      {
+        "handle": "blazer",
+        "title": "BLAZER",
+        "titleAr": "بليزرات",
+        "products": 4
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "dresses: 5 sold-out products added to reach 5",
+      "shirts: 1 sold-out products added to reach 5",
+      "sets: 4 sold-out products added to reach 5",
+      "vests: 3 sold-out products added to reach 5",
+      "skirts: only 3 products",
+      "skirts: 2 sold-out products added to reach 5",
+      "kimonos: only 2 products",
+      "kimonos: 2 sold-out products added to reach 5",
+      "blazer: only 4 products",
+      "blazer: 4 sold-out products added to reach 5"
+    ],
+    "menu": [
+      "end-of-season-sale-up-to-50-off",
+      "sun-kissed",
+      "summer-diaries",
+      "joy-eid-collection",
+      "om-el-denia",
+      "the-red-snow",
+      "after-the-storm",
+      "chapters-of-fall",
+      "el-kenz-الكنز",
+      "dresses",
+      "vests",
+      "sets",
+      "blazer",
+      "skirts",
+      "jumpsuit",
+      "kimonos",
+      "pants",
+      "shirts",
+      "bent-akaber"
+    ]
+  },
+  "promax": {
+    "brandId": "promax",
+    "myshopify": "https://newndy-ta.myshopify.com",
+    "site": "https://promax.market",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "probar",
+        "title": "ProBar",
+        "titleAr": "بروبار",
+        "products": 6
+      },
+      {
+        "handle": "procup",
+        "title": "ProCup",
+        "titleAr": "بروكب",
+        "products": 6
+      },
+      {
+        "handle": "prospread",
+        "title": "ProSpread",
+        "titleAr": "بروسبريد",
+        "products": 1
+      },
+      {
+        "handle": "energy-bar",
+        "title": "Energy Bar",
+        "titleAr": "إنرجي بار",
+        "products": 4
+      },
+      {
+        "handle": "bundles",
+        "title": "Bundles",
+        "titleAr": "باندلز",
+        "products": 3
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "prospread: only 1 products",
+      "energy-bar: only 4 products",
+      "bundles: only 3 products"
+    ],
+    "menu": [
+      "probar",
+      "procup",
+      "energy-bar",
+      "bundles",
+      "prospread"
+    ]
+  },
+  "bezravoga": {
+    "brandId": "bezravoga",
+    "myshopify": "https://hapf1i-rz.myshopify.com",
+    "site": "https://bezravoga-eg.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "drsis",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 3
+      },
+      {
+        "handle": "shirts",
+        "title": "Shirts",
+        "titleAr": "قمصان",
+        "products": 10
+      },
+      {
+        "handle": "set",
+        "title": "Sets",
+        "titleAr": "أطقم",
+        "products": 5
+      },
+      {
+        "handle": "pants",
+        "title": "Pants",
+        "titleAr": "بناطيل",
+        "products": 8
+      },
+      {
+        "handle": "skirts",
+        "title": "Skirts",
+        "titleAr": "جيبات",
+        "products": 5
+      },
+      {
+        "handle": "denim",
+        "title": "Denim",
+        "titleAr": "دنيم",
+        "products": 0
+      },
+      {
+        "handle": "coats",
+        "title": "coats & Sets",
+        "titleAr": "بالطوهات",
+        "products": 0
+      },
+      {
+        "handle": "summer-collection",
+        "title": "Summer Collection",
+        "titleAr": "كولكشن الصيف",
+        "products": 4
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "drsis: only 3 products",
+      "drsis: 1 sold-out products added to reach 5",
+      "denim: only 0 products",
+      "coats: only 0 products",
+      "summer-collection: only 4 products"
+    ],
+    "menu": [
+      "50-off",
+      "summer-collection",
+      "buy-2-get-1-free",
+      "ramadan-collection",
+      "winter-collection-1",
+      "set",
+      "shirts",
+      "skirts",
+      "pants",
+      "drsis",
+      "coats"
+    ]
+  },
+  "hashbag": {
+    "brandId": "hashbag",
+    "myshopify": "https://rx15zw-gg.myshopify.com",
+    "site": "https://hashbag-eg.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "women-bags",
+        "title": "Women Bags",
+        "titleAr": "شنط حريمي",
+        "products": 3
+      },
+      {
+        "handle": "thermal",
+        "title": "Thermal",
+        "titleAr": "شنط حافظة للحرارة",
+        "products": 10
+      },
+      {
+        "handle": "thermal-and-cool-bag",
+        "title": "Thermal and Cool Bag",
+        "titleAr": "شنط حرارة وتبريد",
+        "products": 10
+      },
+      {
+        "handle": "school",
+        "title": "School",
+        "titleAr": "شنط مدرسة",
+        "products": 5
+      },
+      {
+        "handle": "kids",
+        "title": "Kids",
+        "titleAr": "أطفال",
+        "products": 1
+      },
+      {
+        "handle": "cross-bag",
+        "title": "Cross Bag",
+        "titleAr": "كروس باج",
+        "products": 1
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "women-bags: only 3 products",
+      "kids: only 1 products",
+      "kids: 1 sold-out products added to reach 5",
+      "cross-bag: only 1 products"
+    ],
+    "menu": [
+      "buy-1-get-15-off-the-2nd",
+      "all-products",
+      "thermal",
+      "school",
+      "home",
+      "thermal-and-cool-bag",
+      "thermal-and-cool-bag-1",
+      "women-bags"
+    ]
+  },
+  "nourhan": {
+    "brandId": "nourhan",
+    "myshopify": "https://67919d-09.myshopify.com",
+    "site": "https://nourhangado.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 5
+      },
+      {
+        "handle": "sets",
+        "title": "Sets",
+        "titleAr": "أطقم",
+        "products": 10
+      },
+      {
+        "handle": "shirts-vests",
+        "title": "Shirts & vests",
+        "titleAr": "قمصان وفيستات",
+        "products": 10
+      },
+      {
+        "handle": "pants",
+        "title": "Pants",
+        "titleAr": "بناطيل",
+        "products": 7
+      },
+      {
+        "handle": "skirts",
+        "title": "Skirts",
+        "titleAr": "جيبات",
+        "products": 5
+      },
+      {
+        "handle": "jackets-coats",
+        "title": "Jackets & coats",
+        "titleAr": "جواكت وبالطوهات",
+        "products": 5
+      },
+      {
+        "handle": "knitwear",
+        "title": "Knitwear",
+        "titleAr": "تريكو",
+        "products": 3
+      },
+      {
+        "handle": "cocktail-magazine",
+        "title": "Cocktail Magazine",
+        "titleAr": "كوكتيل ماجازين",
+        "products": 5
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "dresses: 4 sold-out products added to reach 5",
+      "jackets-coats: 1 sold-out products added to reach 5",
+      "knitwear: only 3 products",
+      "knitwear: 3 sold-out products added to reach 5",
+      "cocktail-magazine: 5 sold-out products added to reach 5"
+    ],
+    "menu": [
+      "end-of-season-sale-50-off",
+      "cocktail-magazine",
+      "pants",
+      "shirts-vests",
+      "dresses",
+      "skirts",
+      "sets",
+      "plage-show",
+      "eid-20206",
+      "ramadan2026",
+      "mega-sale",
+      "summer-25"
+    ]
+  },
+  "scarfest": {
+    "brandId": "scarfest",
+    "myshopify": "https://wyznpf-17.myshopify.com",
+    "site": "https://scarfestfashion.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "chiffon-printed",
+        "title": "Chiffon Printed",
+        "titleAr": "شيفون مطبوع",
+        "products": 10
+      },
+      {
+        "handle": "modal-printed",
+        "title": "Modal Printed",
+        "titleAr": "مودال مطبوع",
+        "products": 10
+      },
+      {
+        "handle": "modal-plain",
+        "title": "Modal Plain",
+        "titleAr": "مودال سادة",
+        "products": 5
+      },
+      {
+        "handle": "cotton-jill",
+        "title": "Cotton Jill",
+        "titleAr": "قطن جيل",
+        "products": 10
+      },
+      {
+        "handle": "kuwaiti",
+        "title": "Kuwaiti",
+        "titleAr": "كويتي",
+        "products": 7
+      },
+      {
+        "handle": "raffield",
+        "title": "Ruffield",
+        "titleAr": "كشكشة",
+        "products": 9
+      },
+      {
+        "handle": "brooch",
+        "title": "Brooch",
+        "titleAr": "بروشات",
+        "products": 10
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "modal-plain: 3 sold-out products added to reach 5"
+    ],
+    "menu": [
+      "scarves",
+      "bandana-1",
+      "accaccessories",
+      "extensions",
+      "chiffon-printed",
+      "modal-printed",
+      "magnetic-pin-1",
+      "brooch",
+      "cotton-jill",
+      "kuwaiti",
+      "modal-plain",
+      "pins",
+      "hijab-tape-1",
+      "raffield"
+    ]
+  },
+  "slip-and-go": {
+    "brandId": "slip-and-go",
+    "myshopify": "https://vcmq59-ab.myshopify.com",
+    "site": "https://slipngo.co",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "printed-women-flip-flops",
+        "title": "Printed Women Flip flops",
+        "titleAr": "شباشب حريمي مطبوعة",
+        "products": 10
+      },
+      {
+        "handle": "women-basic-flip-flops",
+        "title": "Women Basic Flip flops",
+        "titleAr": "شباشب حريمي بيسك",
+        "products": 10
+      },
+      {
+        "handle": "accessorized-women-s-flip-flops",
+        "title": "Accessorized Women’s Flip‑Flops",
+        "titleAr": "شباشب حريمي بإكسسوار",
+        "products": 10
+      },
+      {
+        "handle": "women-sandals",
+        "title": "Women Sandals",
+        "titleAr": "صنادل حريمي",
+        "products": 6
+      },
+      {
+        "handle": "men-printed-flip-flops",
+        "title": "Men Printed Flip Flops",
+        "titleAr": "شباشب رجالي مطبوعة",
+        "products": 10
+      },
+      {
+        "handle": "men-basic-flip-flops",
+        "title": "Men Basic Flip Flops",
+        "titleAr": "شباشب رجالي بيسك",
+        "products": 10
+      },
+      {
+        "handle": "printed-kids-flip-flops",
+        "title": "Printed Kids Flip Flops",
+        "titleAr": "شباشب أطفال",
+        "products": 10
+      },
+      {
+        "handle": "winter-collection",
+        "title": "Winter Collection",
+        "titleAr": "كولكشن الشتا",
+        "products": 10
+      }
+    ],
+    "dropped": [],
+    "problems": [],
+    "menu": [
+      "men",
+      "men-clogs",
+      "men-sandals",
+      "men-basic-flip-flops",
+      "men-printed-flip-flops",
+      "accessorized-men-s-flip-flops",
+      "socks",
+      "women",
+      "women-clogs",
+      "womens-slides",
+      "women-sandals",
+      "women-basic-flip-flops",
+      "printed-women-flip-flops",
+      "accessorized-women-s-flip-flops",
+      "paduka",
+      "winter-collection",
+      "kids",
+      "kids-clogs",
+      "basic-kids-flip-flops",
+      "printed-kids-flip-flops",
+      "new-arrivals",
+      "x-israa-accessories",
+      "basic",
+      "printed"
+    ]
+  },
+  "rwan-designs": {
+    "brandId": "rwan-designs",
+    "myshopify": "https://rwanagiza.myshopify.com",
+    "site": "https://rwanagiza.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "bags",
+        "title": "Bags",
+        "titleAr": "شنط",
+        "products": 10
+      },
+      {
+        "handle": "clutches",
+        "title": "Clutches",
+        "titleAr": "كلاتشات",
+        "products": 5
+      },
+      {
+        "handle": "tote-bags-1",
+        "title": "Tote Bags",
+        "titleAr": "توت باج",
+        "products": 5
+      },
+      {
+        "handle": "mini-tote-bags-1",
+        "title": "Mini Tote Bags",
+        "titleAr": "ميني توت باج",
+        "products": 6
+      },
+      {
+        "handle": "shirts",
+        "title": "Shirts",
+        "titleAr": "قمصان",
+        "products": 5
+      },
+      {
+        "handle": "summer-vibes",
+        "title": "Summer Vibes",
+        "titleAr": "سمر فايبز",
+        "products": 5
+      },
+      {
+        "handle": "accessories",
+        "title": "Accessories",
+        "titleAr": "إكسسوارات",
+        "products": 2
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "summer-vibes: 2 sold-out products added to reach 5",
+      "accessories: only 2 products"
+    ],
+    "menu": [
+      "new-arrival",
+      "bags",
+      "sale",
+      "accessories",
+      "summer-vibes",
+      "shirts",
+      "clutches",
+      "featured-collection",
+      "laptop-sleeve",
+      "ramadan-collection",
+      "tote-bags-1"
+    ]
+  },
+  "noha-collection": {
+    "brandId": "noha-collection",
+    "myshopify": "https://nohaa-collection.myshopify.com",
+    "site": "https://nohacollection.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses-1",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 5
+      },
+      {
+        "handle": "set",
+        "title": "Set",
+        "titleAr": "أطقم",
+        "products": 9
+      },
+      {
+        "handle": "shirt",
+        "title": "Shirt",
+        "titleAr": "قمصان",
+        "products": 10
+      },
+      {
+        "handle": "pants",
+        "title": "Pants",
+        "titleAr": "بناطيل",
+        "products": 8
+      },
+      {
+        "handle": "cardigans-jackets",
+        "title": "Cardigans & Jackets",
+        "titleAr": "كارديجان وجواكت",
+        "products": 8
+      },
+      {
+        "handle": "vests",
+        "title": "Vests",
+        "titleAr": "فيستات",
+        "products": 1
+      },
+      {
+        "handle": "coastal-collection",
+        "title": "Coastal Collection",
+        "titleAr": "كوستال كولكشن",
+        "products": 6
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "dresses-1: 1 sold-out products added to reach 5",
+      "vests: only 1 products"
+    ],
+    "menu": [
+      "wanted-collection",
+      "coastal-collection",
+      "best-sellers",
+      "eid-2026",
+      "25-off",
+      "bon-voyage",
+      "summer-off2026-noha-collection",
+      "cardigans-jackets",
+      "shirt",
+      "pants",
+      "set"
+    ]
+  },
+  "jeno": {
+    "brandId": "jeno",
+    "myshopify": "https://3e8506-3.myshopify.com",
+    "site": "https://jenodesignseg.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 3
+      },
+      {
+        "handle": "shirts",
+        "title": "Shirts & blouses",
+        "titleAr": "قمصان",
+        "products": 10
+      },
+      {
+        "handle": "sets-co-ords",
+        "title": "Sets / co-ords",
+        "titleAr": "أطقم",
+        "products": 10
+      },
+      {
+        "handle": "bottoms",
+        "title": "Bottoms",
+        "titleAr": "بناطيل وجيبات",
+        "products": 10
+      },
+      {
+        "handle": "denim",
+        "title": "Denim",
+        "titleAr": "دنيم",
+        "products": 3
+      },
+      {
+        "handle": "cardigan",
+        "title": "Cardigan",
+        "titleAr": "كارديجان",
+        "products": 10
+      },
+      {
+        "handle": "sweaters",
+        "title": "SWEATERS",
+        "titleAr": "سويترات",
+        "products": 9
+      },
+      {
+        "handle": "jackets-coats",
+        "title": "JACKETS / COATS",
+        "titleAr": "جواكت وبالطوهات",
+        "products": 10
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "dresses: only 3 products",
+      "dresses: 1 sold-out products added to reach 5",
+      "denim: only 3 products"
+    ],
+    "menu": [
+      "sale-up-to-50",
+      "best-sellers",
+      "bottoms",
+      "sets-co-ords",
+      "frontpage",
+      "cardigan",
+      "dresses",
+      "jumpsuit",
+      "shirts",
+      "winters-script-collection",
+      "new-drops",
+      "denim",
+      "sweaters",
+      "jackets-coats",
+      "ّليال-ًرمضان-ً١٤٤٧",
+      "sale"
+    ]
+  },
+  "nanosh": {
+    "brandId": "nanosh",
+    "myshopify": "https://hrvpua-ec.myshopify.com",
+    "site": "https://nanoushboutique.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 10
+      },
+      {
+        "handle": "sets",
+        "title": "sets",
+        "titleAr": "أطقم",
+        "products": 10
+      },
+      {
+        "handle": "shirts",
+        "title": "Shirts",
+        "titleAr": "قمصان",
+        "products": 10
+      },
+      {
+        "handle": "blouses",
+        "title": "Blouses",
+        "titleAr": "بلوزات",
+        "products": 2
+      },
+      {
+        "handle": "pants",
+        "title": "Pants",
+        "titleAr": "بناطيل",
+        "products": 10
+      },
+      {
+        "handle": "skirts",
+        "title": "skirts",
+        "titleAr": "جيبات",
+        "products": 8
+      },
+      {
+        "handle": "jackets",
+        "title": "Coats",
+        "titleAr": "جواكت",
+        "products": 4
+      },
+      {
+        "handle": "bags",
+        "title": "New Arrival",
+        "titleAr": "شنط",
+        "products": 10
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "blouses: only 2 products",
+      "jackets: only 4 products",
+      "jackets: 3 sold-out products added to reach 5"
+    ],
+    "menu": [
+      "summer-collection",
+      "up-to-50",
+      "new-arrivals",
+      "20-off",
+      "bags",
+      "pants",
+      "dresses",
+      "sets"
+    ]
+  },
+  "axis": {
+    "brandId": "axis",
+    "myshopify": "https://yzgu07-cj.myshopify.com",
+    "site": "https://axis-shop.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "tops",
+        "title": "Tops",
+        "titleAr": "توبات",
+        "products": 10
+      },
+      {
+        "handle": "blouses",
+        "title": "Blouses",
+        "titleAr": "بلوزات",
+        "products": 7
+      },
+      {
+        "handle": "tees",
+        "title": "Tees",
+        "titleAr": "تيشيرتات",
+        "products": 3
+      },
+      {
+        "handle": "hoodies",
+        "title": "Hoodies",
+        "titleAr": "هوديز",
+        "products": 0
+      },
+      {
+        "handle": "hoodies-sets",
+        "title": "Hoodies Sets",
+        "titleAr": "أطقم هوديز",
+        "products": 0
+      },
+      {
+        "handle": "sweaters",
+        "title": "Sweaters",
+        "titleAr": "سويترات",
+        "products": 0
+      },
+      {
+        "handle": "knitwear",
+        "title": "Knitwears",
+        "titleAr": "تريكو",
+        "products": 2
+      },
+      {
+        "handle": "jackets",
+        "title": "Jackets",
+        "titleAr": "جواكت",
+        "products": 1
+      }
+    ],
+    "dropped": [],
+    "problems": [
+      "tees: only 3 products",
+      "tees: 1 sold-out products added to reach 5",
+      "hoodies: only 0 products",
+      "hoodies-sets: only 0 products",
+      "sweaters: only 0 products",
+      "knitwear: only 2 products",
+      "knitwear: 1 sold-out products added to reach 5",
+      "jackets: only 1 products"
+    ],
+    "menu": [
+      "new-in",
+      "tops",
+      "blouses",
+      "long-sleeves",
+      "tees",
+      "cardigans",
+      "fashion-tops",
+      "summer-collection",
+      "winter-drop",
+      "sets"
+    ]
+  },
+  "pistage": {
+    "brandId": "pistage",
+    "myshopify": "https://pistage1.myshopify.com",
+    "site": "https://pistage.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses",
+        "title": "DRESSES",
+        "titleAr": "فساتين",
+        "products": 10
+      },
+      {
+        "handle": "shirts-blouses",
+        "title": "BLOUSES",
+        "titleAr": "قمصان وبلوزات",
+        "products": 10
+      },
+      {
+        "handle": "trousers",
+        "title": "PANTS",
+        "titleAr": "بناطيل",
+        "products": 10
+      },
+      {
+        "handle": "skirts",
+        "title": "SKIRTS",
+        "titleAr": "جيبات",
+        "products": 10
+      },
+      {
+        "handle": "demin",
+        "title": "DENIM",
+        "titleAr": "دنيم",
+        "products": 10
+      },
+      {
+        "handle": "jackets",
+        "title": "JACKETS NEW",
+        "titleAr": "جواكت",
+        "products": 10
+      },
+      {
+        "handle": "sets",
+        "title": "SETS",
+        "titleAr": "أطقم",
+        "products": 10
+      },
+      {
+        "handle": "hijab-scarfs",
+        "title": "HIJAB SCARFS",
+        "titleAr": "طرح وإيشاربات",
+        "products": 10
+      }
+    ],
+    "dropped": [],
+    "problems": [],
+    "menu": [
+      "end-of-season-sale",
+      "summer-2026",
+      "not-just-summer",
+      "swim-tops",
+      "swim-pants",
+      "swim-kimono",
+      "swim-skirt",
+      "head-cover-1",
+      "demin",
+      "basics",
+      "shirts-blouses",
+      "shirts-1",
+      "cardigans",
+      "kimono",
+      "vests",
+      "blazers",
+      "jackets",
+      "sweatshirt-overshirt",
+      "trousers",
+      "skirts",
+      "dresses",
+      "jumpsuit",
+      "sets",
+      "prayer-sets",
+      "acc",
+      "crochet-bag",
+      "hijab-scarfs",
+      "belts",
+      "socks",
+      "perfumes"
+    ]
+  },
+  "fashion-avenue": {
+    "brandId": "fashion-avenue",
+    "myshopify": "https://de78a8-fa.myshopify.com",
+    "site": "https://fashionavenueegypt.com",
+    "currency": "EGP",
+    "sections": [
+      {
+        "handle": "dresses",
+        "title": "Dresses",
+        "titleAr": "فساتين",
+        "products": 10
+      },
+      {
+        "handle": "kaftans-abayas",
+        "title": "Kaftans & Abayas",
+        "titleAr": "قفاطين وعبايات",
+        "products": 10
+      },
+      {
+        "handle": "shirts-tops",
+        "title": "Shirts & Tops",
+        "titleAr": "قمصان وتوبات",
+        "products": 10
+      },
+      {
+        "handle": "bottoms",
+        "title": "Bottoms",
+        "titleAr": "بناطيل وجيبات",
+        "products": 10
+      },
+      {
+        "handle": "jackets-blazers",
+        "title": "Jackets & Blazers",
+        "titleAr": "جواكت وبليزرات",
+        "products": 10
+      },
+      {
+        "handle": "sets",
+        "title": "Sets",
+        "titleAr": "أطقم",
+        "products": 10
+      }
+    ],
+    "dropped": [],
+    "problems": [],
+    "menu": [
+      "fashion-avenue",
+      "dresses",
+      "shirts-tops",
+      "jackets-blazers",
+      "vests",
+      "bottoms",
+      "kaftans-abayas",
+      "new-arrivals",
+      "sets",
+      "nohana"
+    ]
+  }
+}

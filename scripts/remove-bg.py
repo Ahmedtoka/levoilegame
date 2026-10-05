@@ -5,6 +5,7 @@
     .venv/Scripts/python scripts/remove-bg.py --only dresses-03 denim-01
     .venv/Scripts/python scripts/remove-bg.py --model u2net   # try another rembg model
     .venv/Scripts/python scripts/remove-bg.py --sheet out.png # also write a review contact sheet
+    .venv/Scripts/python scripts/remove-bg.py --brands        # the 122 Mall brand catalogues (src/data/brands)
 
 Input:  public/products/<id>/1.jpg   (from scripts/fetch-assets.mjs)
 Output: public/products/<id>/cutout.png  — RGBA, trimmed to content, longest side <= 1024
@@ -27,6 +28,7 @@ from rembg import new_session, remove
 
 ROOT = Path(__file__).resolve().parent.parent
 PRODUCTS_JSON = ROOT / "src" / "data" / "products.json"
+BRANDS_DIR = ROOT / "src" / "data" / "brands"  # 122 Mall brand catalogues (scripts/fetch-brands.mjs)
 PRODUCTS_DIR = ROOT / "public" / "products"
 REPORT = ROOT / "scripts" / "cutout-report.json"
 
@@ -101,13 +103,19 @@ def main() -> int:
     ap.add_argument("--model", default="isnet-general-use", help="rembg model (isnet-general-use, u2net, birefnet-general, …)")
     ap.add_argument("--no-trim", action="store_true", help="keep the original framing instead of trimming to the subject")
     ap.add_argument("--sheet", type=Path, help="write a contact sheet PNG for visual review")
+    ap.add_argument("--brands", action="store_true", help="process the brand catalogues in src/data/brands instead of products.json")
     args = ap.parse_args()
 
-    products = json.loads(PRODUCTS_JSON.read_text(encoding="utf-8"))["products"]
+    if args.brands:
+        products = [p for f in sorted(BRANDS_DIR.glob("*.json")) if not f.name.endswith(".remote.json")
+                    for p in json.loads(f.read_text(encoding="utf-8"))["products"]]
+    else:
+        products = json.loads(PRODUCTS_JSON.read_text(encoding="utf-8"))["products"]
     if args.only:
         products = [p for p in products if p["id"] in set(args.only)]
 
-    previous = {r["id"]: r for r in json.loads(REPORT.read_text())["products"]} if REPORT.exists() else {}
+    report = REPORT.with_name("cutout-report-brands.json") if args.brands else REPORT
+    previous = {r["id"]: r for r in json.loads(report.read_text())["products"]} if report.exists() else {}
     session = new_session(args.model)
     rows, failures = [], []
     t0 = time.time()
@@ -140,7 +148,7 @@ def main() -> int:
             print(f"{tag}: FAILED {exc}", file=sys.stderr)
 
     flagged = [r for r in rows if r.get("flags")]
-    REPORT.write_text(json.dumps({"model": args.model, "products": rows, "failures": failures}, indent=2))
+    report.write_text(json.dumps({"model": args.model, "products": rows, "failures": failures}, indent=2))
     if args.sheet:
         contact_sheet(rows, args.sheet)
 
@@ -149,7 +157,7 @@ def main() -> int:
         print(f"  ⚠ {r['id']}: {'; '.join(r['flags'])}")
     for f in failures:
         print(f"  ✗ {f['id']}: {f['reason']}")
-    print(f"Report: {REPORT.relative_to(ROOT)}")
+    print(f"Report: {report.relative_to(ROOT)}")
     return 1 if failures else 0
 
 

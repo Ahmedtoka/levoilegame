@@ -1,0 +1,1154 @@
+{
+  "brandId": "fashion-avenue",
+  "site": "https://fashionavenueegypt.com",
+  "sections": [
+    {
+      "id": "fashion-avenue--dresses",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "fashion-avenue--dresses-01",
+        "fashion-avenue--dresses-02",
+        "fashion-avenue--dresses-03",
+        "fashion-avenue--dresses-04",
+        "fashion-avenue--dresses-05",
+        "fashion-avenue--dresses-06",
+        "fashion-avenue--dresses-07",
+        "fashion-avenue--dresses-08",
+        "fashion-avenue--dresses-09",
+        "fashion-avenue--dresses-10"
+      ]
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas",
+      "title": "Kaftans & Abayas",
+      "titleAr": "قفاطين وعبايات",
+      "productIds": [
+        "fashion-avenue--kaftans-abayas-01",
+        "fashion-avenue--kaftans-abayas-02",
+        "fashion-avenue--kaftans-abayas-03",
+        "fashion-avenue--kaftans-abayas-04",
+        "fashion-avenue--kaftans-abayas-05",
+        "fashion-avenue--kaftans-abayas-06",
+        "fashion-avenue--kaftans-abayas-07",
+        "fashion-avenue--kaftans-abayas-08",
+        "fashion-avenue--kaftans-abayas-09",
+        "fashion-avenue--kaftans-abayas-10"
+      ]
+    },
+    {
+      "id": "fashion-avenue--shirts-tops",
+      "title": "Shirts & Tops",
+      "titleAr": "قمصان وتوبات",
+      "productIds": [
+        "fashion-avenue--shirts-tops-01",
+        "fashion-avenue--shirts-tops-02",
+        "fashion-avenue--shirts-tops-03",
+        "fashion-avenue--shirts-tops-04",
+        "fashion-avenue--shirts-tops-05",
+        "fashion-avenue--shirts-tops-06",
+        "fashion-avenue--shirts-tops-07",
+        "fashion-avenue--shirts-tops-08",
+        "fashion-avenue--shirts-tops-09",
+        "fashion-avenue--shirts-tops-10"
+      ]
+    },
+    {
+      "id": "fashion-avenue--bottoms",
+      "title": "Bottoms",
+      "titleAr": "بناطيل وجيبات",
+      "productIds": [
+        "fashion-avenue--bottoms-01",
+        "fashion-avenue--bottoms-02",
+        "fashion-avenue--bottoms-03",
+        "fashion-avenue--bottoms-04",
+        "fashion-avenue--bottoms-05",
+        "fashion-avenue--bottoms-06",
+        "fashion-avenue--bottoms-07",
+        "fashion-avenue--bottoms-08",
+        "fashion-avenue--bottoms-09",
+        "fashion-avenue--bottoms-10"
+      ]
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers",
+      "title": "Jackets & Blazers",
+      "titleAr": "جواكت وبليزرات",
+      "productIds": [
+        "fashion-avenue--jackets-blazers-01",
+        "fashion-avenue--jackets-blazers-02",
+        "fashion-avenue--jackets-blazers-03",
+        "fashion-avenue--jackets-blazers-04",
+        "fashion-avenue--jackets-blazers-05",
+        "fashion-avenue--jackets-blazers-06",
+        "fashion-avenue--jackets-blazers-07",
+        "fashion-avenue--jackets-blazers-08",
+        "fashion-avenue--jackets-blazers-09",
+        "fashion-avenue--jackets-blazers-10"
+      ]
+    },
+    {
+      "id": "fashion-avenue--sets",
+      "title": "Sets",
+      "titleAr": "أطقم",
+      "productIds": [
+        "fashion-avenue--sets-01",
+        "fashion-avenue--sets-02",
+        "fashion-avenue--sets-03",
+        "fashion-avenue--sets-04",
+        "fashion-avenue--sets-05",
+        "fashion-avenue--sets-06",
+        "fashion-avenue--sets-07",
+        "fashion-avenue--sets-08",
+        "fashion-avenue--sets-09",
+        "fashion-avenue--sets-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "fashion-avenue--dresses-01",
+      "handle": "fa-1469",
+      "title": "Lemon Print Tiered Maxi Dress",
+      "price": 4900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-01/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-1469"
+    },
+    {
+      "id": "fashion-avenue--dresses-02",
+      "handle": "fa-1388",
+      "title": "Pink Aurora Maxi Dress",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-02/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-1388"
+    },
+    {
+      "id": "fashion-avenue--dresses-03",
+      "handle": "fa-1372",
+      "title": "Colorful Patchwork Maxi Dress",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-03/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-1372"
+    },
+    {
+      "id": "fashion-avenue--dresses-04",
+      "handle": "fa-1241",
+      "title": "FA Rust Tribal Print Maxi Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-04/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-1241"
+    },
+    {
+      "id": "fashion-avenue--dresses-05",
+      "handle": "fa-961",
+      "title": "Pastel Bloom Maxi Dress",
+      "price": 4500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-05/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-961"
+    },
+    {
+      "id": "fashion-avenue--dresses-06",
+      "handle": "fa-948",
+      "title": "Fuchsia Sunset Maxi Dress",
+      "price": 4200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-06/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-948"
+    },
+    {
+      "id": "fashion-avenue--dresses-07",
+      "handle": "fa-930",
+      "title": "Tropical Bloom Tiered Shirt Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-07/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-930"
+    },
+    {
+      "id": "fashion-avenue--dresses-08",
+      "handle": "fa-929",
+      "title": "Emerald Geo Maxi Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-08/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-929"
+    },
+    {
+      "id": "fashion-avenue--dresses-09",
+      "handle": "fa-919",
+      "title": "Terracotta Tribal Print Maxi Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-09/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-919"
+    },
+    {
+      "id": "fashion-avenue--dresses-10",
+      "handle": "fa-917",
+      "title": "Blue Paisley Halter Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--dresses-10/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--dresses-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--dresses",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-917"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-01",
+      "handle": "236",
+      "title": "Romantic Cascading Ruffle Blouse",
+      "price": 2600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-01/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/236"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-02",
+      "handle": "234",
+      "title": "Burgundy Lace-Trim Satin Slip Dress",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-02/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/234"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-03",
+      "handle": "fa-789",
+      "title": "Ivory Bohemian Floral Oversized Shirt",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-03/1.jpg",
+        "/products/fashion-avenue--kaftans-abayas-03/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-789"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-04",
+      "handle": "fa-787",
+      "title": "White Ruffle Sheer Blouse",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-04/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-787"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-05",
+      "handle": "fa-781",
+      "title": "Lime Green Knit Midi Dress",
+      "price": 2800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-05/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-781"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-06",
+      "handle": "fa-773",
+      "title": "Dark Olive Smocked Waist Wide-Leg Pants",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-06/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-773"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-07",
+      "handle": "fa-772",
+      "title": "Black Strapless Ruffle Romper",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-07/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-772"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-08",
+      "handle": "fa-771",
+      "title": "Black Smocked Waist Wide-Leg Pants",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-08/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-771"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-09",
+      "handle": "fa-762",
+      "title": "Sky Blue Lounge Set",
+      "price": 1000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-09/1.jpg",
+        "/products/fashion-avenue--kaftans-abayas-09/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-762"
+    },
+    {
+      "id": "fashion-avenue--kaftans-abayas-10",
+      "handle": "fa-760",
+      "title": "Floral Satin Lounge Set",
+      "price": 3800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--kaftans-abayas-10/1.jpg",
+        "/products/fashion-avenue--kaftans-abayas-10/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--kaftans-abayas-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--kaftans-abayas",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-760"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-01",
+      "handle": "fa-1261",
+      "title": "Ivory Crochet Maxi Skirt",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-01/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-1261"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-02",
+      "handle": "black-tailored-shorts",
+      "title": "Black Tailored Shorts",
+      "price": 700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-02/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/black-tailored-shorts"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-03",
+      "handle": "fa-969",
+      "title": "Crochet Collar Cardigan",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-03/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-969"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-04",
+      "handle": "fa-933",
+      "title": "Tropical Bloom Maxi Kaftan",
+      "price": 3000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-04/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-933"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-05",
+      "handle": "fa-918",
+      "title": "Pastel Mosaic Embellished Kaftan",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-05/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-918"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-06",
+      "handle": "fa-916",
+      "title": "Paisley Halter Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-06/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-916"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-07",
+      "handle": "fa-915",
+      "title": "Boho Geometric Maxi Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-07/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-915"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-08",
+      "handle": "fa-733",
+      "title": "Blue Ombre Tassel Kimono",
+      "price": 3800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-08/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-733"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-09",
+      "handle": "fa-729",
+      "title": "Coin-Trim Fringe Jacket",
+      "price": 3800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-09/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-729"
+    },
+    {
+      "id": "fashion-avenue--shirts-tops-10",
+      "handle": "fa-712",
+      "title": "Sunset Coral Maxi Dress",
+      "price": 4500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--shirts-tops-10/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--shirts-tops-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--shirts-tops",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-712"
+    },
+    {
+      "id": "fashion-avenue--bottoms-01",
+      "handle": "fa-758",
+      "title": "Black Relaxed Maxi Dress",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-01/1.jpg",
+        "/products/fashion-avenue--bottoms-01/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-758"
+    },
+    {
+      "id": "fashion-avenue--bottoms-02",
+      "handle": "fa-757",
+      "title": "Chocolate Gauze Button-Down  Maxi Dress",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-02/1.jpg",
+        "/products/fashion-avenue--bottoms-02/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-757"
+    },
+    {
+      "id": "fashion-avenue--bottoms-03",
+      "handle": "fa-756",
+      "title": "Pearl Flow Dress",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-03/1.jpg",
+        "/products/fashion-avenue--bottoms-03/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-756"
+    },
+    {
+      "id": "fashion-avenue--bottoms-04",
+      "handle": "fa-754",
+      "title": "Navy Relaxed Maxi Dress",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-04/1.jpg",
+        "/products/fashion-avenue--bottoms-04/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-754"
+    },
+    {
+      "id": "fashion-avenue--bottoms-05",
+      "handle": "fa-747",
+      "title": "Striped Zigzag Long Sleeve Maxi Dress",
+      "price": 3200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-05/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-747"
+    },
+    {
+      "id": "fashion-avenue--bottoms-06",
+      "handle": "fa-744",
+      "title": "Black & White Polka Dot Maxi Skirt",
+      "price": 3000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-06/1.jpg",
+        "/products/fashion-avenue--bottoms-06/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-744"
+    },
+    {
+      "id": "fashion-avenue--bottoms-07",
+      "handle": "fa-734",
+      "title": "Burgundy Paisley Printed Co-Ord Set",
+      "price": 3800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-07/1.jpg",
+        "/products/fashion-avenue--bottoms-07/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-734"
+    },
+    {
+      "id": "fashion-avenue--bottoms-08",
+      "handle": "fa-731",
+      "title": "White Wrap Shirt & Wide-Leg Pants Set",
+      "price": 3800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-08/1.jpg",
+        "/products/fashion-avenue--bottoms-08/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-731"
+    },
+    {
+      "id": "fashion-avenue--bottoms-09",
+      "handle": "fa-717",
+      "title": "Golden Ocean Crochet Top",
+      "price": 2800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-09/1.jpg",
+        "/products/fashion-avenue--bottoms-09/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-09/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Off \twhite",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-717"
+    },
+    {
+      "id": "fashion-avenue--bottoms-10",
+      "handle": "fa-683",
+      "title": "White Oversized Button-Up Shirt",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--bottoms-10/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--bottoms-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--bottoms",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-683"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-01",
+      "handle": "fa-706",
+      "title": "Sunset Reef Maxi Dress",
+      "price": 4900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-01/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-706"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-02",
+      "handle": "fa-705",
+      "title": "Amalfi Lemon Maxi Dress",
+      "price": 4900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-02/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-705"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-03",
+      "handle": "fa-685",
+      "title": "Rose Garden Off-Shoulder Maxi Set",
+      "price": 6500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-03/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-685"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-04",
+      "handle": "fa-682",
+      "title": "Citrus Bloom Two-Piece Skirt Set",
+      "price": 5500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-04/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-682"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-05",
+      "handle": "fa-681",
+      "title": "Coral Reef Two-Piece Skirt Set",
+      "price": 5500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-05/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-681"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-06",
+      "handle": "fa-678",
+      "title": "Amalfi Lemon Print Maxi Dress",
+      "price": 4900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-06/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-678"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-07",
+      "handle": "fa-662",
+      "title": "Floral Denim Maxi Dress",
+      "price": 3900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-07/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-662"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-08",
+      "handle": "fa-344",
+      "title": "Sunset Glow Fringed Kimono",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-08/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-344"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-09",
+      "handle": "fa-343",
+      "title": "Azure Shimmer Fringe Kimono",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-09/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-343"
+    },
+    {
+      "id": "fashion-avenue--jackets-blazers-10",
+      "handle": "fa-342",
+      "title": "Mint Breeze Fringe Kimono",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--jackets-blazers-10/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--jackets-blazers-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--jackets-blazers",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-342"
+    },
+    {
+      "id": "fashion-avenue--sets-01",
+      "handle": "fa-413",
+      "title": "Golden Fuchsia Crochet Set",
+      "price": 4000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-01/1.jpg",
+        "/products/fashion-avenue--sets-01/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-413"
+    },
+    {
+      "id": "fashion-avenue--sets-02",
+      "handle": "fa-425",
+      "title": "Boho Blue Off-Shoulder Set",
+      "price": 4500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-02/1.jpg",
+        "/products/fashion-avenue--sets-02/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-425"
+    },
+    {
+      "id": "fashion-avenue--sets-03",
+      "handle": "fa-422",
+      "title": "White Floral Embroidered Linen Set",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-03/1.jpg",
+        "/products/fashion-avenue--sets-03/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-422"
+    },
+    {
+      "id": "fashion-avenue--sets-04",
+      "handle": "fa-419",
+      "title": "White Eyelet Lace Co-Ord Set",
+      "price": 3500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-04/1.jpg",
+        "/products/fashion-avenue--sets-04/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-419"
+    },
+    {
+      "id": "fashion-avenue--sets-05",
+      "handle": "fa-417",
+      "title": "Mint Tie-Dye Boho Maxi Set",
+      "price": 4200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-05/1.jpg",
+        "/products/fashion-avenue--sets-05/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-417"
+    },
+    {
+      "id": "fashion-avenue--sets-06",
+      "handle": "fa-412",
+      "title": "Sunset Bloom Crochet Set",
+      "price": 4000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-06/1.jpg",
+        "/products/fashion-avenue--sets-06/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-412"
+    },
+    {
+      "id": "fashion-avenue--sets-07",
+      "handle": "fa-317",
+      "title": "Textured Cotton-Linen Lounge Set",
+      "price": 2000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-07/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-317"
+    },
+    {
+      "id": "fashion-avenue--sets-08",
+      "handle": "fa-295",
+      "title": "Striped Seersucker Set",
+      "price": 2000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-08/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-295"
+    },
+    {
+      "id": "fashion-avenue--sets-09",
+      "handle": "fa-258",
+      "title": "Printed Oversized Tunic Set (Blue Edition)",
+      "price": 1500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-09/1.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-258"
+    },
+    {
+      "id": "fashion-avenue--sets-10",
+      "handle": "fa-246",
+      "title": "White Crochet Co-Ord Set",
+      "price": 3000,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/fashion-avenue--sets-10/1.jpg",
+        "/products/fashion-avenue--sets-10/2.jpg"
+      ],
+      "cutout": "/products/fashion-avenue--sets-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "fashion-avenue--sets",
+      "modelOutfit": false,
+      "url": "https://fashionavenueegypt.com/products/fa-246"
+    }
+  ]
+}

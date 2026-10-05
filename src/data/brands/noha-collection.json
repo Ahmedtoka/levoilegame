@@ -1,0 +1,1464 @@
+{
+  "brandId": "noha-collection",
+  "site": "https://nohacollection.com",
+  "sections": [
+    {
+      "id": "noha-collection--dresses-1",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "noha-collection--dresses-1-01",
+        "noha-collection--dresses-1-02",
+        "noha-collection--dresses-1-03",
+        "noha-collection--dresses-1-04",
+        "noha-collection--dresses-1-05"
+      ]
+    },
+    {
+      "id": "noha-collection--set",
+      "title": "Set",
+      "titleAr": "أطقم",
+      "productIds": [
+        "noha-collection--set-01",
+        "noha-collection--set-02",
+        "noha-collection--set-03",
+        "noha-collection--set-04",
+        "noha-collection--set-05",
+        "noha-collection--set-06",
+        "noha-collection--set-07",
+        "noha-collection--set-08",
+        "noha-collection--set-09"
+      ]
+    },
+    {
+      "id": "noha-collection--shirt",
+      "title": "Shirt",
+      "titleAr": "قمصان",
+      "productIds": [
+        "noha-collection--shirt-01",
+        "noha-collection--shirt-02",
+        "noha-collection--shirt-03",
+        "noha-collection--shirt-04",
+        "noha-collection--shirt-05",
+        "noha-collection--shirt-06",
+        "noha-collection--shirt-07",
+        "noha-collection--shirt-08",
+        "noha-collection--shirt-09",
+        "noha-collection--shirt-10"
+      ]
+    },
+    {
+      "id": "noha-collection--pants",
+      "title": "Pants",
+      "titleAr": "بناطيل",
+      "productIds": [
+        "noha-collection--pants-01",
+        "noha-collection--pants-02",
+        "noha-collection--pants-03",
+        "noha-collection--pants-04",
+        "noha-collection--pants-05",
+        "noha-collection--pants-06",
+        "noha-collection--pants-07",
+        "noha-collection--pants-08"
+      ]
+    },
+    {
+      "id": "noha-collection--cardigans-jackets",
+      "title": "Cardigans & Jackets",
+      "titleAr": "كارديجان وجواكت",
+      "productIds": [
+        "noha-collection--cardigans-jackets-01",
+        "noha-collection--cardigans-jackets-02",
+        "noha-collection--cardigans-jackets-03",
+        "noha-collection--cardigans-jackets-04",
+        "noha-collection--cardigans-jackets-05",
+        "noha-collection--cardigans-jackets-06",
+        "noha-collection--cardigans-jackets-07",
+        "noha-collection--cardigans-jackets-08"
+      ]
+    },
+    {
+      "id": "noha-collection--vests",
+      "title": "Vests",
+      "titleAr": "فيستات",
+      "productIds": [
+        "noha-collection--vests-01"
+      ]
+    },
+    {
+      "id": "noha-collection--coastal-collection",
+      "title": "Coastal Collection",
+      "titleAr": "كوستال كولكشن",
+      "productIds": [
+        "noha-collection--coastal-collection-01",
+        "noha-collection--coastal-collection-02",
+        "noha-collection--coastal-collection-03",
+        "noha-collection--coastal-collection-04",
+        "noha-collection--coastal-collection-05",
+        "noha-collection--coastal-collection-06"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "noha-collection--dresses-1-01",
+      "handle": "bianchi-dress",
+      "title": "Bianchi Dress",
+      "price": 2800,
+      "compareAtPrice": 3500,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--dresses-1-01/1.jpg",
+        "/products/noha-collection--dresses-1-01/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--dresses-1-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Off white",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        }
+      ],
+      "section": "noha-collection--dresses-1",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/bianchi-dress"
+    },
+    {
+      "id": "noha-collection--dresses-1-02",
+      "handle": "hanouma-dress-cardigan-beige",
+      "title": "Hanouma Dress Cardigan -Beige",
+      "price": 1350,
+      "compareAtPrice": 2700,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--dresses-1-02/1.jpg",
+        "/products/noha-collection--dresses-1-02/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--dresses-1-02/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [],
+      "section": "noha-collection--dresses-1",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/hanouma-dress-cardigan-beige"
+    },
+    {
+      "id": "noha-collection--dresses-1-03",
+      "handle": "hanouma-dress-cardigan-pink",
+      "title": "Hanouma Dress Cardigan -Pink",
+      "price": 1875,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--dresses-1-03/1.jpg",
+        "/products/noha-collection--dresses-1-03/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--dresses-1-03/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [],
+      "section": "noha-collection--dresses-1",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/hanouma-dress-cardigan-pink"
+    },
+    {
+      "id": "noha-collection--dresses-1-04",
+      "handle": "olive-cemono",
+      "title": "Torchwood",
+      "price": 675,
+      "compareAtPrice": 1350,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--dresses-1-04/1.jpg",
+        "/products/noha-collection--dresses-1-04/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--dresses-1-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--dresses-1",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/olive-cemono"
+    },
+    {
+      "id": "noha-collection--dresses-1-05",
+      "handle": "linen-jumpsuit-beige",
+      "title": "Linen Jumpsuit - Beige",
+      "price": 1350,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--dresses-1-05/1.jpg",
+        "/products/noha-collection--dresses-1-05/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--dresses-1-05/cutout.png",
+      "sizes": [
+        "One-size"
+      ],
+      "colors": [],
+      "section": "noha-collection--dresses-1",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/linen-jumpsuit-beige"
+    },
+    {
+      "id": "noha-collection--set-01",
+      "handle": "telal-linen-set",
+      "title": "Telal Linen Set",
+      "price": 2650,
+      "compareAtPrice": 3300,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-01/1.jpg",
+        "/products/noha-collection--set-01/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Butter Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/telal-linen-set"
+    },
+    {
+      "id": "noha-collection--set-02",
+      "handle": "solare-set",
+      "title": "Solare Set",
+      "price": 2450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-02/1.jpg",
+        "/products/noha-collection--set-02/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/solare-set"
+    },
+    {
+      "id": "noha-collection--set-03",
+      "handle": "aziza-set",
+      "title": "Aziza Set",
+      "price": 1950,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-03/1.jpg",
+        "/products/noha-collection--set-03/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-03/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/aziza-set"
+    },
+    {
+      "id": "noha-collection--set-04",
+      "handle": "hunt-set",
+      "title": "Hunt Set",
+      "price": 2950,
+      "compareAtPrice": 3100,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-04/1.jpg",
+        "/products/noha-collection--set-04/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/hunt-set"
+    },
+    {
+      "id": "noha-collection--set-05",
+      "handle": "blazer-milton-green-set",
+      "title": "Blazer Milton Green Set",
+      "price": 600,
+      "compareAtPrice": 1200,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-05/1.jpg",
+        "/products/noha-collection--set-05/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-05/cutout.png",
+      "sizes": [
+        "One Size"
+      ],
+      "colors": [],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/blazer-milton-green-set"
+    },
+    {
+      "id": "noha-collection--set-06",
+      "handle": "satan-set",
+      "title": "Satan set",
+      "price": 1950,
+      "compareAtPrice": 2450,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-06/1.jpg",
+        "/products/noha-collection--set-06/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-06/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/satan-set"
+    },
+    {
+      "id": "noha-collection--set-07",
+      "handle": "name-badriya-set-pink",
+      "title": "Badriya Set -Pink",
+      "price": 1950,
+      "compareAtPrice": 2400,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-07/1.jpg",
+        "/products/noha-collection--set-07/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-07/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/name-badriya-set-pink"
+    },
+    {
+      "id": "noha-collection--set-08",
+      "handle": "name-badriya-set-white",
+      "title": "Badriya Set -White",
+      "price": 1950,
+      "compareAtPrice": 2400,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-08/1.jpg",
+        "/products/noha-collection--set-08/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-08/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/name-badriya-set-white"
+    },
+    {
+      "id": "noha-collection--set-09",
+      "handle": "name-badriya-set",
+      "title": "Badriya Set -Beige",
+      "price": 1950,
+      "compareAtPrice": 2400,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--set-09/1.jpg",
+        "/products/noha-collection--set-09/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--set-09/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "noha-collection--set",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/name-badriya-set"
+    },
+    {
+      "id": "noha-collection--shirt-01",
+      "handle": "basic-shirt-1",
+      "title": "Basic shirt",
+      "price": 1450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-01/1.jpg",
+        "/products/noha-collection--shirt-01/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/basic-shirt-1"
+    },
+    {
+      "id": "noha-collection--shirt-02",
+      "handle": "crossline-sweatshirt",
+      "title": "Diva Shirt",
+      "price": 1700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-02/1.jpg",
+        "/products/noha-collection--shirt-02/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-02/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/crossline-sweatshirt"
+    },
+    {
+      "id": "noha-collection--shirt-03",
+      "handle": "cactus-sweatshirt",
+      "title": "Cactus Sweatshirt",
+      "price": 1950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-03/1.jpg",
+        "/products/noha-collection--shirt-03/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Grape",
+          "nameAr": "Grape",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/cactus-sweatshirt"
+    },
+    {
+      "id": "noha-collection--shirt-04",
+      "handle": "jeans-shirt",
+      "title": "Jeans Shirt",
+      "price": 1500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-04/1.jpg",
+        "/products/noha-collection--shirt-04/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-04/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Dark Jeans",
+          "nameAr": "Dark Jeans",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Light Jeans",
+          "nameAr": "Light Jeans",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/jeans-shirt"
+    },
+    {
+      "id": "noha-collection--shirt-05",
+      "handle": "caesar-shirt",
+      "title": "Caesar Shirt",
+      "price": 1300,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-05/1.jpg",
+        "/products/noha-collection--shirt-05/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/caesar-shirt"
+    },
+    {
+      "id": "noha-collection--shirt-06",
+      "handle": "fouka-shirt",
+      "title": "Fouka Shirt",
+      "price": 1360,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-06/1.jpg",
+        "/products/noha-collection--shirt-06/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-06/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Mint",
+          "nameAr": "مِنت",
+          "hex": "#a8d8c0"
+        },
+        {
+          "name": "Lilac",
+          "nameAr": "ليلكي",
+          "hex": "#c4a8d8"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/fouka-shirt"
+    },
+    {
+      "id": "noha-collection--shirt-07",
+      "handle": "almaza-shirt",
+      "title": "Almaza Shirt",
+      "price": 1250,
+      "compareAtPrice": 1550,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-07/1.jpg",
+        "/products/noha-collection--shirt-07/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-07/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Watermelon",
+          "nameAr": "Watermelon",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/almaza-shirt"
+    },
+    {
+      "id": "noha-collection--shirt-08",
+      "handle": "azha-shirt",
+      "title": "Azha Shirt",
+      "price": 1300,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-08/1.jpg",
+        "/products/noha-collection--shirt-08/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-08/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/azha-shirt"
+    },
+    {
+      "id": "noha-collection--shirt-09",
+      "handle": "pali-shirt",
+      "title": "Pali Shirt",
+      "price": 1300,
+      "compareAtPrice": 1650,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-09/1.jpg",
+        "/products/noha-collection--shirt-09/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-09/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/pali-shirt"
+    },
+    {
+      "id": "noha-collection--shirt-10",
+      "handle": "gharam-shirt",
+      "title": "Gharam Shirt",
+      "price": 1550,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--shirt-10/1.jpg",
+        "/products/noha-collection--shirt-10/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--shirt-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Watermelon",
+          "nameAr": "Watermelon",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Turquoise",
+          "nameAr": "تركواز",
+          "hex": "#2fa6a0"
+        }
+      ],
+      "section": "noha-collection--shirt",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/gharam-shirt"
+    },
+    {
+      "id": "noha-collection--pants-01",
+      "handle": "boho-artistic-harem-pants-copy",
+      "title": "Boho Artistic Harem Pants",
+      "price": 1280,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-01/1.jpg",
+        "/products/noha-collection--pants-01/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/boho-artistic-harem-pants-copy"
+    },
+    {
+      "id": "noha-collection--pants-02",
+      "handle": "boho-artistic-harem-pants",
+      "title": "Boho Artistic Harem Pants",
+      "price": 1280,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-02/1.jpg",
+        "/products/noha-collection--pants-02/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/boho-artistic-harem-pants"
+    },
+    {
+      "id": "noha-collection--pants-03",
+      "handle": "hyde-pants",
+      "title": "Hyde Pants",
+      "price": 1320,
+      "compareAtPrice": 1650,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-03/1.jpg",
+        "/products/noha-collection--pants-03/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/hyde-pants"
+    },
+    {
+      "id": "noha-collection--pants-04",
+      "handle": "bo-pants",
+      "title": "Bo Pants",
+      "price": 1250,
+      "compareAtPrice": 1550,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-04/1.jpg",
+        "/products/noha-collection--pants-04/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-04/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/bo-pants"
+    },
+    {
+      "id": "noha-collection--pants-05",
+      "handle": "cali-pants",
+      "title": "Cali Pants",
+      "price": 1300,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-05/1.jpg",
+        "/products/noha-collection--pants-05/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/cali-pants"
+    },
+    {
+      "id": "noha-collection--pants-06",
+      "handle": "marassi-pants",
+      "title": "Marassi Pants",
+      "price": 1800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-06/1.jpg",
+        "/products/noha-collection--pants-06/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-06/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Denim",
+          "nameAr": "جينز",
+          "hex": "#4a6a90"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        }
+      ],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/marassi-pants"
+    },
+    {
+      "id": "noha-collection--pants-07",
+      "handle": "shape-pants",
+      "title": "Shape Pants",
+      "price": 1450,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-07/1.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/shape-pants"
+    },
+    {
+      "id": "noha-collection--pants-08",
+      "handle": "gabardine-pants",
+      "title": "Gabardine Pants",
+      "price": 1550,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--pants-08/1.jpg"
+      ],
+      "cutout": "/products/noha-collection--pants-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--pants",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/gabardine-pants"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-01",
+      "handle": "supreme-cardigan",
+      "title": "Supreme Cardigan",
+      "price": 2700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-01/1.jpg",
+        "/products/noha-collection--cardigans-jackets-01/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-01/cutout.png",
+      "sizes": [
+        "One Size"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/supreme-cardigan"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-02",
+      "handle": "striped-wool-jacket",
+      "title": "Striped wool jacket",
+      "price": 1950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-02/1.jpg",
+        "/products/noha-collection--cardigans-jackets-02/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/striped-wool-jacket"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-03",
+      "handle": "denim-cardigan",
+      "title": "Denim cardigan with embroidery",
+      "price": 950,
+      "compareAtPrice": 1900,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-03/1.jpg",
+        "/products/noha-collection--cardigans-jackets-03/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/denim-cardigan"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-04",
+      "handle": "pink-leather",
+      "title": "Pink Leather",
+      "price": 875,
+      "compareAtPrice": 1750,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-04/1.jpg",
+        "/products/noha-collection--cardigans-jackets-04/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/pink-leather"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-05",
+      "handle": "waterproof-jaket",
+      "title": "Waterproof jacket",
+      "price": 950,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-05/1.jpg",
+        "/products/noha-collection--cardigans-jackets-05/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-05/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/waterproof-jaket"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-06",
+      "handle": "marseille-cardigan",
+      "title": "Marseille Cardigan",
+      "price": 1400,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-06/1.jpg",
+        "/products/noha-collection--cardigans-jackets-06/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-06/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/marseille-cardigan"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-07",
+      "handle": "hanyia",
+      "title": "Hanyia",
+      "price": 1750,
+      "compareAtPrice": 3500,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-07/1.jpg",
+        "/products/noha-collection--cardigans-jackets-07/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-07/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/hanyia"
+    },
+    {
+      "id": "noha-collection--cardigans-jackets-08",
+      "handle": "name-nawara-dress-cardigan",
+      "title": "Nawara Dress Cardigan -Beige in gold",
+      "price": 2063,
+      "compareAtPrice": 2750,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--cardigans-jackets-08/1.jpg",
+        "/products/noha-collection--cardigans-jackets-08/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--cardigans-jackets-08/cutout.png",
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [
+        {
+          "name": "Beige in gold",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "noha-collection--cardigans-jackets",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/name-nawara-dress-cardigan"
+    },
+    {
+      "id": "noha-collection--vests-01",
+      "handle": "baby-blue-leather",
+      "title": "Baby Blue Leather",
+      "price": 575,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--vests-01/1.jpg",
+        "/products/noha-collection--vests-01/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--vests-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--vests",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/baby-blue-leather"
+    },
+    {
+      "id": "noha-collection--coastal-collection-01",
+      "handle": "elegant-lace-blouse-copy",
+      "title": "Elegant Lace Blouse white",
+      "price": 1560,
+      "compareAtPrice": 1975,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--coastal-collection-01/1.jpg",
+        "/products/noha-collection--coastal-collection-01/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--coastal-collection-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--coastal-collection",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/elegant-lace-blouse-copy"
+    },
+    {
+      "id": "noha-collection--coastal-collection-02",
+      "handle": "elegant-lace-blouse-1",
+      "title": "Elegant Lace Blouse black",
+      "price": 1560,
+      "compareAtPrice": 1975,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--coastal-collection-02/1.jpg",
+        "/products/noha-collection--coastal-collection-02/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--coastal-collection-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--coastal-collection",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/elegant-lace-blouse-1"
+    },
+    {
+      "id": "noha-collection--coastal-collection-03",
+      "handle": "oversized-button-up-shirt",
+      "title": "Oversized Shirt",
+      "price": 1200,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--coastal-collection-03/1.jpg",
+        "/products/noha-collection--coastal-collection-03/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--coastal-collection-03/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        }
+      ],
+      "section": "noha-collection--coastal-collection",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/oversized-button-up-shirt"
+    },
+    {
+      "id": "noha-collection--coastal-collection-04",
+      "handle": "long-line-light-olive",
+      "title": "cross long shirt",
+      "price": 1150,
+      "compareAtPrice": 1450,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--coastal-collection-04/1.jpg",
+        "/products/noha-collection--coastal-collection-04/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--coastal-collection-04/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        }
+      ],
+      "section": "noha-collection--coastal-collection",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/long-line-light-olive"
+    },
+    {
+      "id": "noha-collection--coastal-collection-05",
+      "handle": "elegant-lace-blouse",
+      "title": "Elegant Lace Blouse pink",
+      "price": 1560,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--coastal-collection-05/1.jpg",
+        "/products/noha-collection--coastal-collection-05/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--coastal-collection-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "noha-collection--coastal-collection",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/elegant-lace-blouse"
+    },
+    {
+      "id": "noha-collection--coastal-collection-06",
+      "handle": "terbun",
+      "title": "Turbans",
+      "price": 480,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/noha-collection--coastal-collection-06/1.jpg",
+        "/products/noha-collection--coastal-collection-06/2.jpg"
+      ],
+      "cutout": "/products/noha-collection--coastal-collection-06/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "all color",
+          "nameAr": "all color",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "white",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "off white",
+          "nameAr": "أوف وايت",
+          "hex": "#efe9df"
+        },
+        {
+          "name": "grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "fushia",
+          "nameAr": "fushia",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "dark orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "caffe",
+          "nameAr": "caffe",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "dark purple",
+          "nameAr": "موف",
+          "hex": "#6a3f8a"
+        },
+        {
+          "name": "cashmer",
+          "nameAr": "cashmer",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Dark grey",
+          "nameAr": "رمادي غامق",
+          "hex": "#4c4c50"
+        },
+        {
+          "name": "baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "nbety",
+          "nameAr": "nbety",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Navy Blue",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Beige gold",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "mustard",
+          "nameAr": "مستردة",
+          "hex": "#c89a2a"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        }
+      ],
+      "section": "noha-collection--coastal-collection",
+      "modelOutfit": false,
+      "url": "https://nohacollection.com/products/terbun"
+    }
+  ]
+}

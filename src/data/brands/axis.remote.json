@@ -1,0 +1,1192 @@
+{
+  "brandId": "axis",
+  "site": "https://axis-shop.com",
+  "sections": [
+    {
+      "id": "axis--tops",
+      "title": "Tops",
+      "titleAr": "توبات",
+      "productIds": [
+        "axis--tops-01",
+        "axis--tops-02",
+        "axis--tops-03",
+        "axis--tops-04",
+        "axis--tops-05",
+        "axis--tops-06",
+        "axis--tops-07",
+        "axis--tops-08",
+        "axis--tops-09",
+        "axis--tops-10"
+      ]
+    },
+    {
+      "id": "axis--blouses",
+      "title": "Blouses",
+      "titleAr": "بلوزات",
+      "productIds": [
+        "axis--blouses-01",
+        "axis--blouses-02",
+        "axis--blouses-03",
+        "axis--blouses-04",
+        "axis--blouses-05",
+        "axis--blouses-06",
+        "axis--blouses-07"
+      ]
+    },
+    {
+      "id": "axis--tees",
+      "title": "Tees",
+      "titleAr": "تيشيرتات",
+      "productIds": [
+        "axis--tees-01",
+        "axis--tees-02",
+        "axis--tees-03"
+      ]
+    },
+    {
+      "id": "axis--knitwear",
+      "title": "Knitwears",
+      "titleAr": "تريكو",
+      "productIds": [
+        "axis--knitwear-01",
+        "axis--knitwear-02"
+      ]
+    },
+    {
+      "id": "axis--jackets",
+      "title": "Jackets",
+      "titleAr": "جواكت",
+      "productIds": [
+        "axis--jackets-01"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "axis--tops-01",
+      "handle": "women-s-cotton-relaxed-shirt",
+      "title": "Cotton Relaxed Shirt",
+      "price": 730,
+      "compareAtPrice": 1100,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/ChatGPTImageSep27_2026_07_20_58PM-1.png?v=1790526737",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/ChatGPTImageSep27_2026_07_20_59PM-2.png?v=1790526737"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/women-s-cotton-relaxed-shirt"
+    },
+    {
+      "id": "axis--tops-02",
+      "handle": "rib-button-top-long-sleeve",
+      "title": "Rib button top long sleeve",
+      "price": 290,
+      "compareAtPrice": 650,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9689_result.jpg?v=1785432100",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9739_result.jpg?v=1785432063"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Light grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        },
+        {
+          "name": "Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/rib-button-top-long-sleeve"
+    },
+    {
+      "id": "axis--tops-03",
+      "handle": "blouson-round-neck-blouse",
+      "title": "Round Neck Blouse",
+      "price": 350,
+      "compareAtPrice": 790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_133905_edcb42c8-b60d-43ad-9128-e635620a9751.png?v=1785598955",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/21.png?v=1783896740"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Ocean Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/blouson-round-neck-blouse"
+    },
+    {
+      "id": "axis--tops-04",
+      "handle": "embroidered-split-neck-long-sleeve-tee-copy",
+      "title": "Embroidered Long Sleeve",
+      "price": 490,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/DSC06065.jpg?v=1788302438",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260504_212152_31c88121-4f9f-4801-96ce-3ce1931d1533.png?v=1777929989"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Ice Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Light Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Sage Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "light grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/embroidered-split-neck-long-sleeve-tee-copy"
+    },
+    {
+      "id": "axis--tops-05",
+      "handle": "heritage-blouse",
+      "title": "Heritage Blouse",
+      "price": 950,
+      "compareAtPrice": 1250,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9817_result.jpg?v=1785429573",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9820_result.jpg?v=1785429573"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Dark Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Soft Ivory",
+          "nameAr": "أوف وايت",
+          "hex": "#efe8d8"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/heritage-blouse"
+    },
+    {
+      "id": "axis--tops-06",
+      "handle": "polka-dot-tie-front-blouse",
+      "title": "Polka Dot Tie Front Blouse",
+      "price": 290,
+      "compareAtPrice": 590,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_133740_d3f86d33-f47f-4238-8c50-8261e096929b.png?v=1785598474",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260709_115631_4312ed6c-2ffd-484e-8cb3-8af5fb749c08.png?v=1783697663"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Plum",
+          "nameAr": "Plum",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/polka-dot-tie-front-blouse"
+    },
+    {
+      "id": "axis--tops-07",
+      "handle": "layered-short-sleeve-top",
+      "title": "Layered Short Sleeve Top",
+      "price": 320,
+      "compareAtPrice": 590,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9973_result.jpg?v=1785432273",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260709_165551_b61ee82d-99d2-432a-bdd2-21b0e6d40c95.png?v=1783708264"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Ocean Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Zerpa",
+          "nameAr": "Zerpa",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/layered-short-sleeve-top"
+    },
+    {
+      "id": "axis--tops-08",
+      "handle": "polka-dot-round-neck-blouse",
+      "title": "Polka Dot Round Neck Blouse",
+      "price": 350,
+      "compareAtPrice": 790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_132917_8daa849b-d0ae-4554-80c7-48d82adc9d27.png?v=1785598543",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/13.png?v=1783896740"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Plum",
+          "nameAr": "Plum",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/polka-dot-round-neck-blouse"
+    },
+    {
+      "id": "axis--tops-09",
+      "handle": "long-short-sleeve-top",
+      "title": "Layered Long Sleeve Top",
+      "price": 320,
+      "compareAtPrice": 590,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9897_result.jpg?v=1785430375",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260709_163933_9d60d583-74fa-4849-ba37-ef2ea9bbfbae.png?v=1783707024"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Ocean Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "zerpa",
+          "nameAr": "zerpa",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/long-short-sleeve-top"
+    },
+    {
+      "id": "axis--tops-10",
+      "handle": "lace-blouse",
+      "title": "Lace Blouse",
+      "price": 900,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260602_221030_fa1a41ba-e175-43ef-a642-8dc76b0e37fb.jpg?v=1780439861",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260602_230416_b67a541c-e13f-4b5a-9f4c-16cdcef98ed2.png?v=1780441686"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "axis--tops",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/lace-blouse"
+    },
+    {
+      "id": "axis--blouses-01",
+      "handle": "tie-front-blouse",
+      "title": "Tie Front Blouse",
+      "price": 290,
+      "compareAtPrice": 590,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_132106_ba147743-de0c-47e8-aef5-6362ad2cde62.png?v=1785599005",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260709_120003_647557dc-f84e-47c1-8717-064ba0a24a23.png?v=1783619853"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Ocean Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/tie-front-blouse"
+    },
+    {
+      "id": "axis--blouses-02",
+      "handle": "blouson-wrap-neck-blouse",
+      "title": "Wrap Blouse",
+      "price": 350,
+      "compareAtPrice": 790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_132659_8334bdd5-50db-4d4e-b780-a95cbb8e8a6c.png?v=1785598793",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260709_122227_bd95352e-7b05-43c1-ad9c-b363946afff7.png?v=1783701971"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/blouson-wrap-neck-blouse"
+    },
+    {
+      "id": "axis--blouses-03",
+      "handle": "printed-blouson-round-neck-blouse",
+      "title": "Wild Print Round Neck Blouse",
+      "price": 350,
+      "compareAtPrice": 790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_134751_a26dd939-53b2-4488-b6b0-73c94e566026.png?v=1785598889",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/19.png?v=1783896740"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Zepra",
+          "nameAr": "Zepra",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Brush Zebra",
+          "nameAr": "Brush Zebra",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Tiger",
+          "nameAr": "Tiger",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/printed-blouson-round-neck-blouse"
+    },
+    {
+      "id": "axis--blouses-04",
+      "handle": "blouson-wrap-neck-print-blouse",
+      "title": "Polka Dot Wrap Blouse",
+      "price": 350,
+      "compareAtPrice": 790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_151042_f8904400-b59e-4e9a-b1f6-c56446764150.png?v=1785598739",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/8_f36b710b-0850-4481-b3d1-5c2aadf82906.png?v=1783894717"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Olive Gray",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Mint Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Plum",
+          "nameAr": "Plum",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/blouson-wrap-neck-print-blouse"
+    },
+    {
+      "id": "axis--blouses-05",
+      "handle": "animal-print-tie-front-blouse",
+      "title": "Wild Print Tie Front Blouse",
+      "price": 290,
+      "compareAtPrice": 590,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_135005_47155f5d-ec41-4cce-86bf-4814064c74f5.png?v=1785598385",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260709_120909_1b9290ff-5200-493c-9aa3-48ce28767e9f.png?v=1783685358"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Zebra",
+          "nameAr": "Zebra",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Brush Zebra",
+          "nameAr": "Brush Zebra",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Tiger",
+          "nameAr": "Tiger",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Leopard",
+          "nameAr": "Leopard",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/animal-print-tie-front-blouse"
+    },
+    {
+      "id": "axis--blouses-06",
+      "handle": "v-neck-cotton-blouse",
+      "title": "V-Neck Cotton Blouse",
+      "price": 750,
+      "compareAtPrice": 950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_152829_632afda3-aeda-4757-87ae-bb72cef8e95c.png?v=1785598684",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260710_200612_8001b630-3b96-4599-8d05-7dd5a71f32c0.png?v=1783714219"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Sage Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Ice Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "light Grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/v-neck-cotton-blouse"
+    },
+    {
+      "id": "axis--blouses-07",
+      "handle": "animal-print-wrap-blouse",
+      "title": "Wild Print Wrap Blouse",
+      "price": 350,
+      "compareAtPrice": 790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260801_152254_6ad76777-7b72-43c1-8faa-bb38e848bac0.png?v=1785598627",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/4_2b322d74-c998-428f-80a9-470d047af8d2.png?v=1783894719"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "Zepra",
+          "nameAr": "Zepra",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Brush Zebra",
+          "nameAr": "Brush Zebra",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Tiger",
+          "nameAr": "Tiger",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "axis--blouses",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/animal-print-wrap-blouse"
+    },
+    {
+      "id": "axis--tees-01",
+      "handle": "embroidered-polo-unisex-relaxed-fit",
+      "title": "Embroidered Polo Tee",
+      "price": 390,
+      "compareAtPrice": 950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260510_213215_90763baa-7c98-490e-9fe3-e7fd241bee32.png?v=1778458815",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260511_012846_8104acbc-203f-4740-93f1-8c7d5327404c.png?v=1778468573"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Ice Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Light Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Sage Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "light grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        }
+      ],
+      "section": "axis--tees",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/embroidered-polo-unisex-relaxed-fit"
+    },
+    {
+      "id": "axis--tees-02",
+      "handle": "slit-neck-tee",
+      "title": "Split Neck Tee",
+      "price": 552,
+      "compareAtPrice": 690,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260508_084406_ff15526c-a2b6-4b7f-8332-d0b1977c6329.png?v=1778246828",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/hf_20260508_094103_2795c28b-d156-4fc1-9b88-cced21af0027.png?v=1778246828"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "light grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Ice Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Light Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Sage Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "axis--tees",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/slit-neck-tee"
+    },
+    {
+      "id": "axis--tees-03",
+      "handle": "rib-button-top-short-sleeve",
+      "title": "Rib button top short sleeve",
+      "price": 290,
+      "compareAtPrice": 650,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9864_result.jpg?v=1785431450",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/273A9830_result.jpg?v=1785431111"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Grey",
+          "nameAr": "رمادي",
+          "hex": "#8d8d8f"
+        },
+        {
+          "name": "Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Light grey",
+          "nameAr": "رمادي فاتح",
+          "hex": "#c4c4c6"
+        }
+      ],
+      "section": "axis--tees",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/rib-button-top-short-sleeve"
+    },
+    {
+      "id": "axis--knitwear-01",
+      "handle": "quarter-zip-knit-sweater",
+      "title": "Quarter-Zip Knit Sweater",
+      "price": 800,
+      "compareAtPrice": 1200,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/Pockets.png?v=1771024400",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/DSC04548.jpg?v=1771024400"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Silver",
+          "nameAr": "فضي",
+          "hex": "#c0c0c4"
+        },
+        {
+          "name": "Hot Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        },
+        {
+          "name": "Deep Teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        },
+        {
+          "name": "Indigo",
+          "nameAr": "نيلي",
+          "hex": "#3a3f7a"
+        },
+        {
+          "name": "Royal Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "axis--knitwear",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/quarter-zip-knit-sweater"
+    },
+    {
+      "id": "axis--knitwear-02",
+      "handle": "knit-sweater",
+      "title": "Knit Sweater",
+      "price": 800,
+      "compareAtPrice": 1200,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/round002.png?v=1772072237",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/round001.png?v=1772072237"
+      ],
+      "cutout": null,
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Indigo",
+          "nameAr": "نيلي",
+          "hex": "#3a3f7a"
+        },
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Hot Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Fuchsia",
+          "nameAr": "فوشيا",
+          "hex": "#c2307a"
+        }
+      ],
+      "section": "axis--knitwear",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/knit-sweater"
+    },
+    {
+      "id": "axis--jackets-01",
+      "handle": "embroidered-jacket",
+      "title": "Embroidered Jacket",
+      "price": 1190,
+      "compareAtPrice": 1400,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/03_528271df-7943-4dc8-b375-b6e4e7b81bee.png?v=1771022728",
+        "https://cdn.shopify.com/s/files/1/0757/3395/8692/files/white_04.png?v=1768013209"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colors": [
+        {
+          "name": "Dark Grey",
+          "nameAr": "رمادي غامق",
+          "hex": "#4c4c50"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "rose",
+          "nameAr": "روز",
+          "hex": "#d88a9a"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "teal",
+          "nameAr": "تيل",
+          "hex": "#1f7a78"
+        }
+      ],
+      "section": "axis--jackets",
+      "modelOutfit": false,
+      "url": "https://axis-shop.com/products/embroidered-jacket"
+    }
+  ]
+}

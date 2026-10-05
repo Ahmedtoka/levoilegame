@@ -1,0 +1,855 @@
+{
+  "brandId": "dnd",
+  "site": "https://dnd-design.com",
+  "sections": [
+    {
+      "id": "dnd--dresses",
+      "title": "Dresses",
+      "titleAr": "فساتين",
+      "productIds": [
+        "dnd--dresses-01",
+        "dnd--dresses-02",
+        "dnd--dresses-03",
+        "dnd--dresses-04",
+        "dnd--dresses-05"
+      ]
+    },
+    {
+      "id": "dnd--shirts",
+      "title": "Shirts",
+      "titleAr": "قمصان",
+      "productIds": [
+        "dnd--shirts-01",
+        "dnd--shirts-02",
+        "dnd--shirts-03",
+        "dnd--shirts-04",
+        "dnd--shirts-05"
+      ]
+    },
+    {
+      "id": "dnd--sets",
+      "title": "Sets",
+      "titleAr": "أطقم",
+      "productIds": [
+        "dnd--sets-01",
+        "dnd--sets-02",
+        "dnd--sets-03",
+        "dnd--sets-04",
+        "dnd--sets-05"
+      ]
+    },
+    {
+      "id": "dnd--vests",
+      "title": "VESTS",
+      "titleAr": "فيستات",
+      "productIds": [
+        "dnd--vests-01",
+        "dnd--vests-02",
+        "dnd--vests-03",
+        "dnd--vests-04",
+        "dnd--vests-05"
+      ]
+    },
+    {
+      "id": "dnd--pants",
+      "title": "Pants",
+      "titleAr": "بناطيل",
+      "productIds": [
+        "dnd--pants-01",
+        "dnd--pants-02",
+        "dnd--pants-03",
+        "dnd--pants-04",
+        "dnd--pants-05"
+      ]
+    },
+    {
+      "id": "dnd--skirts",
+      "title": "Skirts",
+      "titleAr": "جيبات",
+      "productIds": [
+        "dnd--skirts-01",
+        "dnd--skirts-02",
+        "dnd--skirts-03"
+      ]
+    },
+    {
+      "id": "dnd--kimonos",
+      "title": "Kimonos",
+      "titleAr": "كيمونو",
+      "productIds": [
+        "dnd--kimonos-01",
+        "dnd--kimonos-02"
+      ]
+    },
+    {
+      "id": "dnd--blazer",
+      "title": "BLAZER",
+      "titleAr": "بليزرات",
+      "productIds": [
+        "dnd--blazer-01",
+        "dnd--blazer-02",
+        "dnd--blazer-03",
+        "dnd--blazer-04"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "dnd--dresses-01",
+      "handle": "dove-long-sleeve-dress",
+      "title": "Dove Long Sleeve Dress",
+      "price": 2890,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5770_result.jpg?v=1782414953",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5764_result.jpg?v=1782414953"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--dresses",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/dove-long-sleeve-dress"
+    },
+    {
+      "id": "dnd--dresses-02",
+      "handle": "dove-dress",
+      "title": "Dove Dress",
+      "price": 2490,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5750_result.jpg?v=1782414953",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5756_result.jpg?v=1782414953"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--dresses",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/dove-dress"
+    },
+    {
+      "id": "dnd--dresses-03",
+      "handle": "blanc-long-sleeve-dress",
+      "title": "Blanc Long Sleeve Dress",
+      "price": 2990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5729_result.jpg?v=1782414441",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5725_result.jpg?v=1782414441"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--dresses",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/blanc-long-sleeve-dress"
+    },
+    {
+      "id": "dnd--dresses-04",
+      "handle": "blanc-dress",
+      "title": "Blanc Dress",
+      "price": 999,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5697_result.jpg?v=1782414463",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5673_result.jpg?v=1782414463"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--dresses",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/blanc-dress"
+    },
+    {
+      "id": "dnd--dresses-05",
+      "handle": "cabana-dress",
+      "title": "Cabana Dress",
+      "price": 999,
+      "compareAtPrice": 3290,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5523_result.jpg?v=1782413926",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5508_result.jpg?v=1782413922"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--dresses",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/cabana-dress"
+    },
+    {
+      "id": "dnd--shirts-01",
+      "handle": "sketch-shirt-in-turquoise",
+      "title": "Sketch Shirt in Turquoise",
+      "price": 999,
+      "compareAtPrice": 2490,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5450_result.jpg?v=1782413184",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5446_result.jpg?v=1782413184"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--shirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/sketch-shirt-in-turquoise"
+    },
+    {
+      "id": "dnd--shirts-02",
+      "handle": "pace-shirt",
+      "title": "Pace Shirt",
+      "price": 845,
+      "compareAtPrice": 1690,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_caa6996d-91d0-4786-9118-26bcf0a77795.jpg?v=1777996302",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-603_result.jpg?v=1777996302"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--shirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/pace-shirt"
+    },
+    {
+      "id": "dnd--shirts-03",
+      "handle": "harmony-shirt",
+      "title": "Harmony Shirt",
+      "price": 1650,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-144.jpg?v=1773249108",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-64.jpg?v=1773249108"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--shirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/harmony-shirt"
+    },
+    {
+      "id": "dnd--shirts-04",
+      "handle": "candy-shirt-1",
+      "title": "Candy crop shirt",
+      "price": 750,
+      "compareAtPrice": 1150,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Screenshot_2025-05-18_192718_85c73f8c-06c5-4e09-9d04-51c183170953.png?v=1747585624",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Screenshot_2025-05-18_192632.png?v=1747585552"
+      ],
+      "cutout": null,
+      "sizes": [
+        "SIze 1",
+        "Size 2"
+      ],
+      "colors": [
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "baby blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        }
+      ],
+      "section": "dnd--shirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/candy-shirt-1"
+    },
+    {
+      "id": "dnd--shirts-05",
+      "handle": "soul-in-brown",
+      "title": "Soul in Brown",
+      "price": 2400,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-03at11.34.02AM.jpg?v=1788424557",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-03at11.34.02AM_1.jpg?v=1788424557"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free size"
+      ],
+      "colors": [],
+      "section": "dnd--shirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/soul-in-brown"
+    },
+    {
+      "id": "dnd--sets-01",
+      "handle": "luna-set",
+      "title": "Luna Set",
+      "price": 1200,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A8237.jpg?v=1785078237",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A8217.jpg?v=1785078342"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--sets",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/luna-set"
+    },
+    {
+      "id": "dnd--sets-02",
+      "handle": "sun-set-in-black",
+      "title": "Sun Set in Black",
+      "price": 2590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-03at3.09.06PM_2.jpg?v=1788437474",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-03at3.09.06PM_1.jpg?v=1788437474"
+      ],
+      "cutout": null,
+      "sizes": [
+        "SIze 1",
+        "Size 2"
+      ],
+      "colors": [],
+      "section": "dnd--sets",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/sun-set-in-black"
+    },
+    {
+      "id": "dnd--sets-03",
+      "handle": "laya-set",
+      "title": "Laya Set",
+      "price": 1600,
+      "compareAtPrice": 3200,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A8249.jpg?v=1785078413",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A8246.jpg?v=1785078413"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--sets",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/laya-set"
+    },
+    {
+      "id": "dnd--sets-04",
+      "handle": "moss-set-in-mint",
+      "title": "Moss Set in Mint",
+      "price": 2790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5927_result.jpg?v=1782414037",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5928_result.jpg?v=1782414036"
+      ],
+      "cutout": null,
+      "sizes": [
+        "1",
+        "2"
+      ],
+      "colors": [],
+      "section": "dnd--sets",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/moss-set-in-mint"
+    },
+    {
+      "id": "dnd--sets-05",
+      "handle": "moss-set-in-rose",
+      "title": "Moss Set in rose",
+      "price": 2790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5889_result.jpg?v=1782414153",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/273A5890_result.jpg?v=1782414153"
+      ],
+      "cutout": null,
+      "sizes": [
+        "1",
+        "2"
+      ],
+      "colors": [],
+      "section": "dnd--sets",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/moss-set-in-rose"
+    },
+    {
+      "id": "dnd--vests-01",
+      "handle": "sola-vest",
+      "title": "Sola Vest",
+      "price": 490,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/bc67534d-c7db-48be-8fa8-ab587a1a9c37_38271141-85a2-43b5-9b3a-cbfc39d33b68.jpg?v=1789041617",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/84d4b063-1fbc-4c68-9f31-dbbf475908da.jpg?v=1789041616"
+      ],
+      "cutout": null,
+      "sizes": [
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--vests",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/sola-vest"
+    },
+    {
+      "id": "dnd--vests-02",
+      "handle": "ruby-fur-vest",
+      "title": "Ruby Fur -Vest",
+      "price": 2490,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/1A9A0826_result.webp?v=1766062684",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/1A9A0820_result.webp?v=1766062684"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [],
+      "section": "dnd--vests",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/ruby-fur-vest"
+    },
+    {
+      "id": "dnd--vests-03",
+      "handle": "jules-camel-vest",
+      "title": "Jules Camel Vest",
+      "price": 500,
+      "compareAtPrice": 1000,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-21at12.12.53PM_0cab34e3-0133-4b9a-8ec8-67381f23625d.jpg?v=1789983494",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-21at12.12.54PM_1_bcd80b10-f520-4405-9e5e-539dd225be99.jpg?v=1789983494"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--vests",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/jules-camel-vest"
+    },
+    {
+      "id": "dnd--vests-04",
+      "handle": "tera-vest-brown",
+      "title": "Tera vest Brown",
+      "price": 999,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/08e7692a-0011-4496-82f1-57ac7633b4a8.jpg?v=1789048312",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/113001db-9fc2-4f02-9e21-4568d340d5d0.jpg?v=1789048311"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--vests",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/tera-vest-brown"
+    },
+    {
+      "id": "dnd--vests-05",
+      "handle": "kinda-vest-in-black",
+      "title": "Kinda Vest in Black",
+      "price": 999,
+      "compareAtPrice": 2390,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-08-26at4.48.47PM.jpg?v=1787752173",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-08-26at4.48.44PM.jpg?v=1787752173"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--vests",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/kinda-vest-in-black"
+    },
+    {
+      "id": "dnd--pants-01",
+      "handle": "linen-flow-pants",
+      "title": "Linen Flow Pants",
+      "price": 750,
+      "compareAtPrice": 1500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsApp_Image_2026-09-03_at_11.16.07_AM.jpg?v=1788423389",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-03at10.42.49AM.jpg?v=1788422916"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L"
+      ],
+      "colors": [],
+      "section": "dnd--pants",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/linen-flow-pants"
+    },
+    {
+      "id": "dnd--pants-02",
+      "handle": "rare-pants-white",
+      "title": "Rare Pants white",
+      "price": 1990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_8cf94518-61a0-4e84-9ad7-6ea07202e3e9.jpg?v=1777996797",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-765_result.jpg?v=1777996797"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--pants",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/rare-pants-white"
+    },
+    {
+      "id": "dnd--pants-03",
+      "handle": "free-pants-mint",
+      "title": "Free Pants Mint",
+      "price": 750,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-772_result.jpg?v=1777996858",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-773_result.jpg?v=1777996858"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--pants",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/free-pants-mint"
+    },
+    {
+      "id": "dnd--pants-04",
+      "handle": "free-pants",
+      "title": "Free Pants Begie",
+      "price": 750,
+      "compareAtPrice": 1490,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_32d9d0c7-5cad-459b-a3ca-c7ae11926b4d.jpg?v=1777996754",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-756_result.jpg?v=1777996754"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--pants",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/free-pants"
+    },
+    {
+      "id": "dnd--pants-05",
+      "handle": "worthy-pants",
+      "title": "Worthy Pants",
+      "price": 750,
+      "compareAtPrice": 1950,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/cover_result_fdff3967-7925-4aff-be41-b8bf6f81d3b5.jpg?v=1777996480",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-662_result.jpg?v=1777996482"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--pants",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/worthy-pants"
+    },
+    {
+      "id": "dnd--skirts-01",
+      "handle": "jules-camel-skirt",
+      "title": "Jules Camel Skirt",
+      "price": 500,
+      "compareAtPrice": 1000,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-09-21at12.24.59PM.jpg?v=1789982842",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsApp_Image_2026-09-21_at_12.36.37_PM_1.jpg?v=1789983421"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--skirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/jules-camel-skirt"
+    },
+    {
+      "id": "dnd--skirts-02",
+      "handle": "alight-skirt",
+      "title": "Align Skirt",
+      "price": 1500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-08-26at11.53.36AM.jpg?v=1787734767",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/WhatsAppImage2026-08-26at11.54.40AM.jpg?v=1787734765"
+      ],
+      "cutout": null,
+      "sizes": [
+        "XL",
+        "L",
+        "M"
+      ],
+      "colors": [],
+      "section": "dnd--skirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/alight-skirt"
+    },
+    {
+      "id": "dnd--skirts-03",
+      "handle": "gentle-skirt",
+      "title": "Gentle Skirt",
+      "price": 1650,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_62714200-550b-4aa2-b6ce-0c42c2631737.jpg?v=1777996697",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-750_result.jpg?v=1777996697"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--skirts",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/gentle-skirt"
+    },
+    {
+      "id": "dnd--kimonos-01",
+      "handle": "safe-kimono",
+      "title": "Safe Kimono",
+      "price": 2290,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_296dcc70-e92a-4102-959d-c5ef6e7d93b7.jpg?v=1777995718",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-272_result.jpg?v=1777995718"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [],
+      "section": "dnd--kimonos",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/safe-kimono"
+    },
+    {
+      "id": "dnd--kimonos-02",
+      "handle": "wisdom-kimono",
+      "title": "Wisdom Kimono",
+      "price": 1590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-566_result.jpg?v=1777996228",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-555_result.jpg?v=1777996226"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Free Size"
+      ],
+      "colors": [],
+      "section": "dnd--kimonos",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/wisdom-kimono"
+    },
+    {
+      "id": "dnd--blazer-01",
+      "handle": "rise-blazer",
+      "title": "Rise Blazer",
+      "price": 1250,
+      "compareAtPrice": 2500,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_793f15ad-be08-464c-a937-d8e92fa0cb48.jpg?v=1777996146",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-519_result.jpg?v=1777996146"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--blazer",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/rise-blazer"
+    },
+    {
+      "id": "dnd--blazer-02",
+      "handle": "heal-blazer",
+      "title": "Heal Blazer",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_1d955caf-c729-49e8-addb-080d5c835928.jpg?v=1777996267",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-573_result.jpg?v=1777996267"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--blazer",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/heal-blazer"
+    },
+    {
+      "id": "dnd--blazer-03",
+      "handle": "pure-blazer",
+      "title": "Pure Blazer",
+      "price": 2500,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/Cover_result_7466e305-0c63-45c0-81f0-f5688bd0c155.jpg?v=1777996186",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/dnd-538_result.jpg?v=1777996186"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S/M",
+        "L",
+        "XL"
+      ],
+      "colors": [],
+      "section": "dnd--blazer",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/pure-blazer"
+    },
+    {
+      "id": "dnd--blazer-04",
+      "handle": "blazer",
+      "title": "Blazer",
+      "price": 1600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/DND-490.jpg?v=1724841732",
+        "https://cdn.shopify.com/s/files/1/0895/5904/0307/files/DND-484.jpg?v=1724841732"
+      ],
+      "cutout": null,
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "dnd--blazer",
+      "modelOutfit": false,
+      "url": "https://dnd-design.com/products/blazer"
+    }
+  ]
+}

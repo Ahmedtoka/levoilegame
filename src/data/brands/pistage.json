@@ -1,0 +1,1911 @@
+{
+  "brandId": "pistage",
+  "site": "https://pistage.com",
+  "sections": [
+    {
+      "id": "pistage--dresses",
+      "title": "DRESSES",
+      "titleAr": "فساتين",
+      "productIds": [
+        "pistage--dresses-01",
+        "pistage--dresses-02",
+        "pistage--dresses-03",
+        "pistage--dresses-04",
+        "pistage--dresses-05",
+        "pistage--dresses-06",
+        "pistage--dresses-07",
+        "pistage--dresses-08",
+        "pistage--dresses-09",
+        "pistage--dresses-10"
+      ]
+    },
+    {
+      "id": "pistage--shirts-blouses",
+      "title": "BLOUSES",
+      "titleAr": "قمصان وبلوزات",
+      "productIds": [
+        "pistage--shirts-blouses-01",
+        "pistage--shirts-blouses-02",
+        "pistage--shirts-blouses-03",
+        "pistage--shirts-blouses-04",
+        "pistage--shirts-blouses-05",
+        "pistage--shirts-blouses-06",
+        "pistage--shirts-blouses-07",
+        "pistage--shirts-blouses-08",
+        "pistage--shirts-blouses-09",
+        "pistage--shirts-blouses-10"
+      ]
+    },
+    {
+      "id": "pistage--trousers",
+      "title": "PANTS",
+      "titleAr": "بناطيل",
+      "productIds": [
+        "pistage--trousers-01",
+        "pistage--trousers-02",
+        "pistage--trousers-03",
+        "pistage--trousers-04",
+        "pistage--trousers-05",
+        "pistage--trousers-06",
+        "pistage--trousers-07",
+        "pistage--trousers-08",
+        "pistage--trousers-09",
+        "pistage--trousers-10"
+      ]
+    },
+    {
+      "id": "pistage--skirts",
+      "title": "SKIRTS",
+      "titleAr": "جيبات",
+      "productIds": [
+        "pistage--skirts-01",
+        "pistage--skirts-02",
+        "pistage--skirts-03",
+        "pistage--skirts-04",
+        "pistage--skirts-05",
+        "pistage--skirts-06",
+        "pistage--skirts-07",
+        "pistage--skirts-08",
+        "pistage--skirts-09",
+        "pistage--skirts-10"
+      ]
+    },
+    {
+      "id": "pistage--demin",
+      "title": "DENIM",
+      "titleAr": "دنيم",
+      "productIds": [
+        "pistage--demin-01",
+        "pistage--demin-02",
+        "pistage--demin-03",
+        "pistage--demin-04",
+        "pistage--demin-05",
+        "pistage--demin-06",
+        "pistage--demin-07",
+        "pistage--demin-08",
+        "pistage--demin-09",
+        "pistage--demin-10"
+      ]
+    },
+    {
+      "id": "pistage--jackets",
+      "title": "JACKETS NEW",
+      "titleAr": "جواكت",
+      "productIds": [
+        "pistage--jackets-01",
+        "pistage--jackets-02",
+        "pistage--jackets-03",
+        "pistage--jackets-04",
+        "pistage--jackets-05",
+        "pistage--jackets-06",
+        "pistage--jackets-07",
+        "pistage--jackets-08",
+        "pistage--jackets-09",
+        "pistage--jackets-10"
+      ]
+    },
+    {
+      "id": "pistage--sets",
+      "title": "SETS",
+      "titleAr": "أطقم",
+      "productIds": [
+        "pistage--sets-01",
+        "pistage--sets-02",
+        "pistage--sets-03",
+        "pistage--sets-04",
+        "pistage--sets-05",
+        "pistage--sets-06",
+        "pistage--sets-07",
+        "pistage--sets-08",
+        "pistage--sets-09",
+        "pistage--sets-10"
+      ]
+    },
+    {
+      "id": "pistage--hijab-scarfs",
+      "title": "HIJAB SCARFS",
+      "titleAr": "طرح وإيشاربات",
+      "productIds": [
+        "pistage--hijab-scarfs-01",
+        "pistage--hijab-scarfs-02",
+        "pistage--hijab-scarfs-03",
+        "pistage--hijab-scarfs-04",
+        "pistage--hijab-scarfs-05",
+        "pistage--hijab-scarfs-06",
+        "pistage--hijab-scarfs-07",
+        "pistage--hijab-scarfs-08",
+        "pistage--hijab-scarfs-09",
+        "pistage--hijab-scarfs-10"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "pistage--dresses-01",
+      "handle": "effortless-flow-dress-cafe",
+      "title": "EFFORTLESS FLOW DRESS -CAFE",
+      "price": 2890,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-01/1.jpg",
+        "/products/pistage--dresses-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/effortless-flow-dress-cafe"
+    },
+    {
+      "id": "pistage--dresses-02",
+      "handle": "ruffle-satin-dress-cafe",
+      "title": "RUFFLE SATIN DRESS -CAFE",
+      "price": 2990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-02/1.jpg",
+        "/products/pistage--dresses-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/ruffle-satin-dress-cafe"
+    },
+    {
+      "id": "pistage--dresses-03",
+      "handle": "ruffle-satin-dress-petroleum",
+      "title": "RUFFLE SATIN DRESS -PETROLEUM",
+      "price": 2990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-03/1.jpg",
+        "/products/pistage--dresses-03/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/ruffle-satin-dress-petroleum"
+    },
+    {
+      "id": "pistage--dresses-04",
+      "handle": "relaxed-waist-dress-maroon",
+      "title": "RELAXED WAIST DRESS -MAROON",
+      "price": 2790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-04/1.jpg",
+        "/products/pistage--dresses-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/relaxed-waist-dress-maroon"
+    },
+    {
+      "id": "pistage--dresses-05",
+      "handle": "minimal-stripe-dress-white",
+      "title": "Minimal Stripe Dress -WHITE",
+      "price": 1949,
+      "compareAtPrice": 2990,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-05/1.jpg",
+        "/products/pistage--dresses-05/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-05/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/minimal-stripe-dress-white"
+    },
+    {
+      "id": "pistage--dresses-06",
+      "handle": "golden-linen-dress-beige",
+      "title": "GOLDEN LINEN DRESS -Beige",
+      "price": 2730,
+      "compareAtPrice": 3900,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-06/1.jpg",
+        "/products/pistage--dresses-06/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-06/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/golden-linen-dress-beige"
+    },
+    {
+      "id": "pistage--dresses-07",
+      "handle": "blue-whisper-dress-blue",
+      "title": "Blue Whisper Dress -BLUE",
+      "price": 2793,
+      "compareAtPrice": 3990,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-07/1.jpg",
+        "/products/pistage--dresses-07/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/blue-whisper-dress-blue"
+    },
+    {
+      "id": "pistage--dresses-08",
+      "handle": "vintage-ruffle-dress-cafe",
+      "title": "VINTAGE RUFFLE DRESS -CAFE",
+      "price": 2660,
+      "compareAtPrice": 3800,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-08/1.jpg",
+        "/products/pistage--dresses-08/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-08/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/vintage-ruffle-dress-cafe"
+    },
+    {
+      "id": "pistage--dresses-09",
+      "handle": "soft-satin-dress-brown",
+      "title": "SOFT SATIN DRESS -BROWN",
+      "price": 1953,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-09/1.jpg",
+        "/products/pistage--dresses-09/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-09/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/soft-satin-dress-brown"
+    },
+    {
+      "id": "pistage--dresses-10",
+      "handle": "scarlet-elegance-linen-dress-red",
+      "title": "SCARLET ELEGANCE LINEN DRESS -RED",
+      "price": 1953,
+      "compareAtPrice": 2790,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--dresses-10/1.jpg",
+        "/products/pistage--dresses-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--dresses-10/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--dresses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/scarlet-elegance-linen-dress-red"
+    },
+    {
+      "id": "pistage--shirts-blouses-01",
+      "handle": "veyra-blouse-petroleum",
+      "title": "VEYRA BLOUSE -PETROLEUM",
+      "price": 1950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-01/1.jpg",
+        "/products/pistage--shirts-blouses-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-01/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/veyra-blouse-petroleum"
+    },
+    {
+      "id": "pistage--shirts-blouses-02",
+      "handle": "veyra-blouse-navy-blue",
+      "title": "VEYRA BLOUSE -NAVY BLUE",
+      "price": 1950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-02/1.jpg",
+        "/products/pistage--shirts-blouses-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-02/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/veyra-blouse-navy-blue"
+    },
+    {
+      "id": "pistage--shirts-blouses-03",
+      "handle": "veyra-blouse-maroon",
+      "title": "VEYRA BLOUSE -MAROON",
+      "price": 1950,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-03/1.jpg",
+        "/products/pistage--shirts-blouses-03/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-03/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/veyra-blouse-maroon"
+    },
+    {
+      "id": "pistage--shirts-blouses-04",
+      "handle": "bright-lace-blouse-beige",
+      "title": "BRIGHT LACE BLOUSE -Beige",
+      "price": 1690,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-04/1.jpg",
+        "/products/pistage--shirts-blouses-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/bright-lace-blouse-beige"
+    },
+    {
+      "id": "pistage--shirts-blouses-05",
+      "handle": "comfy-linen-blouse-brown",
+      "title": "COMFY LINEN BLOUSE -BROWN",
+      "price": 1670,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-05/1.jpg",
+        "/products/pistage--shirts-blouses-05/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-05/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/comfy-linen-blouse-brown"
+    },
+    {
+      "id": "pistage--shirts-blouses-06",
+      "handle": "comfy-linen-blouse-black",
+      "title": "COMFY LINEN BLOUSE -BLACK",
+      "price": 1670,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-06/1.jpg",
+        "/products/pistage--shirts-blouses-06/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-06/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/comfy-linen-blouse-black"
+    },
+    {
+      "id": "pistage--shirts-blouses-07",
+      "handle": "embroidery-poplin-blouse-black",
+      "title": "EMBROIDERY POPLIN BLOUSE -BLACK",
+      "price": 2390,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-07/1.jpg",
+        "/products/pistage--shirts-blouses-07/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-07/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/embroidery-poplin-blouse-black"
+    },
+    {
+      "id": "pistage--shirts-blouses-08",
+      "handle": "oversized-satin-blouse-off-white",
+      "title": "OVERSIZED SATIN BLOUSE -OFF WHITE",
+      "price": 1590,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-08/1.jpg",
+        "/products/pistage--shirts-blouses-08/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-08/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/oversized-satin-blouse-off-white"
+    },
+    {
+      "id": "pistage--shirts-blouses-09",
+      "handle": "peplum-blouse-white",
+      "title": "PEPLUM BLOUSE -WHITE",
+      "price": 1790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-09/1.jpg",
+        "/products/pistage--shirts-blouses-09/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-09/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/peplum-blouse-white"
+    },
+    {
+      "id": "pistage--shirts-blouses-10",
+      "handle": "lace-vintage-blouse-olive",
+      "title": "LACE VINTAGE BLOUSE -OLIVE",
+      "price": 1790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--shirts-blouses-10/1.jpg",
+        "/products/pistage--shirts-blouses-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--shirts-blouses-10/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--shirts-blouses",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/lace-vintage-blouse-olive"
+    },
+    {
+      "id": "pistage--trousers-01",
+      "handle": "tailored-denim-pants-dark-blue",
+      "title": "TAILORED DENIM PANTS -Dark blue",
+      "price": 1890,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-01/1.jpg",
+        "/products/pistage--trousers-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/tailored-denim-pants-dark-blue"
+    },
+    {
+      "id": "pistage--trousers-02",
+      "handle": "veyra-pants-navy-blue",
+      "title": "VEYRA PANTS -NAVY BLUE",
+      "price": 1990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-02/1.jpg",
+        "/products/pistage--trousers-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-02/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/veyra-pants-navy-blue"
+    },
+    {
+      "id": "pistage--trousers-03",
+      "handle": "veyra-pants-petroleum",
+      "title": "VEYRA PANTS -PETROLEUM",
+      "price": 1990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-03/1.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-03/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/veyra-pants-petroleum"
+    },
+    {
+      "id": "pistage--trousers-04",
+      "handle": "veyra-pants-maroon",
+      "title": "VEYRA PANTS -MAROON",
+      "price": 1990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-04/1.jpg",
+        "/products/pistage--trousers-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-04/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/veyra-pants-maroon"
+    },
+    {
+      "id": "pistage--trousers-05",
+      "handle": "aura-ribbed-balloon-pants-brown",
+      "title": "Aura Ribbed Balloon Pants -BROWN",
+      "price": 2990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-05/1.jpg",
+        "/products/pistage--trousers-05/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-05/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/aura-ribbed-balloon-pants-brown"
+    },
+    {
+      "id": "pistage--trousers-06",
+      "handle": "aura-ribbed-balloon-pants-olive",
+      "title": "Aura Ribbed Balloon Pants -OLIVE",
+      "price": 2990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-06/1.jpg",
+        "/products/pistage--trousers-06/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-06/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/aura-ribbed-balloon-pants-olive"
+    },
+    {
+      "id": "pistage--trousers-07",
+      "handle": "comfy-wide-leg-linen-pants-brown",
+      "title": "COMFY WIDE LEG LINEN PANTS -BROWN",
+      "price": 1690,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-07/1.jpg",
+        "/products/pistage--trousers-07/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-07/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/comfy-wide-leg-linen-pants-brown"
+    },
+    {
+      "id": "pistage--trousers-08",
+      "handle": "comfy-wide-leg-linen-pants-black",
+      "title": "COMFY WIDE LEG LINEN PANTS -BLACK",
+      "price": 1690,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-08/1.jpg",
+        "/products/pistage--trousers-08/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-08/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/comfy-wide-leg-linen-pants-black"
+    },
+    {
+      "id": "pistage--trousers-09",
+      "handle": "embroidered-border-pants-off-white",
+      "title": "EMBROIDERED BORDER PANTS -OFF WHITE",
+      "price": 3890,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-09/1.jpg",
+        "/products/pistage--trousers-09/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/embroidered-border-pants-off-white"
+    },
+    {
+      "id": "pistage--trousers-10",
+      "handle": "washed-pure-linen-lace-pants-off-white",
+      "title": "WASHED PURE LINEN LACE PANTS -OFF WHITE",
+      "price": 3780,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--trousers-10/1.jpg",
+        "/products/pistage--trousers-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--trousers-10/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--trousers",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/washed-pure-linen-lace-pants-off-white"
+    },
+    {
+      "id": "pistage--skirts-01",
+      "handle": "high-waist-denim-skirt-navy-blue",
+      "title": "HIGH WAIST DENIM SKIRT -NAVY BLUE",
+      "price": 1999,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-01/1.jpg",
+        "/products/pistage--skirts-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/high-waist-denim-skirt-navy-blue"
+    },
+    {
+      "id": "pistage--skirts-02",
+      "handle": "pleated-crepe-skirt-baby-blue",
+      "title": "PLEATED CREPE SKIRT -BABY BLUE",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-02/1.jpg",
+        "/products/pistage--skirts-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pleated-crepe-skirt-baby-blue"
+    },
+    {
+      "id": "pistage--skirts-03",
+      "handle": "pleated-crepe-skirt-pink",
+      "title": "PLEATED CREPE SKIRT -PINK",
+      "price": 2900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-03/1.jpg",
+        "/products/pistage--skirts-03/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-03/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pleated-crepe-skirt-pink"
+    },
+    {
+      "id": "pistage--skirts-04",
+      "handle": "a-line-lace-skirt-off-white",
+      "title": "A-LINE LACE SKIRT -OFF WHITE",
+      "price": 2490,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-04/1.jpg",
+        "/products/pistage--skirts-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-04/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/a-line-lace-skirt-off-white"
+    },
+    {
+      "id": "pistage--skirts-05",
+      "handle": "soft-glow-maxi-skirt-yellow",
+      "title": "SOFT GLOW MAXI SKIRT -YELLOW",
+      "price": 1365,
+      "compareAtPrice": 2100,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-05/1.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-05/cutout.png",
+      "sizes": [
+        "S"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/soft-glow-maxi-skirt-yellow"
+    },
+    {
+      "id": "pistage--skirts-06",
+      "handle": "lace-maxi-skirt-beige",
+      "title": "LACE MAXI SKIRT -Beige",
+      "price": 2093,
+      "compareAtPrice": 2990,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-06/1.jpg",
+        "/products/pistage--skirts-06/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-06/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/lace-maxi-skirt-beige"
+    },
+    {
+      "id": "pistage--skirts-07",
+      "handle": "velora-tiered-skirt-off-white",
+      "title": "VELORA TIERED SKIRT -OFF WHITE",
+      "price": 1253,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-07/1.jpg",
+        "/products/pistage--skirts-07/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/velora-tiered-skirt-off-white"
+    },
+    {
+      "id": "pistage--skirts-08",
+      "handle": "embroidery-chiffon-skirt-off-white",
+      "title": "EMBROIDERY CHIFFON SKIRT -OFF WHITE",
+      "price": 1323,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-08/1.jpg",
+        "/products/pistage--skirts-08/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/embroidery-chiffon-skirt-off-white"
+    },
+    {
+      "id": "pistage--skirts-09",
+      "handle": "linen-lace-tiered-skirt-brown",
+      "title": "LINEN LACE TIERED SKIRT BROWN",
+      "price": 1195,
+      "compareAtPrice": 1795,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-09/1.jpg",
+        "/products/pistage--skirts-09/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-09/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/linen-lace-tiered-skirt-brown"
+    },
+    {
+      "id": "pistage--skirts-10",
+      "handle": "linen-lace-tiered-skirt-beige",
+      "title": "LINEN LACE TIERED SKIRT -Beige",
+      "price": 1195,
+      "compareAtPrice": 1795,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--skirts-10/1.jpg",
+        "/products/pistage--skirts-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--skirts-10/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--skirts",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/linen-lace-tiered-skirt-beige"
+    },
+    {
+      "id": "pistage--demin-01",
+      "handle": "essential-denim-shirt-dark-blue",
+      "title": "ESSENTIAL DENIM SHIRT -Dark blue",
+      "price": 1690,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-01/1.jpg",
+        "/products/pistage--demin-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-01/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/essential-denim-shirt-dark-blue"
+    },
+    {
+      "id": "pistage--demin-02",
+      "handle": "marble-muse-denim-pants-light-gray",
+      "title": "MARBLE MUSE DENIM PANTS -light gray",
+      "price": 2390,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-02/1.jpg",
+        "/products/pistage--demin-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-02/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/marble-muse-denim-pants-light-gray"
+    },
+    {
+      "id": "pistage--demin-03",
+      "handle": "pinstripe-denim-pants-baby-blue",
+      "title": "PINSTRIPE DENIM PANTS -BABY BLUE",
+      "price": 1790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-03/1.jpg",
+        "/products/pistage--demin-03/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-03/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pinstripe-denim-pants-baby-blue"
+    },
+    {
+      "id": "pistage--demin-04",
+      "handle": "straight-gabardine-pants-yellow",
+      "title": "Straight Gabardine pants -YELLOW",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-04/1.jpg",
+        "/products/pistage--demin-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-04/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/straight-gabardine-pants-yellow"
+    },
+    {
+      "id": "pistage--demin-05",
+      "handle": "straight-gabardine-pants-pink",
+      "title": "Straight Gabardine pants -PINK",
+      "price": 795,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-05/1.jpg",
+        "/products/pistage--demin-05/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-05/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/straight-gabardine-pants-pink"
+    },
+    {
+      "id": "pistage--demin-06",
+      "handle": "geometric-denim-pants-iced",
+      "title": "GEOMETRIC DENIM PANTS - ICED",
+      "price": 2390,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-06/1.jpg",
+        "/products/pistage--demin-06/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/geometric-denim-pants-iced"
+    },
+    {
+      "id": "pistage--demin-07",
+      "handle": "vintage-wash-denim-pants-washed-blue",
+      "title": "VINTAGE WASH DENIM PANTS -WASHED BLUE",
+      "price": 1790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-07/1.jpg",
+        "/products/pistage--demin-07/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-07/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/vintage-wash-denim-pants-washed-blue"
+    },
+    {
+      "id": "pistage--demin-08",
+      "handle": "crochet-trimmed-denim-jacket-dark-blue",
+      "title": "Crochet-Trimmed Denim JACKET -DARK BLUE",
+      "price": 1323,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-08/1.jpg",
+        "/products/pistage--demin-08/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-08/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/crochet-trimmed-denim-jacket-dark-blue"
+    },
+    {
+      "id": "pistage--demin-09",
+      "handle": "paisley-balloon-pants-light-blue",
+      "title": "PAISLEY DENIM BALLOON PANTS - LIGHT BLUE",
+      "price": 2390,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-09/1.jpg",
+        "/products/pistage--demin-09/2.jpg"
+      ],
+      "cutout": "/products/pistage--demin-09/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/paisley-balloon-pants-light-blue"
+    },
+    {
+      "id": "pistage--demin-10",
+      "handle": "comfort-low-waist-denim-pants-blue-black",
+      "title": "COMFORT LOW WAIST DENIM PANTS – BLUE BLACK",
+      "price": 1890,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--demin-10/1.jpg",
+        "/products/pistage--demin-10/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--demin",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/comfort-low-waist-denim-pants-blue-black"
+    },
+    {
+      "id": "pistage--jackets-01",
+      "handle": "jacquard-jacket",
+      "title": "JACQUARD JACKET -BLACK",
+      "price": 1689,
+      "compareAtPrice": 2590,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-01/1.jpg",
+        "/products/pistage--jackets-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-01/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/jacquard-jacket"
+    },
+    {
+      "id": "pistage--jackets-02",
+      "handle": "pockets-jacket-denim",
+      "title": "POCKETS JACKET -DENIM",
+      "price": 1183,
+      "compareAtPrice": 1269,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-02/1.jpg",
+        "/products/pistage--jackets-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-02/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pockets-jacket-denim"
+    },
+    {
+      "id": "pistage--jackets-03",
+      "handle": "pocket-gabardine-jacket-olive",
+      "title": "POCKET GABARDINE JACKET -OLIVE",
+      "price": 1890,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-03/1.jpg",
+        "/products/pistage--jackets-03/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-03/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pocket-gabardine-jacket-olive"
+    },
+    {
+      "id": "pistage--jackets-04",
+      "handle": "cargo-denim-jacket",
+      "title": "CARGO DENIM JACKET -BLACK",
+      "price": 1790,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-04/1.jpg",
+        "/products/pistage--jackets-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-04/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/cargo-denim-jacket"
+    },
+    {
+      "id": "pistage--jackets-05",
+      "handle": "mixed-gabardine-jacket-paige-copy-2",
+      "title": "MIXED GABARDINE JACKET -BEIGE",
+      "price": 1990,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-05/1.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-05/cutout.png",
+      "sizes": [
+        "one-size"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/mixed-gabardine-jacket-paige-copy-2"
+    },
+    {
+      "id": "pistage--jackets-06",
+      "handle": "mixed-jacket-beige",
+      "title": "MIXED JACKET-BEIGE",
+      "price": 1470,
+      "compareAtPrice": 2100,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-06/1.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-06/cutout.png",
+      "sizes": [
+        "one-size"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/mixed-jacket-beige"
+    },
+    {
+      "id": "pistage--jackets-07",
+      "handle": "cropped-linen-jacket-yellow",
+      "title": "CROPPED LINEN JACKET-YELLOW",
+      "price": 1495,
+      "compareAtPrice": 2490,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-07/1.jpg",
+        "/products/pistage--jackets-07/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-07/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/cropped-linen-jacket-yellow"
+    },
+    {
+      "id": "pistage--jackets-08",
+      "handle": "cropped-jacket-green",
+      "title": "CROPPED JACKET-GREEN",
+      "price": 1610,
+      "compareAtPrice": 2300,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-08/1.jpg",
+        "/products/pistage--jackets-08/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-08/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/cropped-jacket-green"
+    },
+    {
+      "id": "pistage--jackets-09",
+      "handle": "linen-oversized-jacket",
+      "title": "LINEN OVERSIZED JACKET",
+      "price": 1673,
+      "compareAtPrice": 2390,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-09/1.jpg",
+        "/products/pistage--jackets-09/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-09/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/linen-oversized-jacket"
+    },
+    {
+      "id": "pistage--jackets-10",
+      "handle": "sleeveless-gabardine-jacket",
+      "title": "SLEEVELESS GABARDINE JACKET",
+      "price": 1419,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--jackets-10/1.jpg",
+        "/products/pistage--jackets-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--jackets-10/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "pistage--jackets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/sleeveless-gabardine-jacket"
+    },
+    {
+      "id": "pistage--sets-01",
+      "handle": "extra-ruffles-chiffon-blouse-rose",
+      "title": "EXTRA RUFFLES CHIFFON BLOUSE -ROSE",
+      "price": 1350,
+      "compareAtPrice": 1890,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-01/1.jpg",
+        "/products/pistage--sets-01/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-01/cutout.png",
+      "sizes": [
+        "FREE SIZE"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/extra-ruffles-chiffon-blouse-rose"
+    },
+    {
+      "id": "pistage--sets-02",
+      "handle": "ruffle-skirt-rose",
+      "title": "RUFFLE SKIRT -Rose",
+      "price": 1079,
+      "compareAtPrice": 1650,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-02/1.jpg",
+        "/products/pistage--sets-02/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-02/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/ruffle-skirt-rose"
+    },
+    {
+      "id": "pistage--sets-03",
+      "handle": "washed-wide-leg-denim-pants-dark-blue",
+      "title": "WASHED WIDE LEG DENIM PANTS -Blue",
+      "price": 1690,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-03/1.jpg",
+        "/products/pistage--sets-03/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-03/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/washed-wide-leg-denim-pants-dark-blue"
+    },
+    {
+      "id": "pistage--sets-04",
+      "handle": "emerald-wrap-blouse",
+      "title": "EMERALD WRAP BLOUSE -GREEN",
+      "price": 1253,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-04/1.jpg",
+        "/products/pistage--sets-04/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-04/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/emerald-wrap-blouse"
+    },
+    {
+      "id": "pistage--sets-05",
+      "handle": "soft-stripe-blouse-beige",
+      "title": "SOFT STRIPE BLOUSE -BEIGE",
+      "price": 1113,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-05/1.jpg",
+        "/products/pistage--sets-05/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-05/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/soft-stripe-blouse-beige"
+    },
+    {
+      "id": "pistage--sets-06",
+      "handle": "guipure-pocket-linen-shirt-brown",
+      "title": "GUIPURE POCKET LINEN SHIRT -BROWN",
+      "price": 1169,
+      "compareAtPrice": 1790,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-06/1.jpg",
+        "/products/pistage--sets-06/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-06/cutout.png",
+      "sizes": [
+        "S1",
+        "S2"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/guipure-pocket-linen-shirt-brown"
+    },
+    {
+      "id": "pistage--sets-07",
+      "handle": "stitched-pants-with-buttons",
+      "title": "STITCHED PANTS WITH BUTTONS DENIM",
+      "price": 1150,
+      "compareAtPrice": 1590,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-07/1.jpg",
+        "/products/pistage--sets-07/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-07/cutout.png",
+      "sizes": [
+        "38",
+        "40",
+        "42",
+        "44",
+        "46"
+      ],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        }
+      ],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/stitched-pants-with-buttons"
+    },
+    {
+      "id": "pistage--sets-08",
+      "handle": "pure-linen-pants-beige",
+      "title": "PURE LINEN PANTS -BEIGE",
+      "price": 1390,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-08/1.jpg",
+        "/products/pistage--sets-08/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-08/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pure-linen-pants-beige"
+    },
+    {
+      "id": "pistage--sets-09",
+      "handle": "pure-linen-vest-maroon",
+      "title": "PURE LINEN VEST -MAROON",
+      "price": 1289,
+      "compareAtPrice": 1980,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-09/1.jpg",
+        "/products/pistage--sets-09/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-09/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/pure-linen-vest-maroon"
+    },
+    {
+      "id": "pistage--sets-10",
+      "handle": "wide-leg-linen-pants-maroon",
+      "title": "WIDE LEG LINEN PANTS -MAROON",
+      "price": 1690,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--sets-10/1.jpg",
+        "/products/pistage--sets-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--sets-10/cutout.png",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "colors": [],
+      "section": "pistage--sets",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/wide-leg-linen-pants-maroon"
+    },
+    {
+      "id": "pistage--hijab-scarfs-01",
+      "handle": "crimson-paisley-satin-mini-scarf",
+      "title": "Crimson Paisley Satin Mini Scarf",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-01/1.jpg"
+      ],
+      "cutout": "/products/pistage--hijab-scarfs-01/cutout.png",
+      "sizes": [
+        "50*50"
+      ],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/crimson-paisley-satin-mini-scarf"
+    },
+    {
+      "id": "pistage--hijab-scarfs-02",
+      "handle": "brown-heritage-satin-mini-scarf",
+      "title": "Brown Heritage Satin Mini Scarf",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-02/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "50*50"
+      ],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/brown-heritage-satin-mini-scarf"
+    },
+    {
+      "id": "pistage--hijab-scarfs-03",
+      "handle": "arabesque-ivory-satin-long-scarf",
+      "title": "Arabesque Ivory Satin Long Scarf",
+      "price": 350,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-03/1.jpg",
+        "/products/pistage--hijab-scarfs-03/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "90*90"
+      ],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/arabesque-ivory-satin-long-scarf"
+    },
+    {
+      "id": "pistage--hijab-scarfs-04",
+      "handle": "arabesque-ivory-satin-mini-scarf",
+      "title": "Arabesque Ivory Satin Mini Scarf",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-04/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "50*50"
+      ],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/arabesque-ivory-satin-mini-scarf"
+    },
+    {
+      "id": "pistage--hijab-scarfs-05",
+      "handle": "retro-geometry-satin-long-scarf",
+      "title": "Retro Geometry Satin Long Scarf",
+      "price": 350,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-05/1.jpg"
+      ],
+      "cutout": "/products/pistage--hijab-scarfs-05/cutout.png",
+      "sizes": [
+        "90*90"
+      ],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/retro-geometry-satin-long-scarf"
+    },
+    {
+      "id": "pistage--hijab-scarfs-06",
+      "handle": "retro-geometry-satin-mini-scarf",
+      "title": "Retro Geometry Satin Mini Scarf",
+      "price": 250,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-06/1.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "50*50"
+      ],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/retro-geometry-satin-mini-scarf"
+    },
+    {
+      "id": "pistage--hijab-scarfs-07",
+      "handle": "chiffon-scarf-brown-copy",
+      "title": "CHIFFON SCARF -BLUE",
+      "price": 120,
+      "compareAtPrice": 250,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-07/1.jpg"
+      ],
+      "cutout": "/products/pistage--hijab-scarfs-07/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/chiffon-scarf-brown-copy"
+    },
+    {
+      "id": "pistage--hijab-scarfs-08",
+      "handle": "chiffon-scarf-blue-copy",
+      "title": "CHIFFON SCARF -FOSHIA",
+      "price": 120,
+      "compareAtPrice": 250,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-08/1.jpg"
+      ],
+      "cutout": "/products/pistage--hijab-scarfs-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/chiffon-scarf-blue-copy"
+    },
+    {
+      "id": "pistage--hijab-scarfs-09",
+      "handle": "chiffon-scarf-foshia-copy",
+      "title": "CHIFFON SCARF -PETROLEUM",
+      "price": 120,
+      "compareAtPrice": 250,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-09/1.jpg"
+      ],
+      "cutout": "/products/pistage--hijab-scarfs-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/chiffon-scarf-foshia-copy"
+    },
+    {
+      "id": "pistage--hijab-scarfs-10",
+      "handle": "chiffon-scarf-petroleum-copy",
+      "title": "CHIFFON SCARF -DARK GRAY",
+      "price": 120,
+      "compareAtPrice": 250,
+      "currency": "EGP",
+      "images": [
+        "/products/pistage--hijab-scarfs-10/1.jpg",
+        "/products/pistage--hijab-scarfs-10/2.jpg"
+      ],
+      "cutout": "/products/pistage--hijab-scarfs-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "pistage--hijab-scarfs",
+      "modelOutfit": false,
+      "url": "https://pistage.com/products/chiffon-scarf-petroleum-copy"
+    }
+  ]
+}

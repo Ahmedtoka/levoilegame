@@ -1,0 +1,138 @@
+{
+  "axis": [
+    { "handle": "tops", "titleAr": "توبات" },
+    { "handle": "blouses", "titleAr": "بلوزات" },
+    { "handle": "tees", "titleAr": "تيشيرتات" },
+    { "handle": "hoodies", "titleAr": "هوديز" },
+    { "handle": "hoodies-sets", "titleAr": "أطقم هوديز" },
+    { "handle": "sweaters", "titleAr": "سويترات" },
+    { "handle": "knitwear", "titleAr": "تريكو" },
+    { "handle": "jackets", "titleAr": "جواكت" }
+  ],
+  "the-cause-wear": [
+    { "handle": "winter-collection", "titleAr": "كولكشن الشتا" },
+    { "handle": "summer-collection", "titleAr": "كولكشن الصيف" },
+    { "handle": "kids", "titleAr": "أطفال" },
+    { "handle": "baby-winter", "titleAr": "بيبي" }
+  ],
+  "dnd": [
+    { "handle": "dresses", "titleAr": "فساتين" },
+    { "handle": "shirts", "titleAr": "قمصان" },
+    { "handle": "sets", "titleAr": "أطقم" },
+    { "handle": "vests", "titleAr": "فيستات" },
+    { "handle": "pants", "titleAr": "بناطيل" },
+    { "handle": "skirts", "titleAr": "جيبات" },
+    { "handle": "kimonos", "titleAr": "كيمونو" },
+    { "handle": "blazer", "titleAr": "بليزرات" }
+  ],
+  "nourhan": [
+    { "handle": "dresses", "titleAr": "فساتين" },
+    { "handle": "sets", "titleAr": "أطقم" },
+    { "handle": "shirts-vests", "titleAr": "قمصان وفيستات" },
+    { "handle": "pants", "titleAr": "بناطيل" },
+    { "handle": "skirts", "titleAr": "جيبات" },
+    { "handle": "jackets-coats", "titleAr": "جواكت وبالطوهات" },
+    { "handle": "knitwear", "titleAr": "تريكو" },
+    { "handle": "cocktail-magazine", "titleAr": "كوكتيل ماجازين" }
+  ],
+  "pistage": [
+    { "handle": "dresses", "titleAr": "فساتين" },
+    { "handle": "shirts-blouses", "titleAr": "قمصان وبلوزات" },
+    { "handle": "trousers", "titleAr": "بناطيل" },
+    { "handle": "skirts", "titleAr": "جيبات" },
+    { "handle": "demin", "titleAr": "دنيم" },
+    { "handle": "jackets", "titleAr": "جواكت" },
+    { "handle": "sets", "titleAr": "أطقم" },
+    { "handle": "hijab-scarfs", "titleAr": "طرح وإيشاربات" }
+  ],
+  "slip-and-go": [
+    { "handle": "printed-women-flip-flops", "titleAr": "شباشب حريمي مطبوعة" },
+    { "handle": "women-basic-flip-flops", "titleAr": "شباشب حريمي بيسك" },
+    { "handle": "accessorized-women-s-flip-flops", "titleAr": "شباشب حريمي بإكسسوار" },
+    { "handle": "women-sandals", "titleAr": "صنادل حريمي" },
+    { "handle": "men-printed-flip-flops", "titleAr": "شباشب رجالي مطبوعة" },
+    { "handle": "men-basic-flip-flops", "titleAr": "شباشب رجالي بيسك" },
+    { "handle": "printed-kids-flip-flops", "titleAr": "شباشب أطفال" },
+    { "handle": "winter-collection", "titleAr": "كولكشن الشتا" }
+  ],
+  "bezravoga": [
+    { "handle": "drsis", "titleAr": "فساتين" },
+    { "handle": "shirts", "titleAr": "قمصان" },
+    { "handle": "set", "titleAr": "أطقم" },
+    { "handle": "pants", "titleAr": "بناطيل" },
+    { "handle": "skirts", "titleAr": "جيبات" },
+    { "handle": "denim", "titleAr": "دنيم" },
+    { "handle": "coats", "titleAr": "بالطوهات" },
+    { "handle": "summer-collection", "titleAr": "كولكشن الصيف" }
+  ],
+  "nanosh": [
+    { "handle": "dresses", "titleAr": "فساتين" },
+    { "handle": "sets", "titleAr": "أطقم" },
+    { "handle": "shirts", "titleAr": "قمصان" },
+    { "handle": "blouses", "titleAr": "بلوزات" },
+    { "handle": "pants", "titleAr": "بناطيل" },
+    { "handle": "skirts", "titleAr": "جيبات" },
+    { "handle": "jackets", "titleAr": "جواكت" },
+    { "handle": "bags", "titleAr": "شنط" }
+  ],
+  "scarfest": [
+    { "handle": "chiffon-printed", "titleAr": "شيفون مطبوع" },
+    { "handle": "modal-printed", "titleAr": "مودال مطبوع" },
+    { "handle": "modal-plain", "titleAr": "مودال سادة" },
+    { "handle": "cotton-jill", "titleAr": "قطن جيل" },
+    { "handle": "kuwaiti", "titleAr": "كويتي" },
+    { "handle": "raffield", "titleAr": "كشكشة" },
+    { "handle": "brooch", "titleAr": "بروشات" }
+  ],
+  "jeno": [
+    { "handle": "dresses", "titleAr": "فساتين" },
+    { "handle": "shirts", "titleAr": "قمصان" },
+    { "handle": "sets-co-ords", "titleAr": "أطقم" },
+    { "handle": "bottoms", "titleAr": "بناطيل وجيبات" },
+    { "handle": "denim", "titleAr": "دنيم" },
+    { "handle": "cardigan", "titleAr": "كارديجان" },
+    { "handle": "sweaters", "titleAr": "سويترات" },
+    { "handle": "jackets-coats", "titleAr": "جواكت وبالطوهات" }
+  ],
+  "hashbag": [
+    { "handle": "women-bags", "titleAr": "شنط حريمي" },
+    { "handle": "thermal", "titleAr": "شنط حافظة للحرارة" },
+    { "handle": "thermal-and-cool-bag", "titleAr": "شنط حرارة وتبريد" },
+    { "handle": "school", "titleAr": "شنط مدرسة" },
+    { "handle": "kids", "titleAr": "أطفال" },
+    { "handle": "cross-bag", "titleAr": "كروس باج" }
+  ],
+  "rwan-designs": [
+    { "handle": "bags", "titleAr": "شنط" },
+    { "handle": "clutches", "titleAr": "كلاتشات" },
+    { "handle": "tote-bags-1", "titleAr": "توت باج" },
+    { "handle": "mini-tote-bags-1", "titleAr": "ميني توت باج" },
+    { "handle": "shirts", "titleAr": "قمصان" },
+    { "handle": "summer-vibes", "titleAr": "سمر فايبز" },
+    { "handle": "accessories", "titleAr": "إكسسوارات" }
+  ],
+  "fashion-avenue": [
+    { "handle": "dresses", "titleAr": "فساتين" },
+    { "handle": "kaftans-abayas", "titleAr": "قفاطين وعبايات" },
+    { "handle": "shirts-tops", "titleAr": "قمصان وتوبات" },
+    { "handle": "bottoms", "titleAr": "بناطيل وجيبات" },
+    { "handle": "jackets-blazers", "titleAr": "جواكت وبليزرات" },
+    { "handle": "sets", "titleAr": "أطقم" }
+  ],
+  "noha-collection": [
+    { "handle": "dresses-1", "titleAr": "فساتين" },
+    { "handle": "set", "titleAr": "أطقم" },
+    { "handle": "shirt", "titleAr": "قمصان" },
+    { "handle": "pants", "titleAr": "بناطيل" },
+    { "handle": "cardigans-jackets", "titleAr": "كارديجان وجواكت" },
+    { "handle": "vests", "titleAr": "فيستات" },
+    { "handle": "coastal-collection", "titleAr": "كوستال كولكشن" }
+  ],
+  "promax": [
+    { "handle": "probar", "titleAr": "بروبار" },
+    { "handle": "procup", "titleAr": "بروكب" },
+    { "handle": "prospread", "titleAr": "بروسبريد" },
+    { "handle": "energy-bar", "titleAr": "إنرجي بار" },
+    { "handle": "bundles", "titleAr": "باندلز" }
+  ]
+}

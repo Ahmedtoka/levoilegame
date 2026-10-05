@@ -1,0 +1,1056 @@
+{
+  "brandId": "rwan-designs",
+  "site": "https://rwanagiza.com",
+  "sections": [
+    {
+      "id": "rwan-designs--bags",
+      "title": "Bags",
+      "titleAr": "شنط",
+      "productIds": [
+        "rwan-designs--bags-01",
+        "rwan-designs--bags-02",
+        "rwan-designs--bags-03",
+        "rwan-designs--bags-04",
+        "rwan-designs--bags-05",
+        "rwan-designs--bags-06",
+        "rwan-designs--bags-07",
+        "rwan-designs--bags-08",
+        "rwan-designs--bags-09",
+        "rwan-designs--bags-10"
+      ]
+    },
+    {
+      "id": "rwan-designs--clutches",
+      "title": "Clutches",
+      "titleAr": "كلاتشات",
+      "productIds": [
+        "rwan-designs--clutches-01",
+        "rwan-designs--clutches-02",
+        "rwan-designs--clutches-03",
+        "rwan-designs--clutches-04",
+        "rwan-designs--clutches-05"
+      ]
+    },
+    {
+      "id": "rwan-designs--tote-bags-1",
+      "title": "Tote Bags",
+      "titleAr": "توت باج",
+      "productIds": [
+        "rwan-designs--tote-bags-1-01",
+        "rwan-designs--tote-bags-1-02",
+        "rwan-designs--tote-bags-1-03",
+        "rwan-designs--tote-bags-1-04",
+        "rwan-designs--tote-bags-1-05"
+      ]
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1",
+      "title": "Mini Tote Bags",
+      "titleAr": "ميني توت باج",
+      "productIds": [
+        "rwan-designs--mini-tote-bags-1-01",
+        "rwan-designs--mini-tote-bags-1-02",
+        "rwan-designs--mini-tote-bags-1-03",
+        "rwan-designs--mini-tote-bags-1-04",
+        "rwan-designs--mini-tote-bags-1-05",
+        "rwan-designs--mini-tote-bags-1-06"
+      ]
+    },
+    {
+      "id": "rwan-designs--shirts",
+      "title": "Shirts",
+      "titleAr": "قمصان",
+      "productIds": [
+        "rwan-designs--shirts-01",
+        "rwan-designs--shirts-02",
+        "rwan-designs--shirts-03",
+        "rwan-designs--shirts-04",
+        "rwan-designs--shirts-05"
+      ]
+    },
+    {
+      "id": "rwan-designs--summer-vibes",
+      "title": "Summer Vibes",
+      "titleAr": "سمر فايبز",
+      "productIds": [
+        "rwan-designs--summer-vibes-01",
+        "rwan-designs--summer-vibes-02",
+        "rwan-designs--summer-vibes-03",
+        "rwan-designs--summer-vibes-04",
+        "rwan-designs--summer-vibes-05"
+      ]
+    },
+    {
+      "id": "rwan-designs--accessories",
+      "title": "Accessories",
+      "titleAr": "إكسسوارات",
+      "productIds": [
+        "rwan-designs--accessories-01",
+        "rwan-designs--accessories-02"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "rwan-designs--bags-01",
+      "handle": "batch-work-multicolor-tote-bag",
+      "title": "Batch work multicolor tote bag",
+      "price": 1900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-01/1.jpg",
+        "/products/rwan-designs--bags-01/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/batch-work-multicolor-tote-bag"
+    },
+    {
+      "id": "rwan-designs--bags-02",
+      "handle": "untitled-jul14_17-19",
+      "title": "Batch-work multicolour mini tote bag",
+      "price": 1600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-02/1.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Multicolor",
+          "nameAr": "Multicolor",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/untitled-jul14_17-19"
+    },
+    {
+      "id": "rwan-designs--bags-03",
+      "handle": "fushya",
+      "title": "fushya",
+      "price": 1900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-03/1.jpg",
+        "/products/rwan-designs--bags-03/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-03/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Fuchia X Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/fushya"
+    },
+    {
+      "id": "rwan-designs--bags-04",
+      "handle": "ghoyom-1",
+      "title": "GHOYOM",
+      "price": 1900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-04/1.jpg",
+        "/products/rwan-designs--bags-04/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "Mini"
+      ],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/ghoyom-1"
+    },
+    {
+      "id": "rwan-designs--bags-05",
+      "handle": "nuru",
+      "title": "NURU",
+      "price": 900,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-05/1.jpg",
+        "/products/rwan-designs--bags-05/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/nuru"
+    },
+    {
+      "id": "rwan-designs--bags-06",
+      "handle": "ghoyom",
+      "title": "GHOYOM",
+      "price": 1900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-06/1.jpg",
+        "/products/rwan-designs--bags-06/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [
+        "40 x 32 x 20 cm",
+        "30 x 22 x 15 cm"
+      ],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/ghoyom"
+    },
+    {
+      "id": "rwan-designs--bags-07",
+      "handle": "loaloa",
+      "title": "loaloa",
+      "price": 2400,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-07/1.jpg",
+        "/products/rwan-designs--bags-07/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-07/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "gold",
+          "nameAr": "دهبي",
+          "hex": "#c9a24a"
+        },
+        {
+          "name": "silver",
+          "nameAr": "فضي",
+          "hex": "#c0c0c4"
+        }
+      ],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/loaloa"
+    },
+    {
+      "id": "rwan-designs--bags-08",
+      "handle": "zuri",
+      "title": "ZURI",
+      "price": 900,
+      "compareAtPrice": 1800,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-08/1.jpg",
+        "/products/rwan-designs--bags-08/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-08/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/zuri"
+    },
+    {
+      "id": "rwan-designs--bags-09",
+      "handle": "حياه-printed-laptop-sleeve",
+      "title": "حياه printed laptop sleeve",
+      "price": 680,
+      "compareAtPrice": 800,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-09/1.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-09/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/حياه-printed-laptop-sleeve"
+    },
+    {
+      "id": "rwan-designs--bags-10",
+      "handle": "حب-printed-laptop-sleeve",
+      "title": "حب printed laptop sleeve",
+      "price": 680,
+      "compareAtPrice": 800,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--bags-10/1.jpg"
+      ],
+      "cutout": "/products/rwan-designs--bags-10/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--bags",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/حب-printed-laptop-sleeve"
+    },
+    {
+      "id": "rwan-designs--clutches-01",
+      "handle": "dollas-gold-x-ivory-clutch",
+      "title": "Dollas silver x ivory clutch",
+      "price": 2400,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--clutches-01/1.jpg",
+        "/products/rwan-designs--clutches-01/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--clutches-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--clutches",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/dollas-gold-x-ivory-clutch"
+    },
+    {
+      "id": "rwan-designs--clutches-02",
+      "handle": "dollas-grey-x-ivory-clutch",
+      "title": "Dollas gold x ivory clutch",
+      "price": 2400,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--clutches-02/1.jpg",
+        "/products/rwan-designs--clutches-02/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--clutches-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--clutches",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/dollas-grey-x-ivory-clutch"
+    },
+    {
+      "id": "rwan-designs--clutches-03",
+      "handle": "love-shiny-clutch",
+      "title": "Love Shiny Clutch",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--clutches-03/1.jpg",
+        "/products/rwan-designs--clutches-03/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--clutches-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--clutches",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/love-shiny-clutch"
+    },
+    {
+      "id": "rwan-designs--clutches-04",
+      "handle": "dollas-green-x-ivory-clutch",
+      "title": "Dollas green x ivory clutch",
+      "price": 2400,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--clutches-04/1.jpg",
+        "/products/rwan-designs--clutches-04/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--clutches-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--clutches",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/dollas-green-x-ivory-clutch"
+    },
+    {
+      "id": "rwan-designs--clutches-05",
+      "handle": "embroidered-heart-clutch",
+      "title": "Embroidered Heart Clutch",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--clutches-05/1.jpg",
+        "/products/rwan-designs--clutches-05/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--clutches-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--clutches",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/embroidered-heart-clutch"
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-01",
+      "handle": "wooden-handle-tote-with-detachable-clutch-multicolor-orange-edition",
+      "title": "Wooden Handle Tote orange Edition",
+      "price": 2700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--tote-bags-1-01/1.jpg",
+        "/products/rwan-designs--tote-bags-1-01/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/wooden-handle-tote-with-detachable-clutch-multicolor-orange-edition"
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-02",
+      "handle": "wooden-handle-tote-with-detachable-clutch-multicolor-black-edition",
+      "title": "Wooden Handle Black Edition",
+      "price": 2700,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--tote-bags-1-02/1.jpg",
+        "/products/rwan-designs--tote-bags-1-02/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--tote-bags-1-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/wooden-handle-tote-with-detachable-clutch-multicolor-black-edition"
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-03",
+      "handle": "kashan-beige-tote-bag",
+      "title": "Kashan beige tote bag",
+      "price": 1800,
+      "compareAtPrice": 2600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--tote-bags-1-03/1.jpg",
+        "/products/rwan-designs--tote-bags-1-03/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--tote-bags-1-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/kashan-beige-tote-bag"
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-04",
+      "handle": "red-tropic-tote-bag",
+      "title": "Red tropical embroidered tote bag",
+      "price": 1500,
+      "compareAtPrice": 2200,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--tote-bags-1-04/1.jpg",
+        "/products/rwan-designs--tote-bags-1-04/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--tote-bags-1-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/red-tropic-tote-bag"
+    },
+    {
+      "id": "rwan-designs--tote-bags-1-05",
+      "handle": "shopping-tote-bag-tote-bag",
+      "title": "Suede Shopping tote bag",
+      "price": 1500,
+      "compareAtPrice": 2200,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--tote-bags-1-05/1.jpg",
+        "/products/rwan-designs--tote-bags-1-05/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--tote-bags-1-05/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Burgandy",
+          "nameAr": "Burgandy",
+          "hex": "#d9cfc7"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "rwan-designs--tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/shopping-tote-bag-tote-bag"
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-01",
+      "handle": "oman-tote-bag",
+      "title": "Oman mini tote bag",
+      "price": 850,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--mini-tote-bags-1-01/1.jpg",
+        "/products/rwan-designs--mini-tote-bags-1-01/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--mini-tote-bags-1-01/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--mini-tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/oman-tote-bag"
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-02",
+      "handle": "jacquard-mini-tote-bag",
+      "title": "Jacquard mini tote bag",
+      "price": 850,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--mini-tote-bags-1-02/1.jpg",
+        "/products/rwan-designs--mini-tote-bags-1-02/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--mini-tote-bags-1-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--mini-tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/jacquard-mini-tote-bag"
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-03",
+      "handle": "multicolor-waterproof-mini-tote-bag",
+      "title": "Multicolor waterproof mini tote bag",
+      "price": 1600,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--mini-tote-bags-1-03/1.jpg",
+        "/products/rwan-designs--mini-tote-bags-1-03/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--mini-tote-bags-1-03/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--mini-tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/multicolor-waterproof-mini-tote-bag"
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-04",
+      "handle": "ikat-mini-tote-bag",
+      "title": "Ikat mini tote bag",
+      "price": 850,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--mini-tote-bags-1-04/1.jpg",
+        "/products/rwan-designs--mini-tote-bags-1-04/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--mini-tote-bags-1-04/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Burgandy",
+          "nameAr": "Burgandy",
+          "hex": "#d9cfc7"
+        }
+      ],
+      "section": "rwan-designs--mini-tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/ikat-mini-tote-bag"
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-05",
+      "handle": "neural-jacquard-mini-tote",
+      "title": "Neural jacquard mini tote",
+      "price": 850,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--mini-tote-bags-1-05/1.jpg",
+        "/products/rwan-designs--mini-tote-bags-1-05/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--mini-tote-bags-1-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--mini-tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/neural-jacquard-mini-tote"
+    },
+    {
+      "id": "rwan-designs--mini-tote-bags-1-06",
+      "handle": "maroon-mini-tote-bag",
+      "title": "Maroon mini tote bag",
+      "price": 850,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--mini-tote-bags-1-06/1.jpg",
+        "/products/rwan-designs--mini-tote-bags-1-06/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--mini-tote-bags-1-06/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--mini-tote-bags-1",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/maroon-mini-tote-bag"
+    },
+    {
+      "id": "rwan-designs--shirts-01",
+      "handle": "denim-shirt-with-handmade-summer-embroidery",
+      "title": "Denim Shirt with Handmade Summer Embroidery",
+      "price": 900,
+      "compareAtPrice": 1900,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--shirts-01/1.jpg",
+        "/products/rwan-designs--shirts-01/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--shirts-01/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "rwan-designs--shirts",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/denim-shirt-with-handmade-summer-embroidery"
+    },
+    {
+      "id": "rwan-designs--shirts-02",
+      "handle": "shoulder-button-freesize-shirt-1",
+      "title": "Shoulder Button Freesize Shirt",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--shirts-02/1.jpg",
+        "/products/rwan-designs--shirts-02/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--shirts-02/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--shirts",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/shoulder-button-freesize-shirt-1"
+    },
+    {
+      "id": "rwan-designs--shirts-03",
+      "handle": "shoulder-button-freesize-shirt",
+      "title": "Shoulder Button Freesize Shirt",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--shirts-03/1.jpg",
+        "/products/rwan-designs--shirts-03/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--shirts-03/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Beige",
+          "nameAr": "بيج",
+          "hex": "#d8c6a8"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        }
+      ],
+      "section": "rwan-designs--shirts",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/shoulder-button-freesize-shirt"
+    },
+    {
+      "id": "rwan-designs--shirts-04",
+      "handle": "denim-shirt-with-handmade-summer-buttons-embroidery",
+      "title": "Denim Shirt with Handmade Summer buttons Embroidery",
+      "price": 800,
+      "compareAtPrice": 1700,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--shirts-04/1.jpg",
+        "/products/rwan-designs--shirts-04/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--shirts-04/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [],
+      "section": "rwan-designs--shirts",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/denim-shirt-with-handmade-summer-buttons-embroidery"
+    },
+    {
+      "id": "rwan-designs--shirts-05",
+      "handle": "poplin-guipure-lace-freesize-shirt",
+      "title": "Poplin & Guipure Lace Freesize Shirt",
+      "price": 800,
+      "compareAtPrice": 1600,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--shirts-05/1.jpg",
+        "/products/rwan-designs--shirts-05/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--shirts-05/cutout.png",
+      "sizes": [
+        "One size"
+      ],
+      "colors": [
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        }
+      ],
+      "section": "rwan-designs--shirts",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/poplin-guipure-lace-freesize-shirt"
+    },
+    {
+      "id": "rwan-designs--summer-vibes-01",
+      "handle": "ramla",
+      "title": "RAMLA",
+      "price": 1800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--summer-vibes-01/1.jpg",
+        "/products/rwan-designs--summer-vibes-01/2.jpg"
+      ],
+      "cutout": null,
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Camel",
+          "nameAr": "جملي",
+          "hex": "#b98a5a"
+        },
+        {
+          "name": "Ivory",
+          "nameAr": "أوف وايت",
+          "hex": "#efe8d8"
+        }
+      ],
+      "section": "rwan-designs--summer-vibes",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/ramla"
+    },
+    {
+      "id": "rwan-designs--summer-vibes-02",
+      "handle": "hawa",
+      "title": "HAWA",
+      "price": 1800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--summer-vibes-02/1.jpg",
+        "/products/rwan-designs--summer-vibes-02/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--summer-vibes-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Dark Havan",
+          "nameAr": "هافان",
+          "hex": "#8a6a4a"
+        },
+        {
+          "name": "yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        }
+      ],
+      "section": "rwan-designs--summer-vibes",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/hawa"
+    },
+    {
+      "id": "rwan-designs--summer-vibes-03",
+      "handle": "ghosn",
+      "title": "GHOSN",
+      "price": 1800,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--summer-vibes-03/1.jpg",
+        "/products/rwan-designs--summer-vibes-03/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--summer-vibes-03/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Baby Blue",
+          "nameAr": "لبني",
+          "hex": "#a9c8e6"
+        },
+        {
+          "name": "Brown",
+          "nameAr": "بني",
+          "hex": "#6b4a33"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        }
+      ],
+      "section": "rwan-designs--summer-vibes",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/ghosn"
+    },
+    {
+      "id": "rwan-designs--summer-vibes-04",
+      "handle": "multicolored-waterproof-bag",
+      "title": "Multicolored waterproof bag",
+      "price": 1900,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--summer-vibes-04/1.jpg",
+        "/products/rwan-designs--summer-vibes-04/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--summer-vibes-04/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--summer-vibes",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/multicolored-waterproof-bag"
+    },
+    {
+      "id": "rwan-designs--summer-vibes-05",
+      "handle": "my-home-tote-bag",
+      "title": "My home tote bag",
+      "price": 2200,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--summer-vibes-05/1.jpg",
+        "/products/rwan-designs--summer-vibes-05/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--summer-vibes-05/cutout.png",
+      "sizes": [],
+      "colors": [],
+      "section": "rwan-designs--summer-vibes",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/my-home-tote-bag"
+    },
+    {
+      "id": "rwan-designs--accessories-01",
+      "handle": "beaded-bag-charm-keychain",
+      "title": "Beaded Bag Charm & Keychain.",
+      "price": 300,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--accessories-01/1.jpg",
+        "/products/rwan-designs--accessories-01/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--accessories-01/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Red",
+          "nameAr": "أحمر",
+          "hex": "#b8302f"
+        },
+        {
+          "name": "Orange",
+          "nameAr": "برتقالي",
+          "hex": "#e07a2a"
+        },
+        {
+          "name": "Navy",
+          "nameAr": "كحلي",
+          "hex": "#24304e"
+        },
+        {
+          "name": "pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Burgundy",
+          "nameAr": "نبيتي",
+          "hex": "#6e1f2e"
+        },
+        {
+          "name": "Olive",
+          "nameAr": "زيتي",
+          "hex": "#6f6f3a"
+        },
+        {
+          "name": "White",
+          "nameAr": "أبيض",
+          "hex": "#f4f2ee"
+        },
+        {
+          "name": "Green",
+          "nameAr": "أخضر",
+          "hex": "#3f7a4a"
+        },
+        {
+          "name": "Black",
+          "nameAr": "أسود",
+          "hex": "#1d1d1f"
+        },
+        {
+          "name": "Blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        },
+        {
+          "name": "Coral Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        },
+        {
+          "name": "Lavender Mix",
+          "nameAr": "لافندر",
+          "hex": "#bfaee0"
+        },
+        {
+          "name": "Baby Pink",
+          "nameAr": "بيبي بينك",
+          "hex": "#f2c6d2"
+        },
+        {
+          "name": "Sunflower Yellow",
+          "nameAr": "أصفر",
+          "hex": "#e8c840"
+        },
+        {
+          "name": "Hot Pink",
+          "nameAr": "بينك",
+          "hex": "#e8a3b8"
+        }
+      ],
+      "section": "rwan-designs--accessories",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/beaded-bag-charm-keychain"
+    },
+    {
+      "id": "rwan-designs--accessories-02",
+      "handle": "beaded-mobile-chain",
+      "title": "Beaded Mobile Chain",
+      "price": 650,
+      "compareAtPrice": null,
+      "currency": "EGP",
+      "images": [
+        "/products/rwan-designs--accessories-02/1.jpg",
+        "/products/rwan-designs--accessories-02/2.jpg"
+      ],
+      "cutout": "/products/rwan-designs--accessories-02/cutout.png",
+      "sizes": [],
+      "colors": [
+        {
+          "name": "Silver",
+          "nameAr": "فضي",
+          "hex": "#c0c0c4"
+        },
+        {
+          "name": "Dark blue",
+          "nameAr": "أزرق",
+          "hex": "#2f5d9a"
+        }
+      ],
+      "section": "rwan-designs--accessories",
+      "modelOutfit": false,
+      "url": "https://rwanagiza.com/products/beaded-mobile-chain"
+    }
+  ]
+}
