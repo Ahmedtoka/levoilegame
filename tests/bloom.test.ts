@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { CustomBlending, Group, Matrix4, MeshBasicMaterial, MeshStandardMaterial, NormalBlending, OneFactor, ZeroFactor } from 'three'
+import { CustomBlending, DstColorFactor, Group, Matrix4, MeshBasicMaterial, MeshStandardMaterial, NormalBlending, OneFactor, OneMinusSrcColorFactor, REVISION, ZeroFactor } from 'three'
 import { registerBloom, setBloomSources } from '../src/engine/bloom'
+import { BLOOM_THREE_REVISION, bloomSupported } from '../src/engine/post'
 import { isMirrored, markMirrored, MIRROR_LAYER } from '../src/engine/layers'
 import { Batcher, UNIT_BOX } from '../src/engine/batcher'
 
@@ -32,6 +33,18 @@ describe('bloom sources', () => {
     expect(sign.toneMapped).toBe(false)
   })
 
+  it('restores the original colour blend factors', () => {
+    const m = new MeshBasicMaterial()
+    m.blendSrc = DstColorFactor
+    m.blendDst = OneMinusSrcColorFactor
+    registerBloom(m, 0.5)
+    setBloomSources(true)
+    expect(m.blendSrc).toBe(OneFactor)
+    setBloomSources(false)
+    expect(m.blendSrc).toBe(DstColorFactor)
+    expect(m.blendDst).toBe(OneMinusSrcColorFactor)
+  })
+
   it('ignores transparent materials (their alpha is not a mask)', () => {
     const fade = new MeshBasicMaterial({ transparent: true, opacity: 0.4 })
     registerBloom(fade, 1)
@@ -56,5 +69,14 @@ describe('mirror layer', () => {
     expect(w.layers.isEnabled(MIRROR_LAYER)).toBe(true)
     expect(w.layers.isEnabled(0)).toBe(true)
     expect(p.layers.isEnabled(MIRROR_LAYER)).toBe(false)
+  })
+})
+
+describe('bloom three.js guard', () => {
+  it('runs on the checked three.js release and is off on any other', () => {
+    // canvasLikeTarget relies on WebGLRenderer internals (isXRRenderTarget): an upgrade must re-check them.
+    expect(REVISION).toBe(BLOOM_THREE_REVISION)
+    expect(bloomSupported()).toBe(true)
+    expect(bloomSupported('999')).toBe(false)
   })
 })

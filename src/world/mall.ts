@@ -31,7 +31,7 @@ import { aoCeilJunction, aoFloorJunction } from './aoStrips'
 import { addContactShadow } from './decals'
 import { FloorMirror, setFloorSeeThrough } from './floorMirror'
 import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, marbleCladMat, oakVeneerMat, tintedPlane, tiledPlane } from './finish'
-import { markMirrored, MIRROR_LAYER } from '../engine/layers'
+import { markMirrored } from '../engine/layers'
 
 export interface ShellHandles {
   doors: { target: number; update(dt: number): void }
@@ -109,7 +109,8 @@ export async function buildShell(
   // ------------------------------------------------------------ plaza floor
   // Large-format marble tiles (shared atlas); grout lines on the plaza axis and the entrance line.
   const atriumFloorMat = new MeshStandardMaterial({
-    map: floorAtlas(),
+    // Low (textureMax 512) gets a 1024 atlas instead of 2048.
+    map: floorAtlas(quality.textureMax <= 512 ? 1024 : 2048),
     roughness: 0.18,
     metalness: 0.05,
     transparent: false,
@@ -117,6 +118,9 @@ export async function buildShell(
   })
   const plazaFloor = new Mesh(tiledPlane(2 * W, A, atlasPeriod(), 0, A / 2), atriumFloorMat)
   plazaFloor.position.set(0, 0, -A / 2)
+  // See-through over its mirror (High), the floor is in the transparent queue: draw it first
+  // there, so the decals on it (inlays, logo) never sort behind it.
+  plazaFloor.renderOrder = -1
   plazaFloor.matrixAutoUpdate = false
   plazaFloor.updateMatrix()
   root.add(plazaFloor)
@@ -131,10 +135,9 @@ export async function buildShell(
     worldBox: new Box3(new Vector3(-W, -0.01, -A), new Vector3(W, 0.01, 0)),
     color: 0xb8b0b4,
     scale: 0.5,
-    layer: 0,
   })
   // One mirror per corridor, created on first entry and only rendered while you are in that wing.
-  // They show the architecture and lights only (MIRROR_LAYER).
+  // Every mirror (plaza too) shows the architecture and lights only (MIRROR_LAYER).
   markMirrored(MAT.wall, MAT.wallWarm, MAT.trim, MAT.brass, MAT.ceiling, MAT.lightWarm, MAT.lightPanel, GYPSUM, oakVeneerMat(), marbleCladMat())
   const wingMirrors: { rect: Rect; mirror: FloorMirror; mat: MeshStandardMaterial; fade: number }[] = []
 
@@ -208,7 +211,7 @@ export async function buildShell(
     const band = 0.6
     // Each wing gets its own instance of the floor material (same program and atlas), so its
     // see-through state follows only its own mirror.
-    const floorMat = corridorFloorMat().clone()
+    const floorMat = corridorFloorMat()
     const floor = new Mesh(
       mergeGeometries([
         tintedPlane(tiledPlane(2 * (B - band), len, atlasPeriod(), B - band, len / 2), '#ffffff'),
@@ -217,6 +220,7 @@ export async function buildShell(
       floorMat,
     )
     floor.position.set(0, 0, -len / 2)
+    floor.renderOrder = -1 // transparent over the mirror: before the star inlays (see plazaFloor)
     group.add(floor)
     const r = wing.rect
     wingMirrors.push({
@@ -232,7 +236,6 @@ export async function buildShell(
         worldBox: new Box3(new Vector3(r.x0, -0.01, r.z0), new Vector3(r.x1, 0.01, r.z1)),
         color: CORRIDOR_MIRROR.color,
         scale: 0.5,
-        layer: MIRROR_LAYER,
       }),
     })
     for (const sd of [-1, 1]) wf.box(MAT.brass, sd * (B - band), 0.002, -len / 2, 0.03, 0.004, len - 0.02)
@@ -550,18 +553,13 @@ export async function buildShell(
       // Only pay for the mirror pass while the plaza can be seen.
       plazaMirror.setVisible(reflectionsOn && Math.abs(px) < W + 26 && pz > -A - 26)
       // Corridor mirrors: only the wing you are in; the reflection fades in as you enter.
-      let inWing = false
       for (const w of wingMirrors) {
         const inside = reflectionsOn && rectContains(w.rect, px, pz)
-        inWing ||= inside
         if (inside && !w.mirror.enabled) w.mirror.setEnabled(true)
         w.fade = inside ? Math.min(1, w.fade + dt / CORRIDOR_MIRROR.fadeIn) : 0
         w.mirror.setVisible(inside)
         setFloorSeeThrough(w.mat, 1 - (1 - CORRIDOR_MIRROR.floorOpacity) * w.fade)
       }
-      // Seen from inside a wing, the distant plaza floor mirrors the architecture and lights
-      // only, so looking back never pays for two full mirror passes.
-      plazaMirror.setLayer(inWing ? MIRROR_LAYER : 0)
     },
   }
 }

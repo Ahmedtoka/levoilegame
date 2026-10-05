@@ -405,8 +405,9 @@ export class Game implements GameBridge {
     this.engine.render()
     this.governor.tick(dt)
     if (this.frame % 30 === 0) {
-      const info = this.engine.renderer.info.render
-      window.dispatchEvent(new CustomEvent('lv:fps', { detail: `${this.governor.fps.toFixed(0)} fps · ${info.calls} calls · ${this.engine.quality.level}` }))
+      const c = this.engine.frameCalls()
+      const calls = c.post ? `${c.total} calls (${c.post} post)` : `${c.total} calls`
+      window.dispatchEvent(new CustomEvent('lv:fps', { detail: `${this.governor.fps.toFixed(0)} fps · ${calls} · ${this.engine.quality.level}` }))
     }
   }
 }

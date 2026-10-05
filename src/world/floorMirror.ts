@@ -1,9 +1,11 @@
 // Planar floor reflections (High only): a Reflector just under a semi-transparent floor.
-// The mirror camera renders one layer: layer 0 for the plaza (the whole scene minus the
-// FLOOR_FX_LAYER overlays), MIRROR_LAYER for the corridors (architecture and lights only).
+// The mirror camera renders MIRROR_LAYER only: the architecture, the lights and the shop
+// lightboxes. Products, characters, screens, banners and props are not reflected, which
+// keeps a mirror pass to a few dozen draw calls.
 
 import { Box3, Frustum, Matrix4, PlaneGeometry, type Camera, type Material, type Object3D } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
+import { MIRROR_LAYER } from '../engine/layers'
 
 export interface FloorMirrorOptions {
   /** Group the mirror is added to (its local frame). */
@@ -19,8 +21,6 @@ export interface FloorMirrorOptions {
   color: number
   /** Fraction of the window size used for the mirror texture (0.5 = half resolution). */
   scale: number
-  /** The one layer the mirror camera renders. */
-  layer: number
 }
 
 const _fr = new Frustum()
@@ -35,16 +35,9 @@ const _pv = new Matrix4()
 export class FloorMirror {
   private reflector: Reflector | null = null
   private readonly opts: FloorMirrorOptions
-  private layer: number
 
   constructor(opts: FloorMirrorOptions) {
     this.opts = opts
-    this.layer = opts.layer
-  }
-
-  /** Changes the one layer the mirror camera renders. */
-  setLayer(layer: number): void {
-    this.layer = layer
   }
 
   get enabled(): boolean {
@@ -69,9 +62,11 @@ export class FloorMirror {
 
   private create(): Reflector {
     const o = this.opts
+    const size = () => [Math.max(2, Math.round(window.innerWidth * o.scale)), Math.max(2, Math.round(window.innerHeight * o.scale))]
+    const [tw, th] = size()
     const r = new Reflector(new PlaneGeometry(o.width, o.depth), {
-      textureWidth: Math.max(2, Math.round(window.innerWidth * o.scale)),
-      textureHeight: Math.max(2, Math.round(window.innerHeight * o.scale)),
+      textureWidth: tw,
+      textureHeight: th,
       color: o.color,
       clipBias: 0.003,
     })
@@ -79,13 +74,13 @@ export class FloorMirror {
     r.rotation.x = -Math.PI / 2
     // 2 mm under the floor: never coplanar with it.
     r.position.set(o.x, -0.002, o.z)
-    // The mirror camera is a clone of the main camera, layers included: limit it to `layer`.
-    const mirror = this
+    // The mirror camera is a clone of the main camera, layers included: limit it to MIRROR_LAYER.
+    // (The scene's lights are on MIRROR_LAYER too, see Engine, or the reflection goes unlit.)
     const rr = r as unknown as { getReflectionCamera(cam: Camera): Camera }
     const getCam = rr.getReflectionCamera.bind(r)
     rr.getReflectionCamera = (cam) => {
       const rc = getCam(cam)
-      rc.layers.set(mirror.layer)
+      rc.layers.set(MIRROR_LAYER)
       return rc
     }
     const pass = r.onBeforeRender
@@ -94,7 +89,12 @@ export class FloorMirror {
       const cam = args[2]
       _pv.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse)
       _fr.setFromProjectionMatrix(_pv)
-      if (_fr.intersectsBox(box)) pass.apply(this, args)
+      if (!_fr.intersectsBox(box)) return
+      // Follow window resizes (the target is a fraction of the window size).
+      const target = r.getRenderTarget()
+      const [w, h] = size()
+      if (target.width !== w || target.height !== h) target.setSize(w, h)
+      pass.apply(this, args)
     }
     o.parent.add(r)
     return r

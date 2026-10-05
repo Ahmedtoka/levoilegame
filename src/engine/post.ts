@@ -1,4 +1,4 @@
-import { SRGBColorSpace, UnsignedByteType, Vector2, WebGLRenderTarget, type Camera, type Scene, type WebGLRenderer } from 'three'
+import { REVISION, SRGBColorSpace, UnsignedByteType, Vector2, WebGLRenderTarget, type Camera, type Scene, type WebGLRenderer } from 'three'
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
@@ -28,6 +28,23 @@ export const BLOOM = { strength: 0.35, radius: 0.4, threshold: 0.6, smoothWidth:
  *   explicitly to linear RGBA8, which is what the canvas is, so encoded values are stored
  *   as they are.
  */
+/** The three.js release `canvasLikeTarget` was checked against (its `isXRRenderTarget` use is internal). */
+export const BLOOM_THREE_REVISION = '186'
+let warned = false
+
+/**
+ * False on any other three.js release: bloom stays off (with one console warning) until the
+ * `isXRRenderTarget` behaviour above has been re-checked and BLOOM_THREE_REVISION bumped.
+ */
+export function bloomSupported(revision: string = REVISION): boolean {
+  if (revision === BLOOM_THREE_REVISION) return true
+  if (!warned) {
+    warned = true
+    console.warn(`[bloom] disabled: checked against three r${BLOOM_THREE_REVISION}, running r${revision}`)
+  }
+  return false
+}
+
 function canvasLikeTarget(rt: WebGLRenderTarget): void {
   rt.texture.colorSpace = SRGBColorSpace
   // Plain RGBA8 storage (not SRGB8_ALPHA8): the shaders already encode, and the multisampled
@@ -71,17 +88,16 @@ const OpaqueCopyShader = {
     }`,
 }
 
-/** Masked bloom at half the composer's resolution (its mips go down from there). */
+/**
+ * Masked bloom. UnrealBloomPass itself works at half the composer's resolution (bright pass
+ * and first mip), and its mips go down from there.
+ */
 class MaskedBloomPass extends UnrealBloomPass {
   constructor(resolution: Vector2) {
     super(resolution, BLOOM.strength, BLOOM.radius, BLOOM.threshold)
     ;(this.highPassUniforms as Record<string, { value: unknown }>).smoothWidth.value = BLOOM.smoothWidth
     this.materialHighPassFilter.fragmentShader = MASKED_HIGH_PASS
     this.materialHighPassFilter.needsUpdate = true
-  }
-
-  override setSize(width: number, height: number): void {
-    super.setSize(Math.max(2, Math.round(width / 2)), Math.max(2, Math.round(height / 2)))
   }
 }
 

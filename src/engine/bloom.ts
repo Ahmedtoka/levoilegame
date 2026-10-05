@@ -1,4 +1,4 @@
-import { CustomBlending, NormalBlending, OneFactor, ZeroFactor, type MeshBasicMaterial } from 'three'
+import { CustomBlending, NormalBlending, OneFactor, ZeroFactor, type Material, type MeshBasicMaterial } from 'three'
 
 /**
  * Bloom sources, selected with an alpha mask.
@@ -28,6 +28,8 @@ export const BLOOM_WEIGHT = {
 interface Entry {
   mat: MeshBasicMaterial
   opacity: number
+  blendSrc: Material['blendSrc']
+  blendDst: Material['blendDst']
   weight: number
 }
 
@@ -37,7 +39,7 @@ let active = false
 /** Registers an opaque bloom source; `weight` (0–1) scales how strongly it can glow. */
 export function registerBloom(mat: MeshBasicMaterial, weight: number): void {
   if (mat.transparent || entries.some((e) => e.mat === mat)) return
-  const e: Entry = { mat, opacity: mat.opacity, weight }
+  const e: Entry = { mat, opacity: mat.opacity, blendSrc: mat.blendSrc, blendDst: mat.blendDst, weight }
   entries.push(e)
   if (active) apply(e)
 }
@@ -60,6 +62,8 @@ function apply(e: Entry): void {
     mat.opacity = 1 - e.weight
   } else {
     mat.blending = NormalBlending
+    mat.blendSrc = e.blendSrc
+    mat.blendDst = e.blendDst
     mat.blendSrcAlpha = null
     mat.blendDstAlpha = null
     mat.opacity = e.opacity

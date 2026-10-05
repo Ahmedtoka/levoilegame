@@ -13,8 +13,8 @@ import {
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { qualitySettings, type QualityLevel, type QualitySettings } from './quality'
 import { setMaxAnisotropy } from './textures'
-import { FLOOR_FX_LAYER } from './layers'
-import { BloomPipeline } from './post'
+import { FLOOR_FX_LAYER, MIRROR_LAYER } from './layers'
+import { BloomPipeline, bloomSupported } from './post'
 import { setBloomSources } from './bloom'
 
 export class Engine {
@@ -60,10 +60,15 @@ export class Engine {
     this.scene.environmentIntensity = 0.42
     pmrem.dispose()
 
-    this.scene.add(new HemisphereLight('#fff3e6', '#b9a796', 0.75))
+    const hemi = new HemisphereLight('#fff3e6', '#b9a796', 0.75)
     const sun = new DirectionalLight('#ffe9cf', 1.25)
     sun.position.set(-8, 30, -6)
-    this.scene.add(sun)
+    // three.js only uses lights whose layers the camera sees: the floor mirrors' cameras
+    // render MIRROR_LAYER alone, so the lights must be on it too (or reflections go unlit).
+    for (const l of [hemi, sun]) {
+      l.layers.enable(MIRROR_LAYER)
+      this.scene.add(l)
+    }
 
     this.syncPost()
     window.addEventListener('resize', () => this.resize())
@@ -71,7 +76,7 @@ export class Engine {
 
   /** Creates or disposes the bloom composer to match the quality level. */
   private syncPost(): void {
-    const want = this.quality.bloom && !new URLSearchParams(location.search).has('nobloom')
+    const want = this.quality.bloom && !new URLSearchParams(location.search).has('nobloom') && bloomSupported()
     if (want && !this.post) {
       this.post = new BloomPipeline(this.renderer, this.scene, this.camera, this.antialias ? 4 : 0)
     } else if (!want && this.post) {

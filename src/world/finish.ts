@@ -54,15 +54,18 @@ export function tiledPlane(w: number, d: number, period: number, ox = 0, oz = 0)
 let atlas: Texture | null = null
 
 /**
- * 4 × 4 large-format marble tiles in one 2048 texture: every tile is a
- * different crop / rotation of the store marble with a small tint shift, and
- * a fine grout joint. Repeating 4 × 4 tiles hides the texture's period.
+ * 4 × 4 large-format marble tiles in one texture (2048, or `size` on the first call,
+ * e.g. 1024 on Low): every tile is a different crop / rotation of the store marble with
+ * a small tint shift, and a fine grout joint. Repeating 4 × 4 tiles hides the texture's period.
  */
-export function floorAtlas(): Texture {
+export function floorAtlas(size = 2048): Texture {
   if (atlas) return atlas
   if (typeof document === 'undefined') return (atlas = storeTexture('/textures/marble.jpg', [1, 1]))
-  const N = 2048
+  const N = size
   const ts = N / ATLAS_TILES
+  // Grout and bevel widths in px (2 and 1 at 2048), so joints keep their width in metres.
+  const gw = Math.max(1, Math.round((2 * N) / 2048))
+  const bw = Math.max(1, Math.round(N / 2048))
   const [c, g] = makeCanvas(N, N)
   g.fillStyle = '#cfcac4'
   g.fillRect(0, 0, N, N)
@@ -94,14 +97,14 @@ export function floorAtlas(): Texture {
         const lift = r() - 0.45
         g.fillStyle = lift > 0 ? `rgba(255,252,247,${lift * 0.22})` : `rgba(60,50,45,${-lift * 0.1})`
         g.fillRect(x0, y0, ts, ts)
-        // Grout: 2 px dark joint on the top and left edge + 1 px bevel highlight
+        // Grout: dark joint on the top and left edge + bevel highlight
         // (the next tile supplies the other side, so the atlas tiles seamlessly).
         g.fillStyle = 'rgba(92,82,74,0.55)'
-        g.fillRect(x0, y0, ts, 2)
-        g.fillRect(x0, y0, 2, ts)
+        g.fillRect(x0, y0, ts, gw)
+        g.fillRect(x0, y0, gw, ts)
         g.fillStyle = 'rgba(255,255,255,0.35)'
-        g.fillRect(x0 + 2, y0 + 2, ts - 2, 1)
-        g.fillRect(x0 + 2, y0 + 2, 1, ts - 2)
+        g.fillRect(x0 + gw, y0 + gw, ts - gw, bw)
+        g.fillRect(x0 + gw, y0 + gw, bw, ts - gw)
       }
     tex.needsUpdate = true
   }
@@ -112,10 +115,13 @@ export function floorAtlas(): Texture {
 /** Period (m) of the floor atlas when one tile is `tile` metres. */
 export const atlasPeriod = (tile = TILE) => tile * ATLAS_TILES
 
-let corridorMat: MeshStandardMaterial | null = null
-/** Corridor floor: the marble atlas tinted per vertex (light field, darker wall band) — one draw per wing. */
+/**
+ * Corridor floor: the marble atlas tinted per vertex (light field, darker wall band), one draw
+ * per wing. A new material per call (same program and atlas): each wing's see-through state
+ * follows its own mirror.
+ */
 export function corridorFloorMat(): MeshStandardMaterial {
-  return (corridorMat ??= new MeshStandardMaterial({ map: floorAtlas(), vertexColors: true, roughness: 0.2, metalness: 0.04 }))
+  return new MeshStandardMaterial({ map: floorAtlas(), vertexColors: true, roughness: 0.2, metalness: 0.04 })
 }
 
 /** `tiledPlane` with a constant vertex colour (sRGB hex), for merging differently tinted floor parts. */
