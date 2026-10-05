@@ -68,7 +68,7 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - Product textures are lazy-loaded per shop.
   - Blob shadows only. The floor reflector is High-only and shown only while the plaza is in view.
 - **Audio** is generated with Web Audio (`src/audio/audio.ts`); there are no audio files.
-- **Arabic is the default.** `<html dir>` follows the language; use CSS logical properties. Product titles stay in English. 3D price tags use Latin digits (they're baked into textures once).
+- **English is the default; Arabic is available** (toggle in the HUD/menu; persisted store v2 migrates old saves to English once). `<html dir>` follows the language; use CSS logical properties. Product titles stay in English. 3D price tags use Latin digits (they're baked into textures once).
 
 ## Data contract — `src/data/products.json`
 

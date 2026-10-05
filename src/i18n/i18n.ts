@@ -1,4 +1,4 @@
-// Bilingual strings. Arabic is the default; brand/product terms stay in English.
+// Bilingual strings. English is the default, Arabic is available; brand/product terms stay in English.
 
 export type Lang = 'ar' | 'en'
 
@@ -147,6 +147,11 @@ const STRINGS = {
   lookingAt: { ar: 'بتتفرج على', en: 'Looking at' },
   seeWhatShesViewing: { ar: 'شوفي بتتفرج على إيه', en: 'See what she’s viewing' },
   groupDeal: { ar: 'صفقة جماعية', en: 'Group deal' },
+  dealBoardTitle: { ar: 'صفقة جماعية · خصم ٢٥٪', en: 'Group deal · 25% off' },
+  dealBoardDone: { ar: 'اكتملت!', en: 'Unlocked!' },
+  dealBoardUnlocked: { ar: 'خصم ٢٥٪ اتفتح', en: '25% off is live' },
+  dealBoardJoin: { ar: 'انضموا', en: 'Join in' },
+  dealBoardLeft: { ar: 'فاضل {t}', en: '{t} left' },
   joined: { ar: 'انضموا', en: 'joined' },
   left: { ar: 'فاضل', en: 'left' },
   joinDeal: { ar: 'انضمي للصفقة', en: 'Join the deal' },

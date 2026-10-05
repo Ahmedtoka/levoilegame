@@ -107,7 +107,7 @@ export const store = createStore<AppState>()(
       loadProgress: 0,
       loadLabel: '',
 
-      lang: 'ar',
+      lang: 'en',
       music: true,
       sound: true,
       quality: 'auto',
@@ -157,7 +157,13 @@ export const store = createStore<AppState>()(
     }),
     {
       name: 'levoile-virtual-store',
-      version: 1,
+      // v2: the mall became English-first; land returning visitors in English once.
+      version: 2,
+      migrate: (persisted, version) => {
+        const s = (persisted ?? {}) as Partial<AppState>
+        if (version < 2) s.lang = 'en'
+        return s as AppState
+      },
       storage: createJSONStorage(() => safeStorage()),
       partialize: (s) => ({
         lang: s.lang,

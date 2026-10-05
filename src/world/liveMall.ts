@@ -156,8 +156,11 @@ function wheelTexture(): CanvasTexture {
     const dark = ['#5b2b82', '#3e1c5c'].includes(WHEEL_PRIZES[i].color)
     g.fillStyle = dark ? '#fff' : '#5a2a4a'
     g.textAlign = 'center'
-    g.font = `700 30px ${BRAND.fontUi}`
-    g.fillText(WHEEL_PRIZES[i].title.ar, 0, -S * 0.3)
+    // Bilingual: the wheel is baked once, so English on top, Arabic beneath.
+    g.font = `700 26px ${BRAND.fontUi}`
+    g.fillText(WHEEL_PRIZES[i].title.en, 0, -S * 0.34)
+    g.font = `700 22px ${BRAND.fontUi}`
+    g.fillText(WHEEL_PRIZES[i].title.ar, 0, -S * 0.27)
     g.restore()
   }
   g.lineWidth = 10
@@ -345,7 +348,9 @@ function buildDealBoards(game: Game, shops: ShopHandles[]): void {
     }
     const secs = Math.max(0, Math.floor((d.endsAt - Date.now()) / 1000))
     const left = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`
-    const key = `${d.joined}|${left}|${d.unlocked}|${!!thumb}`
+    const L = store.getState().lang
+    const ar = L === 'ar'
+    const key = `${d.joined}|${left}|${d.unlocked}|${!!thumb}|${L}`
     if (key === lastKey) return
     lastKey = key
     g.fillStyle = '#fbf6f2'
@@ -355,9 +360,9 @@ function buildDealBoards(game: Game, shops: ShopHandles[]): void {
     g.fillStyle = '#fff'
     g.textAlign = 'center'
     g.textBaseline = 'middle'
-    g.direction = 'rtl'
+    g.direction = ar ? 'rtl' : 'ltr'
     g.font = `700 34px ${BRAND.fontUi}`
-    g.fillText('👥 صفقة جماعية · خصم ٢٥٪', W / 2, 33)
+    g.fillText(`👥 ${t('dealBoardTitle', L)}`, W / 2, 33)
     g.direction = 'ltr'
     if (thumb) {
       const s = Math.min(220 / thumb.width, 300 / thumb.height)
@@ -367,23 +372,23 @@ function buildDealBoards(game: Game, shops: ShopHandles[]): void {
     g.fillStyle = '#2a1f27'
     g.font = `600 26px ${BRAND.fontLatin}`
     g.fillText(p.title.length > 22 ? p.title.slice(0, 21) + '…' : p.title, x, 112)
-    g.direction = 'rtl'
+    g.direction = ar ? 'rtl' : 'ltr'
     g.font = `800 64px ${BRAND.fontUi}`
     g.fillStyle = BRAND.magenta
-    g.fillText(d.unlocked ? 'اكتملت! 🎉' : `${d.joined}/${d.target}`, x, 195)
+    g.fillText(d.unlocked ? `${t('dealBoardDone', L)} 🎉` : `${d.joined}/${d.target}`, x, 195)
     g.font = `700 28px ${BRAND.fontUi}`
     g.fillStyle = '#6b4f35'
-    g.fillText(d.unlocked ? 'خصم ٢٥٪ اتفتح' : 'انضموا', x, 248)
+    g.fillText(t(d.unlocked ? 'dealBoardUnlocked' : 'dealBoardJoin', L), x, 248)
     // progress bar
     g.direction = 'ltr'
     g.fillStyle = '#eadfe6'
     g.fillRect(x - 150, 278, 300, 18)
     g.fillStyle = BRAND.magenta
     g.fillRect(x - 150, 278, (300 * Math.min(d.joined, d.target)) / d.target, 18)
-    g.direction = 'rtl'
+    g.direction = ar ? 'rtl' : 'ltr'
     g.font = `700 30px ${BRAND.fontUi}`
     g.fillStyle = '#2a1f27'
-    if (!d.unlocked) g.fillText(`فاضل ${left}`, x, 340)
+    if (!d.unlocked) g.fillText(t('dealBoardLeft', L).replace('{t}', left), x, 340)
     g.direction = 'ltr'
     tex.needsUpdate = true
   }

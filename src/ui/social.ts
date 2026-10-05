@@ -330,14 +330,14 @@ function mountWheel(root: HTMLElement, game: GameBridge): void {
 
   const n = WHEEL_PRIZES.length
   const seg = 360 / n
-  const slices = WHEEL_PRIZES.map((p, i) => {
+  const slices = (L: Lang) => WHEEL_PRIZES.map((p, i) => {
     const a0 = ((i * seg - 90) * Math.PI) / 180
     const a1 = (((i + 1) * seg - 90) * Math.PI) / 180
     const r = 140
     const path = `M150,150 L${150 + r * Math.cos(a0)},${150 + r * Math.sin(a0)} A${r},${r} 0 0 1 ${150 + r * Math.cos(a1)},${150 + r * Math.sin(a1)} Z`
     const mid = (i + 0.5) * seg
     const dark = ['#5b2b82', '#3e1c5c'].includes(p.color)
-    return `<path d="${path}" fill="${p.color}" stroke="#fff" stroke-width="2"/><text transform="rotate(${mid} 150 150) translate(150 52)" text-anchor="middle" fill="${dark ? '#fff' : '#5a2a4a'}" font-size="14" font-weight="700">${esc(p.title.ar)}</text>`
+    return `<path d="${path}" fill="${p.color}" stroke="#fff" stroke-width="2"/><text transform="rotate(${mid} 150 150) translate(150 52)" text-anchor="middle" fill="${dark ? '#fff' : '#5a2a4a'}" font-size="14" font-weight="700">${esc(p.title[L])}</text>`
   }).join('')
 
   const render = () => {
@@ -356,7 +356,7 @@ function mountWheel(root: HTMLElement, game: GameBridge): void {
           <div class="eyebrow">${esc(t('wheelOnce', L))}</div>
           <h2>${esc(t('wheel', L))}</h2>
           <div class="wheel-wrap">
-            <svg viewBox="0 0 300 300" class="wheel-svg" style="transform:rotate(${angle}deg)">${slices}<circle cx="150" cy="150" r="26" fill="#fbf8f6" stroke="#b08a55" stroke-width="4"/><text x="150" y="156" text-anchor="middle" font-size="16" fill="#5b2b82" font-family="Playfair Display, serif">LV</text></svg>
+            <svg viewBox="0 0 300 300" class="wheel-svg" style="transform:rotate(${angle}deg)">${slices(s.lang)}<circle cx="150" cy="150" r="26" fill="#fbf8f6" stroke="#b08a55" stroke-width="4"/><text x="150" y="156" text-anchor="middle" font-size="16" fill="#5b2b82" font-family="Playfair Display, serif">LV</text></svg>
             <div class="wheel-pointer"></div>
           </div>
           ${
