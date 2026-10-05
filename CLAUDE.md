@@ -64,7 +64,7 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 - **Performance:**
   - Quality tiers come from `engine/quality.ts` (auto-detect plus FPS governor).
   - Static geometry is instanced via `engine/batcher.ts`.
-  - Shop interiors and their characters are culled when not visible.
+  - Shop interior décor is culled at 19/22 m. Characters are not tied to it: staff, models and shoppers switch to static LODs (one BatchedMesh each for the crowd and for placed actors, `world/actorLod.ts`) beyond the rig distance and stay drawn into the fog; crowd LODs walk in the vertex shader (`actors/lodWalk.ts`).
   - Product textures are lazy-loaded per shop.
   - Blob shadows only. The floor reflector is High-only and shown only while the plaza is in view.
 - **Audio** is generated with Web Audio (`src/audio/audio.ts`); there are no audio files.
