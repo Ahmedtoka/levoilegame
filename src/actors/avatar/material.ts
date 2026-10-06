@@ -59,8 +59,9 @@ export function blankTexture(): Texture {
 export function avatarMaterial(colors: Record<Part, string>, tex: AvatarTextures, logo: Texture): AvatarMaterial {
   const palette = PARTS.map((p) => new Color(colors[p]))
   // Double-sided: garments are open shells (hems, sleeves, hijab drape) seen from below too.
-  const mat = new MeshStandardMaterial({ roughness: 0.9, metalness: 0, side: DoubleSide, normalMap: tex.skinNormal }) as AvatarMaterial
-  mat.normalScale.set(0.6, 0.6)
+  const mat = new MeshStandardMaterial({ roughness: 0.95, metalness: 0, side: DoubleSide, normalMap: tex.skinNormal }) as AvatarMaterial
+  // Bitmoji: almost no surface relief; the skin map only breaks up the face a little.
+  mat.normalScale.set(0.25, 0.25)
   mat.userData.palette = palette
   const blink = { value: 0 }
   mat.userData.blink = blink
@@ -178,7 +179,6 @@ diffuseColor.rgb *= lvC;`,
         `vec3 lvMapN = vec3(0.0, 0.0, 1.0);
 if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) lvMapN = texture2D(normalMap, vUv).xyz * 2.0 - 1.0;
 else if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) lvMapN = texture2D(lvHairN, vUv).xyz * 2.0 - 1.0;
-else if (lvI == ${PARTS.indexOf('top')} || lvI == ${PARTS.indexOf('bottom')} || lvI == ${PARTS.indexOf('hijab')} || lvI == ${PARTS.indexOf('vest')}) lvMapN = lvClothNormal(vLvPos, vLvNrm);
 lvMapN.xy *= normalScale;
 // tbn comes from normal_fragment_begin (derivative-based: the pieces carry no tangents).
 normal = normalize(tbn * lvMapN);`,
@@ -193,19 +193,35 @@ else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.25;
 else if (lvI == ${PARTS.indexOf('glasses')}) roughnessFactor = 0.3;
 else roughnessFactor = 0.96;`,
       )
-      // Bitmoji-like shading: one soft wrapped light (the sun) with a lifted shadow side, blended over
-      // the PBR result — fully on garments, partly on skin and hair so the face keeps its form.
+      // Bitmoji shading: the colour is the colour. One soft key light wraps around the form with a
+      // wide, gentle terminator (no hard bands, no specular), a faint cool fill from the sky, a soft
+      // darkening in the folds (ambient term from the normal's downward tilt), and a thin light rim.
       .replace(
         '#include <opaque_fragment>',
-        `#if NUM_DIR_LIGHTS > 0
-float lvNdl = dot(normalize(normal), directionalLights[0].direction);
-float lvWrap = smoothstep(-0.45, 0.7, lvNdl);
-vec3 lvToon = diffuseColor.rgb * mix(0.66, 1.12, lvWrap);
-float lvK = (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')} || lvI == ${PARTS.indexOf('eyes')}) ? 0.45 : (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) ? 0.6 : 0.85;
-outgoingLight = mix(outgoingLight, lvToon, lvK);
+        `vec3 lvN = normalize(normal);
+vec3 lvBase = diffuseColor.rgb;
+#if NUM_DIR_LIGHTS > 0
+float lvNdl = dot(lvN, directionalLights[0].direction);
+#else
+float lvNdl = lvN.y * 0.6 + 0.4;
 #endif
-float lvRim = pow(1.0 - saturate(dot(normalize(normal), normalize(vViewPosition))), 4.0);
-outgoingLight += lvRim * 0.05;
+float lvKey = smoothstep(-0.6, 0.85, lvNdl);           // wrapped, soft
+float lvSky = 0.5 + 0.5 * lvN.y;                        // up-facing surfaces a touch brighter
+float lvShade = mix(0.62, 1.0, lvKey) * mix(0.9, 1.05, lvSky);
+vec3 lvLit = lvBase * lvShade;
+// Skin: warm, slightly translucent shadow; eyes stay bright and glossy.
+if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) lvLit = lvBase * mix(vec3(0.72, 0.60, 0.56), vec3(1.0), lvKey) * mix(0.95, 1.05, lvSky);
+if (lvI == ${PARTS.indexOf('eyes')}) lvLit = lvBase * mix(0.85, 1.0, lvKey);
+// Hair: one soft specular band.
+if (lvI == ${PARTS.indexOf('hair')}) {
+  vec3 lvH = normalize(normalize(vViewPosition) + (NUM_DIR_LIGHTS > 0 ? directionalLights[0].direction : vec3(0.0, 1.0, 0.0)));
+  lvLit += vec3(0.18) * pow(saturate(dot(lvN, lvH)), 24.0);
+}
+float lvRim = pow(1.0 - saturate(dot(lvN, normalize(vViewPosition))), 3.0);
+lvLit += lvRim * 0.06;
+// Keep three.js's own result only as a small fraction (environment reflections on the eyes/glasses).
+float lvPbr = (lvI == ${PARTS.indexOf('eyes')} || lvI == ${PARTS.indexOf('glasses')}) ? 0.35 : 0.0;
+outgoingLight = mix(lvLit, outgoingLight, lvPbr);
 #include <opaque_fragment>`,
       )
   }

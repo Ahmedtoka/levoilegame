@@ -28,6 +28,9 @@ import bmesh
 import bpy
 from mathutils import Vector
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import chibi  # noqa: E402  (Bitmoji-proportion base body)
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 Q = os.path.join(ROOT, "tools", "quaternius")
 UAL = os.path.join(Q, "UAL", "Universal Animation Library[Standard]", "Unreal-Godot", "UAL1_Standard.glb")
@@ -46,9 +49,9 @@ FINGERS = ("index", "middle", "ring", "pinky", "thumb")
 
 # Body landmarks (UBC rest pose, metres): the Head bone sits at the top of the neck.
 HEAD_PIVOT = Vector((0.0, 0.011, 1.55))
-HEAD_SCALE = 1.15  # stylised: a larger head on the slim body; the hair, hijab, eyes and brows follow
-COLLAR_Z = 1.562  # the tops reach up to the base of the jaw (stand collar above)
-HIP_Z = 1.0
+HEAD_SCALE = chibi.HEAD_SCALE  # Bitmoji: big head on a short body; hair, hijab, eyes, brows and glasses follow
+COLLAR_Z = 1.55  # the tops reach up to the base of the jaw (stand collar above)
+HIP_Z = 0.98
 SKIRT_PIVOT_Z = 0.93
 
 # ---------------------------------------------------------------- helpers
@@ -928,9 +931,17 @@ def build():
         clean_mesh(o)
     objs = {}
 
-    # Head + neck and the hands keep the body's UVs (skin atlas).
+    # Head + neck and the hands keep the UBC body's UVs (skin atlas).
     objs["head"] = cut(body, lambda v, d: is_head(d), "head", "face")
     objs["hands"] = cut(body, lambda v, d: is_hand(d), "hands", "skin")
+    # Chunky cartoon hands: the UBC hands scaled about the wrist.
+    for v in objs["hands"].data.vertices:
+        sgn = 1 if v.co.x >= 0 else -1
+        wr = Vector((sgn * 0.739, 0.065, 1.441))
+        v.co = wr + (v.co - wr) * 1.35
+    # The Bitmoji-proportion body replaces the realistic one as the template for every garment.
+    bpy.data.objects.remove(body, do_unlink=True)
+    body = chibi.build_body(arm)
     eyes.name, brows.name = "eyes", "brows"
     eyes["part"], brows["part"] = "eyes", "brows"
     objs["eyes"], objs["brows"] = eyes, brows
@@ -978,6 +989,7 @@ def build():
     objs["cuffs"] = make_object("cuffs", *piece_cuffs(), arm, "trim")
     objs["abaya_trim"] = make_object("abaya_trim", *piece_abaya_trim(), arm, "trim")
     objs["logo"] = make_object("logo", *piece_logo(), arm, "logo")
+    objs["tee"] = make_object("tee", *chibi.piece_tee(PluginCtx(arm, body)), arm, "top")
 
     # Garment plug-ins (scripts/blender/garments/*.py) replace default pieces by name.
     apply_plugins(objs, arm, body)
@@ -1140,6 +1152,7 @@ def export(arm, objs, clips):
 # ---------------------------------------------------------------- preview
 
 LOOKS = {
+    "ref_tee": ["head", "hands", "eyes", "brows", "tee", "trousers", "shoes", "hair_bun"],
     "abaya_hijab": ["head", "hands", "eyes", "brows", "upper_abaya", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
     "skirt_long_hijab": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hijab_long"],
     "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "trousers", "shoes", "hair_long", "glasses_round"],

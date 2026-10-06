@@ -23,6 +23,7 @@ export const PIECE_PART: Record<string, Part> = {
   eyes: 'eyes',
   brows: 'brows',
   upper: 'top',
+  tee: 'top',
   upper_abaya: 'top',
   tunic: 'top',
   skirt_flare: 'bottom',
@@ -90,7 +91,7 @@ export function modestyProblems(pieces: readonly string[]): string[] {
   const has = (...names: string[]) => names.some((n) => pieces.includes(n))
   const problems: string[] = []
   // Torso, neck (high collar) and arms to the wrist.
-  if (!has('upper', 'upper_abaya')) problems.push('no long-sleeved top')
+  if (!has('upper', 'upper_abaya', 'tee')) problems.push('no long-sleeved top')
   // Hips to ankles (the abaya is floor-length on its own).
   if (!has('skirt_flare', 'skirt_straight', 'trousers', 'upper_abaya')) problems.push('no long skirt or trousers')
   // Under a skirt or abaya the shins are always covered too (a step never shows a gap).
