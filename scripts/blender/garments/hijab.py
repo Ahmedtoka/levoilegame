@@ -19,8 +19,10 @@ the shoulders (above balloon sleeves) and pleated panels (6 folds, 8 mm) to a
 rounded hem.
 
 Coordinates: Blender Z-up, the character faces -Y, her left is +X (metres).
-The cap, wrap and drape are built directly in enlarged-head space (HEAD_SCALE
-about HEAD_PIVOT). build_avatar.py scales "hijab_band" after the plug-ins run, so
+The head is the UBC head cut ("head", body space, enlarged later by build()); the
+body is the chibi template (scripts/blender/chibi.py), which has no head. The cap,
+wrap and drape are built directly in enlarged-head space: ctx.HEAD_SCALE
+(= chibi.HEAD_SCALE) about HEAD_PIVOT, through the exact scale_head formula. build_avatar.py scales "hijab_band" after the plug-ins run, so
 the band is built in the same space and then un-scaled here (see unscale()).
 """
 
@@ -33,12 +35,14 @@ from mathutils.bvhtree import BVHTree
 # ---------------------------------------------------------------- tuning (enlarged-head space)
 
 C_BODY = Vector((0.0, 0.0, 1.655))  # head centre (body space): the eyes' height
-OPEN_Z_BOTTOM = 1.538  # cap bottom / chin segment of the band (under the chin, behind the tip)
-OPEN_Z_CHEEK = 1.665  # widest point of the opening (the cheekbones)
-OPEN_Z_TOP = 1.745  # top of the opening on the forehead (brows end at ~1.708)
-OPEN_X_MAX = 0.0874  # half-width of the opening at the cheeks (= face_zone's 0.076 x 1.15)
+# The face opening, in BODY space (scaled by HEAD_SCALE about HEAD_PIVOT at run time):
+# build_avatar's face_zone box is |x| < 0.076, 1.575 < z < 1.735, in front of the ears.
+OPEN_Z_BOTTOM_BODY = 1.540  # cap bottom / chin segment of the band: under the chin, behind the tip
+OPEN_Z_CHEEK_BODY = 1.650  # widest point of the opening (the cheekbones)
+OPEN_Z_TOP_BODY = 1.730  # top of the opening on the forehead (the brows end at 1.687)
+OPEN_X_MAX_BODY = 0.076  # half-width at the cheeks (= face_zone)
 OPEN_CHIN = 0.60  # chin width as a fraction of the cheek width
-OPEN_CENTRE = Vector((0.0, -0.11, 1.645))  # "outward" on the face = away from this point
+OPEN_CENTRE_BODY = Vector((0.0, -0.10, 1.645))  # "outward" on the face = away from this point
 
 CAP_OFF = 0.014  # cap proud of the head
 CAP_EDGE = 0.009  # cap edge this far out from the opening (under the band's outer part)
@@ -79,12 +83,24 @@ class HeadSurface:
 
     def __init__(self, ctx):
         self.ctx = ctx
-        body = ctx.body
-        dom = _dominant(body)
-        verts = [v.co.copy() for v in body.data.vertices]
-        polys = [list(p.vertices) for p in body.data.polygons if all(dom.get(i, "") in ("Head", "neck_01") for i in p.vertices)]
+        head = bpy.data.objects.get("head")  # the UBC head + neck cut, still in body space
+        if head is not None:
+            verts = [v.co.copy() for v in head.data.vertices]
+            polys = [list(p.vertices) for p in head.data.polygons]
+        else:  # a body that still carries its head
+            body = ctx.body
+            dom = _dominant(body)
+            verts = [v.co.copy() for v in body.data.vertices]
+            polys = [list(p.vertices) for p in body.data.polygons if all(dom.get(i, "") in ("Head", "neck_01") for i in p.vertices)]
         bvh = BVHTree.FromPolygons(verts, polys)
         self.c_enl = self.enl(C_BODY)
+        # The opening in enlarged space.
+        self.z_bottom = self.enl(Vector((0, 0, OPEN_Z_BOTTOM_BODY))).z
+        self.z_cheek = self.enl(Vector((0, 0, OPEN_Z_CHEEK_BODY))).z
+        self.z_top = self.enl(Vector((0, 0, OPEN_Z_TOP_BODY))).z
+        self.x_max = OPEN_X_MAX_BODY * ctx.HEAD_SCALE
+        self.centre = self.enl(OPEN_CENTRE_BODY)
+        print(f"HIJAB opening (head space): z {self.z_bottom:.3f}..{self.z_top:.3f}, cheeks +-{self.x_max:.4f}, scale {ctx.HEAD_SCALE}")
         # Raw radial map.
         r = [[None] * N_PSI for _ in range(N_E)]
         for j in range(N_E):
@@ -205,7 +221,7 @@ class HeadSurface:
     def shift(self, psi, e, dist):
         """(psi, e) of the point `dist` further from the opening's centre along the surface."""
         p, n = self.sample(psi, e)
-        v = p - OPEN_CENTRE
+        v = p - self.centre
         v -= n * v.dot(n)
         if v.length < 1e-6:
             return psi, e
@@ -224,24 +240,24 @@ def surface(ctx):
 N_LOW, N_UP, N_CHIN = 5, 6, 7
 
 
-def opening_x(z):
+def opening_x(srf, z):
     """Half-width of the opening at height z: an egg, narrow at the chin, round at the top."""
-    if z <= OPEN_Z_CHEEK:
-        t = (OPEN_Z_CHEEK - z) / (OPEN_Z_CHEEK - OPEN_Z_BOTTOM)
-        return OPEN_X_MAX * (1 - (1 - OPEN_CHIN) * t * t)
-    t = (z - OPEN_Z_CHEEK) / (OPEN_Z_TOP - OPEN_Z_CHEEK)
-    return OPEN_X_MAX * math.sqrt(max(0.0, 1 - t * t))
+    if z <= srf.z_cheek:
+        t = (srf.z_cheek - z) / (srf.z_cheek - srf.z_bottom)
+        return srf.x_max * (1 - (1 - OPEN_CHIN) * t * t)
+    t = (z - srf.z_cheek) / (srf.z_top - srf.z_cheek)
+    return srf.x_max * math.sqrt(max(0.0, 1 - t * t))
 
 
 def opening_loop(srf):
     """Inner edge of the band as (psi, e) samples, clockwise for someone facing her:
     left chin end (-X) up over the forehead, down to the right chin end (+X), then back
     under the chin. Returns (samples, index of the top sample, number of arch samples)."""
-    zs = [OPEN_Z_BOTTOM + (OPEN_Z_CHEEK - OPEN_Z_BOTTOM) * k / N_LOW for k in range(N_LOW)]
-    zs += [OPEN_Z_CHEEK + (OPEN_Z_TOP - OPEN_Z_CHEEK) * math.sin(math.pi / 2 * k / N_UP) for k in range(N_UP + 1)]
+    zs = [srf.z_bottom + (srf.z_cheek - srf.z_bottom) * k / N_LOW for k in range(N_LOW)]
+    zs += [srf.z_cheek + (srf.z_top - srf.z_cheek) * math.sin(math.pi / 2 * k / N_UP) for k in range(N_UP + 1)]
     right = []  # +X side, bottom -> top
     for z in zs:
-        x = opening_x(z)
+        x = opening_x(srf, z)
         psi = srf.psi_at_x(z, x) if x > 1e-4 else 0.0
         right.append((psi, srf.elev_at_z(psi, z)))
     left = [((2 * math.pi - psi) % (2 * math.pi), e) for psi, e in right]
@@ -250,7 +266,7 @@ def opening_loop(srf):
     chin = []
     for k in range(1, N_CHIN + 1):
         psi = psi_r - 2 * psi_r * k / (N_CHIN + 1)
-        chin.append((psi % (2 * math.pi), srf.elev_at_z(psi, OPEN_Z_BOTTOM)))
+        chin.append((psi % (2 * math.pi), srf.elev_at_z(psi, srf.z_bottom)))
     return arch + chin, len(left) - 1, len(arch)
 
 
@@ -342,32 +358,35 @@ def build_band(ctx):
 
 # ---------------------------------------------------------------- wrap + drape
 
-# The drape's cross-section at height z is the convex hull of the dressed chest (an ellipse:
-# the torso + a loose top + 2 cm) and the two sleeve domes at the shoulders, so the cloth
-# bridges from the chest to the arms like real fabric instead of a tube around everything.
-# Neck funnel (z >= 1.49) clears the tops' collars (the blouse's polo neck: rx 0.080, ry 0.082 about
-# y 0.03, up to z 1.592); the chest keeps >= 4.5 cm off the body (the staff waistcoat sits 4 cm out).
-# (z, rx, y_front, y_back) in enlarged / world space.
+# The drape's cross-section at height z is the convex hull of the dressed chest (an ellipse
+# round the chibi torso, scripts/blender/chibi.py TORSO: shoulder shelf rx 0.19 at z 1.45,
+# chest rx 0.164 / front y -0.11 at z 1.32) and the two sleeve capsules, so the cloth bridges
+# from the chest to the arms like real fabric instead of a tube around everything.
+# Front: >= 5.5 cm off the body at the chest (the blouse has 2.2 cm ease, the staff waistcoat
+# 4 cm + 1.2 cm); back: 1.5 cm outside the abaya's back (its yb table). Neck funnel (z >= 1.50)
+# clears the collars: the blouse's turtleneck (rx 0.070, ry 0.072, cy 0.038, to z 1.585) and
+# the abaya's rounded collar (r ~0.087, cy ~0.054). (z, rx, y_front, y_back), world space.
 CHEST = [
-    (1.515, 0.112, -0.115, 0.135),
-    (1.500, 0.150, -0.120, 0.140),
-    (1.490, 0.205, -0.128, 0.160),
-    (1.480, 0.225, -0.138, 0.172),
-    (1.470, 0.235, -0.148, 0.180),
-    (1.460, 0.240, -0.156, 0.186),
-    (1.440, 0.240, -0.166, 0.192),
-    (1.400, 0.235, -0.176, 0.196),
-    (1.360, 0.225, -0.185, 0.192),
-    (1.300, 0.200, -0.190, 0.182),
-    (1.220, 0.175, -0.183, 0.166),
-    (1.140, 0.160, -0.175, 0.155),
-    (1.060, 0.155, -0.167, 0.150),
-    (1.000, 0.152, -0.162, 0.148),
+    (1.515, 0.105, -0.150, 0.160),
+    (1.500, 0.160, -0.148, 0.162),
+    (1.490, 0.220, -0.148, 0.165),
+    (1.480, 0.240, -0.150, 0.168),
+    (1.470, 0.245, -0.155, 0.170),
+    (1.455, 0.245, -0.160, 0.172),
+    (1.440, 0.240, -0.165, 0.174),
+    (1.400, 0.230, -0.168, 0.178),
+    (1.360, 0.220, -0.170, 0.182),
+    (1.300, 0.215, -0.170, 0.190),
+    (1.220, 0.205, -0.166, 0.200),
+    (1.140, 0.200, -0.160, 0.200),
+    (1.060, 0.200, -0.152, 0.196),
+    (1.000, 0.200, -0.150, 0.190),
 ]
-# Sleeve capsule: the upper arm hangs at (x, y); below z it is a cylinder of radius r, above
-# it an ellipsoidal top h tall. The lofted sleeves measure r ~0.09 up to a flat shoulder cap
-# (the abaya), so r is that plus 2 cm of air for a balloon sleeve or an arm swing.
-ARM_X, ARM_Y, ARM_Z, ARM_R, ARM_H = 0.235, 0.057, 1.402, 0.110, 0.100
+# Sleeve capsule about the hanging upper arm: the upperarm joint is at (0.192, 0.065, 1.441);
+# the lofted sleeves' shoulder head is a disc of r ~0.10-0.116 that hangs 3 cm above the joint
+# (z ~1.47, out to x ~0.30), so below z the capsule is a cylinder of radius r (that disc + 1.5 cm)
+# and above it an ellipsoidal top h tall (the cloth rounds over the sleeve head).
+ARM_X, ARM_Y, ARM_Z, ARM_R, ARM_H = 0.192, 0.065, 1.470, 0.115, 0.030
 ARMS_ABOVE = 1.33  # below this the panels hang between the arms
 CENTRE_Y = 0.01
 
@@ -468,11 +487,11 @@ def wrap_weights(ctx, p):
     underneath it (the same clavicle -> upper-arm blend as top_weights), so the sleeves
     cannot swing out from under it when she walks."""
     out = ctx.drape_weights(p)
-    k = ctx.smooth(0.13, 0.21, abs(p.x)) if p.z < 1.53 else 0.0
+    k = ctx.smooth(0.14, 0.22, abs(p.x)) if p.z < 1.53 else 0.0
     if k <= 0:
         return out
     sd = "l" if p.x >= 0 else "r"
-    t = ctx.smooth(0.19, 0.27, abs(p.x))
+    t = ctx.smooth(0.20, 0.28, abs(p.x))
     out = {bn: wt * (1 - k) for bn, wt in out.items()}
     out["upperarm_" + sd] = out.get("upperarm_" + sd, 0) + k * (0.4 + 0.6 * t)
     out["clavicle_" + sd] = out.get("clavicle_" + sd, 0) + k * 0.6 * (1 - t)
@@ -480,7 +499,7 @@ def wrap_weights(ctx, p):
 
 
 def build_wrap(ctx, srf, name, long):
-    z_front, z_side = (1.02, 1.30) if long else (1.28, 1.38)
+    z_front, z_side = (1.02, 1.28) if long else (1.28, 1.38)
     psis = sorted(p % (2 * math.pi) for p in PSIS)
 
     def hem(psi):
@@ -505,9 +524,10 @@ def build_wrap(ctx, srf, name, long):
     rings = []
     # Ring 0 hugs the cap at the jaw (3 mm above it); at the front it tucks under the band's chin segment.
     rings.append([srf.at(psi, math.radians(ctx.lerp(-67.0, -38.0, ctx.smooth(0.5, 1.15, _dpsi(psi)))), CAP_OFF + 0.003) for psi in psis])
-    # Ring 1: the rolled rim, below the chin at the front, rising to the nape.
-    rings.append([Vector((0.110 * math.sin(psi), 0.01 - 0.125 * math.cos(psi), 1.540 + 0.05 * (1 - math.cos(psi)) / 2)) for psi in psis])
-    zs = [1.515, 1.50, 1.49, 1.48, 1.47, 1.455, 1.44, 1.40, 1.36]
+    # Ring 1: the rolled rim, below the chin at the front (the enlarged chin tip is at y -0.14,
+    # z 1.56), round the collars at the sides, rising to the nape.
+    rings.append([Vector((0.105 * math.sin(psi), 0.005 - 0.155 * math.cos(psi), 1.515 + 0.075 * (1 - math.cos(psi)) / 2)) for psi in psis])
+    zs = [1.50, 1.49, 1.48, 1.47, 1.455, 1.44, 1.40, 1.36]
     zs += [1.30, 1.24, 1.18, 1.12, 1.06, 1.00] if long else [1.32, 1.28, 1.25]
     for z in zs:
         rings.append([pleated(psi, z) for psi in psis])
