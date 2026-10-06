@@ -1,9 +1,13 @@
 """Legs garment plug-in: trousers, leggings and shoes (replaces the defaults by name).
 
-trousers  straight-leg trousers: a seat shell over the hips, a visible 3.5 cm waistband
-          (z 1.03-1.065) that sits >= 1 cm outside the blouse with a small flat buckle at
-          the front, two straight legs (same width from the thigh to the hem) with a
-          crisp front crease (a hard-edged ridge) and a clean closed hem at z 0.07.
+trousers  straight-leg trousers: a seat shell over the hips that starts on the two leg
+          tubes at the crotch (z 0.88, no cap) and flares into a 1.8 cm waistband rim
+          (z 1.047-1.065, 6 mm proud, outside the tucked-in tops) with a small flat buckle
+          at the front; two straight legs (same width from the thigh to the hem) with a
+          crisp front crease (a hard-edged ridge), rings every 2-2.5 cm through the gusset
+          and across the knee, and a clean closed hem at z 0.07. Weights: each tube is its
+          own thigh / calf, the pelvis share grows from z 0.80 up through the seat (gusset),
+          the knee blends over +-7.5 cm, the band rides mostly on the pelvis.
 leggings  a snug tube per leg (6 mm ease), hip to ankle, tapering into the shoe.
 shoes     closed flats with a 2.5 cm heel block, a thin sole edge and a rounded toe,
           standing on the floor (lowest point z = 0) in the rest / idle pose.
@@ -26,11 +30,18 @@ R_STRAIGHT = 0.082     # the straight leg's radius (knee to hem): no taper, no f
 LEG_SPREAD = 0.014     # the tubes drift outward towards the hem (a clear gap between the legs)
 HEM_Z = 0.07
 CREASE = 0.0045        # front crease ridge height
-SEAT_Z0, SEAT_Z1 = 0.90, 1.03
-BAND_Z0, BAND_Z1 = 1.03, 1.065
-BAND_EASE = 0.052      # over the body: >= 1 cm outside the blouse (body + ~3.5 cm there)
-BAND_OVER_BLOUSE = 0.012
+SEAT_Z0 = 0.90
+SEAM_Z = 0.88          # the seat's lowest ring sits on the two leg tubes here (the crotch)
+GUSSET_Z0 = 0.78       # below this a leg is all thigh; above, the pelvis share grows (gusset)
+BAND_Z0, BAND_Z1 = 1.047, 1.065   # the proud rim of the waistband (1.8 cm tall)
+BAND_EASE = 0.034      # the seat flares from SEAT_EASE to this under the rim (no ledge)
+RIM = 0.006            # how far the rim stands proud of the seat (<= 8 mm)
+BAND_OVER_BLOUSE = 0.008  # the band stays at least this far outside the tucked-in tops
 SEAT_EASE = 0.03
+FRONT_EASE = 0.014     # extra at the front of the seat top (z >= 0.95): the tucked hems swing there
+KNEE_Z = 0.532         # calf bone head
+KNEE_BLEND = 0.075     # thigh -> calf weights blend over +- this around the knee
+KNEE_BACK_EASE = 0.006 # extra radius at the back of the knee
 LEGGING_EASE = 0.006
 HEEL = 0.025           # heel block height
 SOLE = 0.006           # sole edge thickness
@@ -130,20 +141,26 @@ def _leg_frame(ctx, sd):
     return H, K, A, at, t
 
 
-def _leg_ring(c, r, n, crease=None, shift=0.0):
+def _leg_ring(c, r, n, crease=None, shift=0.0, back=0.0):
     """Ring about +Z (CCW), slightly flatter front-to-back; with `crease` (a height, may be 0)
     the front point (-Y) becomes a ridge whose vertex is doubled (a hard edge once the seam
-    quad is dropped). Every ring of a loft must use the same mode (same point count)."""
+    quad is dropped). `back` adds radius at the back (+Y) only. Every ring of a loft must use
+    the same mode (same point count)."""
     pts = []
+
+    def put(aa, rr):
+        rr += back * max(0.0, math.sin(aa)) ** 2
+        pts.append(Vector((c.x + math.cos(aa) * rr, c.y + shift + math.sin(aa) * rr * 0.96, c.z)))
+
     for i in range(n):
         a = 2 * math.pi * i / n
         if crease is not None and i == (3 * n) // 4:
             da = math.radians(8)
             for aa, rr, dup in ((a - da, r, 1), (a, r + crease, 2), (a + da, r, 1)):
                 for _ in range(dup):
-                    pts.append(Vector((c.x + math.cos(aa) * rr, c.y + shift + math.sin(aa) * rr * 0.96, c.z)))
+                    put(aa, rr)
         else:
-            pts.append(Vector((c.x + math.cos(a) * r, c.y + shift + math.sin(a) * r * 0.96, c.z)))
+            put(a, r)
     return pts
 
 
@@ -182,6 +199,71 @@ class _Roles:
         return lambda p: self.tags[kd.find(p)[1]]
 
 
+def _share(z):
+    """Thigh share of the trousers by height: the gusset. 1 on the leg (z <= GUSSET_Z0), a
+    LINEAR ramp to 0.06 at the top of the seat (z 1.00, where the tucked-in tops' hems are: they
+    must stay inside), then 0.05 at the top of the band, so no ring moves differently from the
+    one next to it and the band still leans on the hip it sits on. Linear, not smoothstep: the
+    fabric over a thigh lifted 77 deg (Jog_Fwd_Loop's peak) compresses vertically by about
+    share * lever arm, and a uniform slope keeps that just short of folding over."""
+    t = max(0.0, min(1.0, (z - GUSSET_Z0) / (1.00 - GUSSET_Z0)))
+    return 1 - 0.94 * t - 0.01 * _smooth(1.00, BAND_Z1, z)
+
+
+def _column(ctx, z):
+    """Torso column of the seat / band: the same pelvis -> spine_01 blend the tops use, so the
+    tucked-in hems and the trousers move together when the torso bends."""
+    return ctx.spine_weights(z)
+
+
+def _tube_weights(ctx, p, sd):
+    """One trouser leg: its own thigh / calf / foot (never the other leg's, even where the two
+    tubes overlap near the crotch), the knee blended over +-7.5 cm, the gusset share above."""
+    z = p.z
+    th, ca, ft = "thigh_" + sd, "calf_" + sd, "foot_" + sd
+    if z > KNEE_Z + KNEE_BLEND:
+        w = {th: 1.0}
+    elif z > KNEE_Z - KNEE_BLEND:
+        t = _smooth(KNEE_Z + KNEE_BLEND, KNEE_Z - KNEE_BLEND, z)
+        w = {th: 1 - t, ca: t}
+    elif z > 0.12:
+        w = {ca: 1.0}
+    else:
+        t = _smooth(0.12, 0.06, z)
+        w = {ca: 1 - t, ft: t}
+    s = _share(z)
+    if s < 1:
+        w = {k: v * s for k, v in w.items()}
+        for k, v in _column(ctx, z).items():
+            w[k] = w.get(k, 0) + v * (1 - s)
+    return w
+
+
+def _seat_weights(ctx, p):
+    """Seat, band and buckle: the column plus the thigh share split left / right by x (the
+    centre front / back is shared by both thighs)."""
+    s = _share(p.z)
+    g = _smooth(-0.025, 0.025, p.x)
+    out = {k: v * (1 - s) for k, v in _column(ctx, p.z).items()}
+    out["thigh_l"] = out.get("thigh_l", 0) + s * g
+    out["thigh_r"] = out.get("thigh_r", 0) + s * (1 - g)
+    return out
+
+
+def _tube_ring_params(ctx, sd, z):
+    """(centre, radius, crease, shift, back) of a trouser leg ring at height z."""
+    H, K, A, at, tf = _leg_frame(ctx, sd)
+    t = tf(z)
+    r = _trouser_radius(t)
+    # The thigh sits behind the bone: push the top rings back so they stay inside the seat.
+    shift = 0.02 * (1 - _smooth(0.0, 0.45, t))
+    crease = CREASE * _smooth(0.12, 0.3, t)
+    c = at(z) + Vector(((1 if sd == "l" else -1) * LEG_SPREAD * _smooth(0.2, 0.7, t), 0, 0))
+    # A little room at the back of the knee so the fold does not pinch when the knee bends.
+    back = KNEE_BACK_EASE * max(0.0, 1 - ((z - KNEE_Z) / KNEE_BLEND) ** 2)
+    return c, r, crease, shift, back
+
+
 def build_trousers(ctx):
     _claim_name("trousers")
     b = ctx.Builder()
@@ -189,18 +271,21 @@ def build_trousers(ctx):
     n_leg = 12
 
     # --- legs: straight tubes from inside the seat to the hem, with the front crease.
-    zs = [0.955, 0.932, 0.90, 0.86, 0.80, 0.72, 0.64, 0.56, 0.48, 0.40, 0.32, 0.24, 0.16, 0.104, HEM_Z]
+    # Rings every 2 cm through the gusset (0.80-0.90) and across the knee (+-7.5 cm). The tube
+    # ends 2 cm above the seam, inside the seat (higher rings sit above the hip joint and fold
+    # the wrong way when the thigh swings).
+    zs = [0.90, SEAM_Z, 0.86, 0.84, 0.82, 0.80, GUSSET_Z0, 0.74, 0.70, 0.66]
+    zs += [KNEE_Z + KNEE_BLEND - 0.025 * i for i in range(7)]  # 0.607 .. 0.457
+    zs += [0.40, 0.32, 0.24, 0.16, 0.104, HEM_Z]
+    seam = {}
     for sd in ("l", "r"):
-        H, K, A, at, tf = _leg_frame(ctx, sd)
         rings = []
         for z in zs:
-            t = tf(z)
-            r = _trouser_radius(t)
-            # The thigh sits behind the bone: push the top rings back so they stay inside the seat.
-            shift = 0.02 * (1 - _smooth(0.0, 0.45, t))
-            crease = CREASE * _smooth(0.12, 0.3, t)
-            c = at(z) + Vector(((1 if sd == "l" else -1) * LEG_SPREAD * _smooth(0.2, 0.7, t), 0, 0))
-            rings.append(_leg_ring(c, r, n_leg, crease=crease, shift=shift))
+            c, r, crease, shift, back = _tube_ring_params(ctx, sd, z)
+            ring = _leg_ring(c, r, n_leg, crease=crease, shift=shift, back=back)
+            if z == SEAM_Z:
+                seam[sd] = (ring, c, r, shift)
+            rings.append(ring)
         rings.reverse()  # bottom-up: outward normals
         b.loft(rings)
         # Closed hem: an annulus turned 12 mm inward, facing down.
@@ -208,67 +293,96 @@ def build_trousers(ctx):
         c = sum(hem, Vector()) / len(hem)
         inner = [c + (p - c) * (1 - 0.012 / R_STRAIGHT) for p in hem]
         b.loft([inner, hem])
-    roles.tag("leg")
+        roles.tag("leg_" + sd)
 
-    # --- seat: the hips from z 0.90 to the band, with a shallow cap closing the crotch.
-    slices = _hip_slices(ctx, SEAT_Z0 - 0.02, BAND_Z1 + 0.02)
-    n_seat = 24
-    seat_zs = [0.90, 0.925, 0.95, 0.98, 1.005, SEAT_Z1]
-    seat_rings = []
-    for z in seat_zs:
-        ease = SEAT_EASE + 0.008 * _smooth(0.97, 0.90, z)
-        seat_rings.append(ctx.ellipse((0, _col(slices, z, 3), z), (1, 0, 0), (0, 1, 0), _col(slices, z, 1) + ease, _col(slices, z, 2) + ease, n_seat))
-    ids = b.loft(seat_rings)
-    b.cap(ids[0], seat_rings[0], flip=True, point=Vector((0, _col(slices, 0.90, 3), 0.88)))
-    roles.tag("seat")
+    # --- seat: starts ON the two tubes at the seam (its lowest ring is the outline of the union
+    # of the two leg rings there, so there is no cap to warp when the legs split), and lofts up
+    # through the hips into the waistband, which is the same surface with a small proud rim.
+    slices = _hip_slices(ctx, SEAM_Z - 0.02, BAND_Z1 + 0.02)
+    (ring_l, c_l, r_t, shift) = seam["l"]
+    (ring_r, c_r, _, _) = seam["r"]
 
-    # --- waistband: 1.03-1.065, >= 1 cm outside the blouse, a ledge over the seat and a closed top.
-    rx_b = max(_col(slices, z, 1) for z in (1.02, 1.03, 1.045, 1.06, 1.07)) + BAND_EASE
-    ry_b = max(_col(slices, z, 2) for z in (1.02, 1.03, 1.045, 1.06, 1.07)) + BAND_EASE
-    cy_b = sum(_col(slices, z, 3) for z in (1.03, 1.045, 1.06)) / 3
-    # Measure the real blouse where it overlaps the band and push the band outside it.
+    def outside(p, c):
+        return ((p.x - c.x) / r_t) ** 2 + ((p.y - c.y - shift) / (0.96 * r_t)) ** 2 > 1.0 + 1e-6
+
+    keep_l = sorted((p for p in ring_l if outside(p, c_r)), key=lambda p: math.atan2(p.y - c_l.y - shift, p.x - c_l.x))
+    keep_r = sorted((p for p in ring_r if outside(p, c_l)), key=lambda p: math.atan2(p.y - c_r.y - shift, p.x - c_r.x) % (2 * math.pi))
+    half = 0.96 * r_t * math.sqrt(max(0.0, 1 - (c_l.x / r_t) ** 2))
+    ymid = (c_l.y + c_r.y) / 2 + shift
+    union = [Vector((0, ymid - half, SEAM_Z))] + keep_l + [Vector((0, ymid + half, SEAM_Z))] + keep_r
+    dedup = []
+    for p in union:
+        if not dedup or (p - dedup[-1]).length > 1e-6:
+            dedup.append(p)
+    if (dedup[0] - dedup[-1]).length < 1e-6:
+        dedup.pop()
+    union = dedup
+    n_seat = len(union)
+    cy_u = sum(p.y for p in union) / n_seat
+    angles = [math.atan2(p.y - cy_u, p.x) for p in union]
+
+    # Measure the tops that are worn with the trousers where they overlap the band: the band
+    # must stay outside them (>= BAND_OVER_BLOUSE).
     import bpy
 
-    blouse = bpy.data.objects.get("upper")
-    band_radial = [1.0] * n_seat
-    if blouse is not None:
-        sect = [0.0] * n_seat
-        for v in blouse.data.vertices:
+    cy_b = sum(_col(slices, z, 3) for z in (1.03, 1.045, 1.06)) / 3
+    top_r = [0.0] * n_seat
+    for name in ("upper", "tee"):
+        top = bpy.data.objects.get(name)
+        if top is None:
+            continue
+        for v in top.data.vertices:
             p = v.co
-            if BAND_Z0 - 0.01 <= p.z <= BAND_Z1 + 0.01:
-                a = math.atan2(p.y - cy_b, p.x) % (2 * math.pi)
-                i = int(round(a / (2 * math.pi) * n_seat)) % n_seat
+            if 1.00 - 1e-4 <= p.z <= BAND_Z1 + 0.01:
+                a = math.atan2(p.y - cy_b, p.x)
                 d = math.hypot(p.x, p.y - cy_b)
-                sect[i] = max(sect[i], d)
-        # Fill the gaps from the neighbours and use the max of the estimate and the measure.
-        for i in range(n_seat):
-            if sect[i] == 0.0:
-                sect[i] = max(sect[(i - 1) % n_seat], sect[(i + 1) % n_seat])
-        for i in range(n_seat):
-            a = 2 * math.pi * i / n_seat
-            est = math.hypot(math.cos(a) * rx_b, math.sin(a) * ry_b)
-            band_radial[i] = max(est, max(sect[i], sect[(i - 1) % n_seat], sect[(i + 1) % n_seat]) + BAND_OVER_BLOUSE)
-        print("LEGS band vs blouse: min clearance %.4f m" % min(band_radial[i] - sect[i] for i in range(n_seat) if sect[i] > 0))
-    else:
-        for i in range(n_seat):
-            a = 2 * math.pi * i / n_seat
-            band_radial[i] = math.hypot(math.cos(a) * rx_b, math.sin(a) * ry_b)
-    # Smooth the band outline (3 taps) so a single blouse vertex never makes a bump.
-    band_radial = [(band_radial[(i - 1) % n_seat] + 2 * band_radial[i] + band_radial[(i + 1) % n_seat]) / 4 for i in range(n_seat)]
+                for i, ai in enumerate(angles):
+                    if abs(((ai - a + math.pi) % (2 * math.pi)) - math.pi) < math.radians(20):
+                        top_r[i] = max(top_r[i], d)
 
-    def band_ring(z, scale=1.0):
-        return [Vector((math.cos(2 * math.pi * i / n_seat) * band_radial[i] * scale, cy_b + math.sin(2 * math.pi * i / n_seat) * band_radial[i] * scale, z)) for i in range(n_seat)]
+    def seat_ring(z):
+        """Ellipse of the body slice at z plus the ease, sampled at the seam ring's angles."""
+        base = SEAT_EASE + 0.008 * _smooth(0.97, 0.90, z)
+        ease = base + (BAND_EASE - SEAT_EASE) * _smooth(1.00, BAND_Z0, z)
+        rim = RIM * _smooth(BAND_Z0 - 0.007, BAND_Z0, z)
+        front = FRONT_EASE * _smooth(0.95, 1.00, z)  # room for the tucked-in hems at the front
+        rx, ry, cy = _col(slices, z, 1) + ease, _col(slices, z, 2) + ease, _col(slices, z, 3)
+        pts = []
+        for i, a in enumerate(angles):
+            x, y = math.cos(a) * rx, math.sin(a) * ry
+            d = math.hypot(x, y)
+            d_min = (top_r[i] + BAND_OVER_BLOUSE) * _smooth(1.00, BAND_Z0, z)
+            k = (max(d, d_min) + rim + front * max(0.0, -math.sin(a)) ** 2) / d
+            pts.append(Vector((x * k, cy + y * k, z)))
+        return pts
 
-    band0, band1 = band_ring(BAND_Z0), band_ring(BAND_Z1)
-    b.loft([seat_rings[-1], band0])          # ledge under the band (faces down: inner -> outer)
-    b.loft([band0, band1])                   # the band itself
-    inner_top = ctx.ellipse((0, cy_b, BAND_Z1), (1, 0, 0), (0, 1, 0), _col(slices, 1.06, 1) + 0.012, _col(slices, 1.06, 2) + 0.012, n_seat)
-    b.loft([band1, inner_top])               # closed top (faces up: outer -> inner)
-    print("LEGS band rx %.3f ry %.3f cy %.3f (body rx %.3f ry %.3f)" % (max(band_radial), band_radial[6], cy_b, rx_b - BAND_EASE, ry_b - BAND_EASE))
+    seat_zs = [0.915, 0.94, 0.965, 0.99, 1.012, 1.03, BAND_Z0 - 0.007, BAND_Z0, BAND_Z1]
+    first = seat_ring(0.915)
+    # A blend ring eases the seat's lower edge onto the tubes (the ellipse is wider than them).
+    blend = [Vector((u.x + (e.x - u.x) * 0.45, u.y + (e.y - u.y) * 0.45, SEAM_Z + 0.014)) for u, e in zip(union, first)]
+    seat_rings = [union, blend] + [seat_ring(z) for z in seat_zs]
+    b.loft(seat_rings)
+    band1 = seat_rings[-1]
+    inner_top = [Vector((math.cos(a) * (_col(slices, 1.06, 1) + 0.012), cy_b + math.sin(a) * (_col(slices, 1.06, 2) + 0.012), BAND_Z1)) for a in angles]
+    b.loft([band1, inner_top])  # closed top (faces up: outer -> inner)
+    # Crotch gusset: a small double-sided fin on the centre plane under the seam, between the
+    # two inner thigh walls (inside both tubes at rest). Shared by both thighs, it stays between
+    # the legs when they split and closes the slit under the seat.
+    yf, yb = ymid - half, ymid + half
+    fin = [Vector((0, yf, SEAM_Z)), Vector((0, ymid - half / 3, SEAM_Z - 0.022)), Vector((0, ymid + half / 3, SEAM_Z - 0.022)), Vector((0, yb, SEAM_Z)), Vector((0, ymid + half / 3, SEAM_Z)), Vector((0, ymid - half / 3, SEAM_Z))]
+    i0 = b.add_ring(fin)
+    for a, c, d in ((0, 1, 5), (2, 3, 4)):
+        b.faces.append((i0[a], i0[c], i0[d]))
+        b.faces.append((i0[a], i0[d], i0[c]))
+    b.faces.append((i0[1], i0[2], i0[4], i0[5]))
+    b.faces.append((i0[1], i0[5], i0[4], i0[2]))
+    clear = [math.hypot(p.x, p.y - cy_b) - top_r[i] for i, p in enumerate(seat_rings[-2]) if top_r[i] > 0]
+    print("LEGS seat ring n %d; band vs tops: min clearance %.4f m" % (n_seat, min(clear) if clear else -1))
+    print("LEGS band rx %.3f ry %.3f cy %.3f" % (max(p.x for p in band1), (max(p.y for p in band1) - min(p.y for p in band1)) / 2, cy_b))
 
     # --- buckle: a small bevelled plate on the front of the band.
     zc = (BAND_Z0 + BAND_Z1) / 2
-    y0 = cy_b - band_radial[18]  # front (angle 270 deg)
+    y0 = min(p.y for p in band1)  # front
     bw, bh = 0.017, 0.012
     n_bk = 12
 
@@ -285,14 +399,15 @@ def build_trousers(ctx):
     bar = [Vector((x, y0 - 0.004 - dy, zc + z)) for x, z, dy in ((-0.003, -0.009, 0), (0.003, -0.009, 0), (0.003, 0.009, 0), (-0.003, 0.009, 0))]
     top = [Vector((p.x * 0.7, p.y - 0.0025, p.z)) for p in bar]
     b.loft([bar, top], cap_end=True)
-    roles.tag("band")
+    roles.tag("seat")
 
     # Clearance report: the blouse must stay outside the seat (where it hangs over it).
+    blouse = bpy.data.objects.get("upper")
     if blouse is not None:
         worst = 1.0
         for v in blouse.data.vertices:
             p = v.co
-            if SEAT_Z0 <= p.z <= BAND_Z0 - 0.005:
+            if SEAT_Z0 <= p.z <= 0.995:
                 rx, ry, cy = _col(slices, p.z, 1) + SEAT_EASE, _col(slices, p.z, 2) + SEAT_EASE, _col(slices, p.z, 3)
                 a = math.atan2((p.y - cy) / ry, p.x / rx)
                 seat_d = math.hypot(math.cos(a) * rx, math.sin(a) * ry)
@@ -304,36 +419,11 @@ def build_trousers(ctx):
 
     def weights(p):
         role = role_of(p)
-        if role == "band":
-            # Band + buckle ride with the torso column like the blouse does.
-            return ctx.spine_weights(min(p.z, BAND_Z1))
         if role == "seat":
-            return _seat_weights(ctx, p, slices)
-        out = ctx.leg_tube_weights(p)
-        # The tube's top rings (inside the seat, above the hip joint) lean on the pelvis so they
-        # do not swing out through the seat / a blouse hem with the thigh.
-        k = 0.5 * _smooth(0.90, 0.96, p.z)
-        if k > 0:
-            out = {bn: w * (1 - k) for bn, w in out.items()}
-            out["pelvis"] = out.get("pelvis", 0) + k
-        return out
+            return _seat_weights(ctx, p)
+        return _tube_weights(ctx, p, role[-1])
 
     return ctx.make_object("trousers", b, weights, "bottom")
-
-
-def _seat_weights(ctx, p, slices):
-    z = p.z
-    # Thigh share grows from the band down to the crotch; it stays moderate where a blouse
-    # (pelvis-weighted) may still hang over the seat, so the seat does not swing through it.
-    t = _smooth(SEAT_Z1, 0.90, z)
-    col = ctx.spine_weights(z)
-    fl = math.exp(-((p.x - 0.089) / 0.075) ** 2)
-    fr = math.exp(-((p.x + 0.089) / 0.075) ** 2)
-    share = 0.9 * t
-    out = {k: w * (1 - share) for k, w in col.items()}
-    out["thigh_l"] = out.get("thigh_l", 0) + share * fl / (fl + fr)
-    out["thigh_r"] = out.get("thigh_r", 0) + share * fr / (fl + fr)
-    return out
 
 
 # ---------------------------------------------------------------- leggings
