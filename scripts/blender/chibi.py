@@ -19,7 +19,7 @@ import bmesh
 import bpy
 from mathutils import Vector
 
-HEAD_SCALE = 1.6
+HEAD_SCALE = 1.5
 # Torso loft: (z, rx, ry, y-centre). Pelvis 0.917, waist 1.05, chest 1.30, shoulders 1.46, neck 1.50.
 TORSO = [
     (0.86, 0.156, 0.122, 0.035),
