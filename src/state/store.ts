@@ -72,7 +72,7 @@ export interface AppState {
   cart: CartLine[]
   lastOrder: Order | null
   zone: string
-  prompt: { text: string; key: string } | null
+  prompt: { text: string; key: string; productId?: string } | null
   bubble: { text: string; id: number } | null
   toast: { text: string; id: number } | null
 

@@ -145,6 +145,7 @@ export function showcaseMesh(ctx: ShowcaseCtx, parent: Group, items: ShowcaseIte
       object: hit,
       kind: 'product',
       label: () => openProductLabel(it.product),
+      productId: it.product.id,
       onInteract: () => store.getState().openProduct(it.product.id),
       highlight: (on) => (hl.visible = on),
       maxDist: 3.6,

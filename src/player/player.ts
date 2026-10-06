@@ -185,7 +185,7 @@ export class Player {
       this.pivotReady = false
     } else {
       // The orbit pivot follows the player with exponential smoothing.
-      const want = _want.set(this.pos.x, 1.5, this.pos.z)
+      const want = _want.set(this.pos.x, 1.55, this.pos.z)
       if (!this.pivotReady || this.pivot.distanceToSquared(want) > 9) {
         this.pivot.copy(want)
         this.pivotReady = true
@@ -197,13 +197,14 @@ export class Player {
         Math.cos(this.yaw) * Math.cos(this.pitch),
       )
       const right = _right.set(Math.cos(this.yaw), 0, -Math.sin(this.yaw))
-      const wantDist = 3.1
-      const hit = world.raycast(target, back, wantDist + 0.3) - 0.3
+      const wantDist = 2.5
+      // Furniture and display fixtures block the camera too, so it never clips through a lightbox or an island.
+      const hit = world.raycastAll(target, back, wantDist + 0.3) - 0.3
       const dist = MathUtils.clamp(hit, 0.6, wantDist)
       // Collision pull-in is instant; release eases out.
       if (dist < this.camDist) this.camDist = dist
       else this.camDist += (dist - this.camDist) * ease(dt, 4)
-      camera.position.copy(target).addScaledVector(back, this.camDist).addScaledVector(right, 0.35)
+      camera.position.copy(target).addScaledVector(back, this.camDist).addScaledVector(right, 0.45)
       camera.position.y = Math.max(camera.position.y, 0.6)
     }
     if (this.avatar) {

@@ -1,0 +1,296 @@
+/* Touch game HUD (ui/gameHud.ts). Everything here is scoped to .touch, so the desktop web HUD is untouched. */
+
+/* The desktop top-bar actions, live chips, help button, purchase toasts, the floating prompt and the
+   "looking at" card are replaced by the icon row, its panels and the interaction card. */
+.touch .topbar .actions,
+.touch .help-btn,
+.touch .buy-toasts,
+.touch .prompt,
+.touch .look-card {
+  display: none !important;
+}
+
+/* The zone chip stays top-left and the icon row top-right in Arabic too (game pads don't mirror). */
+.touch .topbar {
+  inset-inline: auto;
+  left: calc(16px + env(safe-area-inset-left, 0px));
+  right: auto;
+  flex-direction: row;
+}
+
+.touch .brand-chip {
+  height: 40px;
+  padding: 0 12px 0 14px;
+}
+
+.touch .brand-chip img {
+  height: 14px;
+}
+
+.ghud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ghud.hidden {
+  display: none;
+}
+
+.ghud > * {
+  pointer-events: auto;
+}
+
+.ghud.busy .ghud-icons,
+.ghud.busy .ghud-panel,
+.ghud.busy .ghud-card {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------ icon row */
+
+.ghud-icons {
+  position: fixed;
+  direction: ltr;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  display: flex;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.ghud-ico {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(42, 31, 39, 0.38);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font: 800 13px/1 var(--font-ui);
+  transition: background 0.15s, transform 0.15s var(--ease);
+  touch-action: manipulation;
+}
+
+.ghud-ico:active {
+  transform: scale(0.94);
+}
+
+.ghud-ico svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ghud-ico.on {
+  background: var(--magenta);
+  border-color: #fff;
+}
+
+.ghud-ico.coins {
+  background: linear-gradient(120deg, #fff4dc, #f3e2bd);
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #6b4f1d;
+}
+
+.ghud-ico.coins.on {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.ghud-ico .emoji {
+  font-size: 17px;
+}
+
+.ghud-ico .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--magenta);
+  border: 1.5px solid #fff;
+  color: #fff;
+  font: 800 11px/1 var(--font-ui);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+}
+
+.ghud-ico .dot {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7cf0a8;
+  box-shadow: 0 0 0 2px rgba(42, 31, 39, 0.5);
+}
+
+/* ------------------------------------------------------------- panels */
+
+.ghud-panel {
+  position: fixed;
+  top: calc(64px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  padding: 10px;
+  border-radius: 18px;
+  background: var(--glass);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: var(--shadow);
+  animation: ghud-drop 0.18s var(--ease);
+  transition: opacity 0.2s;
+}
+
+.ghud-panel.hidden {
+  display: none;
+}
+
+@keyframes ghud-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.ghud-panel .live-chips {
+  position: static;
+  inset: auto;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 200px;
+}
+
+.ghud-panel .live-chip {
+  justify-content: space-between;
+  height: 38px;
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.ghud-panel .live-chip .dots {
+  display: inline-flex;
+}
+
+.ghud-panel .minimap {
+  position: static;
+  inset: auto;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: none;
+}
+
+.ghud-panel .minimap.off {
+  display: none;
+}
+
+/* ---------------------------------------------------- interaction card */
+
+/* Left of the hand button, centred on it; hidden while a panel is open so the two never overlap. */
+.ghud-card {
+  position: fixed;
+  right: calc(116px + env(safe-area-inset-right, 0px));
+  bottom: calc(142px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(300px, 46vw);
+  padding: 6px 12px 6px 6px;
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  text-align: start;
+  transition: opacity 0.18s, transform 0.18s var(--ease);
+}
+
+.ghud.panel-open .ghud-card,
+.ghud-card.off {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.ghud-card img {
+  width: 44px;
+  height: 54px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #f4eef1;
+  flex: none;
+}
+
+.ghud-card .ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--magenta);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.ghud-card .ico svg {
+  width: 24px;
+  height: 24px;
+}
+
+.ghud-card .txt {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.ghud-card small {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ghud-card b {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ghud-card em {
+  font-style: normal;
+  color: var(--magenta);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.ghud-card .go {
+  color: var(--muted);
+  flex: none;
+}
+
+.ghud-card .go svg {
+  width: 18px;
+  height: 18px;
+}
+
+[dir='rtl'] .ghud-card .go svg {
+  transform: scaleX(-1);
+}
+
+/* The system toast sits under the icon row instead of mid-screen. */
+.touch .toast {
+  top: calc(64px + env(safe-area-inset-top, 0px));
+}

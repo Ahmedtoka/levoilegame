@@ -12,6 +12,8 @@ export interface Interactable {
   kind: InteractKind
   /** Prompt text in the current language. */
   label: () => string
+  /** Product shown by the touch interaction card (photo, title, price). */
+  productId?: string
   onInteract: () => void
   highlight?: (on: boolean) => void
   maxDist?: number
@@ -78,7 +80,7 @@ export class Interaction {
     const key = next ? `${next.label()}` : ''
     if (key !== this.promptKey) {
       this.promptKey = key
-      store.getState().set({ prompt: next ? { text: key, key: isTouch ? '' : 'E' } : null })
+      store.getState().set({ prompt: next ? { text: key, key: isTouch ? '' : 'E', productId: next.productId } : null })
     }
   }
 

@@ -66,11 +66,20 @@ export class CollisionWorld {
     }
   }
 
-  /** Distance to the first wall hit along a ray (third-person camera, line of sight), or maxDist. */
+  /** Distance to the first wall hit along a ray (line of sight), or maxDist. */
   raycast(origin: Vector3, dir: Vector3, maxDist: number): number {
+    return this.cast(this.occluders, origin, dir, maxDist)
+  }
+
+  /** Distance to the first collider of any kind (walls and furniture): the third-person camera. */
+  raycastAll(origin: Vector3, dir: Vector3, maxDist: number): number {
+    return this.cast(this.boxes, origin, dir, maxDist)
+  }
+
+  private cast(boxes: Box3[], origin: Vector3, dir: Vector3, maxDist: number): number {
     this._ray.set(origin, dir)
     let best = maxDist
-    for (const b of this.occluders) {
+    for (const b of boxes) {
       if (b.containsPoint(origin)) continue
       const hit = this._ray.intersectBox(b, this._hit)
       if (hit) {

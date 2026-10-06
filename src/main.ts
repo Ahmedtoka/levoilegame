@@ -5,6 +5,7 @@ import '@fontsource/cairo/800.css'
 import '@fontsource/playfair-display/500.css'
 import '@fontsource/playfair-display/600.css'
 import './styles/app.css'
+import './styles/game.css'
 import './styles/live.css'
 import { Mesh, MeshBasicMaterial, PlaneGeometry, type Texture } from 'three'
 import { buildLayout, type MallLayout } from './config/layout'
@@ -25,6 +26,7 @@ import { createCheckoutService } from './services/CheckoutService'
 import { mountFallback, mountScreens } from './ui/screens'
 import { mountHud, setZoneAliases } from './ui/hud'
 import { mountMinimap } from './ui/minimap'
+import { mountGameHud } from './ui/gameHud'
 import { mountMenu } from './ui/menu'
 import { mountAvatarEditor } from './ui/avatarEditor'
 import './styles/avatar.css'
@@ -138,6 +140,8 @@ async function boot(): Promise<void> {
     if (s.cart.length) return layout.cashier
     return null
   })
+  // Touch: the quiet game HUD adopts the chips and the minimap, so it mounts after them.
+  if (isTouch) mountGameHud(uiRoot, game)
   progress(0.08)
 
   await fontsReady()

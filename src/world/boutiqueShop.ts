@@ -253,6 +253,7 @@ function hero(ctx: ShopContext, f: BatchFrame, g: Group, plan: BoutiquePlan, bra
     object: plane,
     kind: 'product',
     label: () => `${brand.name} · ${p.title}`,
+    productId: p.id,
     onInteract: () => store.getState().openProduct(p.id),
     maxDist: 6,
   })

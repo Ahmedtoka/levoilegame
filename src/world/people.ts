@@ -45,6 +45,7 @@ export function addProductModel(
     object: c.hitbox,
     kind: 'model',
     label: () => openProductLabel(product),
+    productId: product.id,
     onInteract: () => store.getState().openProduct(product.id),
     maxDist: 3.6,
   })

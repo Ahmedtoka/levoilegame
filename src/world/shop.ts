@@ -226,6 +226,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
       object: poster,
       kind: 'product',
       label: () => openProductLabel(p),
+      productId: p.id,
       onInteract: () => store.getState().openProduct(p.id),
       maxDist: 4,
     })
