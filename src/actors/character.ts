@@ -153,6 +153,8 @@ export class Character implements Persona {
   private readonly phase: number
   private readonly skirtRest = new Map<Bone, Quaternion>()
   private headYaw = 0
+  /** Seconds to the next blink (negative while the eyes are closed). */
+  private blinkIn = 1 + Math.random() * 4
   private waving = 0
   private time = 0
 
@@ -169,7 +171,7 @@ export class Character implements Persona {
 
     const pieces = piecesFor({ outfit: look.outfit, head: look.head, vest: !!look.vest, logo: !!look.vest?.logo })
     const browColor = look.head.kind === 'hair' ? look.head.color : '#3a2a22'
-    this.mat = avatarMaterial(lookColors(look), faceTexture(look.face, browColor), look.vest?.logo ?? blankTexture())
+    this.mat = avatarMaterial(lookColors(look), faceTexture(look.face, browColor), look.vest?.logo ?? blankTexture(), faceTexture(look.face, browColor, true))
     const { root: rootBone, bones, byName } = cloneBones(kit)
     this.bones = byName
     for (const n of ['skirt_f', 'skirt_b']) {
@@ -249,6 +251,16 @@ export class Character implements Persona {
   update(dt: number, t: number): void {
     this.time = t
     this.pose(dt, t)
+    this.blink(dt)
+  }
+
+  /** A quick blink every few seconds (sometimes a double one). */
+  private blink(dt: number): void {
+    const b = this.mat?.userData.blink
+    if (!b) return
+    this.blinkIn -= dt
+    if (this.blinkIn < -0.12) this.blinkIn = Math.random() < 0.15 ? 0.18 : 2.2 + Math.random() * 3.5
+    b.value = this.blinkIn < 0 ? 1 : 0
   }
 
   private pose(dt: number, t: number): void {

@@ -7,7 +7,8 @@ import { CanvasTexture, Color, DoubleSide, MeshStandardMaterial, type Texture } 
 import { PARTS, type Part } from './pieces'
 
 export interface AvatarMaterial extends MeshStandardMaterial {
-  userData: { palette: Color[] }
+  /** palette: colour per part; blink: 0 open … 1 eyes closed. */
+  userData: { palette: Color[]; blink: { value: number } }
 }
 
 let blankTex: Texture | null = null
@@ -22,15 +23,19 @@ export function blankTexture(): Texture {
   return blankTex
 }
 
-export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo: Texture): AvatarMaterial {
+export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo: Texture, faceClosed: Texture = face): AvatarMaterial {
   const palette = PARTS.map((p) => new Color(colors[p]))
   // Double-sided: garments are open shells (hems, sleeves, hijab drape) seen from below too.
   const mat = new MeshStandardMaterial({ roughness: 0.84, metalness: 0, side: DoubleSide }) as AvatarMaterial
   mat.userData.palette = palette
+  const blink = { value: 0 }
+  mat.userData.blink = blink
   mat.defines = { USE_UV: '' }
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.lvPal = { value: palette }
     shader.uniforms.lvFace = { value: face }
+    shader.uniforms.lvFaceClosed = { value: faceClosed }
+    shader.uniforms.lvBlink = blink
     shader.uniforms.lvLogo = { value: logo }
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nattribute float part;\nvarying float vPart;')
@@ -41,6 +46,8 @@ export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo
         `#include <common>
 uniform vec3 lvPal[${PARTS.length}];
 uniform sampler2D lvFace;
+uniform sampler2D lvFaceClosed;
+uniform float lvBlink;
 uniform sampler2D lvLogo;
 varying float vPart;`,
       )
@@ -50,7 +57,7 @@ varying float vPart;`,
 int lvI = int(vPart + 0.5);
 vec3 lvC = lvPal[lvI];
 if (lvI == ${PARTS.indexOf('face')}) {
-  vec4 f = texture2D(lvFace, vUv);
+  vec4 f = lvBlink > 0.5 ? texture2D(lvFaceClosed, vUv) : texture2D(lvFace, vUv);
   lvC = mix(lvC, f.rgb, f.a);
 } else if (lvI == ${PARTS.indexOf('logo')}) {
   // The logo texture is shared (flipY on) while glTF UVs run top-down: flip v.
@@ -58,6 +65,12 @@ if (lvI == ${PARTS.indexOf('face')}) {
   lvC = mix(lvC, l.rgb, l.a);
 }
 diffuseColor.rgb *= lvC;`,
+      )
+      // Hair has a soft sheen.
+      .replace(
+        '#include <roughnessmap_fragment>',
+        `#include <roughnessmap_fragment>
+if (lvI == ${PARTS.indexOf('hair')}) roughnessFactor = 0.42;`,
       )
       // Soft rim light: lifts the silhouette off the background (stylised, nearly free).
       .replace(

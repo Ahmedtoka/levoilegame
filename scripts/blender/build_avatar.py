@@ -492,39 +492,104 @@ def hair_floor(p):
     return lerp(back, fringe, smooth(0.15, 0.75, front))
 
 
+def hair_curtain(b, secs, span, z_tip, tip_len=0.05, clumps=9, n=24):
+    """Hair falling behind the head and shoulders: an open shell around the back
+    (angles back ± span(z)), with clumped strands and pointed tips at the bottom.
+    secs: (z, rx, ry, y-centre), top to bottom."""
+    secs = sorted(secs)
+    zs = []
+    for (z0, *_), (z1, *_) in zip(secs, secs[1:]):
+        zs += [lerp(z0, z1, k / 3) for k in range(3)]
+    zs.append(secs[-1][0])
+    z_lo = secs[0][0]
+
+    def at(z):
+        for a, c in zip(secs, secs[1:]):
+            if a[0] <= z <= c[0]:
+                t = smooth(a[0], c[0], z)
+                return [lerp(a[i], c[i], t) for i in (1, 2, 3)]
+        return list(secs[0][1:]) if z < secs[0][0] else list(secs[-1][1:])
+
+    rings = []
+    for z in zs:
+        rx, ry, yc = at(z)
+        sp = span(z)
+        lower = smooth(1.75, z_lo, z)  # clumps grow towards the tips
+        ring = []
+        for i in range(n + 1):
+            a = math.pi / 2 - sp + 2 * sp * i / n
+            k = 1 + (0.012 + 0.03 * lower) * math.cos(clumps * (a - math.pi / 2))
+            ring.append(Vector((math.cos(a) * rx * k, yc + math.sin(a) * ry * k, z)))
+        rings.append(ring)
+    ids = b.loft(rings, closed=False)
+    # Pointed tips: the bottom edge dips between clumps.
+    for i, vi in enumerate(ids[0]):
+        a = math.pi / 2 - span(z_lo) + 2 * span(z_lo) * i / n
+        dip = abs(math.sin(clumps * 0.5 * (a - math.pi / 2)))
+        b.verts[vi].z = z_tip - tip_len * (1 - dip)
+
+
+def hair_lock(b, path, radii, flat=0.55):
+    """A tapered strand (side lock / ponytail) along a path of points."""
+    rings = []
+    for k, (pt, r) in enumerate(zip(path, radii)):
+        nxt = path[min(k + 1, len(path) - 1)] - path[max(k - 1, 0)]
+        d = nxt.normalized()
+        u = d.cross(Vector((0, 0, 1)))
+        u = u.normalized() if u.length > 1e-6 else Vector((1, 0, 0))
+        v = d.cross(u).normalized()
+        if u.cross(v).dot(d) < 0:
+            v = -v
+        rings.append(ellipse(pt, u, v, r, r * flat, 10))
+    b.loft(rings, cap_start=True, cap_end=True)
+
+
 def piece_hair(style):
-    b = _shell_region(1.05, hair_floor)
+    b = _shell_region(1.07, hair_floor)
     if style == "long":
-        secs = [(1.80, 0.172, 0.07), (1.64, 0.170, 0.07), (1.47, 0.160, 0.06), (1.33, 0.138, 0.048)]
-        rings = [ellipse((0, 0.13 + (1.80 - z) * 0.06, z), (1, 0, 0), (0, 1, 0), rx, ry, 16) for z, rx, ry in sorted(secs)]
-        b.loft(rings, cap_start=True)
-    elif style == "bun":
-        c = Vector((0, 0.15, 1.955))
-        rings = []
-        for k in range(1, 8):
-            th = -math.pi / 2 + math.pi * k / 8
-            rings.append(ellipse((c.x, c.y, c.z + math.sin(th) * 0.068), (1, 0, 0), (0, 1, 0), 0.075 * math.cos(th), 0.07 * math.cos(th), 12))
-        ids = b.loft(rings)
-        b.cap(ids[0], rings[0], flip=True, point=c - Vector((0, 0, 0.068)))
-        b.cap(ids[-1], rings[-1], flip=False, point=c + Vector((0, 0, 0.068)))
-    elif style == "ponytail":
-        path = [Vector((0, 0.17, 1.86)), Vector((0, 0.23, 1.76)), Vector((0, 0.23, 1.60)), Vector((0, 0.20, 1.45))]
-        radii = [0.045, 0.05, 0.042, 0.02]
-        rings = [ellipse(pt, (1, 0, 0), (0, 1, 0), r, r, 10) for pt, r in zip(path, radii)]
-        b.loft(rings[::-1], cap_start=True, cap_end=True)
+        # Falls behind the shoulders to mid-back, with soft locks framing the face.
+        hair_curtain(
+            b,
+            [(1.80, 0.198, 0.19, 0.0), (1.72, 0.204, 0.188, 0.006), (1.64, 0.19, 0.16, 0.025), (1.52, 0.20, 0.14, 0.04), (1.40, 0.19, 0.13, 0.045), (1.30, 0.17, 0.12, 0.05)],
+            span=lambda z: math.radians(lerp(98, 112, smooth(1.55, 1.78, z))),
+            z_tip=1.30,
+        )
+        for sx in (1, -1):
+            hair_lock(b, [Vector((sx * 0.15, -0.05, 1.79)), Vector((sx * 0.162, -0.07, 1.68)), Vector((sx * 0.15, -0.075, 1.56)), Vector((sx * 0.13, -0.08, 1.46))], [0.028, 0.034, 0.028, 0.01])
     elif style == "bob":
-        secs = [(1.74, 0.200, 0.194), (1.66, 0.205, 0.198), (1.62, 0.200, 0.192)]
-        rings = [ellipse((0, HEAD_C.y + 0.02, z), (1, 0, 0), (0, 1, 0), rx, ry, 22, -math.pi / 2) for z, rx, ry in sorted(secs)]
-        ids = b.loft(rings, closed=True)
-        b.faces = b.faces[: len(b.faces)]
-        # Open the front of the bob around the face.
-        b.faces = [f for f in b.faces if not all(b.verts[i].y < HEAD_C.y - 0.08 and abs(b.verts[i].x) < 0.15 for i in f)]
+        # Chin-length, curving in at the ends.
+        hair_curtain(
+            b,
+            [(1.86, 0.195, 0.188, -0.01), (1.74, 0.212, 0.2, -0.008), (1.66, 0.214, 0.196, 0.0), (1.61, 0.198, 0.18, 0.004)],
+            span=lambda z: math.radians(150),
+            z_tip=1.61,
+            tip_len=0.02,
+            clumps=11,
+            n=30,
+        )
+    elif style == "bun":
+        c = Vector((0, 0.165, 1.965))
+        rings = []
+        for k in range(1, 10):
+            th = -math.pi / 2 + math.pi * k / 10
+            rr = 0.088 * math.cos(th)
+            rings.append(ellipse((c.x, c.y, c.z + math.sin(th) * 0.075), (1, 0, 0), (0, 1, 0), rr, rr * 0.92, 14))
+        ids = b.loft(rings)
+        b.cap(ids[0], rings[0], flip=True, point=c - Vector((0, 0, 0.075)))
+        b.cap(ids[-1], rings[-1], flip=False, point=c + Vector((0, 0, 0.075)))
+    elif style == "ponytail":
+        hair_lock(
+            b,
+            [Vector((0, 0.17, 1.90)), Vector((0, 0.24, 1.82)), Vector((0, 0.27, 1.70)), Vector((0, 0.25, 1.56)), Vector((0, 0.21, 1.44)), Vector((0, 0.19, 1.37))],
+            [0.05, 0.066, 0.062, 0.05, 0.034, 0.01],
+            flat=0.8,
+        )
 
     def w(p, tag=None):
-        if p.z > 1.58:
+        if p.z > 1.62:
             return {"Head": 1.0}
-        t = smooth(1.32, 1.58, p.z)
-        return {"Head": 0.4 + 0.6 * t, "spine_03": 0.6 * (1 - t)}
+        t = smooth(1.30, 1.62, p.z)
+        return {"Head": 0.35 + 0.65 * t, "neck_01": 0.15 * (1 - t), "spine_03": 0.5 * (1 - t)}
 
     return b, w
 
@@ -812,13 +877,15 @@ def preview(arm, objs, out_dir, clips):
     for look, pieces in LOOKS.items():
         for n, o in objs.items():
             o.hide_render = n not in pieces
-        for clip, frame, view in (("Idle_Loop", 10, "front"), ("Walk_Modest", 8, "side"), ("Walk_Modest", 8, "q"), ("Idle_Loop", 10, "face")):
+        for clip, frame, view in (("Idle_Loop", 10, "front"), ("Walk_Modest", 8, "side"), ("Walk_Modest", 8, "q"), ("Idle_Loop", 10, "face"), ("Idle_Loop", 10, "back")):
             arm.animation_data.action = clips[clip]
             sc.frame_set(frame)
             if view == "front":
                 cam.location, cam.rotation_euler = (0, -4.6, 1.0), (math.radians(90), 0, 0)
             elif view == "side":
                 cam.location, cam.rotation_euler = (4.6, 0, 1.0), (math.radians(90), 0, math.radians(90))
+            elif view == "back":
+                cam.location, cam.rotation_euler = (-1.6, 2.6, 1.55), (math.radians(82), 0, math.radians(212))
             elif view == "face":
                 cam.location, cam.rotation_euler = (0.35, -1.25, 1.85), (math.radians(88), 0, math.radians(16))
             else:

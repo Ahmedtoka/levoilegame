@@ -27,16 +27,19 @@ export const FACE_STYLES: readonly FaceStyle[] = [
 const SIZE = 256
 const cache = new Map<string, Texture>()
 
-/** Face texture for a preset and brow colour (cached; shared by every character using it). */
-export function faceTexture(style: number, browColor: string): Texture {
+/**
+ * Face texture for a preset and brow colour (cached; shared by every character
+ * using it). `closed` draws the same face mid-blink (the material swaps to it).
+ */
+export function faceTexture(style: number, browColor: string, closed = false): Texture {
   const f = FACE_STYLES[((style % FACE_STYLES.length) + FACE_STYLES.length) % FACE_STYLES.length]
-  const key = `${style}|${browColor}`
+  const key = `${style}|${browColor}|${closed ? 1 : 0}`
   let tex = cache.get(key)
   if (tex) return tex
   const c = document.createElement('canvas')
   c.width = c.height = SIZE
   const g = c.getContext('2d')!
-  drawFace(g, f, browColor)
+  drawFace(g, f, browColor, closed)
   tex = new CanvasTexture(c)
   tex.colorSpace = SRGBColorSpace
   // glTF UVs have their origin at the top-left (v flipped vs Blender): don't flip again.
@@ -50,7 +53,7 @@ export function faceTexture(style: number, browColor: string): Texture {
 const X = (u: number) => u * SIZE
 const Y = (v: number) => (1 - v) * SIZE
 
-function drawFace(g: CanvasRenderingContext2D, f: FaceStyle, brow: string): void {
+function drawFace(g: CanvasRenderingContext2D, f: FaceStyle, brow: string, closed = false): void {
   g.clearRect(0, 0, SIZE, SIZE)
   // Blush
   for (const s of [-1, 1]) {
@@ -60,7 +63,7 @@ function drawFace(g: CanvasRenderingContext2D, f: FaceStyle, brow: string): void
     g.fillStyle = gr
     g.fillRect(0, 0, SIZE, SIZE)
   }
-  for (const s of [-1, 1]) eye(g, f, 0.5 + s * 0.108, 0.452, s)
+  for (const s of [-1, 1]) (closed ? closedEye : eye)(g, f, 0.5 + s * 0.108, 0.452, s)
   // Brows: soft arcs
   g.strokeStyle = brow
   g.lineCap = 'round'
@@ -149,6 +152,24 @@ function eye(g: CanvasRenderingContext2D, f: FaceStyle, cu: number, cv: number, 
   g.strokeStyle = 'rgba(60,35,30,0.55)'
   g.beginPath()
   g.ellipse(X(cu), Y(cv), X(w * 0.98), X(h * 0.98), 0, Math.PI * 0.2, Math.PI * 0.8)
+  g.stroke()
+}
+
+/** Mid-blink: the lash line curved down where the open eye sits. */
+function closedEye(g: CanvasRenderingContext2D, f: FaceStyle, cu: number, cv: number, s: number): void {
+  const w = f.eye === 'almond' ? 0.058 : 0.052
+  g.strokeStyle = '#1b1210'
+  g.lineCap = 'round'
+  g.lineWidth = X(0.015)
+  g.beginPath()
+  g.moveTo(X(cu - w), Y(cv + 0.004))
+  g.quadraticCurveTo(X(cu), Y(cv - 0.03), X(cu + w), Y(cv + 0.004))
+  g.stroke()
+  g.lineWidth = X(0.01)
+  g.beginPath()
+  const ox = cu + s * w
+  g.moveTo(X(ox), Y(cv + 0.004))
+  g.lineTo(X(ox + s * 0.02), Y(cv + 0.024))
   g.stroke()
 }
 
