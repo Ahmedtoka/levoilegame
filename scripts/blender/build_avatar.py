@@ -608,8 +608,8 @@ def make_object(name, b, weight_fn, arm, part):
 
 
 # Hip ring of the body (z, rx, ry) measured on the UBC female; the skirts start just under the top's hem.
-SKIRT_FLARE = [(1.06, 0.182, 0.136), (0.95, 0.205, 0.150), (0.80, 0.225, 0.165), (0.52, 0.262, 0.195), (0.25, 0.292, 0.222), (0.05, 0.315, 0.242)]
-SKIRT_STRAIGHT = [(1.06, 0.182, 0.136), (0.95, 0.200, 0.146), (0.80, 0.214, 0.156), (0.52, 0.226, 0.168), (0.25, 0.236, 0.178), (0.06, 0.244, 0.186)]
+SKIRT_FLARE = [(1.06, 0.182, 0.136), (0.95, 0.205, 0.150), (0.80, 0.225, 0.165), (0.52, 0.262, 0.195), (0.25, 0.292, 0.222), (0.02, 0.318, 0.246)]
+SKIRT_STRAIGHT = [(1.06, 0.182, 0.136), (0.95, 0.200, 0.146), (0.80, 0.214, 0.156), (0.52, 0.226, 0.168), (0.25, 0.236, 0.178), (0.03, 0.246, 0.188)]
 SKIRT_Y = 0.04  # the hips sit a little behind the origin
 
 
@@ -656,7 +656,7 @@ def piece_cuffs():
     b = Builder()
     for s in (1, -1):
         u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
-        rr = [ellipse((s * x, 0.052, 1.418), u, v, r, r * 0.95, 14) for x, r in ((0.595, 0.058), (0.645, 0.066))]
+        rr = [ellipse((s * x, 0.052, 1.418), u, v, r, r * 0.95, 16) for x, r in ((0.618, 0.079), (0.66, 0.085))]
         b.loft(rr)
     return b, lambda p: {side_bone("lowerarm_l", p.x): 0.8, side_bone("hand_l", p.x): 0.2}
 
@@ -730,6 +730,33 @@ def piece_glasses(style):
     return b, lambda p: {"Head": 1.0}
 
 
+def piece_shoes_fitted(arm):
+    """Closed flat shoes: a rounded tube from the heel to the toe along each foot bone, plus an ankle cuff."""
+    b = Builder()
+    bones = arm.data.bones
+    for sd in ("l", "r"):
+        ankle = Vector(bones["foot_" + sd].head_local)
+        toe = Vector(bones["ball_" + sd].head_local)
+        heel = Vector((ankle.x, ankle.y + 0.06, 0.012))
+        tip = Vector((toe.x, toe.y - 0.055, 0.012))
+        # Stations heel -> toe: (point, half-width, height).
+        path = [(heel, 0.028, 0.03), (Vector((ankle.x, ankle.y + 0.02, 0.012)), 0.038, 0.05), (Vector((ankle.x, ankle.y - 0.03, 0.012)), 0.042, 0.052), (toe, 0.042, 0.04), (Vector((toe.x, toe.y - 0.03, 0.012)), 0.036, 0.028), (tip, 0.018, 0.014)]
+        rings = []
+        for c, hw, hh in path:
+            rings.append([Vector((c.x + math.cos(a) * hw, c.y, c.z + 0.012 + math.sin(a) * hh)) for a in [2 * math.pi * i / 14 for i in range(14)]])
+        # Rings progress along -Y (forward): reverse for outward normals.
+        b.loft(rings[::-1], cap_start=True, cap_end=True)
+        # Ankle cuff.
+        b.loft([ellipse((ankle.x, ankle.y - 0.004, z), (1, 0, 0), (0, 1, 0), 0.046, 0.052, 14) for z in (0.055, 0.09)])
+
+    def w(p):
+        sd = "l" if p.x >= 0 else "r"
+        t = smooth(0.09, 0.0, p.y)  # towards the toe
+        return {"foot_" + sd: 1 - t * 0.6, "ball_" + sd: t * 0.6}
+
+    return b, w
+
+
 def piece_hijab_band():
     """Thin band along the face opening (the hijab's accent colour)."""
     b = Builder()
@@ -755,7 +782,7 @@ def piece_hijab_band():
 
 def drape(b, long):
     """Chin wrap + drape over the shoulders, hanging longer at the front and back than over the arms."""
-    z_front, z_side = (1.02, 1.22) if long else (1.30, 1.37)
+    z_front, z_side = (1.02, 1.20) if long else (1.27, 1.33)
     n = 32
 
     def profile(z):
@@ -866,9 +893,7 @@ def build():
     objs["tunic"] = make_object("tunic", *piece_tunic_fitted(body), arm, "top")
     objs["leggings"] = make_object("leggings", *piece_legs_fitted(arm, 0.006), arm, "bottom")
     objs["trousers"] = make_object("trousers", *piece_legs_fitted(arm, 0.024, flare=0.055), arm, "bottom")
-    objs["shoes"] = cut(body, lambda v, d: is_foot(d) or (is_leg(d) and v.co.z < 0.1), "shoes", "shoes")
-    relax(objs["shoes"], 14)
-    offset(objs["shoes"], 0.012)
+    objs["shoes"] = make_object("shoes", *piece_shoes_fitted(arm), arm, "shoes")
 
     # Hijab: head shell with the face open, then the chin wrap and drape.
     for name, long in (("hijab_classic", False), ("hijab_long", True)):
