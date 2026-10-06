@@ -1,3 +1,9 @@
+import '@fontsource/cairo/400.css'
+import '@fontsource/cairo/600.css'
+import '@fontsource/cairo/700.css'
+import '@fontsource/cairo/800.css'
+import '@fontsource/playfair-display/500.css'
+import '@fontsource/playfair-display/600.css'
 import './styles/app.css'
 import './styles/live.css'
 import { Mesh, MeshBasicMaterial, PlaneGeometry, type Texture } from 'three'
@@ -12,6 +18,7 @@ import { CollisionWorld } from './engine/colliders'
 import { Batcher } from './engine/batcher'
 import { canvasTexture, loadImage, makeCanvas } from './engine/textures'
 import { Game } from './game'
+import { hideSplash } from './platform/native'
 import { t } from './i18n/i18n'
 import { setCatalog, store, watch } from './state/store'
 import { createCheckoutService } from './services/CheckoutService'
@@ -149,6 +156,7 @@ async function boot(): Promise<void> {
   game.start()
   await new Promise((r) => setTimeout(r, 250))
   store.getState().set({ phase: 'intro' })
+  hideSplash()
 
   if (import.meta.env.DEV || new URLSearchParams(location.search).has('debug')) {
     Object.assign(window, { lv: { game, store, engine, layout, catalog, social: social() } })

@@ -1530,3 +1530,177 @@ button {
     bottom: 24%;
   }
 }
+
+/* ------------------------------------------------ touch game controls */
+/* Game pads use physical left/right on purpose: the stick stays under the left thumb in Arabic too. */
+
+.joystick {
+  left: calc(108px + env(safe-area-inset-left, 0px));
+  top: calc(100% - 104px - env(safe-area-inset-bottom, 0px));
+}
+
+.sprint-lock {
+  position: absolute;
+  left: 50%;
+  top: -74px;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(42, 31, 39, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s var(--ease), background 0.15s;
+}
+
+.sprint-lock svg {
+  width: 22px;
+  height: 22px;
+}
+
+.joystick.active .sprint-lock {
+  opacity: 0.75;
+}
+
+.joystick.armed .sprint-lock,
+.joystick.locked .sprint-lock {
+  opacity: 1;
+  background: var(--magenta);
+  transform: scale(1.15);
+}
+
+.joystick.locked {
+  opacity: 0.9;
+}
+
+.touch .interact-btn {
+  inset-inline-end: auto;
+  right: calc(30px + env(safe-area-inset-right, 0px));
+  bottom: calc(138px + env(safe-area-inset-bottom, 0px));
+}
+
+.pad-btn {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(42, 31, 39, 0.38);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 0.15s var(--ease), opacity 0.2s, background 0.15s;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pad-btn:active {
+  transform: scale(0.92);
+}
+
+.pad-btn.off {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pad-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.sprint-btn {
+  right: calc(34px + env(safe-area-inset-right, 0px));
+  bottom: calc(46px + env(safe-area-inset-bottom, 0px));
+  width: 66px;
+  height: 66px;
+}
+
+.sprint-btn.on {
+  background: var(--magenta);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
+}
+
+.view-btn {
+  right: calc(118px + env(safe-area-inset-right, 0px));
+  bottom: calc(36px + env(safe-area-inset-bottom, 0px));
+  width: 52px;
+  height: 52px;
+  grid-template-rows: auto auto;
+  align-content: center;
+}
+
+.view-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.view-btn span {
+  font: 800 9px/1 var(--font-ui);
+  letter-spacing: 0.04em;
+}
+
+/* Notches and rounded corners (the native app draws edge to edge). */
+.topbar {
+  inset-inline: max(16px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+}
+
+/* Phones held sideways (the native app is landscape-only): denser sheets, smaller map. */
+@media (max-height: 520px) {
+  .minimap {
+    transform-origin: top right;
+    transform: scale(0.7);
+  }
+
+  [dir='rtl'] .minimap {
+    transform-origin: top left;
+  }
+
+  .minimap.off {
+    transform: scale(0.7) translateY(10px);
+  }
+
+  /* The live chips sit beside the map instead of under it. */
+  .touch .live-chips {
+    inset-inline-end: calc(24px + var(--minimap-w, 0px) * 0.7);
+  }
+
+  .veil.sheet .card {
+    max-height: calc(100vh - 16px);
+  }
+
+  .card-body {
+    padding: 16px 20px;
+  }
+
+  .menu-grid .go {
+    padding-block: 8px;
+  }
+
+  .settings {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 28px;
+  }
+
+  .prompt {
+    bottom: 8%;
+  }
+}
+
+/* Phones and tablets: it's a game, so no text selection or long-press callouts outside form fields. */
+@media (pointer: coarse) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  input,
+  textarea {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+}

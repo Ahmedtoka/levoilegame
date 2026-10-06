@@ -40,14 +40,35 @@ export function mountHud(root: HTMLElement, game: GameBridge): void {
   const bubble = el('div', 'bubble')
   const interactBtn = el('button', 'interact-btn off', ICONS.hand)
   interactBtn.setAttribute('aria-label', 'Interact')
+  // Game-style touch buttons (bottom right): run mode and camera.
+  const sprintBtn = el('button', 'pad-btn sprint-btn', ICONS.run)
+  const viewBtn = el('button', 'pad-btn view-btn', ICONS.eye)
   const fps = el('div', 'fps hidden')
   hud.append(crosshair, topbar, prompt, banner, toast, bubble, fps)
   if (game.isTouch) {
-    hud.appendChild(interactBtn)
+    hud.append(interactBtn, sprintBtn, viewBtn)
     crosshair.classList.add('hidden')
     document.documentElement.classList.add('touch')
   }
   interactBtn.addEventListener('click', () => game.interact())
+  sprintBtn.addEventListener('click', () => {
+    audio.click()
+    store.getState().set({ sprint: !store.getState().sprint })
+  })
+  viewBtn.addEventListener('click', () => {
+    audio.click()
+    store.getState().set({ view: store.getState().view === 'first' ? 'third' : 'first' })
+  })
+  watch((s) => s.sprint, (on) => sprintBtn.classList.toggle('on', on))
+  watch((s) => s.view, (v) => {
+    viewBtn.innerHTML = `${ICONS.eye}<span>${v === 'first' ? 'FPP' : 'TPP'}</span>`
+  })
+  const padLabels = () => {
+    const L = store.getState().lang
+    sprintBtn.setAttribute('aria-label', t('run', L))
+    viewBtn.setAttribute('aria-label', t('cameraView', L))
+  }
+  watch((s) => s.lang, padLabels)
 
   onAction(topbar, {
     cart: () => {
@@ -146,6 +167,9 @@ export function mountHud(root: HTMLElement, game: GameBridge): void {
     hud.classList.toggle('hidden', s.phase !== 'playing')
     const busy = !!s.overlay || s.paused
     crosshair.style.opacity = busy ? '0' : '1'
+    for (const b of [sprintBtn, viewBtn]) b.classList.toggle('off', busy)
+    if (busy) interactBtn.classList.add('off')
+    else interactBtn.classList.toggle('off', !s.prompt)
     prompt.style.visibility = busy ? 'hidden' : 'visible'
   }
   watch((s) => s.phase, sync)

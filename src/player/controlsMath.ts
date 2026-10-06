@@ -114,3 +114,22 @@ export function stickVector(dx: number, dy: number, radius: number, dead = 8): {
   const s = len > radius ? radius / len : 1
   return { x: (dx * s) / radius, y: (-dy * s) / radius }
 }
+
+/**
+ * Sprint lock (touch): dragging the stick well past its rim, mostly straight up, arms auto-run;
+ * releasing while armed keeps the player running forward until the stick is touched again.
+ */
+export function sprintLockArmed(dx: number, dy: number, radius: number): boolean {
+  return -dy > radius * 1.9 && Math.abs(dx) < radius * 0.9
+}
+
+/** Touch look sensitivity steps offered in the settings (multiplier on touchLookSens). */
+export const SENSITIVITY_STEPS = [0.6, 1, 1.5, 2] as const
+
+/**
+ * Frame limiter: whether a display refresh at `now` should render, given the last rendered time
+ * and the cap (0 = uncapped). The 2 ms slack keeps a 60 cap from skipping frames on a 60 Hz screen.
+ */
+export function shouldRender(now: number, last: number, cap: number): boolean {
+  return cap <= 0 || now - last >= 1000 / cap - 2
+}

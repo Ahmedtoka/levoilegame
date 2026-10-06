@@ -52,6 +52,8 @@ export class Interaction {
       if (!it || (it.enabled && !it.enabled())) continue
       const dx = h.point.x - player.x
       const dz = h.point.z - player.z
+      // Third person: the camera trails the player, so skip whatever lies between them (behind the player).
+      if (dx * this.ray.ray.direction.x + dz * this.ray.ray.direction.z < -0.2) continue
       if (Math.hypot(dx, dz) > (it.maxDist ?? 3.4)) return null
       // A wall between the camera and the target blocks it.
       _dir.copy(this.ray.ray.direction)

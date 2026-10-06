@@ -5,6 +5,7 @@ import { t } from '../i18n/i18n'
 import { catalog, store, watch } from '../state/store'
 import { audio } from '../audio/audio'
 import { esc, el, ICONS, onAction, paint, type GameBridge } from './dom'
+import { SENSITIVITY_STEPS } from '../player/controlsMath'
 
 export function mountMenu(root: HTMLElement, game: GameBridge): void {
   const veil = el('div', 'veil sheet hidden')
@@ -17,9 +18,10 @@ export function mountMenu(root: HTMLElement, game: GameBridge): void {
       game.teleport(b.dataset.target!)
     },
     set: (b) => {
-      const key = b.dataset.key as 'quality' | 'music' | 'sound' | 'view' | 'minimap' | 'lang'
+      const key = b.dataset.key as 'quality' | 'music' | 'sound' | 'view' | 'minimap' | 'lang' | 'sensitivity' | 'fpsCap' | 'haptics'
       const raw = b.dataset.value!
-      const value = raw === 'true' ? true : raw === 'false' ? false : raw
+      const numeric = key === 'sensitivity' || key === 'fpsCap'
+      const value = numeric ? Number(raw) : raw === 'true' ? true : raw === 'false' ? false : raw
       store.getState().set({ [key]: value } as never)
       audio.click()
     },
@@ -76,6 +78,13 @@ export function mountMenu(root: HTMLElement, game: GameBridge): void {
               ['first', t('firstPerson', L)],
               ['third', t('thirdPerson', L)],
             ])}</div>
+            <div class="setting"><span>${esc(t('frameRate', L))}</span>${seg('fpsCap', s.fpsCap, [
+              [30, '30'],
+              [60, '60'],
+              [0, t('fpsMax', L)],
+            ])}</div>
+            ${game.isTouch ? `<div class="setting"><span>${esc(t('sensitivity', L))}</span>${seg('sensitivity', s.sensitivity, SENSITIVITY_STEPS.map((v, i) => [v, t((['sensLow', 'sensMedium', 'sensHigh', 'sensMax'] as const)[i], L)]))}</div>
+            <div class="setting"><span>${esc(t('haptics', L))}</span>${seg('haptics', s.haptics, onOff)}</div>` : ''}
             <div class="setting"><span>${esc(t('music', L))}</span>${seg('music', s.music, onOff)}</div>
             <div class="setting"><span>${esc(t('sound', L))}</span>${seg('sound', s.sound, onOff)}</div>
             <div class="setting"><span>${esc(t('minimap', L))}</span>${seg('minimap', s.minimap, onOff)}</div>
@@ -98,4 +107,7 @@ export function mountMenu(root: HTMLElement, game: GameBridge): void {
   watch((s) => s.music, render, false)
   watch((s) => s.sound, render, false)
   watch((s) => s.minimap, render, false)
+  watch((s) => s.sensitivity, render, false)
+  watch((s) => s.fpsCap, render, false)
+  watch((s) => s.haptics, render, false)
 }

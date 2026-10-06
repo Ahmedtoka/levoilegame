@@ -1,3 +1,5 @@
+import { haptic } from '../platform/native'
+
 // Generative ambient music and UI sound effects with the Web Audio API, so
 // the project needs no audio files. Unlocked by the "Enter the Mall" click.
 
@@ -152,6 +154,7 @@ export class AudioEngine {
 
   /** Two-note chime when something lands in the cart. */
   addToCart(): void {
+    haptic('medium')
     if (!this.sfxReady) return
     const t = this.ctx!.currentTime
     this.bell(mtof(76), t, 0.22, this.sfxBus)
@@ -159,12 +162,14 @@ export class AudioEngine {
   }
 
   success(): void {
+    haptic('success')
     if (!this.sfxReady) return
     const t = this.ctx!.currentTime
     ;[72, 76, 79, 84].forEach((n, i) => this.bell(mtof(n), t + i * 0.12, 0.18, this.sfxBus))
   }
 
   click(): void {
+    haptic('light')
     if (!this.sfxReady) return
     const ctx = this.ctx!
     const t = ctx.currentTime
@@ -235,6 +240,7 @@ export class AudioEngine {
 
   /** Passport stamp: low thud + bright tick. */
   stamp(): void {
+    haptic('medium')
     if (!this.sfxReady) return
     const t = this.ctx!.currentTime
     this.bell(mtof(55), t, 0.16, this.sfxBus)
@@ -243,6 +249,7 @@ export class AudioEngine {
 
   /** Treasure picked up: rising sparkle. */
   coin(): void {
+    haptic('success')
     if (!this.sfxReady) return
     const t = this.ctx!.currentTime
     ;[84, 88, 91, 96].forEach((n, i) => this.bell(mtof(n), t + i * 0.06, 0.12, this.sfxBus))
@@ -257,6 +264,7 @@ export class AudioEngine {
 
   /** Group deal unlocked / prize won. */
   celebrate(): void {
+    haptic('success')
     if (!this.sfxReady) return
     const t = this.ctx!.currentTime
     ;[72, 76, 79, 84, 88, 91].forEach((n, i) => this.bell(mtof(n), t + i * 0.09, 0.16, this.sfxBus))

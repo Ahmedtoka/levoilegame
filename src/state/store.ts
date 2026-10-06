@@ -56,6 +56,13 @@ export interface AppState {
   activeQuality: QualityLevel
   view: CameraView
   minimap: boolean
+  /** Touch look sensitivity multiplier (see SENSITIVITY_STEPS). */
+  sensitivity: number
+  /** Frame-rate cap: 30, 60, or 0 for the display's refresh rate. */
+  fpsCap: number
+  haptics: boolean
+  /** Run mode (touch sprint button); not persisted. */
+  sprint: boolean
 
   cart: CartLine[]
   lastOrder: Order | null
@@ -112,8 +119,12 @@ export const store = createStore<AppState>()(
       sound: true,
       quality: 'auto',
       activeQuality: 'medium',
-      view: 'first',
+      view: coarsePointer() ? 'third' : 'first',
       minimap: true,
+      sensitivity: 1,
+      fpsCap: 60,
+      haptics: true,
+      sprint: false,
 
       cart: [],
       lastOrder: null,
@@ -158,10 +169,12 @@ export const store = createStore<AppState>()(
     {
       name: 'levoile-virtual-store',
       // v2: the mall became English-first; land returning visitors in English once.
-      version: 2,
+      // v3: phones and tablets start in third person once (the game-style default).
+      version: 3,
       migrate: (persisted, version) => {
         const s = (persisted ?? {}) as Partial<AppState>
         if (version < 2) s.lang = 'en'
+        if (version < 3 && coarsePointer()) s.view = 'third'
         return s as AppState
       },
       storage: createJSONStorage(() => safeStorage()),
@@ -172,6 +185,9 @@ export const store = createStore<AppState>()(
         quality: s.quality,
         view: s.view,
         minimap: s.minimap,
+        sensitivity: s.sensitivity,
+        fpsCap: s.fpsCap,
+        haptics: s.haptics,
         cart: s.cart,
         user: s.user,
         coupons: s.coupons,
@@ -181,6 +197,10 @@ export const store = createStore<AppState>()(
     },
   ),
 )
+
+function coarsePointer(): boolean {
+  return typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches
+}
 
 /** localStorage can throw (private mode, blocked storage) — fall back to memory. */
 function safeStorage(): Storage {

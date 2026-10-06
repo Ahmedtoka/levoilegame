@@ -37,6 +37,19 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 - **Plaza and corridors:** the plaza has an events stage with LED wall and live screens (`plaza.ts`, `screens.ts`); each wing is finished in `corridor.ts`. Notes: `docs/superpowers/notes/`.
 - **Branding:** `BRAND` in `src/config/brand.ts`. The `magenta` key holds the 122 plum. Logos are `public/brand/122-logo*.svg`.
 
+## Mobile app (Android, branch `mobile-app`)
+
+- **Capacitor wraps the web build:** `capacitor.config.ts` (`com.district122.mall`, `webDir: dist`), Gradle project in `android/`. `dist/` ships inside the APK, so the app runs offline. No iOS project yet (needs a Mac).
+- **Build:** `npm run android:apk` (build → `cap sync android` → `gradlew assembleDebug`). It needs `JAVA_HOME` (Android Studio's `jbr`) and `android/local.properties` with `sdk.dir`. Output: `android/app/build/outputs/apk/debug/app-debug.apk`.
+- **Native glue:** `src/platform/native.ts` is the only file that imports Capacitor (haptics, Android back button, splash). Everything is a no-op in a browser.
+- **`MainActivity`:** immersive full screen, keep-screen-on, draws under the cutout. The manifest locks `sensorLandscape`.
+- **Touch controls:** fixed-home joystick with **sprint lock** (drag up past the rim and release), run and camera buttons (`.pad-btn` in `ui/hud.ts`), look sensitivity and vibration settings. Game pads use physical left/right: they don't mirror in Arabic.
+- **Third person is the default on touch** (store v3 migrates touch users once); desktop stays first person.
+- **Frame rate:** `fpsCap` setting (30 / 60 / Max, `shouldRender`), plus dynamic resolution on touch with Auto quality (`resolutionStep`, floor 0.7); a tier only drops after the scale bottoms out.
+- **Icons / splash:** `npm run app:assets` (`scripts/app-assets.mjs` → `assets/` → `capacitor-assets`).
+- **Fonts are bundled** (`@fontsource`), not loaded from Google Fonts.
+- `?touch` forces the touch HUD on desktop. Design: `docs/superpowers/specs/2026-10-06-mobile-app-design.md`.
+
 ## Stack and key decisions
 
 - **Vite + TypeScript + plain Three.js** (no React/R3F: lighter on phones, and the HUD is simple panels). **Zustand vanilla** store (`src/state/store.ts`) drives the HTML/CSS HUD. It persists cart, language and settings.

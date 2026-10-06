@@ -25,6 +25,8 @@ export class Engine {
   /** Bloom composer, only while quality.bloom (High). */
   private post: BloomPipeline | null = null
   private readonly antialias: boolean
+  /** Dynamic resolution multiplier on the tier's pixel ratio (1 = full). */
+  private resScale = 1
   private readonly listeners: ((q: QualitySettings) => void)[] = []
 
   constructor(container: HTMLElement, level: QualityLevel) {
@@ -99,10 +101,22 @@ export class Engine {
   setQuality(level: QualityLevel): void {
     if (level === this.quality.level) return
     this.quality = qualitySettings(level)
+    this.resScale = 1
     this.renderer.setPixelRatio(this.quality.pixelRatio)
     this.syncPost()
     this.resize()
     for (const fn of this.listeners) fn(this.quality)
+  }
+
+  get resolutionScale(): number {
+    return this.resScale
+  }
+
+  setResolutionScale(scale: number): void {
+    if (scale === this.resScale) return
+    this.resScale = scale
+    this.renderer.setPixelRatio(this.quality.pixelRatio * scale)
+    this.resize()
   }
 
   private size = { w: 0, h: 0 }

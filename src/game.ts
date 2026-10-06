@@ -2,7 +2,7 @@
 
 import { Mesh, MeshBasicMaterial, Raycaster, RingGeometry, Timer, Vector2, Vector3 } from 'three'
 import type { Engine } from './engine/renderer'
-import { FpsGovernor, QUALITY_ORDER, type QualityLevel } from './engine/quality'
+import { FpsGovernor, QUALITY_ORDER, RES_SCALE_MIN, resolutionStep, type QualityLevel } from './engine/quality'
 import { TextureWarmer } from './engine/textureWarmer'
 import { withinGate } from './engine/hysteresis'
 import type { CollisionWorld } from './engine/colliders'
@@ -10,7 +10,8 @@ import { rectContains, shopArrival, shopZone, type MallLayout } from './config/l
 import { Input, type Action } from './player/input'
 import { TouchControls } from './player/touch'
 import { Player } from './player/player'
-import { floorPoint } from './player/controlsMath'
+import { floorPoint, shouldRender } from './player/controlsMath'
+import { onBackButton, setHaptics } from './platform/native'
 import { Interaction } from './interact/interaction'
 import { Character, type Persona } from './actors/character'
 import { avatarLook } from './actors/palette'
@@ -84,6 +85,7 @@ export class Game implements GameBridge {
     document.body.appendChild(this.fade)
 
     this.governor = new FpsGovernor(() => this.autoDowngrade())
+    this.governor.onWindow = (fps) => this.tuneResolution(fps)
     this.warmer = new TextureWarmer(engine.renderer, engine.scene)
 
     // Third-person avatar
@@ -118,6 +120,18 @@ export class Game implements GameBridge {
     })
     watch((s) => s.phase, () => this.syncControl())
     watch((s) => s.view, (v) => (this.player.view = v))
+    watch((s) => s.sprint, (on) => (this.input.sprint = on))
+    watch((s) => s.sensitivity, (v) => this.touch && (this.touch.sensitivity = v))
+    watch((s) => s.haptics, (on) => setHaptics(on))
+    // Android back: close the open overlay, else open the menu, else leave the app.
+    onBackButton(() => {
+      const s = store.getState()
+      if (s.phase !== 'playing') return false
+      if (s.overlay === 'menu') return false
+      if (s.overlay) this.resume()
+      else s.set({ overlay: 'menu' })
+      return true
+    })
     watch((s) => s.music, (m) => audio.setMusic(m))
     watch((s) => s.sound, (m) => audio.setSfx(m))
     watch((s) => s.lang, () => this.interaction.refresh())
@@ -300,8 +314,21 @@ export class Game implements GameBridge {
     store.getState().set({ activeQuality: level })
   }
 
+  private resStreak = 0
+
+  /** Dynamic resolution on phones (auto quality): trade pixels for frame rate before dropping a tier. */
+  private tuneResolution(fps: number): void {
+    const s = store.getState()
+    if (!this.isTouch || s.quality !== 'auto' || s.phase !== 'playing' || document.hidden) return
+    const r = resolutionStep(this.engine.resolutionScale, fps, s.fpsCap || 60, this.resStreak)
+    this.resStreak = r.streak
+    this.engine.setResolutionScale(r.scale)
+  }
+
   private autoDowngrade(): boolean {
     if (store.getState().quality !== 'auto') return false
+    // Phones shed resolution first; a tier only drops once that has bottomed out.
+    if (this.isTouch && this.engine.resolutionScale > RES_SCALE_MIN) return false
     const i = QUALITY_ORDER.indexOf(this.engine.quality.level)
     if (i <= 0) return false
     this.applyQuality(QUALITY_ORDER[i - 1])
@@ -324,8 +351,11 @@ export class Game implements GameBridge {
 
   start(): void {
     this.timer.connect(document)
+    let last = -1e9
     const loop = (ts: number) => {
       requestAnimationFrame(loop)
+      if (!shouldRender(ts, last, store.getState().fpsCap)) return
+      last = ts
       this.timer.update(ts)
       this.tick()
     }

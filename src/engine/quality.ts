@@ -38,7 +38,8 @@ export function qualitySettings(level: QualityLevel): QualitySettings {
 }
 
 export function isTouchDevice(): boolean {
-  return matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 1
+  // ?touch forces the touch HUD on a desktop browser (layout checks).
+  return matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 1 || new URLSearchParams(location.search).has('touch')
 }
 
 /** Best guess from device class and GPU string; refined at runtime by the FPS governor. */
@@ -79,6 +80,8 @@ export class FpsGovernor {
   private cooldown = 3
   fps = 60
   private readonly onDowngrade: () => boolean
+  /** Called with the average fps of each 2 s window (dynamic resolution). */
+  onWindow: (fps: number) => void = () => {}
 
   constructor(onDowngrade: () => boolean) {
     this.onDowngrade = onDowngrade
@@ -91,10 +94,27 @@ export class FpsGovernor {
     this.fps = this.frames / this.acc
     this.frames = 0
     this.acc = 0
+    this.onWindow(this.fps)
     if (this.cooldown > 0) {
       this.cooldown--
       return
     }
     if (this.fps < 28 && this.onDowngrade()) this.cooldown = 3
   }
+}
+
+export const RES_SCALE_MIN = 0.7
+
+/**
+ * Dynamic resolution (touch + auto quality): one step per governor window. Drops the render
+ * scale when the frame rate misses the target, and raises it again only after three good
+ * windows in a row so it doesn't oscillate.
+ */
+export function resolutionStep(scale: number, fps: number, target: number, streak: number): { scale: number; streak: number } {
+  if (fps < target * 0.85) return { scale: Math.max(RES_SCALE_MIN, Math.round((scale - 0.1) * 100) / 100), streak: 0 }
+  if (fps >= target * 0.95 && scale < 1) {
+    if (streak + 1 >= 3) return { scale: Math.min(1, Math.round((scale + 0.05) * 100) / 100), streak: 0 }
+    return { scale, streak: streak + 1 }
+  }
+  return { scale, streak: 0 }
 }

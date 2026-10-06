@@ -25,6 +25,10 @@ export class Input {
   dragLook = new URLSearchParams(location.search).has('nolock')
   /** Pending tap/click position to interact with (screen px), consumed by Interaction. */
   tap: { x: number; y: number } | null = null
+  /** Run mode (touch sprint button). */
+  sprint = false
+  /** Sprint lock: keep running forward with no thumb on the stick. */
+  autoRun = false
   /** When false (overlay open), movement and look are ignored. */
   enabled = false
 
@@ -150,12 +154,13 @@ export class Input {
     if (k.has('KeyA')) x -= 1
     x += this.stick.x
     y += this.stick.y
+    if (this.autoRun && !x && !y) y = 1
     const len = Math.hypot(x, y)
     if (len > 1) {
       x /= len
       y /= len
     }
-    const run = k.has('ShiftLeft') || k.has('ShiftRight') || Math.hypot(this.stick.x, this.stick.y) > 0.92
+    const run = k.has('ShiftLeft') || k.has('ShiftRight') || this.sprint || this.autoRun || Math.hypot(this.stick.x, this.stick.y) > 0.92
     return { x, y, run }
   }
 

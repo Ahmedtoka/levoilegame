@@ -23,6 +23,8 @@ export function mountMinimap(root: HTMLElement, game: GameBridge, getMarker: () 
   canvas.height = H * dpr
   canvas.style.width = `${W}px`
   canvas.style.height = `${H}px`
+  // Lets the landscape touch layout park the live chips beside the map (app.css).
+  document.documentElement.style.setProperty('--minimap-w', `${W + 16}px`)
   const g = canvas.getContext('2d')!
   g.scale(dpr, dpr)
   const px = (x: number) => (x - b.x0) * scale
