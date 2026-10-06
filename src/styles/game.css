@@ -529,3 +529,83 @@
     object-fit: cover;
   }
 }
+
+/* Section slider on landscape phones: the cover-flow keeps the stage; head, info and the
+   thumbnail strip go slim so everything fits in ~390 px without scrolling. */
+@media (max-height: 520px) {
+  .touch .slider {
+    height: calc(100dvh - 8px);
+  }
+
+  .touch .sl-head {
+    align-items: center;
+    padding: 2px 8px 0;
+  }
+
+  .touch .sl-head .eyebrow {
+    display: none;
+  }
+
+  .touch .sl-head h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .touch .sl-head .close {
+    width: 36px;
+    height: 36px;
+  }
+
+  .touch .sl-stage {
+    min-height: 0;
+  }
+
+  .touch .sl-nav {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Count · title · price and the View button on one line under the stage. */
+  .touch .sl-info {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .touch .sl-info h3 {
+    margin: 0;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .touch .sl-price {
+    font-size: 14px;
+  }
+
+  .touch .sl-actions {
+    padding: 4px 0 2px;
+  }
+
+  .touch .sl-actions .btn {
+    min-height: 36px;
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+
+  .touch .sl-thumbs {
+    display: flex;
+    justify-content: center;
+    padding: 2px 4px 2px;
+  }
+
+  .touch .sl-thumb {
+    width: 32px;
+    height: 40px;
+    border-radius: 7px;
+  }
+}
