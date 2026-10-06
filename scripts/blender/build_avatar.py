@@ -886,12 +886,20 @@ def apply_plugins(objs, arm, body):
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         for name, (factory, part) in getattr(mod, "PIECES", {}).items():
+            # Free the name first: Blender would otherwise export the new piece as "<name>.001",
+            # which the runtime (kit.ts, PIECE_PART by exact name) never finds.
             old = objs.get(name)
+            if old is not None:
+                old.name = name + "_default"
+                if old.data:
+                    old.data.name = name + "_default"
             ob = factory(ctx)
-            ob.name = name
-            ob["part"] = part
             if old is not None and old is not ob:
                 bpy.data.objects.remove(old, do_unlink=True)
+            ob.name = name
+            if ob.data:
+                ob.data.name = name
+            ob["part"] = part
             objs[name] = ob
             print("PLUGIN", os.path.basename(path), "->", name)
 
