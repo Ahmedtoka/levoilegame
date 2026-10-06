@@ -145,6 +145,194 @@ def leg_weights(p, rx, hip_z=HIP_Z, hem_z=0.06, strength=0.9, ry=None, panels=Tr
     return out
 
 
+# ---------------------------------------------------------------- fitted lofts
+# Garments are smooth tubes fitted to the body's measurements (no muscle detail):
+# an ellipse per height for the torso, a circle per station along each arm / leg.
+
+
+def body_points(body, pred, by_bone=None):
+    """Vertices passing pred(co); with by_bone(dominant_bone_name) only those bones' vertices."""
+    dom = dominant(body) if by_bone else None
+    return [v.co.copy() for v in body.data.vertices if pred(v.co) and (by_bone is None or by_bone(dom.get(v.index, "")))]
+
+
+def torso_sections(body, z0, z1, step=0.02, ease=0.0):
+    """(z, rx, ry, cy) per height from the body's torso silhouette, plus `ease` of room."""
+    pts = body_points(body, lambda p: abs(p.x) < 0.21 and z0 - 0.03 <= p.z <= z1 + 0.03)
+    out = []
+    z = z0
+    while z <= z1 + 1e-6:
+        sl = [p for p in pts if abs(p.z - z) < step]
+        if len(sl) >= 6:
+            rx = max(abs(p.x) for p in sl)
+            ys = [p.y for p in sl]
+            out.append((z, rx + ease, (max(ys) - min(ys)) / 2 + ease, (max(ys) + min(ys)) / 2))
+        z += step
+    # Light smoothing along the height so the loft has no steps.
+    sm = []
+    for i, (z, rx, ry, cy) in enumerate(out):
+        nb = out[max(0, i - 1): i + 2]
+        sm.append((z, sum(r[1] for r in nb) / len(nb), sum(r[2] for r in nb) / len(nb), sum(r[3] for r in nb) / len(nb)))
+    return sm
+
+
+def limb_sections(body, pred, axis, a0, a1, step=0.02, ease=0.0, by_bone=None, r_max=0.2):
+    """(a, c, r) stations along `axis` ('x' arms, 'z' legs): centre and radius of the limb there."""
+    pts = body_points(body, pred, by_bone)
+    out = []
+    a = a0
+    k = 0 if axis == "x" else 2
+    forward = a1 >= a0
+    while (a <= a1 + 1e-6) if forward else (a >= a1 - 1e-6):
+        sl = [p for p in pts if abs(p[k] - a) < step]
+        if len(sl) >= 5:
+            c = sum(sl, Vector()) / len(sl)
+            c[k] = a
+            r = min(r_max, max((p - c).length for p in sl))
+            out.append((a, c, r + ease))
+        a += step if forward else -step
+    sm = []
+    for i, (a, c, r) in enumerate(out):
+        nb = out[max(0, i - 1): i + 2]
+        sm.append((a, sum((x[1] for x in nb), Vector()) / len(nb), sum(x[2] for x in nb) / len(nb)))
+    return sm
+
+
+def loft_torso(b, secs, n=28):
+    rings = [ellipse((0, cy, z), (1, 0, 0), (0, 1, 0), rx, ry, n) for z, rx, ry, cy in secs]
+    return b.loft(rings)
+
+
+def loft_limb(b, secs, axis, n=14, cap_start=False, cap_end=False):
+    if axis == "x":
+        u, v = Vector((0, 1, 0)), Vector((0, 0, 1))
+    else:
+        u, v = Vector((1, 0, 0)), Vector((0, 1, 0))
+    rings = [ellipse(c, u, v, r, r, n) for a, c, r in secs]
+    # Outward normals: rings must progress along +axis.
+    if secs[0][0] > secs[-1][0]:
+        rings.reverse()
+        cap_start, cap_end = cap_end, cap_start
+    return b.loft(rings, cap_start=cap_start, cap_end=cap_end)
+
+
+def top_weights(p):
+    """Torso column + clavicle blend at the shoulders; sleeves by distance along the arm."""
+    ax = abs(p.x)
+    sd = "l" if p.x >= 0 else "r"
+    if ax > 0.19 and p.z > 1.3:
+        if ax < 0.27:
+            t = smooth(0.19, 0.27, ax)
+            return {"clavicle_" + sd: 0.6 * (1 - t), "upperarm_" + sd: 0.4 + 0.6 * t}
+        if ax < 0.34:
+            return {"upperarm_" + sd: 1.0}
+        if ax < 0.42:
+            t = smooth(0.34, 0.42, ax)
+            return {"upperarm_" + sd: 1 - t, "lowerarm_" + sd: t}
+        if ax < 0.61:
+            return {"lowerarm_" + sd: 1.0}
+        return {"lowerarm_" + sd: 0.7, "hand_" + sd: 0.3}
+    out = spine_weights(p.z)
+    k = smooth(0.09, 0.17, ax) * smooth(1.33, 1.43, p.z) * (1 - smooth(1.46, 1.50, p.z)) * 0.55
+    if k > 0:
+        out = {bn: wt * (1 - k) for bn, wt in out.items()}
+        out["clavicle_" + sd] = out.get("clavicle_" + sd, 0) + k
+    return out
+
+
+def leg_tube_weights(p):
+    sd = "l" if p.x >= 0 else "r"
+    z = p.z
+    if z > 0.96:
+        t = smooth(0.96, 1.03, z)
+        return {"thigh_" + sd: 1 - t, "pelvis": t}
+    if z > 0.56:
+        return {"thigh_" + sd: 1.0}
+    if z > 0.46:
+        t = smooth(0.56, 0.46, z)
+        return {"thigh_" + sd: 1 - t, "calf_" + sd: t}
+    if z > 0.12:
+        return {"calf_" + sd: 1.0}
+    t = smooth(0.12, 0.06, z)
+    return {"calf_" + sd: 1 - t, "foot_" + sd: t}
+
+
+def piece_top(body, ease, sleeve_ease, z_top=COLLAR_Z):
+    """Long-sleeved top: fitted torso tube (hips to the jaw, high collar) + sleeves to the wrist."""
+    b = Builder()
+    loft_torso(b, torso_sections(body, HIP_Z - 0.02, z_top, ease=ease))
+    for sgn in (1, -1):
+        arm = lambda p, sgn=sgn: sgn * p.x > 0.17 and sgn * p.x < 0.645 and p.z > 1.28
+        secs = limb_sections(body, arm, "x", sgn * 0.19, sgn * 0.655, ease=sleeve_ease)
+        loft_limb(b, secs, "x", cap_start=True)
+    return b, top_weights
+
+
+def piece_vest_fitted(body):
+    b = Builder()
+    secs = torso_sections(body, HIP_Z + 0.02, 1.46, ease=0.034)
+    loft_torso(b, secs, n=28)
+    # Open front and arm holes.
+    keep = []
+    for f in b.faces:
+        vs = [b.verts[i] for i in f]
+        if all(v.y < -0.1 and abs(v.x) < 0.03 for v in vs):
+            continue
+        if all(abs(v.x) > 0.13 and v.z > 1.30 for v in vs):
+            continue
+        keep.append(f)
+    b.faces = keep
+    return b, lambda p: spine_weights(p.z)
+
+
+def piece_tunic_fitted(body):
+    """Hip tunic: from the waist down to mid-thigh, flaring a little."""
+    b = Builder()
+    base = torso_sections(body, 0.98, 1.08, ease=0.06)
+    z0, rx0, ry0, cy0 = base[0]
+    secs = []
+    for i in range(11):
+        z = 1.08 - i * 0.045
+        f = 0.05 * (1.08 - z) / 0.45
+        secs.append((z, rx0 + f * 1.2, ry0 + f, cy0))
+    secs.reverse()
+    loft_torso(b, secs)
+    table = [(z, rx, ry) for z, rx, ry, _ in secs]
+    return b, lambda p: leg_weights(p, _at(table, p.z, 1), hip_z=1.0, hem_z=0.66, strength=0.7, ry=_at(table, p.z, 2))
+
+
+# Leg radius by fraction of the way down (0 = hip joint, 1 = ankle), UBC female.
+LEG_RADIUS = [(0.0, 0.108), (0.25, 0.092), (0.5, 0.072), (0.75, 0.066), (1.0, 0.052)]
+
+
+def piece_legs_fitted(arm, ease, flare=0.0):
+    """Two smooth tubes along the leg bones (hip -> knee -> ankle); `flare` widens below the knee (wide trousers)."""
+    b = Builder()
+    bones = arm.data.bones
+    for sd in ("l", "r"):
+        hip, knee, ankle = (Vector(bones[n + "_" + sd].head_local) for n in ("thigh", "calf", "foot"))
+        # The tube starts a little above the hip joint (under the top / tunic) and ends at the ankle.
+        top = hip + Vector((0, 0, 0.06))
+        path = [(top, 0.0), (hip, 0.08), (knee, 0.55), (ankle, 1.0)]
+        rings = []
+        for i in range(len(path) - 1):
+            (p0, t0), (p1, t1) = path[i], path[i + 1]
+            n = 6 if i < 2 else 8
+            for k in range(n):
+                f = k / n
+                c = p0.lerp(p1, f)
+                t = lerp(t0, t1, f)
+                # Under the tunic / top hem (upper thigh) the tube stays snug so it never pokes through them.
+                r = _at([(x, y) for x, y in LEG_RADIUS], t, 1) * lerp(0.9, 1.0, smooth(0.3, 0.5, t)) + ease * smooth(0.3, 0.5, t) + flare * smooth(0.5, 1.0, t)
+                rings.append((c, r))
+        rings.append((ankle, LEG_RADIUS[-1][1] + ease + flare))
+        # Rings run bottom-up so the loft's normals face outward.
+        rings.reverse()
+        loft = [ellipse(c, (1, 0, 0), (0, 1, 0), r, r * 0.96, 16) for c, r in rings]
+        b.loft(loft)
+    return b, leg_tube_weights
+
+
 # ---------------------------------------------------------------- scene
 
 
@@ -415,7 +603,8 @@ SKIRT_Y = 0.04  # the hips sit a little behind the origin
 
 
 def _at(sections, z, k):
-    s = sorted(sections)
+    """Linear interpolation of column k of (key, ...) rows at key z (clamped at the ends)."""
+    s = sorted(sections, key=lambda r: r[0])
     for a, b in zip(s, s[1:]):
         if a[0] <= z <= b[0]:
             return lerp(a[k], b[k], (z - a[0]) / (b[0] - a[0]))
@@ -512,9 +701,9 @@ def drape(b, long):
             t = (1.50 - z) / 0.12
             k = math.sin(t * math.pi / 2)
             # Wide enough to clear the loosened tops underneath (they hang ~3 cm proud of the chest).
-            return lerp(0.094, 0.235, k), lerp(0.094, 0.205, k), lerp(0.03, 0.02, t)
+            return lerp(0.094, 0.225, k), lerp(0.094, 0.185, k), lerp(0.03, 0.02, t)
         t = smooth(1.38, 1.15, z)
-        return lerp(0.235, 0.225, t), lerp(0.205, 0.200, t), 0.02
+        return lerp(0.225, 0.205, t), lerp(0.185, 0.175, t), 0.02
 
     def hem(a):
         return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
@@ -598,40 +787,22 @@ def build():
     objs["eyes"], objs["brows"] = eyes, brows
 
     # Garments: offset shells of the body (fit + skin weights for free).
-    chin_front = lambda p: p.y < -0.03 and p.z > 1.552
-    torso = lambda v, d: (not is_hand(d)) and (not is_foot(d)) and HIP_Z - 0.02 <= v.co.z <= COLLAR_Z and not chin_front(v.co)
-    edges = lambda p: p.z < HIP_Z + 0.01 or abs(p.x) > 0.62  # hem and cuffs stay put
-    objs["upper"] = cut(body, torso, "upper", "top")
-    relax(objs["upper"], 18, pin=edges)
-    loosen_chest(objs["upper"], 0.03)
-    offset(objs["upper"], 0.024)
-    objs["upper_abaya"] = cut(body, torso, "upper_abaya", "top")
-    relax(objs["upper_abaya"], 22, pin=edges)
-    loosen_chest(objs["upper_abaya"], 0.045)
-    offset(objs["upper_abaya"], lambda p: 0.03 + 0.025 * smooth(0.25, 0.6, abs(p.x)))
-    objs["vest"] = cut(body, lambda v, d: (not is_hand(d)) and abs(v.co.x) < 0.185 and HIP_Z + 0.02 <= v.co.z <= 1.47, "vest", "vest")
-    relax(objs["vest"], 16)
-    loosen_chest(objs["vest"], 0.03)
-    offset(objs["vest"], 0.032)
-    open_front(objs["vest"])
-    objs["tunic"] = cut(body, lambda v, d: (not is_hand(d)) and 0.66 <= v.co.z <= 1.06 and abs(v.co.x) < 0.24, "tunic", "top")
-    relax(objs["tunic"], 8)
-    offset(objs["tunic"], lambda p: 0.026 + 0.05 * smooth(1.06, 0.66, p.z))
-    legs = lambda v, d: (is_leg(d) or d == "pelvis") and v.co.z <= 1.03
-    objs["leggings"] = cut(body, legs, "leggings", "bottom")
-    relax(objs["leggings"], 4)
-    offset(objs["leggings"], 0.006)
-    objs["trousers"] = cut(body, legs, "trousers", "bottom")
-    relax(objs["trousers"], 16)
-    offset(objs["trousers"], lambda p: 0.022 + 0.05 * smooth(0.75, 0.12, p.z))
+    # Garments: smooth tubes fitted to the body's measurements (never its surface detail).
+    objs["upper"] = make_object("upper", *piece_top(body, 0.024, 0.014), arm, "top")
+    objs["upper_abaya"] = make_object("upper_abaya", *piece_top(body, 0.04, 0.03), arm, "top")
+    objs["vest"] = make_object("vest", *piece_vest_fitted(body), arm, "vest")
+    objs["tunic"] = make_object("tunic", *piece_tunic_fitted(body), arm, "top")
+    objs["leggings"] = make_object("leggings", *piece_legs_fitted(arm, 0.006), arm, "bottom")
+    objs["trousers"] = make_object("trousers", *piece_legs_fitted(arm, 0.024, flare=0.055), arm, "bottom")
     objs["shoes"] = cut(body, lambda v, d: is_foot(d) or (is_leg(d) and v.co.z < 0.1), "shoes", "shoes")
-    relax(objs["shoes"], 10)
+    relax(objs["shoes"], 14)
     offset(objs["shoes"], 0.012)
 
     # Hijab: head shell with the face open, then the chin wrap and drape.
     for name, long in (("hijab_classic", False), ("hijab_long", True)):
         shell = cut(body, lambda v, d: d == "Head" and v.co.z >= 1.555 and not face_zone(v.co), name, "hijab")
-        offset(shell, 0.013)
+        relax(shell, 6, factor=0.4, pin=lambda p: face_zone(Vector((p.x, p.y - 0.03, p.z))))
+        offset(shell, 0.014)
         scale_head(shell)
         b = Builder()
         drape(b, long)
