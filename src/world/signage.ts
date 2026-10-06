@@ -308,6 +308,36 @@ export function comingSoonTexture(): CanvasTexture {
   return canvasTexture(c)
 }
 
+/** Pop-up unit with no guest brand this month: plum hoarding, "122 Pop-up · Book this space". */
+export function popupTexture(): CanvasTexture {
+  const [c, g] = makeCanvas(1024, 640)
+  const grad = g.createLinearGradient(0, 0, 0, 640)
+  grad.addColorStop(0, '#5b2b82')
+  grad.addColorStop(1, '#3e1c5c')
+  g.fillStyle = grad
+  g.fillRect(0, 0, 1024, 640)
+  g.strokeStyle = 'rgba(232,194,122,0.8)'
+  g.lineWidth = 6
+  g.strokeRect(24, 24, 976, 592)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.fillStyle = '#f4ede3'
+  g.font = `600 44px ${BRAND.fontLatin}`
+  g.fillText(spaced('DISTRICT 122'), 512, 120)
+  g.font = `700 120px ${BRAND.fontLatin}`
+  g.fillText('POP-UP', 512, 260)
+  g.font = `500 40px ${BRAND.fontLatin}`
+  g.fillText("This month's guest brand", 512, 380)
+  g.direction = 'rtl'
+  g.font = `700 46px ${BRAND.fontUi}`
+  g.fillText('براندك هنا الشهر الجاي · احجز المساحة', 512, 470)
+  g.direction = 'ltr'
+  g.fillStyle = '#e8c27a'
+  g.font = `600 34px ${BRAND.fontLatin}`
+  g.fillText('BOOK THIS SPACE', 512, 556)
+  return canvasTexture(c)
+}
+
 /** Square double-sided blade sign that sticks out over the corridor. */
 export function bladeSign(section: Section, brand?: Monogram): CanvasTexture {
   if (brand) {

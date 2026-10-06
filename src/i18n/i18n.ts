@@ -23,6 +23,7 @@ const STRINGS = {
   studio: { ar: 'ستوديو الستايلينج', en: 'Styling Studio' },
   comingSoon: { ar: 'قريباً', en: 'Coming Soon' },
   popup: { ar: 'بوب أب ١٢٢', en: '122 Pop-up' },
+  popupBook: { ar: 'احجز المساحة دي لبراندك', en: 'Book this space for your brand' },
   entrance: { ar: 'المدخل', en: 'Entrance' },
   fitting: { ar: 'غرف القياس', en: 'Fitting rooms' },
   store: { ar: 'المحل', en: 'Store' },

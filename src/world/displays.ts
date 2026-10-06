@@ -35,7 +35,8 @@ export const OAK = new MeshStandardMaterial({ color: '#b98a5c', roughness: 0.55 
 export const OAK_DARK = new MeshStandardMaterial({ color: '#8c6644', roughness: 0.6 })
 export const CREAM = new MeshStandardMaterial({ color: BOUTIQUE_CREAM, roughness: 0.8 })
 export const BRONZE = new MeshStandardMaterial({ color: '#a8835a', roughness: 0.35, metalness: 0.7 })
-const HL = new MeshBasicMaterial({ color: BRAND.magenta, toneMapped: false })
+export const HOVER_MAT = new MeshBasicMaterial({ color: BRAND.magenta, toneMapped: false })
+const HL = HOVER_MAT
 const PLACEHOLDER: Material = new MeshStandardMaterial({ color: '#eee6dd', roughness: 0.9 })
 export const CARD_W = 0.42
 
@@ -192,7 +193,7 @@ function panelTexture(cells: Product[], cols: number, rows: number, W: number, H
 const frames = new Map<string, BufferGeometry>()
 
 /** Thin rectangular frame (w × h outside) used as the hover outline. */
-function frameGeometry(w: number, h: number): BufferGeometry {
+export function frameGeometry(w: number, h: number): BufferGeometry {
   const key = `${w.toFixed(3)}x${h.toFixed(3)}`
   let g = frames.get(key)
   if (!g) {
