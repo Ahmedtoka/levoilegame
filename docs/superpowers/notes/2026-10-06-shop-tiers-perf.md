@@ -18,3 +18,16 @@ Same machine and viewport for before and after. Absolute ms are pessimistic: `gl
 | medium | atrium | 16.1 | 146 | 227 k | 553 |
 | low | pistage | 15.4 | 125 | 178 k | 553 |
 | low | axis | 22.0 | 163 | 177 k | 553 |
+
+## After tiers (Task 6, commit 144892f)
+
+| Quality | Target | ms/frame | Draw calls | Triangles | Textures (cumulative) |
+|---|---|---|---|---|---|
+| low | pistage (flagship) | 10.9 | 116 | 221 k | 295 |
+| low | nourhan (flagship) | 10.8 | 66 | 221 k | 333 |
+| low | axis (compact) | 14.9 | 67 | 217 k | 358 |
+| medium | pistage | 17.1 | 128 | 243 k | 365 |
+| medium | nourhan | 10.5 | 76 | 243 k | 368 |
+| medium | axis | 9.3 | 72 | 238 k | 368 |
+
+The shop-interior cost no longer grows with product count. Flagships are at or below the baseline's draw calls, and the compact Axis drops from 163 to ~70 calls.
