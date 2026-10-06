@@ -1,0 +1,123 @@
+{
+  "label": "baseline",
+  "date": "2026-10-06T19:37:20.433Z",
+  "base": "http://127.0.0.1:5190/",
+  "viewport": {
+    "width": 844,
+    "height": 390
+  },
+  "dpr": 2,
+  "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x000046A3) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "override": "C:/Users/AzzaB/AppData/Local/Temp/claude/C--xampp-htdocs-LevoileGame/0de9760f-89d7-4f67-8d5e-4c2ff6e568af/scratchpad/override",
+  "rows": [
+    {
+      "spot": "atrium-entrance",
+      "quality": "medium",
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x000046A3) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "viewport": [
+        844,
+        390
+      ],
+      "dpr": 2,
+      "resolutionScale": 1,
+      "bootS": 16.5,
+      "zone": "atrium",
+      "msFrame": 27.81,
+      "msMedian": 25.4,
+      "msP95": 48.1,
+      "msInterval": 37,
+      "fps": 27,
+      "calls": 191,
+      "callsMax": 194,
+      "triangles": 547673,
+      "textures": 261,
+      "textureMB": 1297.6,
+      "textureMBScene": 1429.6,
+      "texHist": "4096:9 2048:40 1024:156 512:35 <512:9",
+      "frames": 150,
+      "settleS": 34.6,
+      "settled": true,
+      "pos": [
+        0,
+        -3.2
+      ],
+      "screenshot": "screenshots/bench/baseline/atrium-entrance-medium.png",
+      "docShot": "docs/superpowers/notes/bench/baseline/atrium-entrance-medium.jpg",
+      "cpuThrottle": 1,
+      "wallS": 57.6
+    },
+    {
+      "spot": "wing-north-mid",
+      "quality": "medium",
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x000046A3) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "viewport": [
+        844,
+        390
+      ],
+      "dpr": 2,
+      "resolutionScale": 1,
+      "bootS": 16,
+      "zone": "wing-north",
+      "msFrame": 22.35,
+      "msMedian": 21.3,
+      "msP95": 30.5,
+      "msInterval": 27.17,
+      "fps": 36.8,
+      "calls": 119,
+      "callsMax": 122,
+      "triangles": 407244,
+      "textures": 292,
+      "textureMB": 1517.4,
+      "textureMBScene": 1601.4,
+      "texHist": "4096:9 2048:51 1024:173 512:37 <512:9",
+      "frames": 150,
+      "settleS": 44.8,
+      "settled": true,
+      "pos": [
+        0,
+        -64
+      ],
+      "screenshot": "screenshots/bench/baseline/wing-north-mid-medium.png",
+      "docShot": "docs/superpowers/notes/bench/baseline/wing-north-mid-medium.jpg",
+      "cpuThrottle": 1,
+      "wallS": 65.9
+    },
+    {
+      "spot": "shop-pistage",
+      "quality": "medium",
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x000046A3) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "viewport": [
+        844,
+        390
+      ],
+      "dpr": 2,
+      "resolutionScale": 1,
+      "bootS": 11.9,
+      "zone": "pistage",
+      "msFrame": 23.05,
+      "msMedian": 22.2,
+      "msP95": 28.9,
+      "msInterval": 27.4,
+      "fps": 36.5,
+      "calls": 142,
+      "callsMax": 142,
+      "triangles": 372312,
+      "textures": 292,
+      "textureMB": 1516.1,
+      "textureMBScene": 1600.1,
+      "texHist": "4096:9 2048:51 1024:172 512:37 <512:9",
+      "frames": 150,
+      "settleS": 40.2,
+      "settled": true,
+      "pos": [
+        -9,
+        -46
+      ],
+      "screenshot": "screenshots/bench/baseline/shop-pistage-medium.png",
+      "docShot": "docs/superpowers/notes/bench/baseline/shop-pistage-medium.jpg",
+      "cpuThrottle": 1,
+      "wallS": 57.1
+    }
+  ],
+  "errors": []
+}

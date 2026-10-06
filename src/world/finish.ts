@@ -1,12 +1,15 @@
-// Finishing materials and geometry for the plaza and wing corridors:
-// warm gypsum ceilings, oak-veneer wainscot, marble-clad pilasters and the
-// large-format marble floor (one 2048 atlas with per-tile variation).
+// Finishing materials and geometry for the plaza and wing corridors (night mall):
+// charcoal ceilings, dark-oak wainscot, cream-marble pilasters and the large-format
+// dark marble floor (one 2048 atlas with per-tile variation, cut from the CC0
+// `marble-dark` library map). Wall and joinery surfaces come from `engine/pbr.ts`.
 //
 // Boxes and floor planes get UVs in world units (`uvBox`, `tiledPlane`), so
 // one material + one texture serves every size without per-mesh clones.
 
 import { BoxGeometry, BufferAttribute, Color, DoubleSide, MeshPhysicalMaterial, MeshStandardMaterial, PlaneGeometry, type BufferGeometry, type Texture } from 'three'
+import { pbrMaterial, pbrSize, pbrUrl } from '../engine/pbr'
 import { canvasTexture, makeCanvas, rng, storeTexture } from '../engine/textures'
+import { THEME } from './theme'
 
 /** World size of one floor tile (large format) and of the 4 × 4 atlas. */
 export const TILE = 1.2
@@ -54,20 +57,23 @@ export function tiledPlane(w: number, d: number, period: number, ox = 0, oz = 0)
 let atlas: Texture | null = null
 
 /**
- * 4 × 4 large-format marble tiles in one texture (2048, or `size` on the first call,
- * e.g. 1024 on Low): every tile is a different crop / rotation of the store marble with
- * a small tint shift, and a fine grout joint. Repeating 4 × 4 tiles hides the texture's period.
+ * 4 × 4 large-format dark marble tiles in one texture (2048, or `size` on the first call,
+ * e.g. 1024 on Low): every tile is a different crop / rotation of the `marble-dark` map
+ * (Nero Marquina style: near-black base, light veins) with a small tint shift, and a dark
+ * grout joint. Repeating 4 × 4 tiles hides the texture's period. Until the map arrives the
+ * atlas is flat `THEME.floor`.
  */
 export function floorAtlas(size = 2048): Texture {
   if (atlas) return atlas
-  if (typeof document === 'undefined') return (atlas = storeTexture('/textures/marble.jpg', [1, 1]))
+  const src = pbrUrl('marble-dark', 'color', size <= 1024 ? 512 : pbrSize())
+  if (typeof document === 'undefined') return (atlas = storeTexture(src, [1, 1]))
   const N = size
   const ts = N / ATLAS_TILES
   // Grout and bevel widths in px (2 and 1 at 2048), so joints keep their width in metres.
   const gw = Math.max(1, Math.round((2 * N) / 2048))
   const bw = Math.max(1, Math.round(N / 2048))
   const [c, g] = makeCanvas(N, N)
-  g.fillStyle = '#cfcac4'
+  g.fillStyle = THEME.floor
   g.fillRect(0, 0, N, N)
   const tex = canvasTexture(c, [1, 1])
   atlas = tex
@@ -78,7 +84,8 @@ export function floorAtlas(size = 2048): Texture {
       for (let i = 0; i < ATLAS_TILES; i++) {
         const x0 = i * ts
         const y0 = j * ts
-        const sw = 380 + r() * 220
+        // Crop 37–60 % of the map per tile: veins stay large-format, no two tiles alike.
+        const sw = img.width * (0.37 + r() * 0.23)
         const sx = r() * (img.width - sw)
         const sy = r() * (img.height - sw)
         g.save()
@@ -90,25 +97,25 @@ export function floorAtlas(size = 2048): Texture {
         if (r() < 0.5) g.scale(-1, 1)
         g.drawImage(img, sx, sy, sw, sw, -ts / 2, -ts / 2, ts, ts)
         g.restore()
-        // Per-tile variation: a slight warm/cool cast and ±brightness.
+        // Per-tile variation: a slight warm/cool cast and ±brightness (subtle: the stone is dark).
         const warm = r() < 0.5
-        g.fillStyle = warm ? `rgba(255,236,214,${0.05 + r() * 0.08})` : `rgba(226,230,236,${0.04 + r() * 0.06})`
+        g.fillStyle = warm ? `rgba(255,214,170,${0.03 + r() * 0.05})` : `rgba(200,210,232,${0.02 + r() * 0.04})`
         g.fillRect(x0, y0, ts, ts)
         const lift = r() - 0.45
-        g.fillStyle = lift > 0 ? `rgba(255,252,247,${lift * 0.22})` : `rgba(60,50,45,${-lift * 0.1})`
+        g.fillStyle = lift > 0 ? `rgba(255,250,240,${lift * 0.08})` : `rgba(0,0,0,${-lift * 0.3})`
         g.fillRect(x0, y0, ts, ts)
-        // Grout: dark joint on the top and left edge + bevel highlight
+        // Grout: dark joint on the top and left edge + a faint bevel highlight
         // (the next tile supplies the other side, so the atlas tiles seamlessly).
-        g.fillStyle = 'rgba(92,82,74,0.55)'
+        g.fillStyle = 'rgba(0,0,0,0.6)'
         g.fillRect(x0, y0, ts, gw)
         g.fillRect(x0, y0, gw, ts)
-        g.fillStyle = 'rgba(255,255,255,0.35)'
+        g.fillStyle = 'rgba(255,255,255,0.12)'
         g.fillRect(x0 + gw, y0 + gw, ts - gw, bw)
         g.fillRect(x0 + gw, y0 + gw, bw, ts - gw)
       }
     tex.needsUpdate = true
   }
-  img.src = '/textures/marble.jpg'
+  img.src = src
   return tex
 }
 
@@ -121,7 +128,7 @@ export const atlasPeriod = (tile = TILE) => tile * ATLAS_TILES
  * follows its own mirror.
  */
 export function corridorFloorMat(): MeshStandardMaterial {
-  return new MeshStandardMaterial({ map: floorAtlas(), vertexColors: true, roughness: 0.2, metalness: 0.04 })
+  return new MeshStandardMaterial({ map: floorAtlas(), vertexColors: true, roughness: THEME.roughness.floor, metalness: 0.04 })
 }
 
 /** `tiledPlane` with a constant vertex colour (sRGB hex), for merging differently tinted floor parts. */
@@ -135,30 +142,24 @@ export function tintedPlane(g: BufferGeometry, hex: string): BufferGeometry {
 }
 
 // ------------------------------------------------------------- ceilings
-/** Warm off-white matte gypsum (plaza + corridor ceilings). The emissive lift
- * keeps the underside from reading grey: the hemisphere light barely reaches it. */
+/** Matte charcoal ceiling (plaza + corridor slabs, beams): it vanishes into the dark;
+ * the slot lights and halos draw the edges. No emissive lift (the night mall wants it dark).
+ * The name is historical (it was warm gypsum); kept so every ceiling builder compiles. */
 export const GYPSUM = new MeshStandardMaterial({
-  color: '#efe9e1',
-  roughness: 0.95,
-  emissive: new Color('#a89a8a'),
-  emissiveIntensity: 1,
+  color: THEME.ceiling,
+  roughness: THEME.roughness.ceiling,
+  metalness: 0,
 })
 
 // ---------------------------------------------------------------- walls
-let oak: MeshStandardMaterial | null = null
-/** Oak veneer (wainscot): the store's oak grain warmed to a honey tone. */
+/** Dark oak (wainscot, joinery): the CC0 oak map tinted to `THEME.oak`. */
 export function oakVeneerMat(): MeshStandardMaterial {
-  if (oak) return oak
-  const map = typeof document === 'undefined' ? null : storeTexture('/textures/oak-grain.jpg', [1, 1])
-  return (oak = new MeshStandardMaterial({ map, color: '#c79a6c', roughness: 0.55 }))
+  return pbrMaterial('oak-dark', { color: THEME.oak })
 }
 
-let cladding: MeshStandardMaterial | null = null
-/** Polished marble cladding for the pilasters. */
+/** Cream marble cladding for the pilasters (CC0 `marble-cream`). */
 export function marbleCladMat(): MeshStandardMaterial {
-  if (cladding) return cladding
-  const map = typeof document === 'undefined' ? null : storeTexture('/textures/marble.jpg', [1, 1])
-  return (cladding = new MeshStandardMaterial({ map, color: '#ffffff', roughness: 0.22, metalness: 0.05, emissive: new Color('#7a736b'), emissiveIntensity: 0.8 }))
+  return pbrMaterial('marble-cream')
 }
 
 // ------------------------------------------------------------------ glass

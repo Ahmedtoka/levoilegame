@@ -16,6 +16,7 @@ import { setMaxAnisotropy } from './textures'
 import { FLOOR_FX_LAYER, MIRROR_LAYER } from './layers'
 import { BloomPipeline, bloomSupported } from './post'
 import { setBloomSources } from './bloom'
+import { THEME } from '../world/theme'
 
 export class Engine {
   readonly renderer: WebGLRenderer
@@ -39,7 +40,7 @@ export class Engine {
     })
     this.renderer.outputColorSpace = SRGBColorSpace
     this.renderer.toneMapping = ACESFilmicToneMapping
-    this.renderer.toneMappingExposure = 0.92
+    this.renderer.toneMappingExposure = THEME.lighting.exposure
     this.renderer.setPixelRatio(this.quality.pixelRatio)
     this.renderer.setSize(window.innerWidth, window.innerHeight, false)
     // Frames can be several renderer.render() calls (mirror passes, bloom): count the whole frame.
@@ -52,18 +53,21 @@ export class Engine {
     // Floor-level overlays (AO strips, light pools, contact shadows) live on FLOOR_FX_LAYER:
     // the main camera sees them, the floor reflector's virtual camera (layer 0 only) skips them.
     this.camera.layers.enable(FLOOR_FX_LAYER)
-    this.scene.background = new Color('#ebe4da')
-    this.scene.fog = new Fog('#ebe4da', 45, 120)
+    // Night mall (world/theme.ts): the far end of a corridor fades into a warm near-black.
+    this.scene.background = new Color(THEME.fog)
+    this.scene.fog = new Fog(THEME.fog, THEME.fogNear, THEME.fogFar)
 
-    // Soft studio-like image-based lighting gives the premium "showroom" look
-    // for almost no cost; two real lights add direction.
+    // A low studio environment keeps bronze and marble reflective for almost no cost;
+    // the warm hemisphere from above and a faint sun give the light its direction. The
+    // visible light comes from the décor: lightboxes, slot lights, halos, pools and washes.
+    const { lighting } = THEME
     const pmrem = new PMREMGenerator(this.renderer)
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
-    this.scene.environmentIntensity = 0.42
+    this.scene.environmentIntensity = lighting.env
     pmrem.dispose()
 
-    const hemi = new HemisphereLight('#fff3e6', '#b9a796', 0.75)
-    const sun = new DirectionalLight('#ffe9cf', 1.25)
+    const hemi = new HemisphereLight(lighting.hemiSky, lighting.hemiGround, lighting.hemi)
+    const sun = new DirectionalLight(lighting.sunColor, lighting.sun)
     sun.position.set(-8, 30, -6)
     // three.js only uses lights whose layers the camera sees: the floor mirrors' cameras
     // render MIRROR_LAYER alone, so the lights must be on it too (or reflections go unlit).

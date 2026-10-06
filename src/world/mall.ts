@@ -31,6 +31,7 @@ import { aoCeilJunction, aoFloorJunction } from './aoStrips'
 import { addContactShadow } from './decals'
 import { FloorMirror, setFloorSeeThrough } from './floorMirror'
 import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, marbleCladMat, oakVeneerMat, tintedPlane, tiledPlane } from './finish'
+import { setPbrQuality } from '../engine/pbr'
 import { markMirrored } from '../engine/layers'
 
 export interface ShellHandles {
@@ -100,6 +101,8 @@ export async function buildShell(
   quality: QualitySettings,
   _kit: Kit | null = null, // kept for callers; the mall shell no longer places kit pieces
 ): Promise<ShellHandles> {
+  // The CC0 texture library picks its 512 set on Low; every material below goes through it.
+  setPbrQuality(quality)
   const f = batcher.frame(new Matrix4(), colliders)
   const { plazaHalf: W, plazaDepth: A, corridorHalf: B, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
   const root = new Group()
@@ -328,7 +331,7 @@ export async function buildShell(
   f.box(MAT.wall, sky.x1, AH + wellH / 2, (sky.z0 + sky.z1) / 2, 0.1, wellH, sky.z1 - sky.z0)
   for (let x = sky.x0 + 3; x < sky.x1; x += 3) f.box(MAT.brass, x, AH + 0.3, (sky.z0 + sky.z1) / 2, 0.08, 0.12, sky.z1 - sky.z0)
   for (let z = sky.z0 + 3; z < sky.z1; z += 3) f.box(MAT.brass, 0, AH + 0.3, z, sky.x1 - sky.x0, 0.12, 0.08)
-  const skyPlane = new Mesh(new PlaneGeometry(sky.x1 - sky.x0, sky.z1 - sky.z0), imageMat(gradientTexture([[0, '#cfe6f7'], [1, '#ffffff']])))
+  const skyPlane = new Mesh(new PlaneGeometry(sky.x1 - sky.x0, sky.z1 - sky.z0), imageMat(gradientTexture([[0, '#5d7392'], [1, '#8da2bd']])))
   skyPlane.rotation.x = Math.PI / 2
   skyPlane.position.set(0, AH + wellH, (sky.z0 + sky.z1) / 2)
   root.add(skyPlane)
@@ -428,7 +431,7 @@ export async function buildShell(
   const shafts = new Group()
   const shaftTex = gradientTexture([[0, 'rgba(255,255,255,0.0)'], [0.15, 'rgba(255,250,240,0.55)'], [1, 'rgba(255,250,240,0)']])
   for (let i = 0; i < 5; i++) {
-    const m = new Mesh(new PlaneGeometry(3.4, AH + 1), glowMat(shaftTex, '#fff6ea', 0.15))
+    const m = new Mesh(new PlaneGeometry(3.4, AH + 1), glowMat(shaftTex, '#fff6ea', 0.05))
     m.position.set(-7 + i * 3.6, AH / 2, mid + 2 - (i % 2) * 2.5)
     m.rotation.set(0, i * 0.6, 0.18)
     shafts.add(m)

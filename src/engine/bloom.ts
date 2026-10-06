@@ -23,6 +23,8 @@ export const BLOOM_WEIGHT = {
   lightbox: 0.3,
   /** Screens: a faint glow on their brightest parts only. */
   screen: 0.05,
+  /** Sprite halos (world/halo.ts): the "glow without bloom" of Low/Medium also blooms on High. */
+  halo: 0.7,
 }
 
 interface Entry {
@@ -34,7 +36,17 @@ interface Entry {
 }
 
 const entries: Entry[] = []
+const listeners: ((on: boolean) => void)[] = []
 let active = false
+
+/**
+ * Runs `fn` with the current state now and again on every change. For materials that can't
+ * use the replace-blend mask (additive sprites): they scale their own alpha output instead.
+ */
+export function onBloomSources(fn: (on: boolean) => void): void {
+  listeners.push(fn)
+  fn(active)
+}
 
 /** Registers an opaque bloom source; `weight` (0–1) scales how strongly it can glow. */
 export function registerBloom(mat: MeshBasicMaterial, weight: number): void {
@@ -49,6 +61,7 @@ export function setBloomSources(on: boolean): void {
   if (on === active) return
   active = on
   for (const e of entries) apply(e)
+  for (const fn of listeners) fn(on)
 }
 
 function apply(e: Entry): void {
