@@ -82,6 +82,7 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
             }
           </div>
           <div class="info">
+            <div class="details">
             <div class="eyebrow">${esc(section ? (L === 'ar' ? section.titleAr : section.title) : '')}</div>
             <h2 class="display">${esc(p.title)}</h2>
             <div class="price-row">
@@ -104,6 +105,8 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
               .join('')}</div>`
                 : ''
             }
+            </div>
+            <div class="buy">
             <h3>${esc(t('quantity', L))}</h3>
             <div class="qty">
               <button data-action="qty" data-d="-1" aria-label="-">${ICONS.minus}</button>
@@ -115,7 +118,8 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
                 ${adding ? ICONS.check + esc(t('added', L)) : needSize ? esc(t('chooseSize', L)) : ICONS.bag + esc(t('addToCart', L))}
               </button>
             </div>
-            <div style="margin-top:14px"><a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(t('viewOnSite', L))} ↗</a></div>
+            <div class="site-link"><a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(t('viewOnSite', L))} ↗</a></div>
+            </div>
           </div>
         </div>
       </div>`)

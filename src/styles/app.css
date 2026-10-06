@@ -1531,6 +1531,10 @@ button {
   }
 }
 
+.site-link {
+  margin-top: 14px;
+}
+
 /* ------------------------------------------------ touch game controls */
 /* Game pads use physical left/right on purpose: the stick stays under the left thumb in Arabic too. */
 

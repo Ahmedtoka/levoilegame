@@ -454,17 +454,39 @@
 }
 
 @media (max-height: 520px) {
-  /* The add-to-cart row stays pinned at the bottom of the details column. */
-  .touch .product .add-row {
-    position: sticky;
-    bottom: -16px;
-    margin: 10px -20px -16px;
-    padding: 10px 20px 14px;
-    background: var(--paper);
-    border-top: 1px solid var(--line);
+  /* Details scroll; the quantity + add-to-cart row stays pinned at the bottom. */
+  .touch .product .info {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+    padding: 0;
   }
 
-  .touch .product .info > div[style] {
+  .touch .product .details {
+    overflow: auto;
+    padding: 14px 20px 10px;
+  }
+
+  .touch .product .buy {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 20px 12px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+
+  .touch .product .buy h3,
+  .touch .product .buy .site-link {
     display: none;
+  }
+
+  .touch .product .buy .add-row {
+    flex: 1;
+  }
+
+  .touch .product .buy .btn.lg {
+    width: 100%;
+    min-height: 44px;
   }
 }
