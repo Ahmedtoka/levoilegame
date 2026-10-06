@@ -27,6 +27,8 @@ import { showcaseMesh, type ShowcaseItem } from './showcase'
 import { rewardsCounter, type ShopContext, type ShopHandles } from './shop'
 import { BRONZE, OAK, OAK_DARK } from './displays'
 
+const GYPSUM_SOFFIT = tintMat('#f3ece4', 1, 0.9)
+
 export interface BoutiqueOpts {
   tier: Tier
   front: number
@@ -52,7 +54,7 @@ export function buildBoutique(ctx: ShopContext, f: BatchFrame, handles: ShopHand
   const SH = MALL.shopHeight
 
   walls(gf, o, plan)
-  slotLights(gf, plan, SH)
+  slotLights(gf, o, plan, SH)
 
   // ------------------------------------------------ lightboxes by section
   const groups = sectionGroups(o)
@@ -96,7 +98,7 @@ export function buildBoutique(ctx: ShopContext, f: BatchFrame, handles: ShopHand
   })
   const tm = ctx.textureMax()
   showcaseMesh({ interaction: ctx.interaction, loaders }, g, standees, tm / 2)
-  showcaseMesh({ interaction: ctx.interaction, loaders }, g, islandItems, tm / 4)
+  showcaseMesh({ interaction: ctx.interaction, loaders }, g, islandItems, tm / 4, { figures: false })
 
   // --------------------------------------------- screen, counter, fitting
   screen(ctx, gf, g, plan.screen, o, loaders)
@@ -177,14 +179,48 @@ function walls(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan): void {
   }
 }
 
-function slotLights(f: BatchFrame, plan: BoutiquePlan, SH: number): void {
+/**
+ * Cream gypsum perimeter soffit (0.7 m wide, underside 0.3 m under the ceiling) along the
+ * side and back walls, following the plan's light strips; a warm slot light on its inner
+ * lower edge and bronze spot cans every ~2.2 m (same pattern as the corridor cans).
+ */
+function slotLights(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan, SH: number): void {
+  const h = o.front / 2
+  const SW = 0.7
+  const sb = SH - 0.3
+  const wallX = h - 0.16
+  const wallZ = -o.depth + 0.16
   for (const l of plan.lights) {
-    const len = Math.hypot(l.x1 - l.x0, l.z1 - l.z0)
     const alongZ = Math.abs(l.z1 - l.z0) > Math.abs(l.x1 - l.x0)
-    const x = (l.x0 + l.x1) / 2
-    const z = (l.z0 + l.z1) / 2
-    f.box(MAT.lightWarm, x, SH - 0.03, z, alongZ ? 0.06 : len, 0.02, alongZ ? len : 0.06)
+    if (alongZ) {
+      const sx = Math.sign(l.x0)
+      const cx = sx * (wallX - SW / 2)
+      const za = Math.max(l.z0, l.z1) // front end
+      let zb = Math.min(l.z0, l.z1) // back end: run into the back wall when near it
+      if (zb < wallZ + 1) zb = wallZ
+      const len = za - zb
+      const zc = (za + zb) / 2
+      f.box(GYPSUM_SOFFIT, cx, SH - 0.15, zc, SW, 0.3, len)
+      f.box(MAT.lightWarm, sx * (wallX - SW) + -sx * 0.03, sb - 0.005, zc, 0.06, 0.02, len - 0.1)
+      for (let z = za - 1.1; z > zb + 0.5; z -= 2.2) can(f, cx, sb, z)
+    } else {
+      const xa = Math.min(l.x0, l.x1)
+      let xb = Math.max(l.x0, l.x1)
+      const xa2 = xa < -wallX + 1 ? -wallX : xa
+      if (xb > wallX - 1) xb = wallX
+      const len = xb - xa2
+      const xc = (xa2 + xb) / 2
+      const cz = wallZ + SW / 2
+      f.box(GYPSUM_SOFFIT, xc, SH - 0.15, cz, len, 0.3, SW)
+      f.box(MAT.lightWarm, xc, sb - 0.005, wallZ + SW + 0.03, len - 0.1, 0.02, 0.06)
+      for (let x = xa2 + 1.1; x < xb - 0.5; x += 2.2) can(f, x, sb, cz)
+    }
   }
+}
+
+function can(f: BatchFrame, x: number, sb: number, z: number): void {
+  f.cyl(MAT.brass, x, sb - 0.025, z, 0.1, 0.07)
+  f.sphere(MAT.lightWarm, x, sb - 0.005, z, 0.068, 0.35)
 }
 
 function plinth(f: BatchFrame, x: number, z: number, ctx: ShopContext): void {

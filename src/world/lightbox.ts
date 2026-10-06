@@ -169,6 +169,7 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
       const vPhoto = 1 - (r * grid.ch + grid.ph) / S
       const vBottom = 1 - ((r + 1) * grid.ch) / S
       const inset = ((L.margin / boxW) * grid.cw) / S
+      const padK = 0.02 / (L.plaqueH + 0.04)
       const face = (w: number, h: number, y: number, dz: number, uu0: number, uu1: number, v0: number, v1: number) => {
         const q = new PlaneGeometry(w, h)
         const uv = q.getAttribute('uv')
@@ -178,7 +179,8 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
       }
       return [
         face(boxW, boxH, L.y, 0, u0, u1, vPhoto, vTop),
-        face(L.plaqueW, L.plaqueH, L.plaqueY, 0, u0 + inset, u1 - inset, vBottom, vPhoto),
+        // The cell is sized for plaqueH + 0.04; the quad shows its undistorted inner plaqueH band.
+        face(L.plaqueW, L.plaqueH, L.plaqueY, 0, u0 + inset, u1 - inset, vBottom + (vPhoto - vBottom) * padK, vPhoto - (vPhoto - vBottom) * padK),
       ]
     })
     const mesh = new Mesh(mergeGeometries(quads), PENDING)

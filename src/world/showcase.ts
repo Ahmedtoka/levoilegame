@@ -63,24 +63,30 @@ export function alphaBounds(thumb: HTMLCanvasElement, w: number, h: number): { x
 }
 
 /** Draws product `p` bottom-aligned into the cell (x, y, cw, ch). */
-export function drawShowcase(g: CanvasRenderingContext2D, im: HTMLCanvasElement, thumb: HTMLCanvasElement, p: Product, x: number, y: number, cw: number, ch: number): void {
+export function drawShowcase(g: CanvasRenderingContext2D, im: HTMLCanvasElement, thumb: HTMLCanvasElement, p: Product, x: number, y: number, cw: number, ch: number, figures = true): void {
   const b = hasCutout(p) ? alphaBounds(thumb, im.width, im.height) : null
-  if (b && b.h / b.w > 1.45) {
+  const tall = !!b && b.h / b.w > 1.45
+  if (b && tall && figures) {
     // A full-length cutout stands like a mannequin.
     const sc = Math.min((cw * 0.94) / b.w, (ch * 0.98) / b.h)
     g.drawImage(im, b.x, b.y, b.w, b.h, x + (cw - b.w * sc) / 2, y + ch - b.h * sc, b.w * sc, b.h * sc)
     return
   }
-  if (b) {
+  if (b && !tall) {
     // A product cut-out (bag, shoe, box): as large as fits, standing on the base.
     const sc = Math.min((cw * 0.9) / b.w, (ch * 0.9) / b.h)
     g.drawImage(im, b.x, b.y, b.w, b.h, x + (cw - b.w * sc) / 2, y + ch - b.h * sc, b.w * sc, b.h * sc)
     return
   }
-  // Otherwise a mounted print standing on the base; a tall image is narrowed, not squashed.
+  // Otherwise a mounted print standing on the base (a tall cut-out without figures is framed
+  // like one); a tall image is narrowed, not squashed.
+  const sx = tall && b ? b.x : 0
+  const sy = tall && b ? b.y : 0
+  const sw = tall && b ? b.w : im.width
+  const sh = tall && b ? b.h : im.height
   const maxW = cw * 0.86
   const maxH = ch * 0.62
-  const ar = im.height / im.width
+  const ar = sh / sw
   const w = maxW * ar > maxH ? maxH / ar : maxW
   const h = w * ar
   const pad = cw * 0.04
@@ -88,11 +94,12 @@ export function drawShowcase(g: CanvasRenderingContext2D, im: HTMLCanvasElement,
   const px = x + (cw - w) / 2
   g.fillStyle = '#fbf8f4'
   g.fillRect(px - pad, py - pad * 1.2, w + 2 * pad, h + 2.4 * pad)
-  g.drawImage(im, px, py, w, h)
+  g.drawImage(im, sx, sy, sw, sh, px, py, w, h)
 }
 
 /** All items as one alpha-tested mesh in `parent` (cell = texture px per item, height 2 × width). */
-export function showcaseMesh(ctx: ShowcaseCtx, parent: Group, items: ShowcaseItem[], cell: number): Mesh | null {
+export function showcaseMesh(ctx: ShowcaseCtx, parent: Group, items: ShowcaseItem[], cell: number, opts: { figures?: boolean } = {}): Mesh | null {
+  const figures = opts.figures ?? true
   if (!items.length || typeof document === 'undefined') return null
   const cols = Math.min(items.length, 8)
   const rows = Math.ceil(items.length / cols)
@@ -154,7 +161,7 @@ export function showcaseMesh(ctx: ShowcaseCtx, parent: Group, items: ShowcaseIte
           const dh = itAspect < cellAspect ? ch : ch * (cellAspect / itAspect)
           const x = (i % cols) * cw + (cw - dw) / 2
           const y = Math.floor(i / cols) * ch + (ch - dh)
-          drawShowcase(g, image as HTMLCanvasElement, thumb, it.product, x, y, dw, dh)
+          drawShowcase(g, image as HTMLCanvasElement, thumb, it.product, x, y, dw, dh, figures)
         }),
       ),
     ).then(() => {
