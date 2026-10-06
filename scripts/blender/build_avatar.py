@@ -709,7 +709,7 @@ def tube(b, path, radius, n=8, closed=False):
 def piece_glasses(style):
     """Glasses in front of the eyes (head space after HEAD_SCALE): two rims, a bridge, two temples to the ears."""
     b = Builder()
-    cx, cz, y = 0.037, 1.672, -0.108
+    cx, cz, y = 0.037, 1.655, -0.108  # UBC eye height (unscaled); scale_head lifts it with the head
     r = 0.0024
     for sgn in (1, -1):
         rim = []
@@ -995,7 +995,7 @@ def build():
     apply_plugins(objs, arm, body)
 
     # Stylised head: everything attached to it grows about the neck.
-    for n in ("head", "eyes", "brows", "hair_long", "hair_bun", "hair_ponytail", "hair_bob", "hijab_band"):
+    for n in ("head", "eyes", "brows", "hair_long", "hair_bun", "hair_ponytail", "hair_bob", "hijab_band", "glasses_round", "glasses_square"):
         scale_head(objs[n])
     for o in objs.values():
         for p in o.data.polygons:

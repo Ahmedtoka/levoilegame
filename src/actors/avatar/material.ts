@@ -200,21 +200,20 @@ else roughnessFactor = 0.96;`,
         '#include <opaque_fragment>',
         `vec3 lvN = normalize(normal);
 vec3 lvBase = diffuseColor.rgb;
-#if NUM_DIR_LIGHTS > 0
-float lvNdl = dot(lvN, directionalLights[0].direction);
-#else
-float lvNdl = lvN.y * 0.6 + 0.4;
-#endif
+// Bitmoji key light: from the camera's upper-front, so the face is always lit wherever she turns
+// (the mall's own sun stays for the environment; characters carry their own portrait light).
+vec3 lvKeyDir = normalize(normalize(vViewPosition) * 0.75 + vec3(0.25, 0.55, 0.0));
+float lvNdl = dot(lvN, lvKeyDir);
 float lvKey = smoothstep(-0.6, 0.85, lvNdl);           // wrapped, soft
 float lvSky = 0.5 + 0.5 * lvN.y;                        // up-facing surfaces a touch brighter
-float lvShade = mix(0.62, 1.0, lvKey) * mix(0.9, 1.05, lvSky);
+float lvShade = mix(0.74, 1.0, lvKey) * mix(0.94, 1.04, lvSky);
 vec3 lvLit = lvBase * lvShade;
 // Skin: warm, slightly translucent shadow; eyes stay bright and glossy.
-if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) lvLit = lvBase * mix(vec3(0.72, 0.60, 0.56), vec3(1.0), lvKey) * mix(0.95, 1.05, lvSky);
+if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) lvLit = lvBase * mix(vec3(0.82, 0.72, 0.68), vec3(1.0), lvKey) * mix(0.97, 1.04, lvSky);
 if (lvI == ${PARTS.indexOf('eyes')}) lvLit = lvBase * mix(0.85, 1.0, lvKey);
 // Hair: one soft specular band.
 if (lvI == ${PARTS.indexOf('hair')}) {
-  vec3 lvH = normalize(normalize(vViewPosition) + (NUM_DIR_LIGHTS > 0 ? directionalLights[0].direction : vec3(0.0, 1.0, 0.0)));
+  vec3 lvH = normalize(normalize(vViewPosition) + lvKeyDir);
   lvLit += vec3(0.18) * pow(saturate(dot(lvN, lvH)), 24.0);
 }
 float lvRim = pow(1.0 - saturate(dot(lvN, normalize(vViewPosition))), 3.0);
