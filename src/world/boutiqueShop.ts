@@ -63,7 +63,7 @@ export function buildBoutique(ctx: ShopContext, f: BatchFrame, handles: ShopHand
   const picked = groups.flatMap((s, i) => s.items.slice(0, counts[i]).map((p) => ({ p, section: s.section })))
   const spots = placeOnRuns(plan.runs, picked.length)
   const placed: PlacedProduct[] = spots.map((s, i) => ({ product: picked[i].p, ...s }))
-  const lctx = { interaction: ctx.interaction, loaders, atlas: atlasSize(ctx.bakedTextureMax()) }
+  const lctx = { interaction: ctx.interaction, brandId: o.brand.id, loaders, atlas: atlasSize(ctx.bakedTextureMax()) }
   buildLightboxes(lctx, gf, g, placed)
   if (groups.length > 1) buildSectionPlaques(lctx, g, plaquesFor(spots, picked.map((x) => x.section)))
 

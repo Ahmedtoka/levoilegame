@@ -12,7 +12,7 @@ import type { BatchFrame } from '../engine/batcher'
 import { imagePacer } from '../engine/pace'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
 import { discountPercent, type Product, type Section } from '../data/types'
-import { formatPrice } from '../i18n/i18n'
+import { formatPrice, t } from '../i18n/i18n'
 import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { BRONZE, CREAM, frameGeometry, HOVER_MAT } from './displays'
@@ -37,6 +37,8 @@ export interface SectionPlaque {
 
 export interface LightboxCtx {
   interaction: Interaction
+  /** Brand whose catalogue a section plaque opens. */
+  brandId?: string
   loaders: (() => Promise<unknown>)[]
   /** Atlas side in px (atlasSize(bakedTextureMax)). */
   atlas: number
@@ -208,7 +210,6 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
 
 /** Section signs above lightbox groups: one atlas, one mesh (see drawSectionSign). */
 export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques: SectionPlaque[]): void {
-  void ctx
   const RH = SECTION_SIGN.h
   const plaques = allPlaques.slice(0, Math.floor(4096 / RH))
   if (!plaques.length || typeof document === 'undefined') return
@@ -231,4 +232,28 @@ export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques:
     return q.rotateY(pl.yaw).translate(x, LIGHTBOX.sectionY + 0.04, z)
   })
   parent.add(new Mesh(mergeGeometries(quads), imageMat(tex)))
+
+  // A tap on a plaque opens the brand's catalogue on that section.
+  if (!ctx.brandId) return
+  plaques.forEach((pl, i) => {
+    const qw = Math.min(w, pl.w + 0.3)
+    const hit = new Mesh(new PlaneGeometry(qw + 0.2, (qw * RH) / SECTION_SIGN.w + 0.2), HIDDEN)
+    const [x, z] = at(pl, 0, 0.02)
+    hit.position.set(x, LIGHTBOX.sectionY + 0.04, z)
+    hit.rotation.y = pl.yaw
+    parent.add(hit)
+    const hl = new Mesh(frameGeometry(qw + 0.3, (qw * RH) / SECTION_SIGN.w + 0.3), HOVER_MAT)
+    hl.position.z = -0.004
+    hl.visible = false
+    hit.add(hl)
+    void i
+    ctx.interaction.add({
+      object: hit,
+      kind: 'catalog',
+      label: () => `${t('allProducts', store.getState().lang)} · ${store.getState().lang === 'ar' ? pl.section.titleAr || pl.section.title : pl.section.title}`,
+      onInteract: () => store.getState().set({ overlay: 'brandCatalog', catalogBrand: ctx.brandId!, catalogSection: pl.section.id }),
+      highlight: (on) => (hl.visible = on),
+      maxDist: 7,
+    })
+  })
 }

@@ -490,3 +490,42 @@
     min-height: 44px;
   }
 }
+
+/* Brand catalogue on landscape phones: one horizontal slider of products instead of a tall grid. */
+@media (max-height: 520px) {
+  .touch .brand-catalog .card-body {
+    padding: 12px 20px 10px;
+  }
+
+  .touch .brand-catalog h2 {
+    font-size: 18px;
+    margin: 0 0 4px;
+  }
+
+  .touch .brand-catalog .bc-tabs {
+    padding-block: 4px 8px;
+  }
+
+  .touch .brand-catalog .bc-grid {
+    display: flex;
+    gap: 10px;
+    max-block-size: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    padding-block-end: 6px;
+    scrollbar-width: none;
+  }
+
+  .touch .brand-catalog .bc-item {
+    flex: 0 0 132px;
+    scroll-snap-align: start;
+  }
+
+  .touch .brand-catalog .bc-item img {
+    aspect-ratio: 1080 / 1306;
+    block-size: 150px;
+    inline-size: auto;
+    object-fit: cover;
+  }
+}

@@ -87,6 +87,8 @@ export interface AppState {
   rewardsBrand: string | null
   /** Brand whose full catalogue the "All products" overlay shows. */
   catalogBrand: string | null
+  /** Section tab to open the brand catalogue on (a tap on a section plaque). */
+  catalogSection: string | null
   /** Section ids stamped in the passport this session. */
   passport: string[]
   /** Treasure-hunt logos found this session. */
@@ -148,6 +150,7 @@ export const store = createStore<AppState>()(
       coins: 0,
       rewardsBrand: null,
       catalogBrand: null,
+      catalogSection: null,
       passport: [],
       treasures: [],
       wheelSpun: false,
