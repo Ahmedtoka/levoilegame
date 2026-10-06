@@ -41,3 +41,4 @@ screenshots/
 # District 122 brand photo originals (scripts/fetch-brands.mjs + remove-bg.py --brands): only the WebP derivatives ship
 public/products/*--*/*.jpg
 public/products/*--*/*.png
+.superpowers/
