@@ -14,9 +14,10 @@ under the band's outer edge so no gap can open. The chin stays open: the band's
 lower edge sits at the chin crease and the wrap passes under it.
 
 The wrap + drape is a loft: a ring hugging the cap at the jaw, a rolled rim that
-clears the tops' stand collars, a funnel down the neck, a nearly flat run over
-the shoulders (above balloon sleeves) and pleated panels (6 folds, 8 mm) to a
-rounded hem.
+clears the tops' collars, then rings fitted 2 cm outside the tops so the scarf falls
+from the chin and lies on the shoulders and the bust (its sides end on the shoulder
+tops; the sleeves stay outside it), six soft folds converging toward the chin, and a
+gentle U hem at mid-chest (classic) or the waist (long).
 
 Coordinates: Blender Z-up, the character faces -Y, her left is +X (metres).
 The head is the UBC head cut ("head", body space, enlarged later by build()); the
@@ -50,7 +51,7 @@ BAND_W = 0.012
 BAND_OFF = CAP_OFF + 0.002  # band 2 mm proud of the cap
 CAP_M = 26  # points per cap ring
 PLEATS = 6  # creases around the drape (36 points per ring: 6 per crease sector)
-PLEAT_DEPTH = 0.010
+PLEAT_DEPTH = 0.008
 
 # Radial map resolution.
 N_PSI, N_E = 72, 69
@@ -358,37 +359,30 @@ def build_band(ctx):
 
 # ---------------------------------------------------------------- wrap + drape
 
-# The drape's cross-section at height z is the convex hull of the dressed chest (an ellipse
-# round the chibi torso, scripts/blender/chibi.py TORSO: shoulder shelf rx 0.19 at z 1.45,
-# chest rx 0.164 / front y -0.11 at z 1.32) and the two sleeve capsules, so the cloth bridges
-# from the chest to the arms like real fabric instead of a tube around everything.
-# Front: >= 5.5 cm off the body at the chest (the blouse has 2.2 cm ease, the staff waistcoat
-# 4 cm + 1.2 cm); back: 1.5 cm outside the abaya's back (its yb table). Neck funnel (z >= 1.50)
-# clears the collars: the blouse's turtleneck (rx 0.070, ry 0.072, cy 0.038, to z 1.585) and
-# the abaya's rounded collar (r ~0.087, cy ~0.054). (z, rx, y_front, y_back), world space.
+# The drape FALLS from the chin wrap and lies against the dressed body: each ring is an
+# ellipse ~2 cm outside the larger of the two tops, the abaya as exported at ec0bf05 (chest
+# front y -0.165 at z 1.36 with its 8 mm trim at -0.173, -0.15 at 1.44, back 0.195 at 1.16,
+# torso rx ~0.23); the blouse (chibi torso + 2.2 cm) sits further inside it. The front hangs plumb from the
+# rim onto the bust, the back from the nape down the shoulder blades. The scarf's sides end on
+# the shoulder tops (the sleeves stay outside it), so there is no shelf over the arms.
+# (z, rx, y_front, y_back), world space. Neck funnel (z >= 1.50) clears the collars: the
+# blouse's turtleneck (rx 0.070, ry 0.072, cy 0.038, to z 1.585) and the abaya's (r ~0.087).
 CHEST = [
     (1.515, 0.105, -0.150, 0.160),
-    (1.500, 0.160, -0.148, 0.162),
-    (1.490, 0.220, -0.148, 0.165),
-    (1.480, 0.240, -0.150, 0.168),
-    (1.470, 0.245, -0.155, 0.170),
-    (1.455, 0.245, -0.160, 0.172),
-    (1.440, 0.240, -0.165, 0.174),
-    (1.400, 0.230, -0.168, 0.178),
-    (1.360, 0.220, -0.170, 0.182),
-    (1.300, 0.215, -0.170, 0.190),
-    (1.220, 0.205, -0.166, 0.200),
-    (1.140, 0.200, -0.160, 0.200),
-    (1.060, 0.200, -0.152, 0.196),
-    (1.000, 0.200, -0.150, 0.190),
+    (1.500, 0.150, -0.150, 0.148),
+    (1.490, 0.200, -0.152, 0.162),
+    (1.475, 0.235, -0.156, 0.172),
+    (1.455, 0.250, -0.165, 0.180),
+    (1.430, 0.250, -0.178, 0.190),
+    (1.400, 0.250, -0.186, 0.198),
+    (1.360, 0.250, -0.190, 0.205),
+    (1.300, 0.245, -0.190, 0.210),
+    (1.220, 0.235, -0.186, 0.212),
+    (1.140, 0.230, -0.182, 0.215),
+    (1.060, 0.235, -0.180, 0.220),
+    (1.000, 0.240, -0.180, 0.222),
 ]
-# Sleeve capsule about the hanging upper arm: the upperarm joint is at (0.192, 0.065, 1.441);
-# the lofted sleeves' shoulder head is a disc of r ~0.10-0.116 that hangs 3 cm above the joint
-# (z ~1.47, out to x ~0.30), so below z the capsule is a cylinder of radius r (that disc + 1.5 cm)
-# and above it an ellipsoidal top h tall (the cloth rounds over the sleeve head).
-ARM_X, ARM_Y, ARM_Z, ARM_R, ARM_H = 0.192, 0.065, 1.470, 0.115, 0.030
-ARMS_ABOVE = 1.33  # below this the panels hang between the arms
-CENTRE_Y = 0.01
+SHOULDER_Z = 1.49  # the scarf's side edges sit here, on top of the shoulders (sleeve heads are at z ~1.47)
 
 
 def chest(z):
@@ -402,64 +396,9 @@ def chest(z):
     return s[-1][1:]
 
 
-def _hull(pts):
-    """2D convex hull (monotone chain), CCW."""
-    pts = sorted(set(pts))
-    if len(pts) < 3:
-        return pts
-
-    def cross(o, a, b):
-        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
-
-    lower, upper = [], []
-    for p in pts:
-        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
-            lower.pop()
-        lower.append(p)
-    for p in reversed(pts):
-        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
-            upper.pop()
-        upper.append(p)
-    return lower[:-1] + upper[:-1]
-
-
-_SECTIONS = {}
-
-
-def section(z):
-    """Hull polygon of the drape's cross-section at z."""
-    key = round(z, 5)
-    if key in _SECTIONS:
-        return _SECTIONS[key]
+def ellipse_point(psi, z):
     rx, yf, yb = chest(z)
-    y0, ry = (yf + yb) / 2, (yb - yf) / 2
-    pts = [(rx * math.sin(a), y0 - ry * math.cos(a)) for a in (2 * math.pi * i / 40 for i in range(40))]
-    dz = max(0.0, z - ARM_Z)
-    if z >= ARMS_ABOVE and dz < ARM_H:
-        ra = ARM_R * math.sqrt(1 - (dz / ARM_H) ** 2)
-        if ra > 0.004:
-            for sx in (1, -1):
-                pts += [(sx * ARM_X + ra * math.cos(a), ARM_Y + ra * math.sin(a)) for a in (2 * math.pi * i / 24 for i in range(24))]
-    _SECTIONS[key] = _hull(pts)
-    return _SECTIONS[key]
-
-
-def radius_at(poly, psi):
-    """Distance from (0, CENTRE_Y) to the polygon's edge in direction psi."""
-    dx, dy = math.sin(psi), -math.cos(psi)
-    best = 0.0
-    for i in range(len(poly)):
-        (px, py), (qx, qy) = poly[i], poly[(i + 1) % len(poly)]
-        ex, ey = qx - px, qy - py
-        den = dx * ey - dy * ex
-        if abs(den) < 1e-12:
-            continue
-        wx, wy = px - 0.0, py - CENTRE_Y
-        t = (wx * ey - wy * ex) / den
-        s = (wx * dy - wy * dx) / den
-        if t > 0 and -1e-9 <= s <= 1 + 1e-9:
-            best = max(best, t)
-    return best
+    return Vector((rx * math.sin(psi), (yf + yb) / 2 - (yb - yf) / 2 * math.cos(psi), z))
 
 
 def _dpsi(psi):
@@ -467,27 +406,28 @@ def _dpsi(psi):
     return min(psi, 2 * math.pi - psi)
 
 
-# Folds are V-shaped creases: one every 60 deg (at +-30, +-90, +-150 from the front), 6 deg
-# wide on each side (~2.5 cm on the drape), PLEAT_DEPTH deep. The ring's points sit exactly
-# on the crease walls (offsets per 60-deg sector), so each crease stays a crisp pair of facets.
+# Six soft folds, one every 60 deg (at +-30, +-90, +-150 from the front); the rings narrow
+# towards the neck, so the folds converge toward the chin. The ring's points sit on the fold
+# walls (offsets per 60-deg sector) so each valley keeps its shape.
 SECTOR = [-30.0, -14.0, -6.0, 0.0, 6.0, 14.0]
 PSIS = [math.radians(30.0 + 60.0 * k + o) for k in range(PLEATS) for o in SECTOR]
-CREASE_HALF = math.radians(6.0)
+FOLD_HALF = math.radians(10.0)
 
 
 def fold(psi):
-    """1 at the bottom of a crease, 0 on the flat cloth."""
+    """1 at the bottom of a fold, 0 on the flat cloth (rounded profile)."""
     d = (psi - math.radians(30.0)) % math.radians(60.0)
     d = min(d, math.radians(60.0) - d)
-    return max(0.0, 1 - d / CREASE_HALF)
+    if d >= FOLD_HALF:
+        return 0.0
+    return 0.5 * (1 + math.cos(math.pi * d / FOLD_HALF))
 
 
 def wrap_weights(ctx, p):
-    """drape_weights, but the cloth lying on the shoulders and arms follows the sleeve
-    underneath it (the same clavicle -> upper-arm blend as top_weights), so the sleeves
-    cannot swing out from under it when she walks."""
+    """drape_weights, but the cloth on the shoulders follows the clavicle / upper arm a
+    little (the same blend as the tops), so it moves with the shoulder when she walks."""
     out = ctx.drape_weights(p)
-    k = ctx.smooth(0.14, 0.22, abs(p.x)) if p.z < 1.53 else 0.0
+    k = ctx.smooth(0.14, 0.22, abs(p.x)) * 0.7 if p.z < 1.53 else 0.0
     if k <= 0:
         return out
     sd = "l" if p.x >= 0 else "r"
@@ -499,27 +439,32 @@ def wrap_weights(ctx, p):
 
 
 def build_wrap(ctx, srf, name, long):
-    z_front, z_side = (1.02, 1.28) if long else (1.28, 1.38)
+    z_front, z_back = (1.02, 1.08) if long else (1.28, 1.32)
     psis = sorted(p % (2 * math.pi) for p in PSIS)
 
     def hem(psi):
-        # Rounded hem: lowest at the front and back, rising over the arms; the creases hang 1.2 cm lower.
-        z = z_front + (z_side - z_front) * (1 - abs(math.cos(psi))) ** 1.5
-        return z - 0.012 * fold(psi)
+        # A gentle U: lowest at the centre front (and back), rising smoothly to the shoulder
+        # tops at the sides; the fold valleys hang 8 mm lower.
+        a = _dpsi(psi)
+        a0 = math.radians(30.0 if long else 10.0)  # the long panels keep their width to the waist
+        if a <= math.pi / 2:
+            z0, t = z_front, ctx.smooth(a0, math.radians(80.0), a)
+        else:
+            z0, t = z_back, ctx.smooth(a0, math.radians(80.0), math.pi - a)
+        return ctx.lerp(z0, SHOULDER_Z, t) - 0.008 * fold(psi)
 
     def pleated(psi, z):
-        r = radius_at(section(z), psi)
-        # Creases sink along the local surface normal: into the shoulder shelf from above,
-        # into the hanging panels from the outside.
-        h = 0.008
-        dr = radius_at(section(z + h), psi) - radius_at(section(z - h), psi)
-        nr, nz = 2 * h, -dr
-        ln = math.hypot(nr, nz)
-        nr, nz = nr / ln, nz / ln
-        depth = -PLEAT_DEPTH * ctx.smooth(1.51, 1.45, z) * fold(psi)
-        r += depth * nr
-        z += depth * nz
-        return Vector((r * math.sin(psi), CENTRE_Y - r * math.cos(psi), z))
+        p = ellipse_point(psi, z)
+        depth = PLEAT_DEPTH * ctx.smooth(1.50, 1.44, z) * fold(psi)
+        if depth <= 0:
+            return p
+        # The fold sinks along the surface normal (ring tangent x slope tangent = outward).
+        tp = ellipse_point(psi + 0.02, z) - ellipse_point(psi - 0.02, z)
+        tz = ellipse_point(psi, z + 0.008) - ellipse_point(psi, z - 0.008)
+        n = tp.cross(tz)
+        if n.length < 1e-9:
+            return p
+        return p - n.normalized() * depth
 
     rings = []
     # Ring 0 hugs the cap at the jaw (3 mm above it); at the front it tucks under the band's chin segment.
@@ -527,8 +472,8 @@ def build_wrap(ctx, srf, name, long):
     # Ring 1: the rolled rim, below the chin at the front (the enlarged chin tip is at y -0.14,
     # z 1.56), round the collars at the sides, rising to the nape.
     rings.append([Vector((0.105 * math.sin(psi), 0.005 - 0.155 * math.cos(psi), 1.515 + 0.075 * (1 - math.cos(psi)) / 2)) for psi in psis])
-    zs = [1.50, 1.49, 1.48, 1.47, 1.455, 1.44, 1.40, 1.36]
-    zs += [1.30, 1.24, 1.18, 1.12, 1.06, 1.00] if long else [1.32, 1.28, 1.25]
+    zs = [1.50, 1.49, 1.475, 1.455, 1.43, 1.40, 1.36]
+    zs += [1.30, 1.22, 1.14, 1.06, 1.00] if long else [1.32, 1.28, 1.25]
     for z in zs:
         rings.append([pleated(psi, z) for psi in psis])
     rings.reverse()  # bottom-up: outward normals
