@@ -13,7 +13,7 @@ import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
 import { imagePacer } from '../engine/pace'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
 import { discountPercent, type Product, type Section } from '../data/types'
-import { formatPrice } from '../i18n/i18n'
+import { formatPrice, t } from '../i18n/i18n'
 import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { BRONZE, CREAM, frameGeometry, HOVER_MAT } from './displays'
@@ -209,7 +209,6 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
 
 /** Section signs above lightbox groups: one atlas, one mesh (see drawSectionSign). */
 export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques: SectionPlaque[]): void {
-  void ctx
   const RH = SECTION_SIGN.h
   const plaques = allPlaques.slice(0, Math.floor(4096 / RH))
   if (!plaques.length || typeof document === 'undefined') return
@@ -232,4 +231,25 @@ export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques:
     return q.rotateY(pl.yaw).translate(x, LIGHTBOX.sectionY + 0.04, z)
   })
   parent.add(new Mesh(mergeGeometries(quads), imageMat(tex)))
+
+  // Each sign opens its section's slider (every product of the section, not just
+  // the ones on the wall): one invisible hit plane per sign.
+  plaques.forEach((pl) => {
+    const hit = new Mesh(new PlaneGeometry(Math.min(w, pl.w + 0.3), h + 0.1), HIDDEN)
+    const [x, z] = at(pl, 0, 0.01)
+    hit.position.set(x, LIGHTBOX.sectionY + 0.04, z)
+    hit.rotation.y = pl.yaw
+    parent.add(hit)
+    ctx.interaction.add({
+      object: hit,
+      kind: 'product',
+      label: () => `${store.getState().lang === 'ar' ? pl.section.titleAr || pl.section.title : pl.section.title} · ${t('browseSection', store.getState().lang)}`,
+      onInteract: () =>
+        store.getState().set({
+          overlay: 'slider',
+          slider: { title: pl.section.title, titleAr: pl.section.titleAr, productIds: pl.section.productIds, index: 0 },
+        }),
+      maxDist: 7,
+    })
+  })
 }

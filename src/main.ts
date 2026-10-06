@@ -37,6 +37,8 @@ import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
 import { mountBrandCatalog } from './ui/brandCatalog'
+import { mountSectionSlider } from './ui/sectionSlider'
+import './styles/slider.css'
 import { buildLiveMall } from './world/liveMall'
 import { loadAvatarKit } from './actors/avatar/kit'
 import { buildPlaza } from './world/plaza'
@@ -124,6 +126,7 @@ async function boot(): Promise<void> {
   mountCheckout(uiRoot, game, createCheckoutService(provider, catalog))
   mountSocial(uiRoot, game)
   mountBrandCatalog(uiRoot, game)
+  mountSectionSlider(uiRoot, game)
   mountAvatarEditor(uiRoot, game)
   mountMinimap(uiRoot, game, () => {
     const s = store.getState()
@@ -191,8 +194,10 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
           bakedTextureMax: () => engine.quality.bakedTextureMax,
           kit,
           onCheckout: () => game.openCheckout(),
-          // ?nobespoke: every shop uses the generic kit furnishing.
-          bespoke: new URLSearchParams(location.search).has('nobespoke') ? {} : { levoile: levoileInterior },
+          // Every shop (Le Voile included) is a campaign boutique: chic lit walls and
+          // product cut-out standees, no racks. ?bespoke brings back Le Voile's baked
+          // store (racks, hangers, its own fixtures; store.glb loads only then).
+          bespoke: new URLSearchParams(location.search).has('bespoke') ? { levoile: levoileInterior } : {},
         },
         shop,
       ),

@@ -231,6 +231,7 @@ const STRINGS = {
   saveLook: { ar: 'احفظي', en: 'Save' },
   myCharacter: { ar: 'شخصيتي', en: 'My character' },
   dragToTurn: { ar: 'اسحبي عشان تلفّيها', en: 'Drag to turn her' },
+  browseSection: { ar: 'قلّبي في القسم كله', en: 'Browse the whole section' },
   hiddenLogosHint: { ar: 'دوري على ٥ لوجوهات منورة مستخبية في المول', en: 'Find 5 glowing logos hidden around the mall' },
 } satisfies Record<string, Record<Lang, string>>
 

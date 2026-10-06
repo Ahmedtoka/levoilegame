@@ -125,6 +125,7 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
   const closeSheet = () => {
     const s = store.getState()
     if (s.productFrom === 'brandCatalog' && s.catalogBrand) s.set({ overlay: 'brandCatalog', productId: null, productFrom: null })
+    else if (s.productFrom === 'slider' && s.slider) s.set({ overlay: 'slider', productId: null, productFrom: null })
     else game.resume()
   }
 
