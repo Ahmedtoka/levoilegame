@@ -4,6 +4,7 @@
 // plaza columns. Static parts are batched; screens share feeds.
 
 import { Matrix4, type Object3D } from 'three'
+import { MALL_REELS } from '../config/brandSocial'
 import type { Batcher } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import type { Interaction } from '../interact/interaction'
@@ -60,7 +61,7 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
   for (const px of [-3.68, 3.68]) f.block(MAT.brass, px, 0.45, sz2, 0.2, 6.2, 0.2)
   f.box(MAT.brass, sx, 4.47, sz2, 7.2, 4.14, 0.12)
   f.box(MAT.black, sx, 4.47, sz2, 7.08, 4.02, 0.18)
-  const front = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games', 'welcome'], brandIds: openBrandIds(), portrait: false })
+  const front = new ScreenFeed({ kinds: ['reels', 'flash', 'deal', 'brand', 'games', 'welcome'], brandIds: openBrandIds(), portrait: false, reels: MALL_REELS })
   const back = new ScreenFeed({ kinds: ['brand'], brandIds: openBrandIds(), portrait: false, interval: 4 })
   const fm = screenMesh(front, 7, 3.94)
   fm.position.set(sx, 4.47, sz2 + 0.1)
@@ -103,9 +104,30 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
     addContactShadow(px, pz, 1.4, 1.4)
   }
 
+  let totemFeed: ScreenFeed | null = null
+  // ------------------------------------------------ entrance reels totem
+  // Mirrors the directory totem (-3.4, -7.2) on the right of the doors: the mall's
+  // own Instagram reel (and the welcome slide); tapping opens the reels viewer.
+  {
+    const tx = 3.4
+    const tz = -7.2
+    const yaw = -0.35
+    const fr = ctx.batcher.frame(new Matrix4().makeRotationY(yaw).setPosition(tx, 0, tz), ctx.colliders)
+    fr.block(MAT.brass, 0, 0, 0, 1.5, 0.12, 0.42, { collide: true })
+    fr.block(MAT.wall, 0, 0.12, 0, 1.36, 2.7, 0.3)
+    const feed = new ScreenFeed({ kinds: ['reels', 'welcome'], brandIds: [], portrait: true, interval: 7, reels: MALL_REELS })
+    const m = screenMesh(feed, 1.25, 2.22)
+    m.position.set(tx + Math.sin(yaw) * 0.16, 1.47, tz + Math.cos(yaw) * 0.16)
+    m.rotation.y = yaw
+    ctx.root.add(m)
+    feed.addScreen(m)
+    registerScreen(ctx.interaction, m.children[0], feed, ctx.actions)
+    totemFeed = feed
+  }
+
   // ------------------------------------------------ plaza column screens
   // Columns at (±8, −6) and (±8, −28); the screen faces the plaza centre.
-  const colFeed = new ScreenFeed({ kinds: ['flash', 'deal', 'brand', 'games'], brandIds: openBrandIds(), portrait: true })
+  const colFeed = new ScreenFeed({ kinds: ['flash', 'deal', 'reels', 'brand', 'games'], brandIds: openBrandIds(), portrait: true, reels: MALL_REELS })
   for (const [cx, cz] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) {
     const yaw = Math.atan2(sx - cx, sz - cz)
     // Thin bronze bezel plate behind the screen, sunk into the column.
@@ -127,5 +149,5 @@ export function buildPlaza(ctx: PlazaCtx): { feeds: ScreenFeed[] } {
     addBanner(ctx.root, f, bx, 8.3, bz, 0, 8.7, bannerSlides(order), i)
   })
 
-  return { feeds: [front, back, colFeed] }
+  return { feeds: [front, back, colFeed, ...(totemFeed ? [totemFeed] : [])] }
 }

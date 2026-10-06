@@ -6,6 +6,7 @@ import { audio } from '../audio/audio'
 import { FREE_SIZE } from '../data/defaults'
 import { esc, el, ICONS, onAction, paint, type GameBridge } from './dom'
 import { autoDeal } from '../social/pricing'
+import { tryOnPlan } from '../actors/avatar/tryOn'
 import { hasSocial, social } from '../social'
 import type { AppState } from '../state/store'
 
@@ -118,6 +119,7 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
                 ${adding ? ICONS.check + esc(t('added', L)) : needSize ? esc(t('chooseSize', L)) : ICONS.bag + esc(t('addToCart', L))}
               </button>
             </div>
+            ${tryOnPlan(p) ? `<button class="btn ghost block tryon-btn" data-action="tryon">👗 ${esc(t('tryOn', L))}</button>` : ''}
             <div class="site-link"><a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(t('viewOnSite', L))} ↗</a></div>
             </div>
           </div>
@@ -129,6 +131,7 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
   const closeSheet = () => {
     const s = store.getState()
     if (s.productFrom === 'brandCatalog' && s.catalogBrand) s.set({ overlay: 'brandCatalog', productId: null, productFrom: null })
+    else if (s.productFrom === 'slider' && s.slider) s.set({ overlay: 'slider', productId: null, productFrom: null })
     else game.resume()
   }
 
@@ -138,6 +141,11 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
       audio.addToCart()
     },
     close: () => closeSheet(),
+    tryon: () => {
+      if (!product) return
+      audio.click()
+      store.getState().set({ tryOn: { productId: product.id }, overlay: 'tryon' })
+    },
     img: (b) => {
       imgIndex = Number(b.dataset.i)
       render()

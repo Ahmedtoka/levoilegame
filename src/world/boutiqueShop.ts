@@ -18,12 +18,14 @@ import { t } from '../i18n/i18n'
 import { store } from '../state/store'
 import type { BatchFrame } from '../engine/batcher'
 import { BRAND } from '../config/brand'
-import { addCone } from './glow'
+import { addCone, addPool, addRectHalo } from './glow'
 import { MAT, imageMat, tintMat } from './materials'
 import { blobShadow } from './props'
 import { labelSign } from './signage'
 import { buildLightboxes, buildSectionPlaques, type PlacedProduct, type SectionPlaque } from './lightbox'
 import { showcaseMesh, type ShowcaseItem } from './showcase'
+import { storyScreen } from './storyScreen'
+import { brandReels } from '../config/brandSocial'
 import { rewardsCounter, type ShopContext, type ShopHandles } from './shop'
 import { BRONZE, OAK, OAK_DARK } from './displays'
 
@@ -63,8 +65,16 @@ export function buildBoutique(ctx: ShopContext, f: BatchFrame, handles: ShopHand
   const picked = groups.flatMap((s, i) => s.items.slice(0, counts[i]).map((p) => ({ p, section: s.section })))
   const spots = placeOnRuns(plan.runs, picked.length)
   const placed: PlacedProduct[] = spots.map((s, i) => ({ product: picked[i].p, ...s }))
-  const lctx = { interaction: ctx.interaction, brandId: o.brand.id, loaders, atlas: atlasSize(ctx.bakedTextureMax()) }
+  const lctx = { interaction: ctx.interaction, loaders, atlas: atlasSize(ctx.bakedTextureMax()) }
   buildLightboxes(lctx, gf, g, placed)
+  // Warm wash on the wall around every lightbox (gallery lighting; glow layer, Medium+).
+  const yawW = handles.layout.yaw
+  for (const sp of spots) {
+    const nx = Math.sin(sp.yaw)
+    const nz = Math.cos(sp.yaw)
+    const w = f.toWorld(sp.x + ox - nx * 0.08, 0, sp.z - nz * 0.08)
+    addRectHalo(w.x, 1.55, w.z, 1.5, 2.1, yawW + sp.yaw, '#ffd6a0')
+  }
   if (groups.length > 1) buildSectionPlaques(lctx, g, plaquesFor(spots, picked.map((x) => x.section)))
 
   // ---------------------------------------------------------------- hero
@@ -161,14 +171,23 @@ function plaquesFor(spots: Spot[], sections: Section[]): SectionPlaque[] {
   return out
 }
 
+/** Warm greige walls, an oak wainscot with a bronze rail, and a brand-tinted feature back wall. */
 function walls(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan): void {
   const h = o.front / 2
   const SH = MALL.shopHeight
-  const plaster = tintMat('#efe6d8', 1, 0.92)
-  // Cream plaster on the inside faces (1 cm proud of the shell), bronze shadow-gap at the top.
-  f.box(plaster, 0, SH / 2, -o.depth + 0.16, o.front - 0.3, SH, 0.02)
+  const WS = 0.95 // wainscot height
+  const plaster = tintMat('#e8ddcd', 1, 0.92)
+  const feature = tintMat(mixHex(o.brand.color, '#e8ddcd', 0.7), 1, 0.9)
+  const backZ = -o.depth + 0.16
+  // Plaster on the inside faces (1 cm proud of the shell), bronze shadow-gap at the top.
+  f.box(feature, 0, (SH + WS) / 2, backZ, o.front - 0.3, SH - WS, 0.02)
+  f.box(OAK, 0, WS / 2, backZ + 0.005, o.front - 0.3, WS, 0.03)
+  f.box(BRONZE, 0, WS + 0.012, backZ + 0.02, o.front - 0.3, 0.025, 0.03)
   for (const sx of [-1, 1]) {
-    f.box(plaster, sx * (h - 0.16), SH / 2, -o.depth / 2 - 0.15, 0.02, SH, o.depth - 0.6)
+    const x = sx * (h - 0.16)
+    f.box(plaster, x, (SH + WS) / 2, -o.depth / 2 - 0.15, 0.02, SH - WS, o.depth - 0.6)
+    f.box(OAK, x - sx * 0.005, WS / 2, -o.depth / 2 - 0.15, 0.03, WS, o.depth - 0.6)
+    f.box(BRONZE, x - sx * 0.02, WS + 0.012, -o.depth / 2 - 0.15, 0.03, 0.025, o.depth - 0.6)
     f.box(MAT.brass, sx * (h - 0.17), SH - 0.32, -o.depth / 2 - 0.15, 0.02, 0.03, o.depth - 0.6)
   }
   f.box(MAT.brass, 0, SH - 0.32, -o.depth + 0.17, o.front - 0.3, 0.03, 0.02)
@@ -205,7 +224,11 @@ function slotLights(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan, SH: numb
       const zc = (za + zb) / 2
       f.box(GYPSUM_SOFFIT, cx, SH - 0.165, zc, SW, 0.27, len)
       f.box(MAT.lightWarm, sx * (wallX - SW) + -sx * 0.03, sb - 0.005, zc, 0.06, 0.02, len - 0.1)
-      for (let z = za - 1.1; z > zb + 0.5; z -= 2.2) can(f, cx, sb, z)
+      for (let z = za - 1.1; z > zb + 0.5; z -= 2.2) {
+        can(f, cx, sb, z)
+        const w = f.toWorld(cx, 0, z)
+        addPool(w.x, w.z, 1.7, 1.7)
+      }
     } else {
       const xa = Math.min(l.x0, l.x1)
       let xb = Math.max(l.x0, l.x1)
@@ -216,9 +239,21 @@ function slotLights(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan, SH: numb
       const cz = wallZ + SW / 2
       f.box(GYPSUM_SOFFIT, xc, SH - 0.165, cz, len, 0.27, SW)
       f.box(MAT.lightWarm, xc, sb - 0.005, wallZ + SW + 0.03, len - 0.1, 0.02, 0.06)
-      for (let x = xa2 + 1.1; x < xb - 0.5; x += 2.2) can(f, x, sb, cz)
+      for (let x = xa2 + 1.1; x < xb - 0.5; x += 2.2) {
+        can(f, x, sb, cz)
+        const w = f.toWorld(x, 0, cz)
+        addPool(w.x, w.z, 1.7, 1.7)
+      }
     }
   }
+}
+
+/** Hex colour mixed towards another (k = share of `b`). */
+function mixHex(a: string, b: string, k: number): string {
+  const pa = parseInt(a.slice(1), 16)
+  const pb = parseInt(b.slice(1), 16)
+  const ch = (sh: number) => Math.round(((pa >> sh) & 255) * (1 - k) + ((pb >> sh) & 255) * k)
+  return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, '0')}`
 }
 
 function can(f: BatchFrame, x: number, sb: number, z: number): void {
@@ -313,54 +348,21 @@ function screen(ctx: ShopContext, f: BatchFrame, g: Group, s: Spot, o: BoutiqueO
   ctx.interaction.add({
     object: plane,
     kind: 'catalog',
-    label: () => t('browseAll', store.getState().lang),
-    onInteract: () => store.getState().set({ overlay: 'brandCatalog', catalogBrand: o.brand.id }),
+    // With Instagram reels the screen opens them (the viewer links to all products too).
+    label: () => t(brandReels(o.brand.id).length ? 'watchReels' : 'browseAll', store.getState().lang),
+    onInteract: () =>
+      brandReels(o.brand.id).length
+        ? store.getState().set({ overlay: 'reels', reelsBrand: o.brand.id })
+        : store.getState().set({ overlay: 'brandCatalog', catalogBrand: o.brand.id }),
     maxDist: 3.6,
   })
-  loaders.push(async () => {
-    const [cv, cg] = makeCanvas(512, 910)
-    cg.fillStyle = '#1f1a17'
-    cg.fillRect(0, 0, 512, 910)
-    cg.textAlign = 'center'
-    cg.textBaseline = 'middle'
-    cg.fillStyle = '#f4ede3'
-    cg.font = `600 40px ${BRAND.fontLatin}`
-    cg.fillText(o.brand.name.toUpperCase(), 256, 70)
-    cg.fillStyle = '#e8c27a'
-    cg.font = `500 26px ${BRAND.fontLatin}`
-    cg.fillText(`ALL ${o.products.length} PRODUCTS`, 256, 118)
-    cg.direction = 'rtl'
-    cg.font = `700 30px ${BRAND.fontUi}`
-    cg.fillText('كل المنتجات', 256, 160)
-    cg.direction = 'ltr'
-    const thumbs = o.products.slice(0, 9)
-    const imgs = await Promise.all(thumbs.map((p) => loadProductTexture(p.images[0], 256).then((r) => r.image as HTMLCanvasElement).catch(() => null)))
-    imgs.forEach((im, i) => {
-      if (!im) return
-      const cw = 150
-      const x = 31 + (i % 3) * (cw + 10)
-      const yy = 200 + Math.floor(i / 3) * (cw * 1.2 + 10)
-      const sc = Math.max(cw / im.width, (cw * 1.2) / im.height)
-      cg.save()
-      cg.beginPath()
-      cg.rect(x, yy, cw, cw * 1.2)
-      cg.clip()
-      cg.drawImage(im, x + (cw - im.width * sc) / 2, yy + (cw * 1.2 - im.height * sc) / 2, im.width * sc, im.height * sc)
-      cg.restore()
-    })
-    cg.fillStyle = BRAND.magenta
-    cg.fillRect(96, 804, 320, 92)
-    cg.fillStyle = '#fff'
-    cg.font = `700 24px ${BRAND.fontUi}`
-    cg.fillText('TAP TO BROWSE', 256, 830)
-    cg.direction = 'rtl'
-    cg.font = `700 24px ${BRAND.fontUi}`
-    cg.fillText('اضغط عشان تتفرج', 256, 868)
-    cg.direction = 'ltr'
-    const mat = imageMat(canvasTexture(cv))
-    registerBloom(mat, BLOOM_WEIGHT.screen)
-    plane.material = mat
-  })
+  // Stories: the brand's vertical videos, or a moving reel of its products.
+  loaders.push(
+    storyScreen(plane, o.brand, o.products, ctx.textureMax(), (mat) => {
+      registerBloom(mat, BLOOM_WEIGHT.screen)
+      plane.material = mat
+    }),
+  )
 }
 
 function fitting(f: BatchFrame, g: Group, r: { x0: number; z0: number; x1: number; z1: number }): void {

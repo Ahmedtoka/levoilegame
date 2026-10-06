@@ -37,8 +37,6 @@ export interface SectionPlaque {
 
 export interface LightboxCtx {
   interaction: Interaction
-  /** Brand whose catalogue a section plaque opens. */
-  brandId?: string
   loaders: (() => Promise<unknown>)[]
   /** Atlas side in px (atlasSize(bakedTextureMax)). */
   atlas: number
@@ -233,26 +231,23 @@ export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques:
   })
   parent.add(new Mesh(mergeGeometries(quads), imageMat(tex)))
 
-  // A tap on a plaque opens the brand's catalogue on that section.
-  if (!ctx.brandId) return
-  plaques.forEach((pl, i) => {
-    const qw = Math.min(w, pl.w + 0.3)
-    const hit = new Mesh(new PlaneGeometry(qw + 0.2, (qw * RH) / SECTION_SIGN.w + 0.2), HIDDEN)
-    const [x, z] = at(pl, 0, 0.02)
+  // Each sign opens its section's slider (every product of the section, not just
+  // the ones on the wall): one invisible hit plane per sign.
+  plaques.forEach((pl) => {
+    const hit = new Mesh(new PlaneGeometry(Math.min(w, pl.w + 0.3), h + 0.1), HIDDEN)
+    const [x, z] = at(pl, 0, 0.01)
     hit.position.set(x, LIGHTBOX.sectionY + 0.04, z)
     hit.rotation.y = pl.yaw
     parent.add(hit)
-    const hl = new Mesh(frameGeometry(qw + 0.3, (qw * RH) / SECTION_SIGN.w + 0.3), HOVER_MAT)
-    hl.position.z = -0.004
-    hl.visible = false
-    hit.add(hl)
-    void i
     ctx.interaction.add({
       object: hit,
-      kind: 'catalog',
-      label: () => `${t('allProducts', store.getState().lang)} · ${store.getState().lang === 'ar' ? pl.section.titleAr || pl.section.title : pl.section.title}`,
-      onInteract: () => store.getState().set({ overlay: 'brandCatalog', catalogBrand: ctx.brandId!, catalogSection: pl.section.id }),
-      highlight: (on) => (hl.visible = on),
+      kind: 'product',
+      label: () => `${store.getState().lang === 'ar' ? pl.section.titleAr || pl.section.title : pl.section.title} · ${t('browseSection', store.getState().lang)}`,
+      onInteract: () =>
+        store.getState().set({
+          overlay: 'slider',
+          slider: { title: pl.section.title, titleAr: pl.section.titleAr, productIds: pl.section.productIds, index: 0 },
+        }),
       maxDist: 7,
     })
   })

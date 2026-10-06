@@ -12,6 +12,7 @@ import {
   AnimationMixer,
   BufferAttribute,
   BufferGeometry,
+  Color,
   CylinderGeometry,
   Group,
   Matrix4,
@@ -29,7 +30,7 @@ import {
 } from 'three'
 import { blobShadow } from '../world/props'
 import { avatarKit, clipStride, cloneBones, mergedGeometry } from './avatar/kit'
-import { avatarMaterial, blankTexture, type AvatarMaterial } from './avatar/material'
+import { avatarMaterial, blankTexture, type AvatarMaterial, type FabricPart } from './avatar/material'
 import { faceTexture } from './avatar/face'
 import { twoBoneIK } from './avatar/ik'
 import { PARTS, piecesFor, type AvatarOutfit, type HeadWear, type Part } from './avatar/pieces'
@@ -423,6 +424,31 @@ export class Character implements Persona {
     if (top || bottom) this.colorVersion++
   }
 
+  /** Colour each part shows from afar (a worn fabric's average, else the palette). */
+  private readonly lodColor = new Map<number, Color>()
+
+  /**
+   * Wear a fabric texture on a garment part (virtual try-on), or go back to the
+   * plain colour with null. The fabric's average colour stands in for distant LODs.
+   */
+  wearFabric(part: FabricPart, fabric: { texture: Texture; avg: string } | null): void {
+    const u = this.mat?.userData
+    if (!u) return
+    const idx = PARTS.indexOf(part)
+    const axis = part === 'top' ? 'x' : part === 'bottom' ? 'y' : 'z'
+    if (fabric) {
+      u.fabrics[part].value = fabric.texture
+      u.fabricOn.value[axis] = 1
+      u.palette[idx].set('#ffffff')
+      this.lodColor.set(idx, new Color(fabric.avg))
+    } else {
+      u.fabricOn.value[axis] = 0
+      u.palette[idx].set(lookColors(this.look)[part])
+      this.lodColor.delete(idx)
+    }
+    this.colorVersion++
+  }
+
   wave(): void {
     this.waving = 2.2
   }
@@ -518,7 +544,8 @@ export class Character implements Persona {
       outN[i * 3] = qx / ql
       outN[i * 3 + 1] = qy / ql
       outN[i * 3 + 2] = qz / ql
-      const c = pal[Math.round(part.getX(i))]
+      const pi = Math.round(part.getX(i))
+      const c = this.lodColor.get(pi) ?? pal[pi]
       col[i * 3] = c.r
       col[i * 3 + 1] = c.g
       col[i * 3 + 2] = c.b

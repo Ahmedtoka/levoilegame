@@ -8,7 +8,7 @@ import { priceCart } from '../social/pricing'
 import { sanitizeAvatar, type AvatarData } from '../actors/avatar/look'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar' | 'brandCatalog'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar' | 'brandCatalog' | 'slider' | 'tryon' | 'reels'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -46,7 +46,13 @@ export interface AppState {
   overlay: Overlay
   productId: string | null
   /** Where the open product sheet came from (not persisted): closing returns there. */
-  productFrom: 'brandCatalog' | null
+  productFrom: 'brandCatalog' | 'slider' | null
+  /** Section slider (a shop's section sign): its products and the one in front. */
+  slider: { title: string; titleAr: string; productIds: string[]; index: number } | null
+  /** Product she is trying on (her character wears it; not saved). */
+  tryOn: { productId: string } | null
+  /** Brand whose Instagram reels are open. */
+  reelsBrand: string | null
   /** Pointer released while playing (desktop) — shows the pause veil. */
   paused: boolean
   loadProgress: number
@@ -87,8 +93,6 @@ export interface AppState {
   rewardsBrand: string | null
   /** Brand whose full catalogue the "All products" overlay shows. */
   catalogBrand: string | null
-  /** Section tab to open the brand catalogue on (a tap on a section plaque). */
-  catalogSection: string | null
   /** Section ids stamped in the passport this session. */
   passport: string[]
   /** Treasure-hunt logos found this session. */
@@ -150,7 +154,9 @@ export const store = createStore<AppState>()(
       coins: 0,
       rewardsBrand: null,
       catalogBrand: null,
-      catalogSection: null,
+      slider: null,
+      tryOn: null,
+      reelsBrand: null,
       passport: [],
       treasures: [],
       wheelSpun: false,

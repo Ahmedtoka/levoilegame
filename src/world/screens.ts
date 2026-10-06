@@ -16,11 +16,13 @@ import { catalog, store } from '../state/store'
 import { demoEnabled } from '../social'
 import { buildSlides, type SlideKind, type SlideSpec } from './screenSlides'
 import { shopFascia } from './signage'
+import { brandReels } from '../config/brandSocial'
 
 export interface ScreenActions {
   teleport(id: string): void
   openProduct(id: string): void
   openWheel(): void
+  openReels(source: string): void
 }
 
 const FADE = 0.5
@@ -99,7 +101,10 @@ export class ScreenFeed {
   private tick = 0
   private dirty = true
 
-  constructor(opts: { kinds: SlideKind[]; brandIds: string[]; portrait: boolean; interval?: number }) {
+  private readonly reels: string | null
+
+  constructor(opts: { kinds: SlideKind[]; brandIds: string[]; portrait: boolean; interval?: number; reels?: string }) {
+    this.reels = opts.reels && brandReels(opts.reels).length ? opts.reels : null
     this.kinds = opts.kinds
     this.brandIds = opts.brandIds
     this.portrait = opts.portrait
@@ -126,7 +131,7 @@ export class ScreenFeed {
 
   private rebuild(): void {
     const s = store.getState()
-    this.slides = buildSlides({ kinds: this.kinds, flash: s.flash, groupDeal: s.groupDeal, brandIds: this.brandIds, brandIndex: this.brandIndex, demo: demoEnabled, now: Date.now() })
+    this.slides = buildSlides({ kinds: this.kinds, flash: s.flash, groupDeal: s.groupDeal, brandIds: this.brandIds, brandIndex: this.brandIndex, demo: demoEnabled, now: Date.now(), reels: this.reels })
   }
 
   private visible(camera: Camera): boolean {
@@ -192,6 +197,10 @@ export class ScreenFeed {
     if (s?.kind === 'brand') {
       const bid = s.brandId
       if (!brandById.get(bid ?? '') || !catalog().sections.some((x) => x.id === bid)) s = null
+    }
+    if (s?.kind === 'reels') {
+      reelsSlide(g, W, H, P)
+      return
     }
     const dark = !s || s.kind === 'flash' || s.kind === 'games' || s.kind === 'welcome'
     const grad = g.createLinearGradient(0, 0, W * 0.4, H)
@@ -400,6 +409,7 @@ export function registerScreen(interaction: Interaction, hit: Object3D, feed: Sc
         const b = brandById.get(s.action.target)
         return `${t('screenGoTo', L)} ${L === 'ar' ? (b?.nameAr ?? '') : (b?.name ?? '')}`
       }
+      if (s?.action?.type === 'reels') return t('watchReels', L)
       return t('screenOpen', L)
     },
     onInteract: () => {
@@ -407,8 +417,36 @@ export function registerScreen(interaction: Interaction, hit: Object3D, feed: Sc
       if (!a) return
       if (a.type === 'teleport') actions.teleport(a.target)
       else if (a.type === 'product') actions.openProduct(a.id)
+      else if (a.type === 'reels') actions.openReels(a.source)
       else actions.openWheel()
     },
     maxDist: 9,
   })
+}
+
+/** "Watch our reels" slide: Instagram gradient, play button, bilingual call to action. */
+function reelsSlide(g: CanvasRenderingContext2D, W: number, H: number, P: boolean): void {
+  const grad = g.createLinearGradient(0, H, W, 0)
+  grad.addColorStop(0, '#feda75')
+  grad.addColorStop(0.3, '#fa7e1e')
+  grad.addColorStop(0.6, '#d62976')
+  grad.addColorStop(1, '#4f5bd5')
+  g.fillStyle = grad
+  g.fillRect(0, 0, W, H)
+  const cx = W / 2
+  const cy = H * (P ? 0.36 : 0.4)
+  const r = Math.min(W, H) * (P ? 0.14 : 0.16)
+  g.fillStyle = 'rgba(255,255,255,0.25)'
+  g.beginPath()
+  g.arc(cx, cy, r, 0, Math.PI * 2)
+  g.fill()
+  g.fillStyle = '#ffffff'
+  g.beginPath()
+  g.moveTo(cx - r * 0.32, cy - r * 0.45)
+  g.lineTo(cx - r * 0.32, cy + r * 0.45)
+  g.lineTo(cx + r * 0.5, cy)
+  g.closePath()
+  g.fill()
+  text(g, 'Watch our reels', cx, H * (P ? 0.6 : 0.72), P ? 52 : 58, '#ffffff', 700, BRAND.fontLatin)
+  text(g, '\u0634\u0648\u0641\u064a \u0627\u0644\u0631\u064a\u0644\u0632', cx, H * (P ? 0.68 : 0.84), P ? 44 : 46, '#ffffff', 700, BRAND.fontUi, true)
 }

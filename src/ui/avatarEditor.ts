@@ -221,8 +221,8 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
   }, false)
 }
 
-/** Small dedicated renderer for the character preview (exists only while the editor is open). */
-class PreviewStage {
+/** Small dedicated renderer for a character preview (exists only while its overlay is open). */
+export class PreviewStage {
   private readonly renderer: WebGLRenderer
   private readonly scene = new Scene()
   private readonly camera = new PerspectiveCamera(26, 1, 0.1, 20)
@@ -263,9 +263,11 @@ class PreviewStage {
     this.loop()
   }
 
-  show(d: AvatarData): void {
+  /** Show a character with this look; `dress` can put more on it (try-on fabrics). */
+  show(d: AvatarData, dress?: (c: Character) => void): void {
     const old = this.char
     const c = new Character({ ...d, pose: 'relaxed' }, 3)
+    dress?.(c)
     if (old) {
       old.root.removeFromParent()
       // Geometry is shared (cached per piece set); only the material is per character.

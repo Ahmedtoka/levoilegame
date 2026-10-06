@@ -29,7 +29,7 @@ URL flags:
 | `?debug` | Exposes `window.lv` (game, store, engine, layout, catalog, social) in production builds; always on in dev |
 | `?boutique` | Walk the single baked Le Voile boutique (original catalogue) instead of the mall |
 | `?nokit` | Procedural props instead of the baked décor kit |
-| `?nobespoke` | Generic furnishing for every shop (turns off bespoke interiors such as Le Voile's) |
+| `?bespoke` | Bespoke interiors (Le Voile's baked store with its racks); by default every shop is a campaign boutique |
 | `?crowd=N` | Number of simulated shoppers (0–80). Default by quality: High 50, Medium 30, Low 20 |
 | `?nodemo` | Turns off every simulation: crowd, purchase toasts, viewer counts, group deal and flash sales. Staff chat and the games stay |
 | `?nobloom` | No bloom on High (renders straight to the canvas, like Medium) |
@@ -68,7 +68,7 @@ Coming Soon units get a closed hoarding front. The Styling Studio and the lounge
 1. **Brand and slot** in `src/config/mall.ts`: add a `BrandDef` to `BRANDS` (`id`, `name`, `nameAr`, `initials`, `color`, `status`, `display` rack/shelf/gallery/boxes, model `outfit`, placeholder `kinds`) and put its id in a wing's `slots` in `WINGS`. To open a Coming Soon unit, replace its `soon-N` slot with the brand id.
 2. **Logo:** set `BrandDef.logo` (e.g. `/brand/<id>.png`); it is used on the shopfront and the blade sign. Without it, a monogram is drawn.
 3. **Products:** today every brand except Le Voile gets generated placeholder products (`buildMallCatalog()` in `src/data/mallCatalog.ts`). Real products later come from one data file or Shopify collection per brand (TODO).
-4. **Bespoke interior (optional):** register a builder in `ShopContext.bespoke[brandId]` (see `src/world/bespoke/levoile.ts`). It replaces the generic furnishing; `?nobespoke` turns it off. A bespoke unit can be deeper via `BrandDef.depth`.
+4. **Bespoke interior (optional):** register a builder in `ShopContext.bespoke[brandId]` (see `src/world/bespoke/levoile.ts`). It replaces the generic furnishing when the page has `?bespoke`. A bespoke unit can be deeper via `BrandDef.depth`.
 
 Products are shown on fixtures in every shop: composed card panels, rails, shelves and easels (`src/world/displays.ts`, `cardPanel`), placed with `Kit.place(..., { hideSoft: true })` so baked garments don't compete with real products.
 

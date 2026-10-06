@@ -28,7 +28,12 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - Earned from: passport +10 per shop (+150 for all), treasure +25 each (+100 for all), and the wheel (coins or free shipping).
   - `REWARD_TIERS` (100 / 250 / 400 coins → 10 / 20 / 30%) are redeemed at each shop's rewards counter (`rewardsCounter` in `shop.ts`, overlay in `ui/social.ts`). This needs the mock login.
   - The result is a brand-scoped coupon (`Coupon.brandId`) that `pricing.ts` applies only to that brand's lines.
-- **Bespoke shops:** `ShopContext.bespoke[brandId]` replaces the generic furnishing (`?nobespoke` turns it off).
+- **Shops:** every shop (Le Voile included) is a campaign boutique (`src/world/boutiqueShop.ts`): lit lightbox walls grouped by section under dark section signs, cut-out standees, greige walls with an oak wainscot and a brand-tinted back wall, wall washes and floor light pools.
+  - A section sign opens the **section slider** (`src/ui/sectionSlider.ts`, overlay `slider`): every product of the section as a cover-flow.
+  - The portrait **stories screen** (`src/world/storyScreen.ts`) plays the brand's vertical videos from `src/config/brandVideos.ts` (files in `public/videos/<brandId>/`), else a shader-animated reel of its products; tapping it opens all products.
+  - **Instagram:** `src/config/brandSocial.ts` holds each brand's handle and reel links (link or embed code). With reels, the stories screen shows a "Watch our reels" card and opens the reels viewer (`src/ui/reelsOverlay.ts`, official embeds, one iframe at a time, loaded only while open). Embeds can't play on the 3D screen itself (cross-origin iframe); MP4s in `brandVideos.ts` can.
+- **Try-on** (`src/actors/avatar/tryOn.ts`, `src/ui/tryOnMirror.ts`): "Try it on" in the product sheet dresses her character in the product (outfit from the garment words, fabric patch cut from the product photo, tiled triplanar by the avatar material), shown in a mirror; she can wear it around the mall (`store.tryOn`, not saved).
+- **Bespoke shops:** `ShopContext.bespoke[brandId]` replaces the generic furnishing. Le Voile's baked store (`src/world/bespoke/levoile.ts`, racks and hangers) is only used with `?bespoke`.
   - Le Voile is the real baked boutique (`src/world/bespoke/levoile.ts`, `store.glb`) at real size in the plaza-side half of a split flagship; the other half is a lightbox hall, with a cream partition between.
   - Its baked garments and scarves (`store_soft`) are hidden; only real products show: composed card panels on the wall bays, rails and rear display, plus easels.
   - The model preloads about 2.5 s after boot.

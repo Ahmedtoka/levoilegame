@@ -26,12 +26,6 @@ export function mountBrandCatalog(root: HTMLElement, game: GameBridge): void {
     const subs = brandSubsections(brand.id)
     const sections = subs.length ? subs : cat.sections.filter((x) => x.id === brand.id)
     const total = new Set(sections.flatMap((x) => x.productIds)).size
-    // A section plaque opens straight on its tab.
-    if (s.catalogSection) {
-      const i = sections.findIndex((x) => x.id === s.catalogSection)
-      if (i >= 0) tab = i
-      s.set({ catalogSection: null })
-    }
     tab = Math.min(tab, Math.max(0, sections.length - 1))
     const sec = sections[tab]
     const items = (sec?.productIds ?? []).map((id) => cat.byId.get(id)).filter((p): p is Product => !!p)

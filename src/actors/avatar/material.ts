@@ -3,12 +3,18 @@
 // part also lays the canvas-drawn face over the skin, the logo part the brand logo.
 // One shader program for every character (only the uniforms differ).
 
-import { CanvasTexture, Color, DoubleSide, MeshStandardMaterial, type Texture } from 'three'
+import { CanvasTexture, Color, DoubleSide, MeshStandardMaterial, Vector3, type Texture } from 'three'
 import { PARTS, type Part } from './pieces'
 
+/** Garment parts that can wear a fabric texture (try-on). */
+export type FabricPart = 'top' | 'bottom' | 'hijab'
+
 export interface AvatarMaterial extends MeshStandardMaterial {
-  /** palette: colour per part; blink: 0 open … 1 eyes closed. */
-  userData: { palette: Color[]; blink: { value: number } }
+  /**
+   * palette: colour per part; blink: 0 open … 1 eyes closed; fabrics: a texture
+   * per garment part, shown where fabricOn (x top, y bottom, z hijab) is 1.
+   */
+  userData: { palette: Color[]; blink: { value: number }; fabrics: Record<FabricPart, { value: Texture }>; fabricOn: { value: Vector3 } }
 }
 
 let blankTex: Texture | null = null
@@ -30,6 +36,10 @@ export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo
   mat.userData.palette = palette
   const blink = { value: 0 }
   mat.userData.blink = blink
+  const fabrics = { top: { value: blankTexture() }, bottom: { value: blankTexture() }, hijab: { value: blankTexture() } }
+  const fabricOn = { value: new Vector3() }
+  mat.userData.fabrics = fabrics
+  mat.userData.fabricOn = fabricOn
   mat.defines = { USE_UV: '' }
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.lvPal = { value: palette }
@@ -37,9 +47,14 @@ export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo
     shader.uniforms.lvFaceClosed = { value: faceClosed }
     shader.uniforms.lvBlink = blink
     shader.uniforms.lvLogo = { value: logo }
+    shader.uniforms.lvFabTop = fabrics.top
+    shader.uniforms.lvFabBottom = fabrics.bottom
+    shader.uniforms.lvFabHijab = fabrics.hijab
+    shader.uniforms.lvFabOn = fabricOn
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute float part;\nvarying float vPart;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvPart = part;')
+      .replace('#include <common>', '#include <common>\nattribute float part;\nvarying float vPart;\nvarying vec3 vLvPos;\nvarying vec3 vLvNrm;')
+      // Bind-pose position/normal: a fabric print stays put on the cloth as she moves.
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvPart = part;\nvLvPos = position;\nvLvNrm = normal;')
     shader.fragmentShader = shader.fragmentShader
       .replace(
         '#include <common>',
@@ -49,7 +64,20 @@ uniform sampler2D lvFace;
 uniform sampler2D lvFaceClosed;
 uniform float lvBlink;
 uniform sampler2D lvLogo;
-varying float vPart;`,
+uniform sampler2D lvFabTop;
+uniform sampler2D lvFabBottom;
+uniform sampler2D lvFabHijab;
+uniform vec3 lvFabOn;
+varying float vPart;
+varying vec3 vLvPos;
+varying vec3 vLvNrm;
+// Triplanar fabric: ~0.5 m per repeat, blended by the bind-pose normal.
+vec3 lvFabric(sampler2D t) {
+  vec3 w = pow(abs(normalize(vLvNrm)), vec3(4.0));
+  w /= (w.x + w.y + w.z);
+  vec2 s = vec2(2.0);
+  return texture2D(t, vLvPos.zy * s).rgb * w.x + texture2D(t, vLvPos.xz * s).rgb * w.y + texture2D(t, vLvPos.xy * s).rgb * w.z;
+}`,
       )
       .replace(
         '#include <color_fragment>',
@@ -63,6 +91,12 @@ if (lvI == ${PARTS.indexOf('face')}) {
   // The logo texture is shared (flipY on) while glTF UVs run top-down: flip v.
   vec4 l = texture2D(lvLogo, vec2(vUv.x, 1.0 - vUv.y));
   lvC = mix(lvC, l.rgb, l.a);
+} else if (lvI == ${PARTS.indexOf('top')} && lvFabOn.x > 0.5) {
+  lvC = lvFabric(lvFabTop);
+} else if (lvI == ${PARTS.indexOf('bottom')} && lvFabOn.y > 0.5) {
+  lvC = lvFabric(lvFabBottom);
+} else if (lvI == ${PARTS.indexOf('hijab')} && lvFabOn.z > 0.5) {
+  lvC = lvFabric(lvFabHijab);
 }
 diffuseColor.rgb *= lvC;`,
       )

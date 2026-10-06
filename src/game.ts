@@ -16,8 +16,9 @@ import { Interaction } from './interact/interaction'
 import { Character, type Persona } from './actors/character'
 import { avatarLook } from './actors/palette'
 import type { AvatarData } from './actors/avatar/look'
+import { dressTryOn, tryOnLook, tryOnPlan } from './actors/avatar/tryOn'
 import { audio } from './audio/audio'
-import { store, watch } from './state/store'
+import { catalog, store, watch } from './state/store'
 import { t } from './i18n/i18n'
 import type { GameBridge } from './ui/dom'
 import type { ShellHandles } from './world/mall'
@@ -90,7 +91,8 @@ export class Game implements GameBridge {
     this.warmer = new TextureWarmer(engine.renderer, engine.scene)
 
     // Third-person avatar: the visitor's own look (avatar editor), rebuilt when she changes it.
-    watch((s) => s.avatar, (look) => this.setAvatar(look))
+    watch((s) => s.avatar, () => this.setAvatar())
+    watch((s) => s.tryOn, () => this.setAvatar(), false)
 
     const { spawn } = layout
     this.player.teleport(spawn.x, spawn.z, spawn.yaw)
@@ -198,11 +200,19 @@ export class Game implements GameBridge {
     return this.warmer.flush()
   }
 
-  /** Replace the player's character with a new look (the default until she designs hers). */
-  setAvatar(data: AvatarData | null): void {
+  /**
+   * Rebuild the player's character from her saved look (the default until she
+   * designs hers), wearing the product she is trying on, if any.
+   */
+  setAvatar(): void {
+    const s = store.getState()
     const old = this.player.avatar
-    const look = data ? { ...data, pose: 'relaxed' as const } : avatarLook()
+    const data: AvatarData = s.avatar ?? { ...avatarLook() }
+    const product = s.tryOn ? catalog().byId.get(s.tryOn.productId) : undefined
+    const plan = product ? tryOnPlan(product) : null
+    const look = { ...(plan ? tryOnLook(data, plan) : data), pose: 'relaxed' as const }
     const avatar = new Character(look, 3)
+    if (product && plan) void dressTryOn(avatar, product, plan)
     if (old) {
       avatar.root.position.copy(old.root.position)
       avatar.root.rotation.copy(old.root.rotation)
