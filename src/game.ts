@@ -15,6 +15,7 @@ import { onBackButton, setHaptics } from './platform/native'
 import { Interaction } from './interact/interaction'
 import { Character, type Persona } from './actors/character'
 import { avatarLook } from './actors/palette'
+import type { AvatarData } from './actors/avatar/look'
 import { audio } from './audio/audio'
 import { store, watch } from './state/store'
 import { t } from './i18n/i18n'
@@ -88,11 +89,8 @@ export class Game implements GameBridge {
     this.governor.onWindow = (fps) => this.tuneResolution(fps)
     this.warmer = new TextureWarmer(engine.renderer, engine.scene)
 
-    // Third-person avatar
-    const avatar = new Character(avatarLook(), 3)
-    avatar.root.visible = false
-    engine.scene.add(avatar.root)
-    this.player.avatar = avatar
+    // Third-person avatar: the visitor's own look (avatar editor), rebuilt when she changes it.
+    watch((s) => s.avatar, (look) => this.setAvatar(look))
 
     const { spawn } = layout
     this.player.teleport(spawn.x, spawn.z, spawn.yaw)
@@ -170,7 +168,8 @@ export class Game implements GameBridge {
     if (s.phase !== 'playing') return
     switch (a) {
       case 'escape':
-        if (s.overlay) this.resume()
+        if (s.overlay === 'product' && s.productFrom === 'brandCatalog' && s.catalogBrand) s.set({ overlay: 'brandCatalog', productId: null, productFrom: null })
+        else if (s.overlay) this.resume()
         break
       case 'interact':
         if (!s.overlay) this.interact()
@@ -194,6 +193,26 @@ export class Game implements GameBridge {
 
   // ---------------------------------------------------------- GameBridge
 
+  /** Upload every texture the scene already has (boot, behind the loading screen). */
+  warmTextures(): number {
+    return this.warmer.flush()
+  }
+
+  /** Replace the player's character with a new look (the default until she designs hers). */
+  setAvatar(data: AvatarData | null): void {
+    const old = this.player.avatar
+    const look = data ? { ...data, pose: 'relaxed' as const } : avatarLook()
+    const avatar = new Character(look, 3)
+    if (old) {
+      avatar.root.position.copy(old.root.position)
+      avatar.root.rotation.copy(old.root.rotation)
+      old.root.removeFromParent()
+    }
+    avatar.root.visible = false
+    this.engine.scene.add(avatar.root)
+    this.player.avatar = avatar
+  }
+
   enterMall(): void {
     audio.unlock()
     audio.setMusic(store.getState().music)
@@ -204,7 +223,7 @@ export class Game implements GameBridge {
 
   resume(): void {
     const s = store.getState()
-    if (s.overlay) s.set({ overlay: null, productId: null })
+    if (s.overlay) s.set({ overlay: null, productId: null, productFrom: null })
     else this.relock()
     this.syncControl()
   }
@@ -226,7 +245,7 @@ export class Game implements GameBridge {
       this.player.teleport(dest.x, dest.z, dest.yaw)
       this.fade.style.opacity = '0'
     }, 230)
-    store.getState().set({ overlay: null, productId: null })
+    store.getState().set({ overlay: null, productId: null, productFrom: null })
   }
 
   restart(): void {

@@ -308,6 +308,36 @@ export function comingSoonTexture(): CanvasTexture {
   return canvasTexture(c)
 }
 
+/** Pop-up unit with no guest brand this month: plum hoarding, "122 Pop-up · Book this space". */
+export function popupTexture(): CanvasTexture {
+  const [c, g] = makeCanvas(1024, 640)
+  const grad = g.createLinearGradient(0, 0, 0, 640)
+  grad.addColorStop(0, '#5b2b82')
+  grad.addColorStop(1, '#3e1c5c')
+  g.fillStyle = grad
+  g.fillRect(0, 0, 1024, 640)
+  g.strokeStyle = 'rgba(232,194,122,0.8)'
+  g.lineWidth = 6
+  g.strokeRect(24, 24, 976, 592)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.fillStyle = '#f4ede3'
+  g.font = `600 44px ${BRAND.fontLatin}`
+  g.fillText(spaced('DISTRICT 122'), 512, 120)
+  g.font = `700 120px ${BRAND.fontLatin}`
+  g.fillText('POP-UP', 512, 260)
+  g.font = `500 40px ${BRAND.fontLatin}`
+  g.fillText("This month's guest brand", 512, 380)
+  g.direction = 'rtl'
+  g.font = `700 46px ${BRAND.fontUi}`
+  g.fillText('براندك هنا الشهر الجاي · احجز المساحة', 512, 470)
+  g.direction = 'ltr'
+  g.fillStyle = '#e8c27a'
+  g.font = `600 34px ${BRAND.fontLatin}`
+  g.fillText('BOOK THIS SPACE', 512, 556)
+  return canvasTexture(c)
+}
+
 /** Square double-sided blade sign that sticks out over the corridor. */
 export function bladeSign(section: Section, brand?: Monogram): CanvasTexture {
   if (brand) {
@@ -526,6 +556,35 @@ export function boutiqueHeader(section: Section): CanvasTexture {
   fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 46, 900)
   g.fillText(section.titleAr, 512, 140)
   return canvasTexture(c)
+}
+
+/**
+ * Section sign over a group of lightboxes (drawn at `y` in a shared atlas):
+ * espresso panel, thin gold frame, large cream serif title and the Arabic in gold.
+ * High contrast on the cream boutique walls, readable from across the shop.
+ */
+export const SECTION_SIGN = { w: 1024, h: 232 }
+export function drawSectionSign(g: CanvasRenderingContext2D, section: Section, y: number): void {
+  const { w, h } = SECTION_SIGN
+  const grad = g.createLinearGradient(0, y, 0, y + h)
+  grad.addColorStop(0, '#3a2e33')
+  grad.addColorStop(1, '#241c20')
+  g.fillStyle = grad
+  g.fillRect(0, y, w, h)
+  g.strokeStyle = '#c8a46e'
+  g.lineWidth = 4
+  g.strokeRect(14, y + 14, w - 28, h - 28)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.fillStyle = '#f4ede3'
+  const title = spaced(section.title)
+  fitText(g, title, (px) => `600 ${px}px ${BRAND.fontLatin}`, 84, 900)
+  g.fillText(title, w / 2, y + 88)
+  g.fillStyle = '#d9b77a'
+  g.direction = 'rtl'
+  fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 54, 860)
+  g.fillText(section.titleAr, w / 2, y + 166)
+  g.direction = 'ltr'
 }
 
 /**

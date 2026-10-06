@@ -26,6 +26,8 @@ import { mountFallback, mountScreens } from './ui/screens'
 import { mountHud, setZoneAliases } from './ui/hud'
 import { mountMinimap } from './ui/minimap'
 import { mountMenu } from './ui/menu'
+import { mountAvatarEditor } from './ui/avatarEditor'
+import './styles/avatar.css'
 import { mountProductCard } from './ui/productCard'
 import { mountCart } from './ui/cart'
 import { mountCheckout } from './ui/checkout'
@@ -41,7 +43,9 @@ import { levoileInterior } from './world/bespoke/levoile'
 import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
+import { mountBrandCatalog } from './ui/brandCatalog'
 import { buildLiveMall } from './world/liveMall'
+import { loadAvatarKit } from './actors/avatar/kit'
 import { buildPlaza } from './world/plaza'
 import { buildDecals } from './world/decals'
 import { buildCorridor } from './world/corridor'
@@ -72,6 +76,8 @@ const frame = () =>
 
 async function boot(): Promise<void> {
   installImageFallback()
+  // Characters are built from this model; fetched alongside the catalogue.
+  const avatarKit = loadAvatarKit()
   let catalog: Catalog | null = null
   let levoileCatalog: Catalog | null = null
   const provider = createProductProvider()
@@ -114,6 +120,7 @@ async function boot(): Promise<void> {
   createSocial(catalog, crowdSize(level))
   startSession()
 
+  await avatarKit
   const colliders = new CollisionWorld()
   const game = new Game(engine, layout, colliders, uiRoot, isTouch)
   mountScreens(uiRoot, game)
@@ -123,6 +130,8 @@ async function boot(): Promise<void> {
   mountCart(uiRoot, game)
   mountCheckout(uiRoot, game, createCheckoutService(provider, catalog))
   mountSocial(uiRoot, game)
+  mountBrandCatalog(uiRoot, game)
+  mountAvatarEditor(uiRoot, game)
   mountMinimap(uiRoot, game, () => {
     const s = store.getState()
     if (s.lastOrder) return layout.exit
@@ -152,6 +161,10 @@ async function boot(): Promise<void> {
   // Pre-compile shaders so the first seconds don't hitch.
   game.player.applyCamera(engine.camera, colliders, 0)
   engine.renderer.compile(engine.scene, engine.camera)
+  // Textures too: uploading them here keeps the first minutes of play smooth.
+  progress(0.96)
+  await frame()
+  game.warmTextures()
   progress(1)
   game.start()
   await new Promise((r) => setTimeout(r, 250))

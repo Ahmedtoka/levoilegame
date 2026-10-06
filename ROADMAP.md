@@ -39,5 +39,6 @@ Each mock in `src/social/` gets a real implementation of the same interface:
 - Events on the plaza stage: launch days, collection reveals, guided tours hosted by a stylist.
 
 ## Housekeeping
+- Remove the now-unused `DisplayKind` / `BrandDef.display` / `SectionStyle.display` and the kit's rack / hangbay / scarfbay pieces (and their bake in `scripts/blender/export_store.py` `kit_pieces()` if `?boutique` no longer needs them).
 - Playwright smoke test (boot → add to cart → mock checkout → exit).
 - Accessibility: keyboard-only UI navigation, reduced-motion mode, and a 2D catalogue toggle.

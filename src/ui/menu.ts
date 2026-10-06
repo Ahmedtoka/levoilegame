@@ -13,6 +13,10 @@ export function mountMenu(root: HTMLElement, game: GameBridge): void {
 
   onAction(veil, {
     close: () => game.resume(),
+    avatar: () => {
+      audio.click()
+      store.getState().set({ overlay: 'avatar' })
+    },
     go: (b) => {
       audio.click()
       game.teleport(b.dataset.target!)
@@ -66,6 +70,7 @@ export function mountMenu(root: HTMLElement, game: GameBridge): void {
             ${sectionButtons}
             ${game.layout.shops.some((x) => x.amenity === 'studio') ? go('studio', t('studioTitle', L), t('stylistRole', L), '#e8d9c8') : ''}
           </div>
+          <button class="btn ghost block" style="margin-top:16px" data-action="avatar">${ICONS.camera}${esc(t('myCharacter', L))}</button>
           <h3>${esc(t('settings', L))}</h3>
           <div class="settings">
             <div class="setting"><span>${esc(t('quality', L))}</span>${seg('quality', s.quality, [

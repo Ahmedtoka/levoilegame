@@ -6,9 +6,10 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 
 - **Brands and slots:** `src/config/mall.ts`.
   - `BRANDS` holds name, Arabic name, monogram initials and colour, status (open / soon), display, outfit and placeholder product kinds.
-  - `WINGS` holds the slot order per wing (west / north / east).
+  - `BrandDef.tier` is `flagship` (24×16 m) / `standard` (12×16) / `compact` (6×10). `split: true` (Le Voile) makes a flagship of two halves.
+  - `WINGS` has `left` / `right` unit lists per wing (west / north / east), ordered from the plaza outwards. `wingOf(id)` finds a brand's wing.
+  - `POPUP_BRAND_ID` (null → the plum "122 Pop-up · Book this space" kiosk).
   - The base look of each shop comes from its brand: brand fascia, blade sign with monogram, tint, display.
-  - Bespoke décor per shop is the next phase.
 - **Catalogue:** `src/data/mallCatalog.ts`.
   - `buildMallCatalog()` makes one `Section` per open brand.
   - Le Voile merges its real `products.json` sections into one shop.
@@ -17,7 +18,9 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - Then run `.venv/Scripts/python scripts/remove-bg.py --brands`, then `node scripts/fetch-brands.mjs --apply-cutouts` (QA thresholds; manual rejects in `scripts/brand-cutout-reject.json`), then `scripts/optimize-images.py`.
   - `?boutique` still walks the single Le Voile store with the original catalogue.
 - **Layout:** `src/config/layout.ts`.
-  - A plaza (44 × 34 m, entrance at z = 0) with 3 wings.
+  - A plaza (44 × 34 m, entrance at z = 0) with 3 wings of 60 / 60 / 48 m.
+  - Units are packed by frontage in `src/config/layoutMath.ts` (pure, unit-tested: `packWing`, `sideBoundaries`, `depthAt`, `openingsFor`, `frontSolidSpans`, `frontWallSpans`, `allocate`). The shorter wing side ends in a 4 m seating nook (zone `wing-<id>`).
+  - `ShopLayout` carries `tier`, `front`, `depth`, `z0`/`z1`, `plazaDir`, `openings` and `popup`. `MALL.shopLen` / `MALL.shopDepth` are deprecated.
   - Each wing has its own frame (origin = mouth on the plaza, local −Z away from it); `toWorld()` converts.
   - `ShopLayout.kind` is `shop | soon | lounge` (`amenity`: `studio` / `lounge`). Zone ids are a brand id, `studio`, `lounge`, `soon-N`, `wing-<id>` or `atrium` (plaza).
 - **Shell:** `src/world/mall.ts` builds the plaza and each wing in its local frame. Coming Soon units get a closed hoarding front.
@@ -26,12 +29,19 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - `REWARD_TIERS` (100 / 250 / 400 coins → 10 / 20 / 30%) are redeemed at each shop's rewards counter (`rewardsCounter` in `shop.ts`, overlay in `ui/social.ts`). This needs the mock login.
   - The result is a brand-scoped coupon (`Coupon.brandId`) that `pricing.ts` applies only to that brand's lines.
 - **Bespoke shops:** `ShopContext.bespoke[brandId]` replaces the generic furnishing (`?nobespoke` turns it off).
-  - Le Voile is the real baked boutique (`src/world/bespoke/levoile.ts`, `store.glb`) at real size in a 16 m-deep anchor unit (`BrandDef.depth`).
+  - Le Voile is the real baked boutique (`src/world/bespoke/levoile.ts`, `store.glb`) at real size in the plaza-side half of a split flagship; the other half is a lightbox hall, with a cream partition between.
   - Its baked garments and scarves (`store_soft`) are hidden; only real products show: composed card panels on the wall bays, rails and rear display, plus easels.
   - The model preloads about 2.5 s after boot.
   - Brand logos: `BrandDef.logo` (shopfront + blade sign).
 - **Plaza/corridor finishing:** `plaza.ts` (stage + LED + seating), `corridor.ts` (per-wing finishing), `screens.ts`/`screenSlides.ts` (live screens, shared feeds), `decals.ts`/`glow.ts` (instanced contact shadows / additive glows, glows hidden on Low).
-- **Product display:** every shop shows its products on fixtures: `cardPanel` and the lookbook stand in `src/world/displays.ts`, with kit pieces placed via `Kit.place(..., { hideSoft: true })` so the baked garments (`store_soft`) are hidden. Always-visible kit plants use `Kit.placeBatched` (one batched draw). Design: `docs/superpowers/specs/2026-10-05-product-display-design.md`.
+- **Product display:** brand shops are style-B "campaign boutiques", built by `src/world/boutiqueShop.ts` from the pure plan `src/config/boutiquePlan.ts`.
+  - Lightbox walls are grouped by section with plaques (`src/world/lightbox.ts`: one atlas mesh per ≤ 28 products, atlas 2048 / 1536 / 1024 by quality), plus a hero campaign wall.
+  - Standees stand on marble plinths and islands show cut-outs (`src/world/showcase.ts`, one alpha-tested mesh each; tall cut-outs become mounted prints on islands).
+  - The cream ceiling has a soffit, slot lights and spot cans. Flagships get a fitting room. Each shop has the 122 Coins counter.
+  - An "All products" screen opens `src/ui/brandCatalog.ts` (overlay `brandCatalog`, `catalogBrand`).
+  - Storefronts follow `shop.openings`: flagship long windows with 4 figures, standard 2 windows, compact glass sidelights.
+  - The old kit / rack furnishing (`furnishWithKit` and the rack / shelf / gallery / boxes displays) was removed in this branch. `cardPanel`, `easelRow` and `lookbookStand` remain, used by Le Voile's baked half (`src/world/bespoke/levoile.ts`) and `?boutique` (`src/world/boutique.ts`).
+  - Design: `docs/superpowers/specs/2026-10-06-shop-tiers-design.md`. Perf notes: `docs/superpowers/notes/2026-10-06-shop-tiers-perf.md`. Earlier design: `docs/superpowers/specs/2026-10-05-product-display-design.md`.
 - **Controls:** `src/player/controlsMath.ts` holds the pure maths (look smoothing, tap-to-walk, product focus, touch tuning), unit-tested. Design: `docs/superpowers/specs/2026-10-05-controls-design.md`.
 - **WebP images:** `scripts/optimize-images.py` writes `.webp` next to each product photo/cutout; `src/data/webImage.ts` picks them at runtime (failed cutouts have none); a Vite plugin in `vite.config.ts` prunes the jpg/png sources from `dist/`.
 - **Plaza and corridors:** the plaza has an events stage with LED wall and live screens (`plaza.ts`, `screens.ts`); each wing is finished in `corridor.ts`. Notes: `docs/superpowers/notes/`.
@@ -56,11 +66,17 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 - **Everything 3D is procedural:** mall, props, canvas-drawn bilingual signage and characters. The décor kit / boutique GLBs (`public/models/mall/`) are optional, and the app never blocks on them.
 - **Layout comes from config** (`src/config/layout.ts` + `src/config/mall.ts`): a plaza at the entrance (z = 0) with three wings, one shop per slot. Shop interiors are built in a local frame (origin = centre of the opening, −Z into the shop).
 - **Per-section look** is in `src/config/sections.ts` (`display`: rack/shelf/gallery/boxes, `tint`, model `outfit`, size profile, Shopify `collection`). Unknown sections get defaults.
-- **Characters** (`src/actors/`): every character comes from `createCharacter(look, seed)`, one procedural cartoon rig (Groups: hips, spine, head, arms, legs). Hijab / hair meshes are added straight onto the head and spine bones. Meshes are merged per bone with vertex colours (`bake.ts`, ~10 draw calls each). Outfit colours are sampled from the product cutout. Models only for products with `modelOutfit: true`; every shop has a sales assistant (magenta vest + logo); there's also a concierge, a cashier and 3 stylists. Realistic / GLB human bodies were removed on purpose: don't bring them back.
+- **Characters** (`src/actors/`):
+  - One stylised base (big head, slim body; Zepeto-like) on the Quaternius UAL skeleton (CC0), animated by its clips (`Idle_Loop`, `Walk_Loop`, `Walk_Modest` = damped stride for long skirts, plus talk/sit/dance…).
+  - `scripts/blender/build_avatar.py` builds garment pieces (head, hands, tops, skirts, trousers, leggings, shoes, hijab styles + accent band, hair styles, vest + logo, trims) skinned to that skeleton and exports `public/models/avatar/avatar.glb`; then run `node scripts/avatar-postprocess.mjs` (strips baked channels). Sources live in `tools/quaternius/` (git-ignored).
+  - Runtime (`src/actors/avatar/`): `piecesFor()` picks pieces per look, they merge into ONE skinned geometry (cached per piece set) with ONE material; a per-vertex `part` index picks colours from a per-character palette, the face is a canvas texture (`face.ts`). Poses and the wave are two-bone IK hand targets (`ik.ts`).
+  - `createCharacter(look, seed)` in `character.ts` is the only factory (staff, models, cashier, concierge, stylists, crowd, the player). Distant ones use `lodGeometry()` snapshots (BatchedMesh, `lodWalk.ts`).
+  - **Avatar editor** (`src/ui/avatarEditor.ts`): opens on the first "Enter the Mall" and from the menu ("My character"); the look is saved on the device (`store.avatar`, validated by `sanitizeAvatar`).
+  - The old procedural rig and realistic / MakeHuman bodies were removed on purpose: don't bring them back.
 - **MODESTY RULE (mandatory, no exceptions):**
   - No character may ever appear without clothes, not even for one frame.
   - Clothing is always modest: abaya / long dress, or long sleeves with a long skirt or wide trousers.
-  - Only the face and hands are skin: legs use `bottomMat` for every outfit, the neck uses the top colour. Most characters wear hijab (models ~80%, staff/shoppers ~85%).
+  - There is NO body mesh: a character is garment pieces + head + hands only. Only the face and hands are skin; legs always carry leggings or trousers, the neck a high collar. `piecesFor()` rejects any look that isn't covered neck to ankles and shoulders to wrists (tests in `tests/avatarPieces.test.ts`). Most characters wear hijab (models ~80%, staff/shoppers ~85%).
   - `root.visible` stays false until the character is fully built and merged.
   - Any new look, outfit or LOD must keep this.
 - **Interaction:** a raycast against registered interactables (product planes, character hitboxes, counter, doors), with wall occlusion and a distance limit (`src/interact/interaction.ts`).
@@ -139,7 +155,7 @@ node scripts/fetch-assets.mjs              # validate + download images and logo
   - Denoising is OIDN through the compositor; the 8-bit save applies the AgX look.
 - **`kit.glb` / `kit.json`:** 22 baked pieces cut by bounding boxes (shared atlases). Use them via `Kit.place()` (`src/world/kit.ts`). The material is unlit `MeshBasicMaterial` (baked).
 - **Furnishing:**
-  - Shops: `furnishWithKit` in `src/world/shop.ts`, by `SectionStyle.display`. Every shop gets a lookbook stand with its products (`src/world/displays.ts`).
+  - Shops: brand shops use the campaign boutique (see Product display). `furnishWithKit` and the rack / shelf / gallery / boxes displays were removed; the kit's lookbook stand, `cardPanel` and `easelRow` remain for Le Voile's baked half and `?boutique`.
   - Atrium cashier: the kit counter, brand panel and plants (`src/world/cashier.ts`).
   - Atrium and shop corners use the kit plant.
 - **Palette restyle:** cream walls, dark ceilings, bronze trims, the store's marble (`public/textures/marble.jpg`), and cream/bronze signage (`shopFascia`, `bladeSign`, directory).

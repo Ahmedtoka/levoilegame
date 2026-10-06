@@ -18,6 +18,7 @@ export function zoneTitles(zone: string): { en: string; ar: string } {
   if (section) return { en: section.title, ar: section.titleAr }
   const wing = WINGS.find((w) => `wing-${w.id}` === zone)
   if (wing) return { en: wing.nameEn, ar: wing.nameAr }
+  if (zone === 'popup') return both('popup')
   if (brandById.get(zone)?.status === 'soon') return both('comingSoon')
   const z = aliases[zone] ?? zone
   const named = NAMED_ZONES.find((n) => n === z)

@@ -232,15 +232,18 @@ export class Crowd {
 
   private buildSpots(): void {
     for (const s of this.shops) {
-      const inner = this.local(s, 0, -1.6)
+      const { front, depth, openings } = s.layout
       const list: Pose[] = []
-      for (let lz = -2.4; lz >= -11.5; lz -= 1.5)
-        for (let lx = -4.5; lx <= 4.5; lx += 1.5) {
+      const hx = front / 2 - 1.5
+      for (let lz = -2.4; lz >= -(depth - 2.5); lz -= 1.5)
+        for (let lx = -hx; lx <= hx + 1e-6; lx += 1.5) {
           const p = this.local(s, lx, lz)
+          // Walk in through the nearest opening.
+          const door = openings.length ? openings.reduce((a, o) => (Math.abs(o.cx - lx) < Math.abs(a.cx - lx) ? o : a)) : null
+          const inner = this.local(s, door?.cx ?? 0, -1.6)
           if (this.blocked(p.x, p.z, 0.45) || !this.clearLine(inner, p, 0.3)) continue
-          // Face the nearest wall display (back or side walls), in shop-local terms.
-          const toBack = 14 + lz
-          const toSide = 6 - Math.abs(lx)
+          const toBack = depth + lz
+          const toSide = front / 2 - Math.abs(lx)
           const localYaw = toSide < toBack ? (lx < 0 ? -Math.PI / 2 : Math.PI / 2) : Math.PI
           list.push({ ...p, yaw: s.layout.yaw + localYaw })
         }
@@ -486,9 +489,10 @@ export class Crowd {
         // taking over continues the same stride.
         this.blendWalk(a, dt)
         a.c.lookTarget = d < 4 ? _head.set(P.x, 1.6, P.z) : null
-        // Distant rigs animate at a third of the rate (but always on the frame they appear).
+        // Every drawn rig animates every frame: the skinned characters are cheap, and a
+        // third-rate update read as stutter. Rigs past 14 m update every other frame.
         a.animAcc += dt
-        if (fresh || d < 8 || this.frame % 3 === a.idx % 3) {
+        if (fresh || d < 14 || this.frame % 2 === a.idx % 2) {
           a.c.update(fresh ? dt : a.animAcc, time)
           a.animAcc = 0
         }
@@ -521,7 +525,8 @@ export class Crowd {
   private blendWalk(a: Agent, dt: number): void {
     const walking = a.path.length ? 1 : 0
     a.c.walk += (walking - a.c.walk) * Math.min(1, dt * 6)
-    a.c.walkRate = a.m.rushing ? 2.5 : 0.6
+    // Ground speed (matches simulate()), so the walk clip keeps pace with no foot sliding.
+    a.c.walkRate = (a.m.rushing ? 2.6 : 1.15) * (0.9 + (a.idx % 5) * 0.05)
   }
 
   private simulate(a: Agent, dt: number): void {

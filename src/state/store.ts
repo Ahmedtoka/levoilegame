@@ -5,9 +5,10 @@ import type { Catalog } from '../data/types'
 import type { QualityLevel } from '../engine/quality'
 import type { ChatMessage, Coupon, FlashSale, GroupDeal, Prize, StaffRef, User } from '../social/types'
 import { priceCart } from '../social/pricing'
+import { sanitizeAvatar, type AvatarData } from '../actors/avatar/look'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar' | 'brandCatalog'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -44,6 +45,8 @@ export interface AppState {
   phase: Phase
   overlay: Overlay
   productId: string | null
+  /** Where the open product sheet came from (not persisted): closing returns there. */
+  productFrom: 'brandCatalog' | null
   /** Pointer released while playing (desktop) — shows the pause veil. */
   paused: boolean
   loadProgress: number
@@ -63,6 +66,8 @@ export interface AppState {
   haptics: boolean
   /** Run mode (touch sprint button); not persisted. */
   sprint: boolean
+  /** The visitor's own character (avatar editor), saved on the device. */
+  avatar: AvatarData | null
 
   cart: CartLine[]
   lastOrder: Order | null
@@ -80,6 +85,8 @@ export interface AppState {
   coins: number
   /** Brand whose rewards counter is open. */
   rewardsBrand: string | null
+  /** Brand whose full catalogue the "All products" overlay shows. */
+  catalogBrand: string | null
   /** Section ids stamped in the passport this session. */
   passport: string[]
   /** Treasure-hunt logos found this session. */
@@ -110,6 +117,7 @@ export const store = createStore<AppState>()(
       phase: 'loading',
       overlay: null,
       productId: null,
+      productFrom: null,
       paused: false,
       loadProgress: 0,
       loadLabel: '',
@@ -125,6 +133,7 @@ export const store = createStore<AppState>()(
       fpsCap: 60,
       haptics: true,
       sprint: false,
+      avatar: null,
 
       cart: [],
       lastOrder: null,
@@ -138,6 +147,7 @@ export const store = createStore<AppState>()(
       appliedCoupon: null,
       coins: 0,
       rewardsBrand: null,
+      catalogBrand: null,
       passport: [],
       treasures: [],
       wheelSpun: false,
@@ -147,8 +157,8 @@ export const store = createStore<AppState>()(
       flash: null,
 
       set: (patch) => set(patch),
-      openProduct: (id) => set({ overlay: 'product', productId: id }),
-      closeOverlay: () => set({ overlay: null, productId: null }),
+      openProduct: (id) => set({ overlay: 'product', productId: id, productFrom: null }),
+      closeOverlay: () => set({ overlay: null, productId: null, productFrom: null }),
       addToCart: (line) => {
         const key = `${line.productId}|${line.size}|${line.color}`
         const cart = get().cart
@@ -177,6 +187,11 @@ export const store = createStore<AppState>()(
         if (version < 3 && coarsePointer()) s.view = 'third'
         return s as AppState
       },
+      // A saved avatar is validated on load (a stale or hand-edited save falls back safely).
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<AppState>
+        return { ...current, ...p, avatar: sanitizeAvatar(p.avatar) }
+      },
       storage: createJSONStorage(() => safeStorage()),
       partialize: (s) => ({
         lang: s.lang,
@@ -188,6 +203,7 @@ export const store = createStore<AppState>()(
         sensitivity: s.sensitivity,
         fpsCap: s.fpsCap,
         haptics: s.haptics,
+        avatar: s.avatar,
         cart: s.cart,
         user: s.user,
         coupons: s.coupons,

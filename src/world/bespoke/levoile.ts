@@ -25,6 +25,9 @@ import {
 } from 'three'
 import { BOUTIQUE } from '../../config/boutique'
 import { brandById } from '../../config/mall'
+import { MALL } from '../../config/layout'
+import { brandSubsections } from '../../data/mallCatalog'
+import { buildBoutique } from '../boutiqueShop'
 import { BRAND } from '../../config/brand'
 import { isTouchDevice } from '../../engine/quality'
 import { capBitmapTextures } from '../../engine/textures'
@@ -47,14 +50,17 @@ interface Anchors {
 const HIDDEN = new MeshBasicMaterial({ visible: false })
 
 /** Boutique coordinates → shop-local. */
-function local(x: number, z: number): { x: number; z: number } {
-  return { x, z: FRONT_Z + (z - GLASS_Z) }
+function local(x: number, z: number, off = 0): { x: number; z: number } {
+  return { x: x + off, z: FRONT_Z + (z - GLASS_Z) }
 }
 
 export function levoileInterior(ctx: ShopContext, f: BatchFrame, handles: ShopHandles, loaders: (() => Promise<unknown>)[]): boolean {
+  const lay = handles.layout
+  /** The baked boutique fills the plaza-side half of the flagship; the other half is the lightbox hall. */
+  const off = lay.front > 12 ? (lay.plazaDir * lay.front) / 4 : 0
   const g = new Group()
   g.name = 'levoile-boutique'
-  g.position.set(0, 0, FRONT_Z - GLASS_Z)
+  g.position.set(off, 0, FRONT_Z - GLASS_Z)
   g.updateMatrix()
   handles.interior.add(g)
   const toWorldM = f.base.clone().multiply(g.matrix)
@@ -98,11 +104,11 @@ export function levoileInterior(ctx: ShopContext, f: BatchFrame, handles: ShopHa
 
   // Fill between the boutique's ceiling and the mall shopfront header, with the logo.
   const top = 3.15
-  f.box(CREAM, 0, (top + 3.9) / 2, -0.33, 6.0, 3.9 - top, 0.04)
-  f.box(BRONZE, 0, top + 0.02, -0.31, 6.0, 0.04, 0.03)
+  f.box(CREAM, off, (top + 3.9) / 2, -0.33, 6.0, 3.9 - top, 0.04)
+  f.box(BRONZE, off, top + 0.02, -0.31, 6.0, 0.04, 0.03)
   logoTexture(BOUTIQUE_CREAM, 1024, 200, '/brand/logo-trim.png').then((tex) => {
     const sign = new Mesh(new PlaneGeometry(2.6, 0.5), imageMat(tex))
-    sign.position.set(0, (top + 3.9) / 2, -0.3)
+    sign.position.set(off, (top + 3.9) / 2, -0.3)
     handles.interior.parent?.add(sign)
   })
 
@@ -206,8 +212,23 @@ export function levoileInterior(ctx: ShopContext, f: BatchFrame, handles: ShopHa
   }
 
   // 122 Coins rewards counter just inside the door (left).
-  const rc = local(-2.4, 6.2)
+  const rc = local(-2.4, 6.2, off)
   rewardsCounter(ctx, f, handles.interior, 'levoile', brandById.get('levoile')?.color ?? BRAND.magenta, rc.x, rc.z)
+
+  if (off) {
+    // Partition between the two halves (cream both faces), full shop height.
+    f.box(CREAM, 0, MALL.shopHeight / 2, -lay.depth / 2 - 0.15, 0.3, MALL.shopHeight, lay.depth - 0.3, { collide: true, occlude: true })
+    buildBoutique(ctx, f, handles, loaders, {
+      tier: 'standard',
+      front: lay.front / 2,
+      depth: lay.depth,
+      offsetX: -off,
+      products,
+      sections: brandSubsections('levoile'),
+      brand: brandById.get('levoile')!,
+      skipCounter: true,
+    })
+  }
 
   return true
 }
