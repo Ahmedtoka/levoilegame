@@ -30,17 +30,16 @@ describe('resolutionStep', () => {
     expect(resolutionStep(1, 40, 60, 2)).toEqual({ scale: 0.9, streak: 0 })
     expect(resolutionStep(RES_SCALE_MIN, 20, 60, 0).scale).toBe(RES_SCALE_MIN)
   })
-  it('raises it only after three good windows', () => {
+  it('raises it only after two good windows', () => {
     let s = { scale: 0.8, streak: 0 }
     s = resolutionStep(s.scale, 60, 60, s.streak)
+    expect(s).toEqual({ scale: 0.8, streak: 1 })
     s = resolutionStep(s.scale, 60, 60, s.streak)
-    expect(s).toEqual({ scale: 0.8, streak: 2 })
-    s = resolutionStep(s.scale, 60, 60, s.streak)
-    expect(s).toEqual({ scale: 0.85, streak: 0 })
+    expect(s).toEqual({ scale: 0.9, streak: 0 })
   })
   it('holds at full scale and in the dead band', () => {
     expect(resolutionStep(1, 60, 60, 0)).toEqual({ scale: 1, streak: 0 })
-    expect(resolutionStep(0.8, 54, 60, 2)).toEqual({ scale: 0.8, streak: 0 })
+    expect(resolutionStep(0.8, 54, 60, 1)).toEqual({ scale: 0.8, streak: 0 })
   })
 })
 

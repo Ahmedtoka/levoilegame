@@ -214,6 +214,7 @@ export class Game implements GameBridge {
   }
 
   enterMall(): void {
+    this.warmUntil = this.time + 8
     audio.unlock()
     audio.setMusic(store.getState().music)
     audio.setSfx(store.getState().sound)
@@ -240,6 +241,7 @@ export class Game implements GameBridge {
     if (target === 'exit') dest = { ...layout.exit.arrival }
     const shop = layout.shops.find((s) => shopZone(s) === target)
     if (shop) dest = shopArrival(shop)
+    this.warmUntil = this.time + 8
     this.fade.style.opacity = '1'
     setTimeout(() => {
       this.player.teleport(dest.x, dest.z, dest.yaw)
@@ -249,6 +251,7 @@ export class Game implements GameBridge {
   }
 
   restart(): void {
+    this.warmUntil = this.time + 8
     const { spawn } = this.layout
     this.player.teleport(spawn.x, spawn.z - 1.5, spawn.yaw)
     this.shell.doors.target = 0
@@ -334,11 +337,13 @@ export class Game implements GameBridge {
   }
 
   private resStreak = 0
+  /** Loading a wing's shops stalls frames: the first seconds after entering or teleporting don't count. */
+  private warmUntil = 0
 
   /** Dynamic resolution on phones (auto quality): trade pixels for frame rate before dropping a tier. */
   private tuneResolution(fps: number): void {
     const s = store.getState()
-    if (!this.isTouch || s.quality !== 'auto' || s.phase !== 'playing' || document.hidden) return
+    if (!this.isTouch || s.quality !== 'auto' || s.phase !== 'playing' || document.hidden || this.time < this.warmUntil) return
     const r = resolutionStep(this.engine.resolutionScale, fps, s.fpsCap || 60, this.resStreak)
     this.resStreak = r.streak
     this.engine.setResolutionScale(r.scale)

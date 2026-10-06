@@ -116,13 +116,13 @@ export const RES_SCALE_MIN = 0.7
 
 /**
  * Dynamic resolution (touch + auto quality): one step per governor window. Drops the render
- * scale when the frame rate misses the target, and raises it again only after three good
- * windows in a row so it doesn't oscillate.
+ * scale by 0.1 when the frame rate misses the target, and raises it by 0.1 after two good
+ * windows in a row (4 s) so it doesn't oscillate but recovers within ~20 s.
  */
 export function resolutionStep(scale: number, fps: number, target: number, streak: number): { scale: number; streak: number } {
   if (fps < target * 0.85) return { scale: Math.max(RES_SCALE_MIN, Math.round((scale - 0.1) * 100) / 100), streak: 0 }
   if (fps >= target * 0.95 && scale < 1) {
-    if (streak + 1 >= 3) return { scale: Math.min(1, Math.round((scale + 0.05) * 100) / 100), streak: 0 }
+    if (streak + 1 >= 2) return { scale: Math.min(1, Math.round((scale + 0.1) * 100) / 100), streak: 0 }
     return { scale, streak: streak + 1 }
   }
   return { scale, streak: 0 }
