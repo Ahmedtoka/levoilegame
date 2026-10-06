@@ -14,6 +14,7 @@ import { floorPoint } from './player/controlsMath'
 import { Interaction } from './interact/interaction'
 import { Character, type Persona } from './actors/character'
 import { avatarLook } from './actors/palette'
+import type { AvatarData } from './actors/avatar/look'
 import { audio } from './audio/audio'
 import { store, watch } from './state/store'
 import { t } from './i18n/i18n'
@@ -86,11 +87,8 @@ export class Game implements GameBridge {
     this.governor = new FpsGovernor(() => this.autoDowngrade())
     this.warmer = new TextureWarmer(engine.renderer, engine.scene)
 
-    // Third-person avatar
-    const avatar = new Character(avatarLook(), 3)
-    avatar.root.visible = false
-    engine.scene.add(avatar.root)
-    this.player.avatar = avatar
+    // Third-person avatar: the visitor's own look (avatar editor), rebuilt when she changes it.
+    watch((s) => s.avatar, (look) => this.setAvatar(look))
 
     const { spawn } = layout
     this.player.teleport(spawn.x, spawn.z, spawn.yaw)
@@ -179,6 +177,21 @@ export class Game implements GameBridge {
   }
 
   // ---------------------------------------------------------- GameBridge
+
+  /** Replace the player's character with a new look (the default until she designs hers). */
+  setAvatar(data: AvatarData | null): void {
+    const old = this.player.avatar
+    const look = data ? { ...data, pose: 'relaxed' as const } : avatarLook()
+    const avatar = new Character(look, 3)
+    if (old) {
+      avatar.root.position.copy(old.root.position)
+      avatar.root.rotation.copy(old.root.rotation)
+      old.root.removeFromParent()
+    }
+    avatar.root.visible = false
+    this.engine.scene.add(avatar.root)
+    this.player.avatar = avatar
+  }
 
   enterMall(): void {
     audio.unlock()

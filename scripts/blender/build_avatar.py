@@ -213,7 +213,8 @@ def piece_upper(cuff=0.0):
     for s in (1, -1):
         u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
         rr = [ellipse((s * x, ARM_Y - 0.004, ARM_Z), u, v, r, r * 0.95, 12) for x, r in sleeve]
-        b.loft(rr)
+        # Closed at the shoulder: when the arm drops, the sleeve top shows above the torso.
+        b.loft(rr, cap_start=True)
 
     def w(p, tag=None):
         ax = abs(p.x)

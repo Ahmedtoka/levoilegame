@@ -5,9 +5,10 @@ import type { Catalog } from '../data/types'
 import type { QualityLevel } from '../engine/quality'
 import type { ChatMessage, Coupon, FlashSale, GroupDeal, Prize, StaffRef, User } from '../social/types'
 import { priceCart } from '../social/pricing'
+import { sanitizeAvatar, type AvatarData } from '../actors/avatar/look'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -56,6 +57,8 @@ export interface AppState {
   activeQuality: QualityLevel
   view: CameraView
   minimap: boolean
+  /** The visitor's own character (avatar editor), saved on the device. */
+  avatar: AvatarData | null
 
   cart: CartLine[]
   lastOrder: Order | null
@@ -114,6 +117,7 @@ export const store = createStore<AppState>()(
       activeQuality: 'medium',
       view: 'first',
       minimap: true,
+      avatar: null,
 
       cart: [],
       lastOrder: null,
@@ -164,6 +168,11 @@ export const store = createStore<AppState>()(
         if (version < 2) s.lang = 'en'
         return s as AppState
       },
+      // A saved avatar is validated on load (a stale or hand-edited save falls back safely).
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<AppState>
+        return { ...current, ...p, avatar: sanitizeAvatar(p.avatar) }
+      },
       storage: createJSONStorage(() => safeStorage()),
       partialize: (s) => ({
         lang: s.lang,
@@ -172,6 +181,7 @@ export const store = createStore<AppState>()(
         quality: s.quality,
         view: s.view,
         minimap: s.minimap,
+        avatar: s.avatar,
         cart: s.cart,
         user: s.user,
         coupons: s.coupons,

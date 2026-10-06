@@ -43,11 +43,17 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 - **Everything 3D is procedural:** mall, props, canvas-drawn bilingual signage and characters. The décor kit / boutique GLBs (`public/models/mall/`) are optional, and the app never blocks on them.
 - **Layout comes from config** (`src/config/layout.ts` + `src/config/mall.ts`): a plaza at the entrance (z = 0) with three wings, one shop per slot. Shop interiors are built in a local frame (origin = centre of the opening, −Z into the shop).
 - **Per-section look** is in `src/config/sections.ts` (`display`: rack/shelf/gallery/boxes, `tint`, model `outfit`, size profile, Shopify `collection`). Unknown sections get defaults.
-- **Characters** (`src/actors/`): every character comes from `createCharacter(look, seed)`, one procedural cartoon rig (Groups: hips, spine, head, arms, legs). Hijab / hair meshes are added straight onto the head and spine bones. Meshes are merged per bone with vertex colours (`bake.ts`, ~10 draw calls each). Outfit colours are sampled from the product cutout. Models only for products with `modelOutfit: true`; every shop has a sales assistant (magenta vest + logo); there's also a concierge, a cashier and 3 stylists. Realistic / GLB human bodies were removed on purpose: don't bring them back.
+- **Characters** (`src/actors/`):
+  - One stylised base (big head, slim body; Zepeto-like) on the Quaternius UAL skeleton (CC0), animated by its clips (`Idle_Loop`, `Walk_Loop`, `Walk_Modest` = damped stride for long skirts, plus talk/sit/dance…).
+  - `scripts/blender/build_avatar.py` builds garment pieces (head, hands, tops, skirts, trousers, leggings, shoes, hijab styles + accent band, hair styles, vest + logo, trims) skinned to that skeleton and exports `public/models/avatar/avatar.glb`; then run `node scripts/avatar-postprocess.mjs` (strips baked channels). Sources live in `tools/quaternius/` (git-ignored).
+  - Runtime (`src/actors/avatar/`): `piecesFor()` picks pieces per look, they merge into ONE skinned geometry (cached per piece set) with ONE material; a per-vertex `part` index picks colours from a per-character palette, the face is a canvas texture (`face.ts`). Poses and the wave are two-bone IK hand targets (`ik.ts`).
+  - `createCharacter(look, seed)` in `character.ts` is the only factory (staff, models, cashier, concierge, stylists, crowd, the player). Distant ones use `lodGeometry()` snapshots (BatchedMesh, `lodWalk.ts`).
+  - **Avatar editor** (`src/ui/avatarEditor.ts`): opens on the first "Enter the Mall" and from the menu ("My character"); the look is saved on the device (`store.avatar`, validated by `sanitizeAvatar`).
+  - The old procedural rig and realistic / MakeHuman bodies were removed on purpose: don't bring them back.
 - **MODESTY RULE (mandatory, no exceptions):**
   - No character may ever appear without clothes, not even for one frame.
   - Clothing is always modest: abaya / long dress, or long sleeves with a long skirt or wide trousers.
-  - Only the face and hands are skin: legs use `bottomMat` for every outfit, the neck uses the top colour. Most characters wear hijab (models ~80%, staff/shoppers ~85%).
+  - There is NO body mesh: a character is garment pieces + head + hands only. Only the face and hands are skin; legs always carry leggings or trousers, the neck a high collar. `piecesFor()` rejects any look that isn't covered neck to ankles and shoulders to wrists (tests in `tests/avatarPieces.test.ts`). Most characters wear hijab (models ~80%, staff/shoppers ~85%).
   - `root.visible` stays false until the character is fully built and merged.
   - Any new look, outfit or LOD must keep this.
 - **Interaction:** a raycast against registered interactables (product planes, character hitboxes, counter, doors), with wall occlusion and a distance limit (`src/interact/interaction.ts`).

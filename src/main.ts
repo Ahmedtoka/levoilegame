@@ -19,6 +19,8 @@ import { mountFallback, mountScreens } from './ui/screens'
 import { mountHud, setZoneAliases } from './ui/hud'
 import { mountMinimap } from './ui/minimap'
 import { mountMenu } from './ui/menu'
+import { mountAvatarEditor } from './ui/avatarEditor'
+import './styles/avatar.css'
 import { mountProductCard } from './ui/productCard'
 import { mountCart } from './ui/cart'
 import { mountCheckout } from './ui/checkout'
@@ -120,6 +122,7 @@ async function boot(): Promise<void> {
   mountCart(uiRoot, game)
   mountCheckout(uiRoot, game, createCheckoutService(provider, catalog))
   mountSocial(uiRoot, game)
+  mountAvatarEditor(uiRoot, game)
   mountMinimap(uiRoot, game, () => {
     const s = store.getState()
     if (s.lastOrder) return layout.exit

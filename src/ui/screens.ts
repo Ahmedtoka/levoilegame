@@ -22,7 +22,9 @@ export function mountScreens(root: HTMLElement, game: GameBridge): void {
   for (const s of [loading, intro, paused, exited]) {
     onAction(s, {
       lang: toggleLang,
-      enter: () => game.enterMall(),
+      // First visit: design her character before going in.
+      enter: () => (store.getState().avatar ? game.enterMall() : store.getState().set({ overlay: 'avatar' })),
+      avatar: () => store.getState().set({ overlay: 'avatar' }),
       resume: () => game.resume(),
       menu: () => store.getState().set({ overlay: 'menu', paused: false }),
       restart: () => game.restart(),
@@ -44,6 +46,7 @@ export function mountScreens(root: HTMLElement, game: GameBridge): void {
         <img class="logo" src="${BRAND.logo}" alt="District 122" />
         <h1 class="display display-ar">${esc(t('tagline', L))}</h1>
         <button class="btn lg" data-action="enter">${esc(t('enterMall', L))}</button>
+        ${s.avatar ? `<button class="link" data-action="avatar">${esc(t('myCharacter', L))}</button>` : ''}
         <div class="kbd-hint">${esc(t(game.isTouch ? 'controlsMobile' : 'controlsDesktop', L))}</div>
       </div>`
     paused.innerHTML = `
@@ -74,6 +77,7 @@ export function mountScreens(root: HTMLElement, game: GameBridge): void {
     if (label) label.textContent = store.getState().loadLabel || t('loading', store.getState().lang)
   })
   watch((s) => s.lastOrder, render)
+  watch((s) => s.avatar, render, false)
 
   watch((s) => s.phase, (phase) => {
     if (phase !== 'loading') {
