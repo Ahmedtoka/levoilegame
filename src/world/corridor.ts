@@ -47,7 +47,7 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   const BH = MALL.boulevardHeight
   const L = MALL.shopLen
   const len = wing.len
-  const rows = Math.ceil(wing.def.slots.length / 2)
+  const rows = Math.ceil([...wing.def.left, ...wing.def.right].length / 2)
   const base = new Matrix4().makeRotationY(wing.yaw).setPosition(wing.origin.x, 0, wing.origin.z)
   const wf = ctx.batcher.frame(base, ctx.colliders)
   const group = new Group()

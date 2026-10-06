@@ -22,6 +22,7 @@ const STRINGS = {
   lounge: { ar: 'استراحة ديستريكت', en: 'District Lounge' },
   studio: { ar: 'ستوديو الستايلينج', en: 'Styling Studio' },
   comingSoon: { ar: 'قريباً', en: 'Coming Soon' },
+  popup: { ar: 'بوب أب ١٢٢', en: '122 Pop-up' },
   entrance: { ar: 'المدخل', en: 'Entrance' },
   fitting: { ar: 'غرف القياس', en: 'Fitting rooms' },
   store: { ar: 'المحل', en: 'Store' },

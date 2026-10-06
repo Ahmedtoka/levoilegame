@@ -6,7 +6,7 @@
 import { Frustum, Group, Matrix4, Mesh, MeshBasicMaterial, PlaneGeometry, Sphere, Vector3, type Camera, type CanvasTexture, type Object3D } from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { BRAND } from '../config/brand'
-import { brandById, WINGS } from '../config/mall'
+import { brandById, wingOf } from '../config/mall'
 import type { BatchFrame } from '../engine/batcher'
 import { canvasTexture, loadImage, loadProductTexture, makeCanvas } from '../engine/textures'
 import { catalog } from '../state/store'
@@ -272,7 +272,7 @@ function drawSlide(b: Banner, s: Slide | undefined): void {
       archPhoto(g, p ? image(p.images[0], true) : null, 52, 384, CW - 104, 420, 'rgba(251,243,230,0.9)')
       txt(g, spaced('NEW SEASON'), cx, 856, 24, cream, 600, BRAND.fontLatin)
       txt(g, 'كوليكشن جديد', cx, 900, 32, cream, 700, BRAND.fontUi, true)
-      const wing = WINGS.find((w) => w.slots.includes(br.id))
+      const wing = wingOf(br.id)
       if (wing) {
         rule(g, 936, 'rgba(251,243,230,0.5)', 48)
         txt(g, `${wing.nameEn} · ${wing.nameAr}`, cx, 966, 20, 'rgba(251,243,230,0.8)', 600, BRAND.fontUi)

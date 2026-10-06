@@ -16,6 +16,7 @@ import {
 } from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { MALL, rectContains, type MallLayout, type Rect, type Wing } from '../config/layout'
+import { TIERS } from '../config/layoutMath'
 import { brandById } from '../config/mall'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
@@ -248,10 +249,10 @@ export async function buildShell(
     // Back wall of each unit (units can be deeper, e.g. anchor stores) and the
     // separators between units, as long as the deeper neighbour.
     const depthOf = (k: number) => {
-      const slot = wing.def.slots[k]
-      return slot ? (brandById.get(slot)?.depth ?? SD) : 0
+      const slot = [...wing.def.left, ...wing.def.right][k]
+      return slot ? TIERS[brandById.get(slot)?.tier ?? 'standard'].depth : 0
     }
-    const rows = Math.ceil(wing.def.slots.length / 2)
+    const rows = Math.ceil([...wing.def.left, ...wing.def.right].length / 2)
     for (const side of [-1, 1]) {
       const first = side < 0 ? 0 : 1
       for (let r = 0; r < rows; r++) {

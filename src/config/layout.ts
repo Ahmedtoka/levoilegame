@@ -17,7 +17,8 @@
 
 import type { Section } from '../data/types'
 import { sectionStyle, type SectionStyle } from './sections'
-import { brandById, WINGS, type BrandDef, type WingDef, type WingId } from './mall'
+import { NOOK_DEPTH, openingsFor, packWing, type Opening, type PackedWing, type Side, type Tier, type UnitSpec } from './layoutMath'
+import { brandById, POPUP_BRAND_ID, WINGS, type BrandDef, type WingDef, type WingId } from './mall'
 
 export interface Rect {
   x0: number
@@ -32,6 +33,7 @@ export const MALL = {
   plazaDepth: 34,
   /** Wing corridor half width. */
   corridorHalf: 6,
+  /** @deprecated legacy furnishing (?nokit / lounge); tiers use ShopLayout.front/depth. */
   shopLen: 12,
   shopDepth: 14,
   doorHalf: 3,
@@ -60,6 +62,17 @@ export interface Wing {
   len: number
   /** Corridor footprint (world). */
   rect: Rect
+  /** Units and nooks packed along both sides (wing-local z). */
+  packed: PackedWing
+  nooks: WingNook[]
+}
+
+export interface WingNook {
+  side: Side
+  z0: number
+  z1: number
+  /** World footprint (a 4 m seating bay off the corridor). */
+  rect: Rect
 }
 
 export interface ShopLayout {
@@ -74,6 +87,19 @@ export interface ShopLayout {
   index: number
   wing: WingId | null
   side: 'L' | 'R'
+  tier: Tier
+  /** Frontage along the corridor and depth into the unit (m). */
+  front: number
+  depth: number
+  /** Wing-local span along the corridor (z1 nearer the plaza). */
+  z0: number
+  z1: number
+  /** Shop-local x direction that points towards the plaza (+1 / -1). */
+  plazaDir: 1 | -1
+  /** Walk-through openings on the front (shops only; empty otherwise). */
+  openings: Opening[]
+  /** The pop-up unit (guest brand or the "book this space" kiosk). */
+  popup?: boolean
   rect: Rect
   /** Centre of the shop's opening on the corridor. */
   entrance: { x: number; z: number }
@@ -130,32 +156,37 @@ const WING_FRAME: Record<WingId, { origin: { x: number; z: number }; yaw: number
 }
 
 export function buildLayout(sections: Section[]): MallLayout {
-  const { plazaHalf: W, plazaDepth: A, corridorHalf: B, shopLen: L, shopDepth: D } = MALL
+  const { plazaHalf: W, plazaDepth: A, corridorHalf: B } = MALL
   const wings: Wing[] = []
   const shops: ShopLayout[] = []
+  const zones: { id: string; rect: Rect }[] = []
   let index = 0
+  const resolve = (slot: string) => (slot === 'popup' ? (POPUP_BRAND_ID ?? 'popup') : slot)
+  const tierOf = (slot: string): Tier => (slot === POPUP_BRAND_ID ? 'compact' : (brandById.get(slot)?.tier ?? 'standard'))
 
   for (const def of WINGS) {
     const { origin, yaw } = WING_FRAME[def.id]
-    const rows = Math.ceil(def.slots.length / 2)
-    const len = rows * L
-    wings.push({ id: def.id, def, origin, yaw, len, rect: rectOf(origin, yaw, -B, -len, B, 0) })
+    const spec = (slot: string): UnitSpec => ({ id: resolve(slot), tier: tierOf(resolve(slot)) })
+    const packed = packWing(def.left.map(spec), def.right.map(spec))
+    const len = packed.len
+    const nooks: WingNook[] = packed.nooks.map((n) => ({
+      ...n,
+      rect: rectOf(origin, yaw, n.side === 'L' ? -B - NOOK_DEPTH : B, n.z0, n.side === 'L' ? -B : B + NOOK_DEPTH, n.z1),
+    }))
+    for (const n of nooks) zones.push({ id: `wing-${def.id}`, rect: n.rect })
+    wings.push({ id: def.id, def, origin, yaw, len, rect: rectOf(origin, yaw, -B, -len, B, 0), packed, nooks })
 
-    def.slots.forEach((slot, k) => {
-      const side = k % 2 === 0 ? 'L' : 'R'
-      const row = Math.floor(k / 2)
-      const z1 = -row * L
-      const z0 = z1 - L
+    for (const u of packed.units) {
+      const slot = u.id
       const brand = brandById.get(slot) ?? null
-      const depth = brand?.depth ?? D
-      const lx0 = side === 'L' ? -B - depth : B
-      const lx1 = side === 'L' ? -B : B + depth
-      const ex = side === 'L' ? -B : B
+      const lx0 = u.side === 'L' ? -B - u.depth : B
+      const lx1 = u.side === 'L' ? -B : B + u.depth
+      const ex = u.side === 'L' ? -B : B
       const section = sections.find((s) => s.id === slot) ?? null
       const amenity = slot === 'studio' || slot === 'lounge' ? slot : undefined
       const kind: ShopLayout['kind'] = amenity ? 'lounge' : brand?.status === 'soon' || !section ? 'soon' : 'shop'
-      const entrance = toWorld(origin, yaw, ex, (z0 + z1) / 2)
-      const rect = rectOf(origin, yaw, lx0, z0, lx1, z1)
+      const entrance = toWorld(origin, yaw, ex, (u.z0 + u.z1) / 2)
+      const rect = rectOf(origin, yaw, lx0, u.z0, lx1, u.z1)
       shops.push({
         kind,
         id: slot,
@@ -165,13 +196,21 @@ export function buildLayout(sections: Section[]): MallLayout {
         amenity,
         index: index++,
         wing: def.id,
-        side,
+        side: u.side,
+        tier: u.tier,
+        front: u.front,
+        depth: u.depth,
+        z0: u.z0,
+        z1: u.z1,
+        plazaDir: u.side === 'L' ? -1 : 1,
+        openings: kind === 'shop' ? openingsFor(u.tier, !!brand?.split) : [],
+        popup: slot === 'popup' || (POPUP_BRAND_ID !== null && slot === POPUP_BRAND_ID),
         rect,
         entrance,
-        yaw: yaw + (side === 'L' ? Math.PI / 2 : -Math.PI / 2),
+        yaw: yaw + (u.side === 'L' ? Math.PI / 2 : -Math.PI / 2),
         center: { x: (rect.x0 + rect.x1) / 2, z: (rect.z0 + rect.z1) / 2 },
       })
-    })
+    }
   }
 
   const all = [{ x0: -W, z0: -A, x1: W, z1: 0 }, ...wings.map((w) => w.rect), ...shops.map((s) => s.rect)]
@@ -188,6 +227,7 @@ export function buildLayout(sections: Section[]): MallLayout {
     atrium: { x0: -W, z0: -A, x1: W, z1: 0 },
     wings,
     shops,
+    zones,
     spawn: { x: 0, z: -3.2, yaw: 0 },
     cashier: {
       x: 13,
@@ -213,7 +253,8 @@ export function buildLayout(sections: Section[]): MallLayout {
  */
 export function shopArrival(s: ShopLayout): Pose {
   if (s.arrival) return s.arrival
-  const p = toWorld(s.entrance, s.yaw, 0, -0.3)
+  const o = s.openings.find((x) => Math.sign(x.cx) === s.plazaDir) ?? s.openings[0]
+  const p = toWorld(s.entrance, s.yaw, o?.cx ?? 0, -0.3)
   return { x: p.x, z: p.z, yaw: s.yaw }
 }
 
