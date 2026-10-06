@@ -8,7 +8,7 @@ import { priceCart } from '../social/pricing'
 import { sanitizeAvatar, type AvatarData } from '../actors/avatar/look'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar' | 'brandCatalog' | 'slider'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar' | 'brandCatalog' | 'slider' | 'tryon'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -49,6 +49,8 @@ export interface AppState {
   productFrom: 'brandCatalog' | 'slider' | null
   /** Section slider (a shop's section sign): its products and the one in front. */
   slider: { title: string; titleAr: string; productIds: string[]; index: number } | null
+  /** Product she is trying on (her character wears it; not saved). */
+  tryOn: { productId: string } | null
   /** Pointer released while playing (desktop) — shows the pause veil. */
   paused: boolean
   loadProgress: number
@@ -140,6 +142,7 @@ export const store = createStore<AppState>()(
       rewardsBrand: null,
       catalogBrand: null,
       slider: null,
+      tryOn: null,
       passport: [],
       treasures: [],
       wheelSpun: false,

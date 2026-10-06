@@ -38,6 +38,7 @@ import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
 import { mountBrandCatalog } from './ui/brandCatalog'
 import { mountSectionSlider } from './ui/sectionSlider'
+import { mountTryOnMirror } from './ui/tryOnMirror'
 import './styles/slider.css'
 import { buildLiveMall } from './world/liveMall'
 import { loadAvatarKit } from './actors/avatar/kit'
@@ -127,6 +128,7 @@ async function boot(): Promise<void> {
   mountSocial(uiRoot, game)
   mountBrandCatalog(uiRoot, game)
   mountSectionSlider(uiRoot, game)
+  mountTryOnMirror(uiRoot, game)
   mountAvatarEditor(uiRoot, game)
   mountMinimap(uiRoot, game, () => {
     const s = store.getState()

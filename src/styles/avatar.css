@@ -225,3 +225,62 @@
     margin-bottom: 10px;
   }
 }
+
+/* Try-on mirror (src/ui/tryOnMirror.ts) reuses the editor layout. */
+.tryon .eyebrow {
+  color: var(--magenta);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tryon-note {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.tryon-actions {
+  flex-direction: column;
+}
+
+.tryon-btn {
+  margin-top: 10px;
+}
+
+.tryon-chip {
+  position: fixed;
+  inset-block-end: 84px;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  pointer-events: auto;
+}
+
+[dir='rtl'] .tryon-chip {
+  transform: translateX(50%);
+  padding: 8px 16px 8px 8px;
+}
+
+.tryon-chip button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--magenta-050);
+  color: var(--magenta);
+}
+
+.tryon-chip button svg {
+  width: 16px;
+  height: 16px;
+}
