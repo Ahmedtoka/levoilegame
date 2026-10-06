@@ -47,7 +47,7 @@ FINGERS = ("index", "middle", "ring", "pinky", "thumb")
 # Body landmarks (UBC rest pose, metres): the Head bone sits at the top of the neck.
 HEAD_PIVOT = Vector((0.0, 0.011, 1.55))
 HEAD_SCALE = 1.15  # stylised: a larger head on the slim body; the hair, hijab, eyes and brows follow
-COLLAR_Z = 1.578  # the tops reach up under the jaw (high collar); the chin front is left out
+COLLAR_Z = 1.562  # the tops reach up to the base of the jaw (stand collar above)
 HIP_Z = 1.0
 SKIRT_PIVOT_Z = 0.93
 
@@ -257,14 +257,25 @@ def leg_tube_weights(p):
     return {"calf_" + sd: 1 - t, "foot_" + sd: t}
 
 
-def piece_top(body, ease, sleeve_ease, z_top=COLLAR_Z):
-    """Long-sleeved top: fitted torso tube (hips to the jaw, high collar) + sleeves to the wrist."""
+def piece_top(body, ease, sleeve_ease, z_top=COLLAR_Z, hem_z=0.93, flare=0.035):
+    """Long blouse: fitted above the waist, A-line over the hips to `hem_z`, a stand collar
+    under the jaw, sleeves to the wrist with a small cuff. Clean Bitmoji-like silhouette."""
     b = Builder()
-    loft_torso(b, torso_sections(body, HIP_Z - 0.02, z_top, ease=ease))
+    secs = torso_sections(body, hem_z, z_top, ease=ease)
+    # A-line: the ease grows from the waist (z 1.12) down to the hem.
+    secs = [(z, rx + flare * smooth(1.12, hem_z, z), ry + flare * 0.7 * smooth(1.12, hem_z, z), cy) for z, rx, ry, cy in secs]
+    # Stand collar: two rings just under the jaw, a little wider than the neck.
+    zt, rxt, ryt, cyt = secs[-1]
+    neck = [s for s in secs if s[0] > zt - 0.06]
+    rn = min(s[1] for s in neck) if neck else rxt
+    secs += [(zt + 0.005, rn + 0.015, rn + 0.015, cyt), (zt + 0.022, rn + 0.016, rn + 0.016, cyt)]
+    loft_torso(b, secs)
     for sgn in (1, -1):
         arm = lambda p, sgn=sgn: sgn * p.x > 0.17 and sgn * p.x < 0.645 and p.z > 1.28
-        secs = limb_sections(body, arm, "x", sgn * 0.19, sgn * 0.655, ease=sleeve_ease)
-        loft_limb(b, secs, "x", cap_start=True)
+        ss = limb_sections(body, arm, "x", sgn * 0.19, sgn * 0.655, ease=sleeve_ease)
+        # Cuff: the last two stations flare 6 mm.
+        ss = ss[:-2] + [(a, c, r + 0.006) for a, c, r in ss[-2:]]
+        loft_limb(b, ss, "x", cap_start=True)
     return b, top_weights
 
 
@@ -328,7 +339,7 @@ def piece_legs_fitted(arm, ease, flare=0.0):
         rings.append((ankle, LEG_RADIUS[-1][1] + ease + flare))
         # Rings run bottom-up so the loft's normals face outward.
         rings.reverse()
-        loft = [ellipse(c, (1, 0, 0), (0, 1, 0), r, r * 0.96, 16) for c, r in rings]
+        loft = [ellipse(c, (1, 0, 0), (0, 1, 0), r, r * 0.96, 12) for c, r in rings]
         b.loft(loft)
     return b, leg_tube_weights
 
@@ -623,7 +634,7 @@ def piece_skirt(sections, hem_z=0.06):
     for z in zs:
         ring = ellipse((0, SKIRT_Y, z), (1, 0, 0), (0, 1, 0), _at(sections, z, 1), _at(sections, z, 2), 56)
         # Drape folds: 9 soft vertical pleats, flat at the waist, ~1.5 cm deep at the hem.
-        depth = 0.016 * smooth(z_top, z_top - 0.45, z) ** 1.2
+        depth = 0.011 * smooth(z_top, z_top - 0.45, z) ** 1.2
         for i, v in enumerate(ring):
             a = 2 * math.pi * i / 56
             k = 1 + (depth / max(_at(sections, z, 1), 1e-3)) * math.sin(9 * a + 0.4 * math.sin(3 * a))
@@ -711,9 +722,9 @@ def drape(b, long):
             t = (1.50 - z) / 0.12
             k = math.sin(t * math.pi / 2)
             # Wide enough to clear the loosened tops underneath (they hang ~3 cm proud of the chest).
-            return lerp(0.094, 0.212, k), lerp(0.094, 0.150, k), lerp(0.03, 0.03, t)
+            return lerp(0.094, 0.236, k), lerp(0.094, 0.178, k), lerp(0.03, 0.03, t)
         t = smooth(1.38, 1.15, z)
-        return lerp(0.212, 0.200, t), lerp(0.150, 0.146, t), 0.03
+        return lerp(0.236, 0.222, t), lerp(0.178, 0.172, t), 0.03
 
     def hem(a):
         return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
@@ -724,7 +735,7 @@ def drape(b, long):
         rx, ry, y0 = profile(max(z, z_front - 0.03))
         ring = ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, n, -math.pi / 2)
         # Pleats from the shoulders down (none at the chin wrap), 7 mm deep at the hem.
-        depth = 0.007 * smooth(1.46, 1.2, z)
+        depth = 0.005 * smooth(1.46, 1.2, z)
         for i, v in enumerate(ring):
             a = -math.pi / 2 + 2 * math.pi * i / n
             k = 1 + (depth / rx) * math.sin(7 * a)
@@ -805,8 +816,8 @@ def build():
 
     # Garments: offset shells of the body (fit + skin weights for free).
     # Garments: smooth tubes fitted to the body's measurements (never its surface detail).
-    objs["upper"] = make_object("upper", *piece_top(body, 0.024, 0.014), arm, "top")
-    objs["upper_abaya"] = make_object("upper_abaya", *piece_top(body, 0.04, 0.03), arm, "top")
+    objs["upper"] = make_object("upper", *piece_top(body, 0.022, 0.014), arm, "top")
+    objs["upper_abaya"] = make_object("upper_abaya", *piece_top(body, 0.036, 0.028, hem_z=1.0, flare=0.02), arm, "top")
     objs["vest"] = make_object("vest", *piece_vest_fitted(body), arm, "vest")
     objs["tunic"] = make_object("tunic", *piece_tunic_fitted(body), arm, "top")
     objs["leggings"] = make_object("leggings", *piece_legs_fitted(arm, 0.006), arm, "bottom")
@@ -951,8 +962,8 @@ def export(arm, objs, clips):
 
 LOOKS = {
     "abaya_hijab": ["head", "hands", "eyes", "brows", "upper_abaya", "skirt_flare", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
-    "skirt_long_hijab": ["head", "hands", "eyes", "brows", "upper", "tunic", "skirt_straight", "leggings", "shoes", "hijab_long"],
-    "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "tunic", "trousers", "shoes", "hair_long"],
+    "skirt_long_hijab": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hijab_long"],
+    "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "trousers", "shoes", "hair_long"],
     "staff_bun": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hair_bun", "vest", "logo"],
 }
 PART_COLORS = {"skin": (0.91, 0.73, 0.58), "face": (0.91, 0.73, 0.58), "top": (0.93, 0.90, 0.86), "bottom": (0.36, 0.30, 0.38), "shoes": (0.22, 0.18, 0.2), "hijab": (0.79, 0.6, 0.68), "accent": (1, 1, 1), "hair": (0.2, 0.13, 0.1), "brows": (0.2, 0.13, 0.1), "eyes": (1, 1, 1), "vest": (0.36, 0.17, 0.51), "logo": (1, 1, 1), "trim": (0.78, 0.64, 0.43)}

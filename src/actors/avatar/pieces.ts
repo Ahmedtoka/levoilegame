@@ -56,8 +56,9 @@ export interface Garments {
 const OUTFIT_PIECES: Record<AvatarOutfit, string[]> = {
   abaya: ['upper_abaya', 'skirt_flare', 'leggings', 'cuffs', 'abaya_trim'],
   dress: ['upper', 'skirt_flare', 'leggings', 'belt'],
-  skirt: ['upper', 'tunic', 'skirt_straight', 'leggings'],
-  pants: ['upper', 'tunic', 'trousers'],
+  // The blouse (`upper`) falls over the hips, so skirts and trousers need no tunic.
+  skirt: ['upper', 'skirt_straight', 'leggings'],
+  pants: ['upper', 'trousers'],
 }
 
 /** Pieces of a look, in a stable order (the merged-geometry cache key). */

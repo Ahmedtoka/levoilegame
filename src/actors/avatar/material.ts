@@ -47,7 +47,8 @@ export function blankTexture(): Texture {
 export function avatarMaterial(colors: Record<Part, string>, tex: AvatarTextures, logo: Texture): AvatarMaterial {
   const palette = PARTS.map((p) => new Color(colors[p]))
   // Double-sided: garments are open shells (hems, sleeves, hijab drape) seen from below too.
-  const mat = new MeshStandardMaterial({ roughness: 0.84, metalness: 0, side: DoubleSide, normalMap: tex.skinNormal }) as AvatarMaterial
+  const mat = new MeshStandardMaterial({ roughness: 0.9, metalness: 0, side: DoubleSide, normalMap: tex.skinNormal }) as AvatarMaterial
+  mat.normalScale.set(0.6, 0.6)
   mat.userData.palette = palette
   const blink = { value: 0 }
   mat.userData.blink = blink
@@ -93,20 +94,14 @@ uniform vec3 lvFabOn;
 varying float vPart;
 varying vec3 vLvPos;
 varying vec3 vLvNrm;
-// Cloth micro-surface (procedural, bind-pose space): a fine weave plus soft folds that run
-// down the garment and gather towards the hems. Returns a tangent-space normal.
+// Cloth: soft, broad folds only (Bitmoji-like: big shapes, no visible weave). Tangent-space normal.
 vec3 lvClothNormal(vec3 p, vec3 n) {
-  // Weave: two crossed sine ridges, ~1.2 mm pitch.
-  float w = 5200.0;
-  vec2 g = vec2(sin(p.x * w) * cos(p.y * w * 0.97), sin(p.z * w * 1.03) * cos(p.y * w));
-  // Folds: slow vertical waves whose phase drifts with height (cloth hanging, not stripes).
   float h = p.y;
   float ang = atan(p.z, p.x);
-  float f1 = sin(ang * 9.0 + h * 6.0) * 0.5 + sin(ang * 23.0 - h * 11.0) * 0.25;
+  float f1 = sin(ang * 9.0 + h * 6.0) * 0.5;
   float f2 = cos(ang * 9.0 + h * 6.0 + 1.3) * 0.5;
-  float gather = smoothstep(1.45, 0.3, h) * 0.6 + 0.15;
-  vec2 fold = vec2(f1, f2) * gather;
-  return normalize(vec3(g * 0.12 + fold * 0.22, 1.0));
+  float gather = smoothstep(1.45, 0.3, h) * 0.5 + 0.1;
+  return normalize(vec3(vec2(f1, f2) * gather * 0.14, 1.0));
 }
 // Triplanar fabric: ~0.5 m per repeat, blended by the bind-pose normal.
 vec3 lvFabric(sampler2D t) {
@@ -158,16 +153,24 @@ normal = normalize(tbn * lvMapN);`,
       .replace(
         '#include <roughnessmap_fragment>',
         `#include <roughnessmap_fragment>
-if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) roughnessFactor = 0.42;
-else if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) roughnessFactor = 0.6;
-else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.2;
-else if (lvI == ${PARTS.indexOf('hijab')}) roughnessFactor = 0.72;`,
+if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) roughnessFactor = 0.55;
+else if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) roughnessFactor = 0.78;
+else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.25;
+else roughnessFactor = 0.96;`,
       )
-      // Soft rim light: lifts the silhouette off the background (stylised, nearly free).
+      // Bitmoji-like shading: one soft wrapped light (the sun) with a lifted shadow side, blended over
+      // the PBR result — fully on garments, partly on skin and hair so the face keeps its form.
       .replace(
         '#include <opaque_fragment>',
-        `float lvRim = pow(1.0 - saturate(dot(normalize(normal), normalize(vViewPosition))), 3.0);
-outgoingLight += lvRim * (diffuseColor.rgb * 0.35 + 0.06);
+        `#if NUM_DIR_LIGHTS > 0
+float lvNdl = dot(normalize(normal), directionalLights[0].direction);
+float lvWrap = smoothstep(-0.45, 0.7, lvNdl);
+vec3 lvToon = diffuseColor.rgb * mix(0.66, 1.12, lvWrap);
+float lvK = (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')} || lvI == ${PARTS.indexOf('eyes')}) ? 0.45 : (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) ? 0.6 : 0.85;
+outgoingLight = mix(outgoingLight, lvToon, lvK);
+#endif
+float lvRim = pow(1.0 - saturate(dot(normalize(normal), normalize(vViewPosition))), 4.0);
+outgoingLight += lvRim * 0.05;
 #include <opaque_fragment>`,
       )
   }
