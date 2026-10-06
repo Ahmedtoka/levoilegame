@@ -40,7 +40,7 @@ let hooked = false
 let sprite: Texture | null = null
 let geometry: PlaneGeometry | null = null
 /** Sprite opacity: the core adds ~0.5 of the halo colour (soft on Low/Medium; bloom tops it up on High). */
-export const HALO_OPACITY = 0.6
+export const HALO_OPACITY = 0.25
 
 /**
  * Queues a halo of radius `r` metres (the sprite is 2r across) centred at (x, y, z).

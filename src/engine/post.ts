@@ -12,7 +12,7 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js'
  * a light source (which is where halos sit). A lightbox's cream lettering crosses it, its
  * darker brand-colour field mostly does not.
  */
-export const BLOOM = { strength: 0.55, radius: 0.5, threshold: 0.55, smoothWidth: 0.25 }
+export const BLOOM = { strength: 0.25, radius: 0.5, threshold: 0.72, smoothWidth: 0.25 }
 
 /**
  * The composer's scene targets are flagged like an XR target, so three.js renders into

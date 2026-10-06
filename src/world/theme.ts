@@ -42,8 +42,8 @@ export const THEME = {
 
   // ------------------------------------------------------------------ lights
   /** Emissive light panels, slot lights, pendant globes (sRGB, pre-bloom). */
-  warmLight: '#ffd9a8',
-  slotLight: '#ffe2b8',
+  warmLight: '#dcb98c',
+  slotLight: '#e2c7a0',
   /** Floor light pools and wall washes (additive). */
   poolWarm: '#ffc98a',
   /** Night sky through the plaza skylight. */
@@ -65,10 +65,10 @@ export const THEME = {
     env: 0.18,
     hemiSky: '#ffd2a0',
     hemiGround: '#2a1f18',
-    hemi: 0.55,
+    hemi: 0.45,
     sunColor: '#ffe0b8',
-    sun: 0.35,
-    exposure: 0.95,
+    sun: 0.28,
+    exposure: 0.88,
   },
 } as const
 

@@ -97,14 +97,14 @@ function layer(geo: SphereGeometry | ConeGeometry | PlaneGeometry, opacity: numb
 
 export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] {
   const out: InstancedMesh[] = []
-  if (halos.length) out.push(layer(new SphereGeometry(1, 16, 12), 0.13, halos, parent, visible))
+  if (halos.length) out.push(layer(new SphereGeometry(1, 16, 12), 0.06, halos, parent, visible))
   // Unit cone: ConeGeometry's apex is at +0.5; translating by −0.5 puts the apex
   // at the origin and the base at y = −1, so it opens downwards by `length`.
-  if (cones.length) out.push(layer(new ConeGeometry(1, 1, 24, 1, true).translate(0, -0.5, 0), 0.06, cones, parent, visible))
+  if (cones.length) out.push(layer(new ConeGeometry(1, 1, 24, 1, true).translate(0, -0.5, 0), 0.03, cones, parent, visible))
   // Light pools: flat unit quads on the floor, drawn after the floor decals. One call,
   // on every tier (not part of `built`, so setGlowsVisible leaves them on).
   if (pools.length) {
-    const m = layer(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), 0.5, pools, parent, true, true)
+    const m = layer(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), 0.22, pools, parent, true, true)
     m.renderOrder = 2
     m.layers.set(FLOOR_FX_LAYER)
     poolMeshes.push(m)
@@ -116,7 +116,7 @@ export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] 
 
 function buildFancy(parent: Object3D, visible: boolean, fancy: InstancedMesh[], always: InstancedMesh[]): InstancedMesh[] {
   if (rects.length && typeof document !== 'undefined') {
-    const mat = new MeshBasicMaterial({ map: rectHaloTexture(), transparent: true, opacity: 0.55, depthWrite: false, blending: AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 })
+    const mat = new MeshBasicMaterial({ map: rectHaloTexture(), transparent: true, opacity: 0.25, depthWrite: false, blending: AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 })
     const mesh = new InstancedMesh(new PlaneGeometry(1, 1), mat, rects.length)
     rects.forEach((r, i) => {
       mesh.setMatrixAt(i, r.m)
