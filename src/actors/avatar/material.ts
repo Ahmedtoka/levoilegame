@@ -59,6 +59,13 @@ if (lvI == ${PARTS.indexOf('face')}) {
 }
 diffuseColor.rgb *= lvC;`,
       )
+      // Soft rim light: lifts the silhouette off the background (stylised, nearly free).
+      .replace(
+        '#include <opaque_fragment>',
+        `float lvRim = pow(1.0 - saturate(dot(normalize(normal), normalize(vViewPosition))), 3.0);
+outgoingLight += lvRim * (diffuseColor.rgb * 0.35 + 0.06);
+#include <opaque_fragment>`,
+      )
   }
   mat.customProgramCacheKey = () => 'lv-avatar'
   return mat
