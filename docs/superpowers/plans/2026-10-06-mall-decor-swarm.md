@@ -170,7 +170,7 @@ Each task: read `theme.ts`, `pbr.ts`, `halo.ts`, the relevant builder file(s), a
 
 ### Task A8 (agent 8): corridor walls, pilasters, seating nooks
 
-**Owns:** `src/world/corridor/walls.ts` (new), the wainscot/pilaster/column-screen/end-wall blocks of `src/world/corridor.ts` (lines ~116–180, ~245–end), the nook furnishing (in `src/world/shop.ts` `buildLounge` ONLY for `kind === 'lounge'` nooks? no — nooks are built in `corridor.ts` end wall; find `wing-<id>` zone furnishing there).
+**Owns:** `src/world/corridor/walls.ts` (new), the wainscot/pilaster/column-screen/end-wall blocks of `src/world/corridor.ts` (lines ~116–180, ~245–end), and the nook lines of `src/world/mall.ts` `buildWing` (the `wing.nooks` loops at lines ~260, ~294 and ~470: back wall, open front and furnishing of the `wing-<id>` seating nook).
 **Deliver:**
 - Walls: `plaster-cream` above a 1.1 m `oak-dark` wainscot with a `bronzeLight` cap; wall washes above every pilaster; pilasters in `marble-cream` with a bronze base; column screens get a bronze frame.
 - Seating nook at the wing end: velvet-plum banquette, two dark-oak side tables, a tall plant (from A5's `premiumPlanter`, call only), a backlit art panel (campaign photo of the nearest brand), low warm lighting.
