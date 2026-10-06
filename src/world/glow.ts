@@ -14,6 +14,10 @@ const cones: Matrix4[] = []
 const pools: Matrix4[] = []
 const rects: { m: Matrix4; c: Color }[] = []
 let built: InstancedMesh[] = []
+/** Floor light pools are off (user: hide them on the cream floor); the data is kept so a
+ * flag flip brings them back. */
+export const SHOW_POOLS = false
+
 /** Floor pools: built once, never toggled (visible on Low too). */
 const poolMeshes: InstancedMesh[] = []
 const _y = new Vector3(0, 1, 0)
@@ -107,6 +111,7 @@ export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] 
     const m = layer(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), 0.22, pools, parent, true, true)
     m.renderOrder = 2
     m.layers.set(FLOOR_FX_LAYER)
+    m.visible = SHOW_POOLS
     poolMeshes.push(m)
     pools.length = 0
     return buildFancy(parent, visible, out, [m])

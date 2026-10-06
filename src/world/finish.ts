@@ -152,13 +152,14 @@ export function tintedPlane(g: BufferGeometry, hex: string): BufferGeometry {
 }
 
 // ------------------------------------------------------------- ceilings
-/** Matte charcoal ceiling (plaza + corridor slabs, beams): it vanishes into the dark;
- * the slot lights and halos draw the edges. No emissive lift (the night mall wants it dark).
- * The name is historical (it was warm gypsum); kept so every ceiling builder compiles. */
+/** Warm cream gypsum ceiling (plaza + corridor slabs, beams), self-lit a little so it stays
+ * light under the dim night rig. */
 export const GYPSUM = new MeshStandardMaterial({
   color: THEME.ceiling,
   roughness: THEME.roughness.ceiling,
   metalness: 0,
+  emissive: new Color(THEME.ceilingGlow),
+  emissiveIntensity: 1,
 })
 
 // ---------------------------------------------------------------- walls

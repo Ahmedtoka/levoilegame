@@ -10,9 +10,11 @@ import { BRAND } from '../config/brand'
 
 export const THEME = {
   // ---------------------------------------------------------------- surfaces
-  /** Plaza, corridor and shop ceilings: matte charcoal. */
-  ceiling: '#15120f',
-  /** Recessed coffers / trays: a step darker than the ceiling. */
+  /** Plaza, corridor and shop ceilings: warm cream gypsum (user: the light ceiling stays). */
+  ceiling: '#efe9e1',
+  /** Self-lit lift of the cream ceiling so it reads light under the dim night rig. */
+  ceilingGlow: '#a89a8a',
+  /** Near-black: coffers, screen bezels, joinery (`MAT.black`). */
   ceilingCoffer: '#0f0d0b',
   /** Cream wall under the wall washes. */
   wall: '#e8dccb',

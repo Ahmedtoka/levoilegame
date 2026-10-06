@@ -39,11 +39,11 @@ describe('THEME', () => {
     }
   })
 
-  it('is darker at the ceiling than on the walls (night mall)', () => {
+  it('keeps the cream ceiling light and the joinery black (night mall, light ceiling)', () => {
     const lum = (hex: string) => parseInt(hex.slice(1, 3), 16) + parseInt(hex.slice(3, 5), 16) + parseInt(hex.slice(5, 7), 16)
-    expect(lum(THEME.ceiling)).toBeLessThan(lum(THEME.wallShadow))
+    expect(lum(THEME.ceiling)).toBeGreaterThan(lum(THEME.wall))
     expect(lum(THEME.wallShadow)).toBeLessThan(lum(THEME.wall))
-    expect(lum(THEME.ceilingCoffer)).toBeLessThanOrEqual(lum(THEME.ceiling))
+    expect(lum(THEME.ceilingCoffer)).toBeLessThan(lum(THEME.wallShadow))
     expect(lum(THEME.floorBorder)).toBeLessThanOrEqual(lum(THEME.floor))
   })
 })

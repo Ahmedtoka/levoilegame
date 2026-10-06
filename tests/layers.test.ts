@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { Group } from 'three'
 import { addContactShadow, buildDecals } from '../src/world/decals'
-import { addCone, addHalo, addPool, buildGlows, setGlowsVisible } from '../src/world/glow'
+import { addCone, addHalo, addPool, buildGlows, setGlowsVisible, SHOW_POOLS } from '../src/world/glow'
 import { addAOStrip, aoCeilJunction, aoFloorJunction, buildAOStrips } from '../src/world/aoStrips'
 import { tiledPlane, uvBox } from '../src/world/finish'
 import { FLOOR_FX_LAYER } from '../src/engine/layers'
@@ -60,7 +60,7 @@ describe('glow', () => {
 })
 
 describe('light pools', () => {
-  it('builds one floor layer on the floor-FX layer, toggled with the glows', () => {
+  it('builds one floor layer on the floor-FX layer, hidden (SHOW_POOLS off) and untouched by the glow toggle', () => {
     addPool(0, -5, 2.8, 2.8)
     addPool(3, -5, 2.8, 2.8)
     const meshes = buildGlows(new Group(), false)
@@ -69,7 +69,7 @@ describe('light pools', () => {
     expect(meshes[0].layers.isEnabled(FLOOR_FX_LAYER)).toBe(true)
     expect(meshes[0].layers.isEnabled(0)).toBe(false)
     setGlowsVisible(true)
-    expect(meshes[0].visible).toBe(true)
+    expect(meshes[0].visible).toBe(SHOW_POOLS)
   })
 })
 

@@ -19,8 +19,8 @@ export const MAT = {
   wall: std(THEME.wall, THEME.roughness.wall),
   /** Shop greige walls (a touch lighter: lit from closer). */
   wallWarm: std(THEME.shopWall, THEME.roughness.wall),
-  /** Matte charcoal ceilings that vanish into the dark: no emissive lift. */
-  ceiling: std(THEME.ceiling, THEME.roughness.ceiling),
+  /** Cream gypsum ceilings, self-lit a little (see finish.ts GYPSUM). */
+  ceiling: std(THEME.ceiling, THEME.roughness.ceiling, 0, { emissive: new Color(THEME.ceilingGlow), emissiveIntensity: 1 }),
   /** Painted trim (skirtings, cornices) in the wall cream, a little smoother. */
   trim: std(THEME.wall, 0.5),
   /** Bronze, the only metal: frames, rails, bezels. */
