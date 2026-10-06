@@ -235,6 +235,7 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
     teleport: (id) => game.teleport(id),
     openProduct: (id) => store.getState().openProduct(id),
     openWheel: () => store.getState().set({ overlay: 'wheel' }),
+    openReels: (source) => store.getState().set({ overlay: 'reels', reelsBrand: source }),
   }
   const feeds: ScreenFeed[] = []
   feeds.push(...buildPlaza({ root: engine.scene, batcher, colliders, interaction: game.interaction, kit, actions }).feeds)

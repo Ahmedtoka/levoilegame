@@ -6,6 +6,15 @@
 // on the 3D screen itself (a cross-origin iframe can't be drawn into WebGL). For
 // playback on the 3D screen, add MP4 files in src/config/brandVideos.ts.
 
+/** Reel source id of the mall itself (not a brand). */
+export const MALL_REELS = 'district122'
+
+/** Display name of a reel source: a brand, or the mall. */
+export function reelSourceName(id: string, brand: { name: string; nameAr: string } | undefined): { name: string; nameAr: string } {
+  if (brand) return brand
+  return id === MALL_REELS ? { name: 'District 122', nameAr: 'ديستريكت 122' } : { name: id, nameAr: id }
+}
+
 export interface BrandSocial {
   /** Handle without the @. */
   instagram?: string
@@ -14,7 +23,14 @@ export interface BrandSocial {
 }
 
 const SOCIAL: Record<string, BrandSocial> = {
-  // levoile: { instagram: 'levoilestores', reels: ['https://www.instagram.com/reel/XXXXXXXXXXX/'] },
+  levoile: {
+    instagram: 'levoilestores',
+    reels: ['https://www.instagram.com/levoilestores/reel/Dd9bQaytHS8/', 'https://www.instagram.com/levoilestores/reel/Dcblu7ztIAf/'],
+  },
+  // The mall itself: the plaza's entrance totem and LED screen.
+  [MALL_REELS]: {
+    reels: ['https://www.instagram.com/reel/DWj9FzsjSq7/'],
+  },
 }
 
 export function brandSocial(brandId: string): BrandSocial {

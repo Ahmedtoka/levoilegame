@@ -3,8 +3,8 @@
 
 import type { FlashSale, GroupDeal } from '../social/types'
 
-export type SlideKind = 'flash' | 'deal' | 'brand' | 'games' | 'welcome'
-export type SlideAction = { type: 'teleport'; target: string } | { type: 'product'; id: string } | { type: 'wheel' } | null
+export type SlideKind = 'flash' | 'deal' | 'brand' | 'games' | 'welcome' | 'reels'
+export type SlideAction = { type: 'teleport'; target: string } | { type: 'product'; id: string } | { type: 'wheel' } | { type: 'reels'; source: string } | null
 
 export interface SlideSpec {
   kind: SlideKind
@@ -25,6 +25,8 @@ export interface SlideInput {
   brandIndex: number
   demo: boolean
   now: number
+  /** Reel source for a 'reels' slide (shown only when it has reels). */
+  reels?: string | null
 }
 
 export function buildSlides(i: SlideInput): SlideSpec[] {
@@ -44,6 +46,9 @@ export function buildSlides(i: SlideInput): SlideSpec[] {
         out.push({ kind, brandId, action: { type: 'teleport', target: brandId } })
       }
     } else if (kind === 'games') out.push({ kind, action: { type: 'wheel' } })
+    else if (kind === 'reels') {
+      if (i.reels) out.push({ kind, action: { type: 'reels', source: i.reels } })
+    }
     else out.push({ kind, action: null })
   }
   return out

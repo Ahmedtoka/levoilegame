@@ -4,7 +4,7 @@
 // The iframe loads only while the viewer is open (nothing reaches Instagram before).
 
 import { brandById } from '../config/mall'
-import { brandReels, brandSocial, instagramProfile } from '../config/brandSocial'
+import { brandReels, brandSocial, instagramProfile, reelSourceName } from '../config/brandSocial'
 import { t } from '../i18n/i18n'
 import { store, watch } from '../state/store'
 import { audio } from '../audio/audio'
@@ -40,8 +40,8 @@ export function mountReelsOverlay(root: HTMLElement, game: GameBridge): void {
 
   const render = () => {
     const s = store.getState()
-    const brand = s.reelsBrand ? brandById.get(s.reelsBrand) : null
-    if (s.overlay !== 'reels' || !brand) {
+    const id = s.reelsBrand
+    if (s.overlay !== 'reels' || !id) {
       if (!veil.classList.contains('hidden')) {
         veil.classList.add('hidden')
         veil.innerHTML = '' // unload the iframe (stops the video)
@@ -49,10 +49,12 @@ export function mountReelsOverlay(root: HTMLElement, game: GameBridge): void {
       return
     }
     const L = s.lang
-    reels = brandReels(brand.id)
+    const brand = brandById.get(id)
+    const src = reelSourceName(id, brand)
+    reels = brandReels(id)
     index = Math.min(index, Math.max(0, reels.length - 1))
-    const handle = brandSocial(brand.id).instagram
-    const name = L === 'ar' ? brand.nameAr : brand.name
+    const handle = brandSocial(id).instagram
+    const name = L === 'ar' ? src.nameAr : src.name
     veil.innerHTML = `
       <div class="reels" role="dialog" aria-modal="true" aria-label="${esc(name)} · Instagram">
         <button class="close" data-action="close" aria-label="${esc(t('close', L))}">${ICONS.close}</button>
@@ -64,7 +66,7 @@ export function mountReelsOverlay(root: HTMLElement, game: GameBridge): void {
         ${reels.length > 1 ? `<div class="rl-dots">${reels.map(() => `<i class="rl-dot"></i>`).join('')}</div>` : ''}
         <div class="rl-actions">
           ${handle ? `<a class="btn ig" href="${esc(instagramProfile(handle))}" target="_blank" rel="noopener">${IG}${esc(t('followIg', L))}</a>` : ''}
-          <button class="btn ghost light" data-action="all">${esc(t('browseAll', L))}</button>
+          ${brand ? `<button class="btn ghost light" data-action="all">${esc(t('browseAll', L))}</button>` : ''}
         </div>
       </div>`
     veil.classList.remove('hidden')
