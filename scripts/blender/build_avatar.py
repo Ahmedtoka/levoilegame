@@ -618,7 +618,17 @@ def piece_skirt(sections, hem_z=0.06):
     for (z0, _, _), (z1, _, _) in zip(s, s[1:]):
         zs += [lerp(z0, z1, t / 3) for t in range(3)]
     zs.append(s[-1][0])
-    rings = [ellipse((0, SKIRT_Y, z), (1, 0, 0), (0, 1, 0), _at(sections, z, 1), _at(sections, z, 2), 28) for z in zs]
+    z_top = max(z for z, _, _ in sections)
+    rings = []
+    for z in zs:
+        ring = ellipse((0, SKIRT_Y, z), (1, 0, 0), (0, 1, 0), _at(sections, z, 1), _at(sections, z, 2), 56)
+        # Drape folds: 9 soft vertical pleats, flat at the waist, ~1.5 cm deep at the hem.
+        depth = 0.016 * smooth(z_top, z_top - 0.45, z) ** 1.2
+        for i, v in enumerate(ring):
+            a = 2 * math.pi * i / 56
+            k = 1 + (depth / max(_at(sections, z, 1), 1e-3)) * math.sin(9 * a + 0.4 * math.sin(3 * a))
+            ring[i] = Vector((v.x * k, SKIRT_Y + (v.y - SKIRT_Y) * k, v.z))
+        rings.append(ring)
     b.loft(rings)
     return b, lambda p: leg_weights(p, _at(sections, p.z, 1), hem_z=hem_z, ry=_at(sections, p.z, 2))
 
@@ -690,7 +700,7 @@ def piece_hijab_band():
 
 def drape(b, long):
     """Chin wrap + drape over the shoulders, hanging longer at the front and back than over the arms."""
-    z_front, z_side = (0.98, 1.18) if long else (1.22, 1.32)
+    z_front, z_side = (1.02, 1.22) if long else (1.30, 1.37)
     n = 32
 
     def profile(z):
@@ -701,9 +711,9 @@ def drape(b, long):
             t = (1.50 - z) / 0.12
             k = math.sin(t * math.pi / 2)
             # Wide enough to clear the loosened tops underneath (they hang ~3 cm proud of the chest).
-            return lerp(0.094, 0.225, k), lerp(0.094, 0.185, k), lerp(0.03, 0.02, t)
+            return lerp(0.094, 0.212, k), lerp(0.094, 0.150, k), lerp(0.03, 0.03, t)
         t = smooth(1.38, 1.15, z)
-        return lerp(0.225, 0.205, t), lerp(0.185, 0.175, t), 0.02
+        return lerp(0.212, 0.200, t), lerp(0.150, 0.146, t), 0.03
 
     def hem(a):
         return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
@@ -712,7 +722,14 @@ def drape(b, long):
     rings = []
     for z in zs:
         rx, ry, y0 = profile(max(z, z_front - 0.03))
-        rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, n, -math.pi / 2))
+        ring = ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, n, -math.pi / 2)
+        # Pleats from the shoulders down (none at the chin wrap), 7 mm deep at the hem.
+        depth = 0.007 * smooth(1.46, 1.2, z)
+        for i, v in enumerate(ring):
+            a = -math.pi / 2 + 2 * math.pi * i / n
+            k = 1 + (depth / rx) * math.sin(7 * a)
+            ring[i] = Vector((v.x * k, y0 + (v.y - y0) * k, v.z))
+        rings.append(ring)
     ids = b.loft(rings)
     snapped = set()
     for ring in ids:

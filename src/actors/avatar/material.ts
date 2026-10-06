@@ -93,6 +93,21 @@ uniform vec3 lvFabOn;
 varying float vPart;
 varying vec3 vLvPos;
 varying vec3 vLvNrm;
+// Cloth micro-surface (procedural, bind-pose space): a fine weave plus soft folds that run
+// down the garment and gather towards the hems. Returns a tangent-space normal.
+vec3 lvClothNormal(vec3 p, vec3 n) {
+  // Weave: two crossed sine ridges, ~1.2 mm pitch.
+  float w = 5200.0;
+  vec2 g = vec2(sin(p.x * w) * cos(p.y * w * 0.97), sin(p.z * w * 1.03) * cos(p.y * w));
+  // Folds: slow vertical waves whose phase drifts with height (cloth hanging, not stripes).
+  float h = p.y;
+  float ang = atan(p.z, p.x);
+  float f1 = sin(ang * 9.0 + h * 6.0) * 0.5 + sin(ang * 23.0 - h * 11.0) * 0.25;
+  float f2 = cos(ang * 9.0 + h * 6.0 + 1.3) * 0.5;
+  float gather = smoothstep(1.45, 0.3, h) * 0.6 + 0.15;
+  vec2 fold = vec2(f1, f2) * gather;
+  return normalize(vec3(g * 0.12 + fold * 0.22, 1.0));
+}
 // Triplanar fabric: ~0.5 m per repeat, blended by the bind-pose normal.
 vec3 lvFabric(sampler2D t) {
   vec3 w = pow(abs(normalize(vLvNrm)), vec3(4.0));
@@ -110,7 +125,9 @@ if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) {
   // The atlas is one skin tone: shift it towards this character's (ratio in linear light).
   lvC = texture2D(lvSkin, vUv).rgb * (lvPal[${PARTS.indexOf('skin')}] / max(lvSkinRef, vec3(0.02)));
 } else if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) {
-  lvC = texture2D(lvHair, vUv).rgb * lvC * 1.7;
+  // Strands read on any hair colour: dark hair keeps lighter highlights, light hair keeps shadow between locks.
+  float lvHl = dot(texture2D(lvHair, vUv).rgb, vec3(0.3, 0.59, 0.11));
+  lvC = lvC * (0.45 + 1.5 * lvHl) + vec3(0.05) * lvHl * lvHl;
 } else if (lvI == ${PARTS.indexOf('eyes')}) {
   lvC = texture2D(lvEyes, vUv).rgb;
 } else if (lvI == ${PARTS.indexOf('logo')}) {
@@ -132,6 +149,7 @@ diffuseColor.rgb *= lvC;`,
         `vec3 lvMapN = vec3(0.0, 0.0, 1.0);
 if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) lvMapN = texture2D(normalMap, vUv).xyz * 2.0 - 1.0;
 else if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) lvMapN = texture2D(lvHairN, vUv).xyz * 2.0 - 1.0;
+else if (lvI == ${PARTS.indexOf('top')} || lvI == ${PARTS.indexOf('bottom')} || lvI == ${PARTS.indexOf('hijab')} || lvI == ${PARTS.indexOf('vest')}) lvMapN = lvClothNormal(vLvPos, vLvNrm);
 lvMapN.xy *= normalScale;
 // tbn comes from normal_fragment_begin (derivative-based: the pieces carry no tangents).
 normal = normalize(tbn * lvMapN);`,
@@ -142,7 +160,8 @@ normal = normalize(tbn * lvMapN);`,
         `#include <roughnessmap_fragment>
 if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) roughnessFactor = 0.42;
 else if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) roughnessFactor = 0.6;
-else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.2;`,
+else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.2;
+else if (lvI == ${PARTS.indexOf('hijab')}) roughnessFactor = 0.72;`,
       )
       // Soft rim light: lifts the silhouette off the background (stylised, nearly free).
       .replace(

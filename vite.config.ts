@@ -26,7 +26,8 @@ export default defineConfig({
   plugins: [pruneProductSources()],
   // Assets are referenced with absolute paths (/products, /brand, /models): deploy at the domain root.
   // PORT lets tooling (e.g. the preview pane) pick a free port; defaults stay 5173 / 4173.
-  server: { host: true, port: Number(process.env.PORT) || 5173 },
+  // The native project copies dist/ (175 MB) under android/: watching it stalled the dev server.
+  server: { host: true, port: Number(process.env.PORT) || 5173, watch: { ignored: ['**/android/**', '**/dist/**', '**/tools/**', '**/assets/**'] } },
   preview: { port: Number(process.env.PORT) || 4173 },
   build: {
     target: 'es2022',
