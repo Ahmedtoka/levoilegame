@@ -4,6 +4,10 @@
   public/products/<id>/cutout.png   -> cutout.webp (1024 px, q82, alpha) + cutout.s.webp (512 px)
 
 Originals are left untouched. Run: .venv/Scripts/python scripts/optimize-images.py [--force]
+
+--pbr instead converts the CC0 PBR library (tools/textures-src/<name>/{color,normal,roughness}.jpg,
+from scripts/fetch-textures.mjs) to public/textures/pbr/<name>/<map>.webp (1024, q82; normal maps q90)
+plus <map>.s.webp (512). Used by src/engine/pbr.ts.
 """
 import json
 import sys
@@ -35,6 +39,36 @@ def save(src: Path, dst: Path, size: int, quality: int, alpha: bool) -> None:
 def total(paths) -> int:
     return sum(p.stat().st_size for p in paths)
 
+
+def pbr() -> None:
+    src_root = ROOT.parent.parent / "tools" / "textures-src"
+    dst_root = ROOT.parent / "textures" / "pbr"
+    if not src_root.is_dir():
+        sys.exit(f"{src_root} is missing: run `node scripts/fetch-textures.mjs` first")
+    names = sorted(d for d in src_root.iterdir() if d.is_dir())
+    for d in names:
+        out = dst_root / d.name
+        out.mkdir(parents=True, exist_ok=True)
+        for m in ("color", "normal", "roughness"):
+            src = d / f"{m}.jpg"
+            if not src.exists():
+                print(f"  {d.name}: no {m} map")
+                continue
+            q = 90 if m == "normal" else 82
+            save(src, out / f"{m}.webp", 1024, q, False)
+            save(src, out / f"{m}.s.webp", 512, q, False)
+    webps = sorted(dst_root.glob("*/*.webp"))
+    print(f"pbr: {len(names)} names, {len(webps)} webp files, {total(webps) / 1e6:.2f} MB")
+    print(f"  large: {total([w for w in webps if not w.name.endswith('.s.webp')]) / 1e6:.2f} MB")
+    print(f"  small: {total([w for w in webps if w.name.endswith('.s.webp')]) / 1e6:.2f} MB")
+    for d in names:
+        files = sorted((dst_root / d.name).glob("*.webp"))
+        print(f"  {d.name}: " + ", ".join(f"{f.name} {f.stat().st_size // 1024} KB" for f in files))
+
+
+if "--pbr" in sys.argv:
+    pbr()
+    sys.exit(0)
 
 sources = sorted(list(ROOT.glob("*/*.jpg")) + list(ROOT.glob("*/cutout.png")))
 for src in sources:

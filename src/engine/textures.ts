@@ -20,6 +20,11 @@ export function setMaxAnisotropy(renderer: WebGLRenderer, cap: number): void {
   maxAniso = Math.min(renderer.capabilities.getMaxAnisotropy(), cap)
 }
 
+/** The anisotropy cap of the current renderer / quality tier (for textures made outside this module). */
+export function maxAnisotropy(): number {
+  return maxAniso
+}
+
 /**
  * `readable`: a CPU-backed canvas (willReadFrequently). Use it for canvases whose
  * pixels are read back (getImageData) or that only hold a decoded photo: reading a
