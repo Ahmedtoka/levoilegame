@@ -8,7 +8,7 @@ import { priceCart } from '../social/pricing'
 import { sanitizeAvatar, type AvatarData } from '../actors/avatar/look'
 
 export type Phase = 'loading' | 'intro' | 'playing' | 'exited' | 'error'
-export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar'
+export type Overlay = null | 'product' | 'cart' | 'checkout' | 'thankyou' | 'menu' | 'leave' | 'chat' | 'wheel' | 'claim' | 'rewards' | 'avatar' | 'brandCatalog'
 export type CameraView = 'first' | 'third'
 export type PaymentMethod = 'card' | 'vodafone' | 'instapay' | 'cod'
 
@@ -76,6 +76,8 @@ export interface AppState {
   coins: number
   /** Brand whose rewards counter is open. */
   rewardsBrand: string | null
+  /** Brand whose full catalogue the "All products" overlay shows. */
+  catalogBrand: string | null
   /** Section ids stamped in the passport this session. */
   passport: string[]
   /** Treasure-hunt logos found this session. */
@@ -131,6 +133,7 @@ export const store = createStore<AppState>()(
       appliedCoupon: null,
       coins: 0,
       rewardsBrand: null,
+      catalogBrand: null,
       passport: [],
       treasures: [],
       wheelSpun: false,
