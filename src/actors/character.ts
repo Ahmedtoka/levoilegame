@@ -31,7 +31,6 @@ import {
 import { blobShadow } from '../world/props'
 import { avatarKit, clipStride, cloneBones, mergedGeometry } from './avatar/kit'
 import { avatarMaterial, blankTexture, type AvatarMaterial, type FabricPart } from './avatar/material'
-import { faceTexture } from './avatar/face'
 import { twoBoneIK } from './avatar/ik'
 import { PARTS, piecesFor, type AvatarOutfit, type HeadWear, type Part } from './avatar/pieces'
 
@@ -75,8 +74,8 @@ export interface Look {
   height?: number
 }
 
-/** The skeleton is ~1.98 m to the top of the big head; scaled to ~1.66 m. */
-const BASE_SCALE = 0.84
+/** The model stands ~1.84 m (head enlarged ×1.15 in the build); scaled to ~1.66 m. */
+const BASE_SCALE = 0.9
 const HITBOX = new CylinderGeometry(0.34, 0.34, 1.8, 8)
 const HIDDEN = new MeshBasicMaterial({ visible: false })
 const BOUNDS = new Sphere(new Vector3(0, 1.0, 0), 1.25)
@@ -130,6 +129,8 @@ export function lookColors(look: Look): Record<Part, string> {
     hair: look.head.kind === 'hair' ? look.head.color : '#2b1d16',
     vest: look.vest?.color ?? look.top,
     logo: look.vest?.color ?? look.top,
+    eyes: '#ffffff',
+    brows: look.head.kind === 'hair' ? look.head.color : '#2b1d16',
   }
 }
 
@@ -171,8 +172,7 @@ export class Character implements Persona {
     if (!kit) return // model unavailable: nothing is ever drawn (never a partial body)
 
     const pieces = piecesFor({ outfit: look.outfit, head: look.head, vest: !!look.vest, logo: !!look.vest?.logo })
-    const browColor = look.head.kind === 'hair' ? look.head.color : '#3a2a22'
-    this.mat = avatarMaterial(lookColors(look), faceTexture(look.face, browColor), look.vest?.logo ?? blankTexture(), faceTexture(look.face, browColor, true))
+    this.mat = avatarMaterial(lookColors(look), kit.tex, look.vest?.logo ?? blankTexture())
     const { root: rootBone, bones, byName } = cloneBones(kit)
     this.bones = byName
     for (const n of ['skirt_f', 'skirt_b']) {

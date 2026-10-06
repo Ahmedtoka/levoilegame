@@ -3,21 +3,24 @@
 // slot ("part") each piece is painted with.
 //
 // MODESTY RULE (no exceptions): there is no body mesh at all. A character is
-// garment pieces + head + hands, and every look must cover neck to ankles and
-// shoulders to wrists (see modestyProblems; enforced in piecesFor and by tests).
+// garment pieces + head (with eyes and brows) + hands, and every look must cover
+// neck to ankles and shoulders to wrists (see modestyProblems; enforced in
+// piecesFor and by tests).
 
 export type AvatarOutfit = 'abaya' | 'dress' | 'skirt' | 'pants'
 export type HijabStyle = 'classic' | 'long'
 export type HairStyle = 'long' | 'bun' | 'ponytail' | 'bob'
 
 /** Colour slots of the shared avatar material. */
-export const PARTS = ['face', 'skin', 'top', 'bottom', 'trim', 'shoes', 'hijab', 'accent', 'hair', 'vest', 'logo'] as const
+export const PARTS = ['face', 'skin', 'top', 'bottom', 'trim', 'shoes', 'hijab', 'accent', 'hair', 'vest', 'logo', 'eyes', 'brows'] as const
 export type Part = (typeof PARTS)[number]
 
 /** Piece name in the GLB -> colour slot. */
 export const PIECE_PART: Record<string, Part> = {
   head: 'face',
   hands: 'skin',
+  eyes: 'eyes',
+  brows: 'brows',
   upper: 'top',
   upper_abaya: 'top',
   tunic: 'top',
@@ -59,7 +62,7 @@ const OUTFIT_PIECES: Record<AvatarOutfit, string[]> = {
 
 /** Pieces of a look, in a stable order (the merged-geometry cache key). */
 export function piecesFor(g: Garments): string[] {
-  const out = ['head', 'hands', 'shoes', ...OUTFIT_PIECES[g.outfit]]
+  const out = ['head', 'eyes', 'brows', 'hands', 'shoes', ...OUTFIT_PIECES[g.outfit]]
   if (g.head.kind === 'hijab') {
     out.push(`hijab_${g.head.style}`)
     if (g.head.accent) out.push('hijab_band')

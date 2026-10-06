@@ -1,13 +1,28 @@
 // The avatar's single material: every vertex carries a `part` index (see
-// PARTS in ./pieces) that picks its colour from a per-character palette; the face
-// part also lays the canvas-drawn face over the skin, the logo part the brand logo.
-// One shader program for every character (only the uniforms differ).
+// PARTS in ./pieces) that picks its colour from a per-character palette. The
+// textured parts sample the shared atlases exported by the Blender build: the
+// face and hands the skin atlas (tinted towards the palette's skin tone), hair
+// and brows the hair atlas (a strand mask times the hair colour), the eyes the
+// iris texture; the logo part lays the brand logo on the vest. One shader program
+// for every character (only the uniforms differ).
 
 import { CanvasTexture, Color, DoubleSide, MeshStandardMaterial, Vector3, type Texture } from 'three'
 import { PARTS, type Part } from './pieces'
 
 /** Garment parts that can wear a fabric texture (try-on). */
 export type FabricPart = 'top' | 'bottom' | 'hijab'
+
+/** Atlases shared by every character (loaded once with the kit). */
+export interface AvatarTextures {
+  skin: Texture
+  skinNormal: Texture
+  hair: Texture
+  hairNormal: Texture
+  eyes: Texture
+}
+
+/** Average cheek colour of the skin atlas (printed by build_avatar.py as SKIN_REF): the tint reference. */
+export const SKIN_REF = '#c8ab94'
 
 export interface AvatarMaterial extends MeshStandardMaterial {
   /**
@@ -29,10 +44,10 @@ export function blankTexture(): Texture {
   return blankTex
 }
 
-export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo: Texture, faceClosed: Texture = face): AvatarMaterial {
+export function avatarMaterial(colors: Record<Part, string>, tex: AvatarTextures, logo: Texture): AvatarMaterial {
   const palette = PARTS.map((p) => new Color(colors[p]))
   // Double-sided: garments are open shells (hems, sleeves, hijab drape) seen from below too.
-  const mat = new MeshStandardMaterial({ roughness: 0.84, metalness: 0, side: DoubleSide }) as AvatarMaterial
+  const mat = new MeshStandardMaterial({ roughness: 0.84, metalness: 0, side: DoubleSide, normalMap: tex.skinNormal }) as AvatarMaterial
   mat.userData.palette = palette
   const blink = { value: 0 }
   mat.userData.blink = blink
@@ -41,10 +56,14 @@ export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo
   mat.userData.fabrics = fabrics
   mat.userData.fabricOn = fabricOn
   mat.defines = { USE_UV: '' }
+  const skinRef = new Color(SKIN_REF)
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.lvPal = { value: palette }
-    shader.uniforms.lvFace = { value: face }
-    shader.uniforms.lvFaceClosed = { value: faceClosed }
+    shader.uniforms.lvSkinRef = { value: skinRef }
+    shader.uniforms.lvSkin = { value: tex.skin }
+    shader.uniforms.lvHair = { value: tex.hair }
+    shader.uniforms.lvHairN = { value: tex.hairNormal }
+    shader.uniforms.lvEyes = { value: tex.eyes }
     shader.uniforms.lvBlink = blink
     shader.uniforms.lvLogo = { value: logo }
     shader.uniforms.lvFabTop = fabrics.top
@@ -60,8 +79,11 @@ export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo
         '#include <common>',
         `#include <common>
 uniform vec3 lvPal[${PARTS.length}];
-uniform sampler2D lvFace;
-uniform sampler2D lvFaceClosed;
+uniform vec3 lvSkinRef;
+uniform sampler2D lvSkin;
+uniform sampler2D lvHair;
+uniform sampler2D lvHairN;
+uniform sampler2D lvEyes;
 uniform float lvBlink;
 uniform sampler2D lvLogo;
 uniform sampler2D lvFabTop;
@@ -84,9 +106,13 @@ vec3 lvFabric(sampler2D t) {
         `#include <color_fragment>
 int lvI = int(vPart + 0.5);
 vec3 lvC = lvPal[lvI];
-if (lvI == ${PARTS.indexOf('face')}) {
-  vec4 f = lvBlink > 0.5 ? texture2D(lvFaceClosed, vUv) : texture2D(lvFace, vUv);
-  lvC = mix(lvC, f.rgb, f.a);
+if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) {
+  // The atlas is one skin tone: shift it towards this character's (ratio in linear light).
+  lvC = texture2D(lvSkin, vUv).rgb * (lvPal[${PARTS.indexOf('skin')}] / max(lvSkinRef, vec3(0.02)));
+} else if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) {
+  lvC = texture2D(lvHair, vUv).rgb * lvC * 1.7;
+} else if (lvI == ${PARTS.indexOf('eyes')}) {
+  lvC = texture2D(lvEyes, vUv).rgb;
 } else if (lvI == ${PARTS.indexOf('logo')}) {
   // The logo texture is shared (flipY on) while glTF UVs run top-down: flip v.
   vec4 l = texture2D(lvLogo, vec2(vUv.x, 1.0 - vUv.y));
@@ -100,11 +126,23 @@ if (lvI == ${PARTS.indexOf('face')}) {
 }
 diffuseColor.rgb *= lvC;`,
       )
-      // Hair has a soft sheen.
+      // Normal maps: the skin atlas on face/hands, the hair atlas on hair/brows, flat elsewhere.
+      .replace(
+        '#include <normal_fragment_maps>',
+        `vec3 lvMapN = vec3(0.0, 0.0, 1.0);
+if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) lvMapN = texture2D(normalMap, vUv).xyz * 2.0 - 1.0;
+else if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) lvMapN = texture2D(lvHairN, vUv).xyz * 2.0 - 1.0;
+lvMapN.xy *= normalScale;
+// tbn comes from normal_fragment_begin (derivative-based: the pieces carry no tangents).
+normal = normalize(tbn * lvMapN);`,
+      )
+      // Skin is smoother than cloth; hair has a soft sheen.
       .replace(
         '#include <roughnessmap_fragment>',
         `#include <roughnessmap_fragment>
-if (lvI == ${PARTS.indexOf('hair')}) roughnessFactor = 0.42;`,
+if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) roughnessFactor = 0.42;
+else if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) roughnessFactor = 0.6;
+else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.2;`,
       )
       // Soft rim light: lifts the silhouette off the background (stylised, nearly free).
       .replace(

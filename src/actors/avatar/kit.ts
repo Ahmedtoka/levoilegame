@@ -3,12 +3,14 @@
 // skeleton copies. One merged geometry per distinct set of pieces is cached and
 // shared by every character wearing that set.
 
-import { AnimationMixer, BufferAttribute, Group, Vector3, type AnimationClip, type Bone, type BufferGeometry, type Matrix4, type SkinnedMesh } from 'three'
+import { AnimationMixer, BufferAttribute, Group, SRGBColorSpace, TextureLoader, Vector3, type AnimationClip, type Bone, type BufferGeometry, type Matrix4, type SkinnedMesh } from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { PARTS, PIECE_PART } from './pieces'
+import type { AvatarTextures } from './material'
 
 export const AVATAR_URL = '/models/avatar/avatar.glb'
+const TEX_DIR = '/models/avatar/'
 
 export interface AvatarKit {
   pieces: Map<string, BufferGeometry>
@@ -18,6 +20,8 @@ export interface AvatarKit {
   boneNames: string[]
   boneInverses: Matrix4[]
   bindMatrix: Matrix4
+  /** Shared atlases (skin, hair, eyes); they stream in behind the first draw. */
+  tex: AvatarTextures
 }
 
 let kit: AvatarKit | null = null
@@ -47,6 +51,7 @@ export function loadAvatarKit(): Promise<AvatarKit | null> {
       let rootBone = t.skeleton.bones[0]
       while (rootBone.parent && (rootBone.parent as Bone).isBone) rootBone = rootBone.parent as Bone
       kit = {
+        tex: loadTextures(),
         pieces,
         clips: new Map(gltf.animations.map((c) => [c.name, c])),
         rootBone,
@@ -61,6 +66,20 @@ export function loadAvatarKit(): Promise<AvatarKit | null> {
       return null
     })
   return loading
+}
+
+/** The atlases load in the background: a character drawn before they arrive gets them on the next frame. */
+function loadTextures(): AvatarTextures {
+  const loader = new TextureLoader()
+  const load = (file: string, srgb: boolean) => {
+    const t = loader.load(TEX_DIR + file)
+    if (srgb) t.colorSpace = SRGBColorSpace
+    // glTF UVs have their origin at the top-left (v flipped vs Blender): don't flip again.
+    t.flipY = false
+    t.anisotropy = 4
+    return t
+  }
+  return { skin: load('skin.png', true), skinNormal: load('skin_n.png', false), hair: load('hair.png', true), hairNormal: load('hair_n.png', false), eyes: load('eyes.png', true) }
 }
 
 export function avatarKit(): AvatarKit | null {

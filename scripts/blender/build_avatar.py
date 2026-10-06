@@ -1,32 +1,41 @@
-"""District 122 avatar builder.
+"""District 122 avatar builder (Quaternius base).
 
-Builds the stylized base character (big head, slim body) as separate garment
-pieces skinned to the Quaternius UAL skeleton (CC0), keeps a few animation
-clips and exports one GLB: public/models/avatar/avatar.glb.
+Builds the stylised character from the Quaternius "Universal Base Characters"
+female (CC0) and the Universal Animation Library skeleton + clips, and exports
+one GLB: public/models/avatar/avatar.glb, plus its textures next to it.
 
-MODESTY RULE: there is NO body mesh. A character is made only of garment pieces
-plus the head (face) and hands, so it can never render unclothed. Every outfit
-covers neck to ankles and shoulders to wrists; legs always carry leggings or
-trousers in the bottom colour.
+MODESTY RULE: the body mesh is NEVER exported. The GLB holds the head (head +
+neck), the hands, eyes, brows, hair pieces and garment pieces. Garments are cut
+from the body as offset shells (so they fit and inherit its skin weights), then
+the body is discarded. Every outfit covers neck to ankles and shoulders to
+wrists; legs always carry leggings or trousers.
 
 Run:  tools/blender-4.2.23-windows-x64/blender.exe -b -P scripts/blender/build_avatar.py -- [--preview DIR]
+Then: node scripts/avatar-postprocess.mjs
 
 Pieces are named <piece>; the runtime (src/actors/avatar/) picks a subset per
 look, merges them into one skinned geometry and colours each piece through a
-`part` attribute (see PIECES below for the part of each).
-Coordinates while building: Blender Z-up, character faces -Y, its left is +X.
+`part` attribute (see PIECE_PART in src/actors/avatar/pieces.ts). Textured parts
+(face, skin, hair, brows, eyes) sample the atlases exported here.
+Coordinates: Blender Z-up, the character faces -Y, her left is +X (metres).
 """
 
 import math
 import os
 import sys
 
+import bmesh
 import bpy
 from mathutils import Vector
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-UAL = os.path.join(ROOT, "tools", "quaternius", "UAL", "Universal Animation Library[Standard]", "Unreal-Godot", "UAL1_Standard.glb")
-OUT = os.path.join(ROOT, "public", "models", "avatar", "avatar.glb")
+Q = os.path.join(ROOT, "tools", "quaternius")
+UAL = os.path.join(Q, "UAL", "Universal Animation Library[Standard]", "Unreal-Godot", "UAL1_Standard.glb")
+UBC = os.path.join(Q, "UBC", "Universal Base Characters[Standard]")
+BODY = os.path.join(UBC, "Base Characters", "Godot - UE", "Superhero_Female_FullBody.gltf")
+HAIR_DIR = os.path.join(UBC, "Hairstyles", "Rigged to Head Bone", "glTF (Godot -Unreal)")
+OUT_DIR = os.path.join(ROOT, "public", "models", "avatar")
+OUT = os.path.join(OUT_DIR, "avatar.glb")
 
 argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 PREVIEW = argv[argv.index("--preview") + 1] if "--preview" in argv else None
@@ -35,7 +44,15 @@ PREVIEW = argv[argv.index("--preview") + 1] if "--preview" in argv else None
 CLIPS = ["Idle_Loop", "Idle_Talking_Loop", "Walk_Loop", "Walk_Formal_Loop", "Jog_Fwd_Loop", "Interact", "Sitting_Idle_Loop", "Dance_Loop", "PickUp_Table"]
 FINGERS = ("index", "middle", "ring", "pinky", "thumb")
 
+# Body landmarks (UBC rest pose, metres): the Head bone sits at the top of the neck.
+HEAD_PIVOT = Vector((0.0, 0.011, 1.55))
+HEAD_SCALE = 1.15  # stylised: a larger head on the slim body; the hair, hijab, eyes and brows follow
+COLLAR_Z = 1.578  # the tops reach up under the jaw (high collar); the chin front is left out
+HIP_Z = 1.0
+SKIRT_PIVOT_Z = 0.93
+
 # ---------------------------------------------------------------- helpers
+
 
 def smooth(e0, e1, x):
     t = max(0.0, min(1.0, (x - e0) / (e1 - e0)))
@@ -53,27 +70,24 @@ def ellipse(c, u, v, ru, rv, n, a0=0.0):
 
 
 class Builder:
-    """Collects vertices/faces/weights/uvs for one piece."""
+    """Collects vertices/faces/uvs for a lofted piece."""
 
     def __init__(self):
-        self.verts, self.faces, self.uvs, self.tags = [], [], [], []
-        self.tag = None
+        self.verts, self.faces, self.uvs = [], [], []
 
     def add_ring(self, ring):
         i0 = len(self.verts)
         self.verts.extend(ring)
         self.uvs.extend([(0.0, 0.0)] * len(ring))
-        self.tags.extend([self.tag] * len(ring))
         return list(range(i0, i0 + len(ring)))
 
-    def loft(self, rings, cap_start=False, cap_end=False, closed=True):
+    def loft(self, rings, cap_start=False, cap_end=False):
         """Rings progress along the axis; each ring runs CCW about it -> outward normals."""
         ids = [self.add_ring(r) for r in rings]
         n = len(rings[0])
-        last = n if closed else n - 1
         for k in range(len(ids) - 1):
             a, b = ids[k], ids[k + 1]
-            for i in range(last):
+            for i in range(n):
                 j = (i + 1) % n
                 self.faces.append((a[i], a[j], b[j], b[i]))
         if cap_start:
@@ -91,49 +105,13 @@ class Builder:
             self.faces.append((ci, ring_ids[j], ring_ids[i]) if flip else (ci, ring_ids[i], ring_ids[j]))
 
 
-def mirror_x(p):
-    return Vector((-p.x, p.y, p.z))
-
-
 def side_bone(name, s):
     return name.replace("_l", "_r") if s < 0 else name
 
 
-# ---------------------------------------------------------------- body landmarks (UAL rest pose, metres)
-HEAD_C = Vector((0.0, -0.014, 1.778))
-HEAD_R = Vector((0.182, 0.176, 0.206))
-ARM_Z, ARM_Y = 1.441, 0.066
-SHOULDER_X, ELBOW_X, WRIST_X = 0.192, 0.466, 0.739
-HIP_X, KNEE_Z, ANKLE_Z = 0.089, 0.532, 0.104
-
-# Torso sections: z, rx, ry, y offset (front is -Y).
-TORSO = [
-    (0.90, 0.162, 0.118, 0.010),
-    (1.00, 0.152, 0.110, 0.008),
-    (1.12, 0.124, 0.088, 0.010),
-    (1.25, 0.136, 0.094, 0.004),
-    (1.35, 0.150, 0.102, 0.000),
-    (1.40, 0.156, 0.098, 0.006),
-    (1.44, 0.150, 0.090, 0.010),
-    (1.47, 0.126, 0.080, 0.012),
-    (1.49, 0.096, 0.068, 0.012),
-    (1.505, 0.064, 0.056, 0.012),
-    (1.62, 0.054, 0.051, 0.004),
-]
-SEG = 16
-
-
-def torso_at(z):
-    for (z0, rx0, ry0, y0), (z1, rx1, ry1, y1) in zip(TORSO, TORSO[1:]):
-        if z0 <= z <= z1:
-            t = (z - z0) / (z1 - z0)
-            return lerp(rx0, rx1, t), lerp(ry0, ry1, t), lerp(y0, y1, t)
-    return TORSO[0][1:] if z < TORSO[0][0] else TORSO[-1][1:]
-
-
 def spine_weights(z):
-    """Torso column weights by height."""
-    bands = [("pelvis", 0.95), ("spine_01", 1.11), ("spine_02", 1.24), ("spine_03", 1.40), ("neck_01", 1.53), ("Head", 1.61)]
+    """Torso column weights by height (lofted pieces: skirts, drape, bands)."""
+    bands = [("pelvis", 0.93), ("spine_01", 1.08), ("spine_02", 1.22), ("spine_03", 1.38), ("neck_01", 1.50), ("Head", 1.57)]
     if z <= bands[0][1]:
         return {"pelvis": 1.0}
     for (b0, z0), (b1, z1) in zip(bands, bands[1:]):
@@ -143,7 +121,7 @@ def spine_weights(z):
     return {"Head": 1.0}
 
 
-def leg_weights(p, rx, hip_z=1.0, hem_z=0.06, strength=0.9, ry=None, panels=True):
+def leg_weights(p, rx, hip_z=HIP_Z, hem_z=0.06, strength=0.9, ry=None, panels=True):
     """Skirt/tunic: the sides follow the legs; the front and back panels follow the
     skirt_f / skirt_b hinge bones (driven at runtime by the leading / trailing leg)."""
     s = max(-1.0, min(1.0, p.x / max(rx, 1e-4)))
@@ -157,7 +135,7 @@ def leg_weights(p, rx, hip_z=1.0, hem_z=0.06, strength=0.9, ry=None, panels=True
         out["thigh_" + side] = w * (1 - calf)
         out["calf_" + side] = w * calf
     if panels:
-        cy = max(-1.0, min(1.0, (p.y - 0.012) / max(ry or rx * 0.75, 1e-4)))
+        cy = max(-1.0, min(1.0, (p.y - 0.04) / max(ry or rx * 0.75, 1e-4)))
         k = (1 - sideness) * smooth(0.0, 0.5, t) * 0.95
         if cy < 0:
             out["skirt_f"] = k * (-cy) ** 0.8
@@ -167,535 +145,14 @@ def leg_weights(p, rx, hip_z=1.0, hem_z=0.06, strength=0.9, ry=None, panels=True
     return out
 
 
-# ---------------------------------------------------------------- pieces
-# Each returns (Builder, weight_fn(vertex)->dict).
-
-def piece_head():
-    b = Builder()
-    rings = []
-    lat = 14
-    for k in range(1, lat):
-        th = -math.pi / 2 + math.pi * k / lat
-        z = HEAD_C.z + math.sin(th) * HEAD_R.z
-        below = max(0.0, -math.sin(th))
-        taper = 1 - 0.30 * below ** 1.6  # chin
-        rx, ry = HEAD_R.x * math.cos(th) * taper, HEAD_R.y * math.cos(th) * taper
-        rings.append(ellipse((HEAD_C.x, HEAD_C.y - 0.014 * below, z), (1, 0, 0), (0, 1, 0), rx, ry, 22, -math.pi / 2))
-    ids = b.loft(rings)
-    b.cap(ids[0], rings[0], flip=True, point=HEAD_C - Vector((0, 0.02, HEAD_R.z * 0.97)))
-    b.cap(ids[-1], rings[-1], flip=False, point=HEAD_C + Vector((0, 0, HEAD_R.z)))
-    # Face UVs: orthographic from the front into the face atlas cell; the back maps to the
-    # (transparent) top edge so the face never repeats behind.
-    for i, p in enumerate(b.verts):
-        u = 0.5 + (p.x - HEAD_C.x) / (2 * HEAD_R.x)
-        v = 0.5 + (p.z - HEAD_C.z) / (2 * HEAD_R.z)
-        b.uvs[i] = (u, v) if p.y < HEAD_C.y + 0.01 else (u, 1.0)
-    return b, lambda p, tag=None: {"Head": 1.0} if p.z > 1.62 else {"Head": 0.7, "neck_01": 0.3}
-
-
-def piece_hands():
-    b = Builder()
-    for s in (1, -1):
-        ax = Vector((s, 0, 0))
-        u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
-        # Soft mitten: round wrist, broad palm, rounded fingertips.
-        secs = [
-            (WRIST_X - 0.012, 0.033, 0.028),
-            (WRIST_X + 0.025, 0.046, 0.030),
-            (WRIST_X + 0.06, 0.052, 0.028),
-            (WRIST_X + 0.09, 0.050, 0.024),
-            (WRIST_X + 0.112, 0.040, 0.019),
-            (WRIST_X + 0.124, 0.024, 0.012),
-        ]
-        rings = [ellipse((s * x, ARM_Y - 0.004, ARM_Z - 0.004), u, v, ry, rz, 12) for x, ry, rz in secs]
-        b.loft(rings, cap_start=True, cap_end=True)
-        # Thumb, angled forward (-Y) and down.
-        base = Vector((s * (WRIST_X + 0.03), ARM_Y - 0.035, ARM_Z - 0.008))
-        d = Vector((s * 0.35, -1, -0.25)).normalized()
-        uu = d.cross(Vector((0, 0, 1))).normalized()
-        vv = d.cross(uu).normalized() * -1
-        if uu.cross(vv).dot(d) < 0:
-            vv = -vv
-        rings = [ellipse(base + d * t, uu, vv, r, r * 0.9, 8) for t, r in ((0.0, 0.019), (0.025, 0.017), (0.045, 0.013), (0.055, 0.007))]
-        b.loft(rings, cap_end=True)
-    return b, lambda p, tag=None: {side_bone("hand_l", p.x): 1.0}
-
-
-def piece_upper(cuff=0.0):
-    """Long-sleeved top: torso (hem at hips), high neck, sleeves to the wrist."""
-    b = Builder()
-    rings = []
-    for z, rx, ry, y0 in TORSO:
-        rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, SEG))
-    b.loft(rings)
-    sleeve = [(0.10, 0.066), (0.20, 0.064), (0.32, 0.057), (ELBOW_X, 0.050), (0.60, 0.046), (WRIST_X - 0.04, 0.046 + cuff * 0.5), (WRIST_X + 0.008, 0.050 + cuff)]
-    b.tag = "sleeve"
-    for s in (1, -1):
-        u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
-        rr = [ellipse((s * x, ARM_Y - 0.004, ARM_Z), u, v, r, r * 0.95, 12) for x, r in sleeve]
-        # Closed at the shoulder: when the arm drops, the sleeve top shows above the torso.
-        b.loft(rr, cap_start=True)
-
-    def w(p, tag=None):
-        ax = abs(p.x)
-        sd = "l" if p.x >= 0 else "r"
-        if tag == "sleeve":
-            if ax < 0.17:
-                return {"spine_03": 0.35, "clavicle_" + sd: 0.35, "upperarm_" + sd: 0.30}
-            if ax < 0.26:
-                t = smooth(0.17, 0.26, ax)
-                return {"clavicle_" + sd: 0.6 * (1 - t), "upperarm_" + sd: 0.4 + 0.6 * t}
-            if ax < 0.42:
-                return {"upperarm_" + sd: 1.0}
-            if ax < 0.52:
-                t = smooth(0.42, 0.52, ax)
-                return {"upperarm_" + sd: 1 - t, "lowerarm_" + sd: t}
-            if ax < WRIST_X - 0.02:
-                return {"lowerarm_" + sd: 1.0}
-            return {"lowerarm_" + sd: 0.75, "hand_" + sd: 0.25}
-        out = spine_weights(p.z)
-        # Shoulder caps lean on the clavicles so the armpit doesn't tear when arms drop.
-        k = smooth(0.07, 0.15, ax) * smooth(1.33, 1.43, p.z) * (1 - smooth(1.46, 1.50, p.z)) * 0.55
-        if k > 0:
-            out = {bn: wt * (1 - k) for bn, wt in out.items()}
-            out["clavicle_" + sd] = out.get("clavicle_" + sd, 0) + k
-        return out
-
-    return b, w
-
-
-def piece_skirt(sections, hem_z=0.06):
-    """Long skirt (abaya / dress / skirt). sections: z, rx, ry."""
-    b = Builder()
-    s = sorted(sections)
-    zs = []
-    for (z0, _, _), (z1, _, _) in zip(s, s[1:]):
-        zs += [lerp(z0, z1, t / 3) for t in range(3)]
-    zs.append(s[-1][0])
-    rings = [ellipse((0, 0.012, z), (1, 0, 0), (0, 1, 0), _rx_at(sections, z), _ry_at(sections, z), 24) for z in zs]
-    b.loft(rings)
-    def w(p, tag=None):
-        return leg_weights(p, _rx_at(sections, p.z), hem_z=hem_z, ry=_ry_at(sections, p.z))
-
-    return b, w
-
-
-def _rx_at(sections, z):
-    s = sorted(sections)
-    for (z0, rx0, _), (z1, rx1, _) in zip(s, s[1:]):
-        if z0 <= z <= z1:
-            return lerp(rx0, rx1, (z - z0) / (z1 - z0))
-    return s[0][1] if z < s[0][0] else s[-1][1]
-
-
-SKIRT_FLARE = [(1.13, 0.130, 0.094), (1.02, 0.160, 0.118), (0.82, 0.196, 0.150), (0.52, 0.240, 0.185), (0.25, 0.276, 0.212), (0.05, 0.300, 0.232)]
-SKIRT_STRAIGHT = [(1.13, 0.130, 0.094), (1.02, 0.156, 0.114), (0.82, 0.184, 0.140), (0.52, 0.214, 0.164), (0.25, 0.232, 0.178), (0.06, 0.246, 0.190)]
-TUNIC = [(0.97, 0.178, 0.128), (0.86, 0.198, 0.148), (0.74, 0.222, 0.168), (0.64, 0.236, 0.178)]
-
-
-def piece_tunic():
-    b, _ = piece_skirt(TUNIC)
-    return b, lambda p, tag=None: leg_weights(p, _rx_at(TUNIC, p.z), hip_z=0.98, hem_z=0.64, strength=0.7, ry=_ry_at(TUNIC, p.z))
-
-
-def piece_legs(r_top, r_bot, z_top=0.96, z_bot=0.06, seg=10, hip_block=False):
-    """Leg tubes (leggings under skirts, or wide trousers)."""
-    b = Builder()
-    for s in (1, -1):
-        b.tag = "l" if s > 0 else "r"  # each tube follows its own leg, even where it flares past the centre
-        secs = [(z_top, r_top), (KNEE_Z + 0.06, lerp(r_top, r_bot, 0.5)), (KNEE_Z - 0.06, lerp(r_top, r_bot, 0.6)), (z_bot, r_bot)]
-        secs = [q for q in secs if q[0] <= z_top]
-        rings = [ellipse((s * HIP_X, 0.006 + (0.02 if z < 0.3 else 0.0) * (0.3 - z) / 0.3, z), (1, 0, 0), (0, 1, 0), r, r * 0.95, seg) for z, r in sorted(secs)]
-        b.loft(rings)
-    if hip_block:
-        b.tag = "hip"
-        secs = [(0.86, 0.160, 0.112), (1.00, 0.152, 0.110), (1.13, 0.128, 0.092)]
-        b.loft([ellipse((0, 0.010, z), (1, 0, 0), (0, 1, 0), rx, ry, SEG) for z, rx, ry in secs])
-
-    def w(p, tag=None):
-        if tag == "hip":
-            return leg_weights(p, 0.16, hip_z=1.0, hem_z=0.6, strength=0.6)
-        sd = tag if tag in ("l", "r") else ("l" if p.x >= 0 else "r")
-        if p.z > 0.86:
-            t = smooth(0.86, 0.98, p.z)
-            return {"thigh_" + sd: 1 - t * 0.5, "pelvis": t * 0.5}
-        t = smooth(KNEE_Z - 0.07, KNEE_Z + 0.07, p.z)
-        return {"thigh_" + sd: t, "calf_" + sd: 1 - t}
-
-    return b, w
-
-
-
-def piece_shoes():
-    b = Builder()
-    for s in (1, -1):
-        x = s * HIP_X
-        secs = [(0.075, 0.040, 0.034, 0.048), (0.02, 0.048, 0.046, 0.048), (-0.09, 0.050, 0.040, 0.040), (-0.175, 0.040, 0.026, 0.026), (-0.205, 0.024, 0.014, 0.016)]
-        # Axis -Y (toe direction): u x v must equal -Y.
-        u, v = Vector((0, 0, 1)), Vector((1, 0, 0))
-        rings = [ellipse((x, y, zc), u, v, rz, rx, 10) for y, rx, rz, zc in secs]
-        b.loft(rings, cap_start=True, cap_end=True)
-    return b, lambda p, tag=None: {side_bone("foot_l", p.x): 1.0} if p.y > -0.11 else {side_bone("foot_l", p.x): 0.4, side_bone("ball_l", p.x): 0.6}
-
-
-def head_shell_point(scale, x, z):
-    rx, ry, rz = HEAD_R.x * scale, HEAD_R.y * scale, HEAD_R.z * scale
-    q = 1 - (x / rx) ** 2 - ((z - HEAD_C.z) / rz) ** 2
-    return Vector((x, HEAD_C.y - ry * math.sqrt(max(q, 0.0)), z))
-
-
-FACE_W, FACE_H, FACE_Z = 0.134, 0.150, HEAD_C.z - 0.006
-
-
-def piece_hijab(long=False):
-    """Head shell with a face opening, wrap under the chin, and a drape over the shoulders."""
-    b = Builder()
-    sc = 1.075
-    rings = []
-    lat = 14
-    for k in range(1, lat):
-        th = -math.pi / 2 + math.pi * k / lat
-        z = HEAD_C.z + math.sin(th) * HEAD_R.z * sc
-        rings.append(ellipse((HEAD_C.x, HEAD_C.y + 0.004, z), (1, 0, 0), (0, 1, 0), HEAD_R.x * sc * math.cos(th), HEAD_R.y * sc * math.cos(th), 26, -math.pi / 2))
-    ids = b.loft(rings)
-    b.cap(ids[-1], rings[-1], flip=False, point=HEAD_C + Vector((0, 0.004, HEAD_R.z * sc)))
-    # Face opening: vertices inside the face ellipse are pushed out onto it (a smooth
-    # edge), faces left fully on the edge are dropped.
-    open_face(b, sc)
-    # Chin wrap + drape: rounded over the shoulders, hanging longer at the front
-    # and back than over the arms (a curved hem, like real cloth).
-    z_front, z_side = (1.02, 1.22) if long else (1.27, 1.37)
-    n = 30
-
-    def profile(z):
-        """rx, ry, y-offset of the drape at height z."""
-        if z >= 1.59:
-            t = smooth(1.59, 1.665, z)
-            return lerp(0.124, 0.150, t), lerp(0.118, 0.140, t), -0.005
-        if z >= 1.44:
-            # Neck -> shoulder: a rounded slope (ease-out), not a step.
-            t = (1.59 - z) / 0.15
-            k = math.sin(t * math.pi / 2)
-            return lerp(0.124, 0.248, k), lerp(0.118, 0.158, k), lerp(-0.005, 0.010, t)
-        t = smooth(1.44, 1.20, z)
-        return lerp(0.248, 0.232, t), lerp(0.158, 0.150, t), 0.010
-
-    def hem(a):
-        return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
-
-    # Bottom to top: rings must progress along +Z for outward-facing normals.
-    zs = [1.665 - i * 0.025 for i in range(int((1.665 - z_front) / 0.025) + 2)][::-1]
-    rings = []
-    for z in zs:
-        rx, ry, y0 = profile(max(z, z_front - 0.03))
-        rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, n, -math.pi / 2))
-    ids = b.loft(rings)
-    snapped = set()
-    for k, ring in enumerate(ids):
-        for i, vi in enumerate(ring):
-            a = -math.pi / 2 + 2 * math.pi * i / n
-            hz = hem(a)
-            if b.verts[vi].z < hz:
-                rx, ry, y0 = profile(hz)
-                b.verts[vi] = Vector((math.cos(a) * rx, y0 + math.sin(a) * ry, hz))
-                snapped.add(vi)
-    b.faces = [f for f in b.faces if not all(i in snapped for i in f)]
-
-    def w(p, tag=None):
-        if p.z > 1.60:
-            return {"Head": 1.0}
-        if p.z > 1.50:
-            t = smooth(1.50, 1.60, p.z)
-            return {"Head": 0.5 * t, "neck_01": 0.5 + 0.0 * t, "spine_03": 0.5 * (1 - t)}
-        out = spine_weights(min(p.z, 1.45)) if p.z < 1.35 else {"spine_03": 1.0}
-        sd = "l" if p.x >= 0 else "r"
-        k = smooth(0.15, 0.24, abs(p.x)) * 0.45
-        if k > 0:
-            out = {bn: wt * (1 - k) for bn, wt in out.items()}
-            out["clavicle_" + sd] = out.get("clavicle_" + sd, 0) + k * 0.5
-            out["upperarm_" + sd] = out.get("upperarm_" + sd, 0) + k * 0.5
-        return out
-
-    return b, w
-
-
-def face_edge(scale, k, a):
-    """Point on the head shell (scale) on the face ellipse scaled by k, angle a."""
-    return head_shell_point(scale, math.cos(a) * FACE_W * k, FACE_Z + math.sin(a) * FACE_H * k)
-
-
-def open_face(b, scale):
-    snapped = set()
-    for i, p in enumerate(b.verts):
-        if p.y > HEAD_C.y - 0.02:
-            continue
-        ex, ez = p.x / FACE_W, (p.z - FACE_Z) / FACE_H
-        e = math.hypot(ex, ez)
-        if e >= 1.0:
-            continue
-        a = math.atan2(ez, ex) if e > 1e-6 else math.pi / 2
-        q = face_edge(scale, 1.0, a)
-        b.verts[i] = Vector((q.x, q.y + 0.004, q.z))
-        snapped.add(i)
-    b.faces = [f for f in b.faces if not all(i in snapped for i in f)]
-
-
-def piece_hijab_band():
-    """Accent underscarf band hugging the face opening of the hijab."""
-    b = Builder()
-    n = 40
-    inner, outer = [], []
-    for i in range(n):
-        a = 2 * math.pi * i / n
-        inner.append(b.add_ring([face_edge(1.083, 0.985, a)])[0])
-        outer.append(b.add_ring([face_edge(1.083, 1.13, a)])[0])
-    for i in range(n):
-        j = (i + 1) % n
-        b.faces.append((inner[i], outer[i], outer[j], inner[j]))
-    return b, lambda p, tag=None: {"Head": 1.0}
-
-
-def _shell_region(scale, floor, seg=30, lat=16):
-    """Head-hugging shell whose lower edge follows floor(x, back) smoothly:
-    vertices below it are snapped up onto it, fully-snapped faces are dropped."""
-    b = Builder()
-    rings = []
-    for k in range(1, lat):
-        th = -math.pi / 2 + math.pi * k / lat
-        z = HEAD_C.z + math.sin(th) * HEAD_R.z * scale
-        rings.append(ellipse((HEAD_C.x, HEAD_C.y + 0.006, z), (1, 0, 0), (0, 1, 0), HEAD_R.x * scale * math.cos(th), HEAD_R.y * scale * math.cos(th), seg, -math.pi / 2))
-    ids = b.loft(rings)
-    b.cap(ids[-1], rings[-1], flip=False, point=HEAD_C + Vector((0, 0.006, HEAD_R.z * scale)))
-    c = HEAD_C + Vector((0, 0.006, 0))
-    snapped = set()
-    for i, p in enumerate(b.verts):
-        zf = floor(p)
-        if p.z < zf:
-            # Keep the azimuth, move up the ellipsoid to the floor height.
-            rx, ry, rz = HEAD_R.x * scale, HEAD_R.y * scale, HEAD_R.z * scale
-            k = math.sqrt(max(0.0, 1 - ((zf - c.z) / rz) ** 2))
-            d = Vector(((p.x - c.x) / rx, (p.y - c.y) / ry, 0))
-            d = d.normalized() if d.length > 1e-6 else Vector((0, 1, 0))
-            b.verts[i] = Vector((c.x + d.x * rx * k, c.y + d.y * ry * k, zf))
-            snapped.add(i)
-    b.faces = [f for f in b.faces if not all(i in snapped for i in f)]
-    return b
-
-
-def hair_floor(p):
-    """Hairline: a soft fringe over the forehead, lower at the sides and back."""
-    rel_y = (p.y - HEAD_C.y) / HEAD_R.y  # -1 front .. 1 back
-    rel_x = min(1.0, abs(p.x) / HEAD_R.x)
-    front = max(0.0, -rel_y)
-    fringe = HEAD_C.z + 0.09 - 0.075 * rel_x ** 2
-    back = HEAD_C.z - 0.13
-    return lerp(back, fringe, smooth(0.15, 0.75, front))
-
-
-def hair_curtain(b, secs, span, z_tip, tip_len=0.05, clumps=9, n=24):
-    """Hair falling behind the head and shoulders: an open shell around the back
-    (angles back ± span(z)), with clumped strands and pointed tips at the bottom.
-    secs: (z, rx, ry, y-centre), top to bottom."""
-    secs = sorted(secs)
-    zs = []
-    for (z0, *_), (z1, *_) in zip(secs, secs[1:]):
-        zs += [lerp(z0, z1, k / 3) for k in range(3)]
-    zs.append(secs[-1][0])
-    z_lo = secs[0][0]
-
-    def at(z):
-        for a, c in zip(secs, secs[1:]):
-            if a[0] <= z <= c[0]:
-                t = smooth(a[0], c[0], z)
-                return [lerp(a[i], c[i], t) for i in (1, 2, 3)]
-        return list(secs[0][1:]) if z < secs[0][0] else list(secs[-1][1:])
-
-    rings = []
-    for z in zs:
-        rx, ry, yc = at(z)
-        sp = span(z)
-        lower = smooth(1.75, z_lo, z)  # clumps grow towards the tips
-        ring = []
-        for i in range(n + 1):
-            a = math.pi / 2 - sp + 2 * sp * i / n
-            k = 1 + (0.012 + 0.03 * lower) * math.cos(clumps * (a - math.pi / 2))
-            ring.append(Vector((math.cos(a) * rx * k, yc + math.sin(a) * ry * k, z)))
-        rings.append(ring)
-    ids = b.loft(rings, closed=False)
-    # Pointed tips: the bottom edge dips between clumps.
-    for i, vi in enumerate(ids[0]):
-        a = math.pi / 2 - span(z_lo) + 2 * span(z_lo) * i / n
-        dip = abs(math.sin(clumps * 0.5 * (a - math.pi / 2)))
-        b.verts[vi].z = z_tip - tip_len * (1 - dip)
-
-
-def hair_lock(b, path, radii, flat=0.55):
-    """A tapered strand (side lock / ponytail) along a path of points."""
-    rings = []
-    for k, (pt, r) in enumerate(zip(path, radii)):
-        nxt = path[min(k + 1, len(path) - 1)] - path[max(k - 1, 0)]
-        d = nxt.normalized()
-        u = d.cross(Vector((0, 0, 1)))
-        u = u.normalized() if u.length > 1e-6 else Vector((1, 0, 0))
-        v = d.cross(u).normalized()
-        if u.cross(v).dot(d) < 0:
-            v = -v
-        rings.append(ellipse(pt, u, v, r, r * flat, 10))
-    b.loft(rings, cap_start=True, cap_end=True)
-
-
-def piece_hair(style):
-    b = _shell_region(1.07, hair_floor)
-    if style == "long":
-        # Falls behind the shoulders to mid-back, with soft locks framing the face.
-        hair_curtain(
-            b,
-            [(1.80, 0.198, 0.19, 0.0), (1.72, 0.204, 0.188, 0.006), (1.64, 0.19, 0.16, 0.025), (1.52, 0.20, 0.14, 0.04), (1.40, 0.19, 0.13, 0.045), (1.30, 0.17, 0.12, 0.05)],
-            span=lambda z: math.radians(lerp(98, 112, smooth(1.55, 1.78, z))),
-            z_tip=1.30,
-        )
-        for sx in (1, -1):
-            hair_lock(b, [Vector((sx * 0.15, -0.05, 1.79)), Vector((sx * 0.162, -0.07, 1.68)), Vector((sx * 0.15, -0.075, 1.56)), Vector((sx * 0.13, -0.08, 1.46))], [0.028, 0.034, 0.028, 0.01])
-    elif style == "bob":
-        # Chin-length, curving in at the ends.
-        hair_curtain(
-            b,
-            [(1.86, 0.195, 0.188, -0.01), (1.74, 0.212, 0.2, -0.008), (1.66, 0.214, 0.196, 0.0), (1.61, 0.198, 0.18, 0.004)],
-            span=lambda z: math.radians(150),
-            z_tip=1.61,
-            tip_len=0.02,
-            clumps=11,
-            n=30,
-        )
-    elif style == "bun":
-        c = Vector((0, 0.165, 1.965))
-        rings = []
-        for k in range(1, 10):
-            th = -math.pi / 2 + math.pi * k / 10
-            rr = 0.088 * math.cos(th)
-            rings.append(ellipse((c.x, c.y, c.z + math.sin(th) * 0.075), (1, 0, 0), (0, 1, 0), rr, rr * 0.92, 14))
-        ids = b.loft(rings)
-        b.cap(ids[0], rings[0], flip=True, point=c - Vector((0, 0, 0.075)))
-        b.cap(ids[-1], rings[-1], flip=False, point=c + Vector((0, 0, 0.075)))
-    elif style == "ponytail":
-        hair_lock(
-            b,
-            [Vector((0, 0.17, 1.90)), Vector((0, 0.24, 1.82)), Vector((0, 0.27, 1.70)), Vector((0, 0.25, 1.56)), Vector((0, 0.21, 1.44)), Vector((0, 0.19, 1.37))],
-            [0.05, 0.066, 0.062, 0.05, 0.034, 0.01],
-            flat=0.8,
-        )
-
-    def w(p, tag=None):
-        if p.z > 1.62:
-            return {"Head": 1.0}
-        t = smooth(1.30, 1.62, p.z)
-        return {"Head": 0.35 + 0.65 * t, "neck_01": 0.15 * (1 - t), "spine_03": 0.5 * (1 - t)}
-
-    return b, w
-
-
-def piece_vest():
-    """Open-front staff vest over the top."""
-    b = Builder()
-    secs = [(1.00, 1.07), (1.12, 1.09), (1.25, 1.08), (1.35, 1.07), (1.42, 1.06), (1.47, 1.05)]
-    rings = []
-    for z, sc in secs:
-        rx, ry, y0 = torso_at(z)
-        rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx * sc + 0.004, ry * sc + 0.004, 20, -math.pi / 2))
-    b.loft(rings)
-    b.faces = [f for f in b.faces if not all(b.verts[i].y < -0.05 and abs(b.verts[i].x) < 0.045 for i in f)]
-    # Arm holes: drop the side faces at chest height.
-    b.faces = [f for f in b.faces if not all(abs(b.verts[i].x) > 0.12 and b.verts[i].z > 1.30 for i in f)]
-    return b, lambda p, tag=None: spine_weights(p.z)
-
-
-def piece_logo():
-    """Logo patch on the vest's left chest (uv -> logo cell of the atlas)."""
-    b = Builder()
-    rx, ry, y0 = torso_at(1.34)
-    y = y0 - ry * 1.07 - 0.012
-    x0, x1, z0, z1 = 0.035, 0.115, 1.318, 1.348
-    ids = b.add_ring([Vector((x0, y, z0)), Vector((x1, y + 0.012, z0)), Vector((x1, y + 0.012, z1)), Vector((x0, y, z1))])
-    b.uvs[ids[0]], b.uvs[ids[1]], b.uvs[ids[2]], b.uvs[ids[3]] = (0, 0), (1, 0), (1, 1), (0, 1)
-    b.faces.append((ids[0], ids[1], ids[2], ids[3]))
-    return b, lambda p, tag=None: {"spine_03": 0.6, "spine_02": 0.4}
-
-
-def piece_belt():
-    b = Builder()
-    rings = [ellipse((0, 0.012, z), (1, 0, 0), (0, 1, 0), rx + 0.006, ry + 0.006, 20) for z, rx, ry in ((1.10, 0.128, 0.091), (1.15, 0.127, 0.090))]
-    b.loft(rings)
-    return b, lambda p, tag=None: {"spine_01": 0.6, "pelvis": 0.4}
-
-
-def piece_cuffs():
-    """Contrast trim at the abaya sleeve ends."""
-    b = Builder()
-    for s in (1, -1):
-        u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
-        rr = [ellipse((s * x, ARM_Y - 0.004, ARM_Z), u, v, r, r * 0.95, 12) for x, r in ((WRIST_X - 0.03, 0.062), (WRIST_X + 0.012, 0.072))]
-        b.loft(rr)
-    return b, lambda p, tag=None: {side_bone("lowerarm_l", p.x): 0.8, side_bone("hand_l", p.x): 0.2}
-
-
-def piece_abaya_trim():
-    """Vertical front band of the abaya (neck to hem)."""
-    b = Builder()
-    zs = [1.47, 1.35, 1.25, 1.13, 1.02, 0.82, 0.52, 0.25, 0.05]
-    left, right = [], []
-    for z in zs:
-        if z > 1.12:
-            rx, ry, y0 = torso_at(z)
-        else:
-            rx, ry = _rx_at(SKIRT_FLARE, z), [s[2] for s in sorted(SKIRT_FLARE) if True][0]
-            ry = _ry_at(SKIRT_FLARE, z)
-            y0 = 0.012
-        y = y0 - ry - 0.006
-        left.append(b.add_ring([Vector((0.022, y, z))])[0])
-        right.append(b.add_ring([Vector((-0.022, y, z))])[0])
-    for k in range(len(zs) - 1):
-        b.faces.append((right[k + 1], left[k + 1], left[k], right[k]))
-    return b, lambda p, tag=None: spine_weights(p.z) if p.z > 1.12 else leg_weights(p, _rx_at(SKIRT_FLARE, p.z), ry=_ry_at(SKIRT_FLARE, p.z))
-
-
-def _ry_at(sections, z):
-    s = sorted(sections)
-    for (z0, _, ry0), (z1, _, ry1) in zip(s, s[1:]):
-        if z0 <= z <= z1:
-            return lerp(ry0, ry1, (z - z0) / (z1 - z0))
-    return s[0][2] if z < s[0][0] else s[-1][2]
-
-
-# name -> (factory, part). Parts are coloured by the runtime palette.
-PIECES = {
-    "head": (piece_head, "skin"),
-    "hands": (piece_hands, "skin"),
-    "upper": (lambda: piece_upper(0.0), "top"),
-    "upper_abaya": (lambda: piece_upper(0.018), "top"),
-    "skirt_flare": (lambda: piece_skirt(SKIRT_FLARE), "bottom"),
-    "skirt_straight": (lambda: piece_skirt(SKIRT_STRAIGHT), "bottom"),
-    "tunic": (piece_tunic, "top"),
-    "leggings": (lambda: piece_legs(0.05, 0.044, z_top=0.36), "bottom"),
-    "trousers": (lambda: piece_legs(0.074, 0.112, z_top=0.97, z_bot=0.05, seg=12), "bottom"),
-    "shoes": (piece_shoes, "shoes"),
-    "hijab_classic": (lambda: piece_hijab(False), "hijab"),
-    "hijab_long": (lambda: piece_hijab(True), "hijab"),
-    "hijab_band": (piece_hijab_band, "accent"),
-    "hair_long": (lambda: piece_hair("long"), "hair"),
-    "hair_bun": (lambda: piece_hair("bun"), "hair"),
-    "hair_ponytail": (lambda: piece_hair("ponytail"), "hair"),
-    "hair_bob": (lambda: piece_hair("bob"), "hair"),
-    "vest": (piece_vest, "vest"),
-    "logo": (piece_logo, "logo"),
-    "belt": (piece_belt, "trim"),
-    "cuffs": (piece_cuffs, "trim"),
-    "abaya_trim": (piece_abaya_trim, "trim"),
-}
-
-PART_COLORS = {"skin": (0.91, 0.73, 0.58), "top": (0.55, 0.36, 0.45), "bottom": (0.25, 0.23, 0.30), "shoes": (0.9, 0.88, 0.85), "hijab": (0.79, 0.6, 0.68), "accent": (1, 1, 1), "hair": (0.2, 0.13, 0.1), "vest": (0.55, 0.1, 0.35), "logo": (1, 1, 1), "trim": (0.75, 0.6, 0.4)}
-
-
 # ---------------------------------------------------------------- scene
+
+
+def import_gltf(path):
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=path)
+    return [o for o in bpy.data.objects if o not in before]
+
 
 def load_skeleton():
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -728,9 +185,6 @@ def load_skeleton():
     return arm, keep
 
 
-SKIRT_PIVOT_Z = 0.93
-
-
 def add_skirt_bones(arm):
     """Front and back skirt panels hinge at the hips. No clip animates them: the
     runtime swings them with whichever leg is furthest forward / back, so a
@@ -738,9 +192,9 @@ def add_skirt_bones(arm):
     bpy.context.view_layer.objects.active = arm
     bpy.ops.object.mode_set(mode="EDIT")
     eb = arm.data.edit_bones
-    for name, y in (("skirt_f", -0.10), ("skirt_b", 0.12)):
+    for name, y in (("skirt_f", -0.10), ("skirt_b", 0.14)):
         b = eb.new(name)
-        b.head = (0.0, 0.012, SKIRT_PIVOT_Z)
+        b.head = (0.0, 0.04, SKIRT_PIVOT_Z)
         b.tail = (0.0, y, 0.45)
         b.parent = eb["pelvis"]
         b.use_deform = True
@@ -770,6 +224,159 @@ def modest_walk(src, name):
     return ac
 
 
+def adopt(objects, arm):
+    """Re-parent imported skinned meshes (same bone names) to our armature and drop theirs."""
+    out = []
+    for o in objects:
+        if o.type != "MESH":
+            continue
+        o.parent = arm
+        o.matrix_parent_inverse.identity()
+        for m in o.modifiers:
+            if m.type == "ARMATURE":
+                m.object = arm
+        out.append(o)
+    for o in objects:
+        if o.type == "ARMATURE":
+            bpy.data.objects.remove(o, do_unlink=True)
+    return out
+
+
+def clean_mesh(ob):
+    """One UV map, no colour attributes: every exported piece must carry the same attributes (merged at runtime)."""
+    me = ob.data
+    # Removing a layer renumbers the rest: look the next extra one up by name each time.
+    while len(me.uv_layers) > 1:
+        extra = next((uv for uv in me.uv_layers if uv.name != "UVMap"), None)
+        if extra is None:
+            break
+        me.uv_layers.remove(extra)
+    if "UVMap" in me.uv_layers:
+        me.uv_layers.active = me.uv_layers["UVMap"]
+    while len(me.color_attributes):
+        me.color_attributes.remove(me.color_attributes[0])
+
+
+# ---------------------------------------------------------------- body regions
+
+GROUP_CACHE = {}
+
+
+def dominant(ob):
+    """vertex index -> name of its heaviest bone."""
+    key = ob.name
+    if key not in GROUP_CACHE:
+        names = {g.index: g.name for g in ob.vertex_groups}
+        dom = {}
+        for v in ob.data.vertices:
+            if v.groups:
+                g = max(v.groups, key=lambda g: g.weight)
+                dom[v.index] = names[g.group]
+        GROUP_CACHE[key] = dom
+    return GROUP_CACHE[key]
+
+
+def cut(src, keep, name, part):
+    """A copy of `src` keeping only the faces whose vertices all pass `keep(vertex, dominant_bone)`."""
+    ob = src.copy()
+    ob.data = src.data.copy()
+    ob.name = name
+    ob.data.name = name
+    bpy.context.scene.collection.objects.link(ob)
+    dom = dominant(src)
+    ok = {v.index: bool(keep(v, dom.get(v.index, ""))) for v in ob.data.vertices}
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bm.verts.ensure_lookup_table()
+    dead = [f for f in bm.faces if not all(ok[v.index] for v in f.verts)]
+    bmesh.ops.delete(bm, geom=dead, context="FACES")
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob["part"] = part
+    for m in list(ob.modifiers):
+        if m.type != "ARMATURE":
+            ob.modifiers.remove(m)
+    return ob
+
+
+def offset(ob, d):
+    """Push every vertex along its normal by d (a number or a function of the position)."""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bm.normal_update()
+    for v in bm.verts:
+        k = d(v.co) if callable(d) else d
+        v.co += v.normal * k
+    bm.to_mesh(ob.data)
+    bm.free()
+
+
+def relax(ob, iterations=6, factor=0.5, pin=None):
+    """Smooth the shell so the garment drapes over the body instead of tracing every muscle.
+    `pin(co)` keeps vertices in place (hems, cuffs, collar edges)."""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    verts = [v for v in bm.verts if not (pin and pin(v.co))]
+    for _ in range(iterations):
+        bmesh.ops.smooth_vert(bm, verts=verts, factor=factor, use_axis_x=True, use_axis_y=True, use_axis_z=True)
+    bm.to_mesh(ob.data)
+    bm.free()
+
+
+def loosen_chest(ob, amount=0.03):
+    """A modest top hangs straight from the bust: below it, the front falls as a flat panel
+    (per 2 cm column, nothing sits behind the bust's most forward point), plus `amount` of ease."""
+    front = {}
+    for v in ob.data.vertices:
+        p = v.co
+        if p.y < -0.05 and 1.24 < p.z < 1.42 and abs(p.x) < 0.17:
+            col = round(p.x / 0.02)
+            front[col] = min(front.get(col, 0.0), p.y)
+    for v in ob.data.vertices:
+        p = v.co
+        if p.y < -0.05 and 1.02 < p.z < 1.42 and abs(p.x) < 0.17:
+            col = round(p.x / 0.02)
+            line = front.get(col)
+            if line is None:
+                continue
+            k = smooth(1.02, 1.10, p.z) * (1 - smooth(1.34, 1.42, p.z)) * (1 - smooth(0.11, 0.17, abs(p.x)))
+            target = line - amount
+            if p.y > target:
+                v.co.y = lerp(p.y, target, k)
+
+
+def scale_head(ob, s=HEAD_SCALE, pivot=HEAD_PIVOT, z_from=1.50):
+    for v in ob.data.vertices:
+        if v.co.z > z_from:
+            k = smooth(z_from, z_from + 0.05, v.co.z)
+            v.co = pivot + (v.co - pivot) * lerp(1.0, s, k)
+
+
+def is_hand(bone):
+    return bone.startswith("hand_") or bone.startswith(FINGERS)
+
+
+def is_head(bone):
+    return bone in ("Head", "neck_01")
+
+
+def is_leg(bone):
+    return bone.startswith(("thigh_", "calf_"))
+
+
+def is_foot(bone):
+    return bone.startswith(("foot_", "ball_"))
+
+
+def face_zone(p):
+    """The open face in the hijab: in front of the ears, between chin and hairline."""
+    return p.y < -0.025 and 1.575 < p.z < 1.735 and abs(p.x) < 0.076
+
+
+# ---------------------------------------------------------------- lofted pieces (skirts, drape, bands)
+
+
 def make_object(name, b, weight_fn, arm, part):
     me = bpy.data.meshes.new(name)
     me.from_pydata([tuple(v) for v in b.verts], [], b.faces)
@@ -784,7 +391,7 @@ def make_object(name, b, weight_fn, arm, part):
     bpy.context.scene.collection.objects.link(ob)
     groups = {}
     for i, v in enumerate(me.vertices):
-        ws = weight_fn(Vector(v.co), b.tags[i])
+        ws = weight_fn(Vector(v.co))
         ws = {k: x for k, x in ws.items() if x > 0.002}
         top = sorted(ws.items(), key=lambda kv: -kv[1])[:4]
         tot = sum(x for _, x in top) or 1.0
@@ -798,27 +405,324 @@ def make_object(name, b, weight_fn, arm, part):
     mod = ob.modifiers.new("Armature", "ARMATURE")
     mod.object = arm
     ob["part"] = part
-    mat = bpy.data.materials.new(name + "_m")
-    mat.diffuse_color = (*PART_COLORS[part], 1)
-    me.materials.append(mat)
     return ob
+
+
+# Hip ring of the body (z, rx, ry) measured on the UBC female; the skirts start just under the top's hem.
+SKIRT_FLARE = [(1.06, 0.182, 0.136), (0.95, 0.205, 0.150), (0.80, 0.225, 0.165), (0.52, 0.262, 0.195), (0.25, 0.292, 0.222), (0.05, 0.315, 0.242)]
+SKIRT_STRAIGHT = [(1.06, 0.182, 0.136), (0.95, 0.200, 0.146), (0.80, 0.214, 0.156), (0.52, 0.226, 0.168), (0.25, 0.236, 0.178), (0.06, 0.244, 0.186)]
+SKIRT_Y = 0.04  # the hips sit a little behind the origin
+
+
+def _at(sections, z, k):
+    s = sorted(sections)
+    for a, b in zip(s, s[1:]):
+        if a[0] <= z <= b[0]:
+            return lerp(a[k], b[k], (z - a[0]) / (b[0] - a[0]))
+    return s[0][k] if z < s[0][0] else s[-1][k]
+
+
+def piece_skirt(sections, hem_z=0.06):
+    b = Builder()
+    s = sorted(sections)
+    zs = []
+    for (z0, _, _), (z1, _, _) in zip(s, s[1:]):
+        zs += [lerp(z0, z1, t / 3) for t in range(3)]
+    zs.append(s[-1][0])
+    rings = [ellipse((0, SKIRT_Y, z), (1, 0, 0), (0, 1, 0), _at(sections, z, 1), _at(sections, z, 2), 28) for z in zs]
+    b.loft(rings)
+    return b, lambda p: leg_weights(p, _at(sections, p.z, 1), hem_z=hem_z, ry=_at(sections, p.z, 2))
+
+
+def piece_belt():
+    b = Builder()
+    rings = [ellipse((0, SKIRT_Y, z), (1, 0, 0), (0, 1, 0), 0.172, 0.128, 24) for z in (1.08, 1.125)]
+    b.loft(rings)
+    return b, lambda p: {"spine_01": 0.6, "pelvis": 0.4}
+
+
+def piece_cuffs():
+    """Contrast trim at the abaya sleeve ends (the wrist is at x = 0.64)."""
+    b = Builder()
+    for s in (1, -1):
+        u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
+        rr = [ellipse((s * x, 0.052, 1.418), u, v, r, r * 0.95, 14) for x, r in ((0.595, 0.058), (0.645, 0.066))]
+        b.loft(rr)
+    return b, lambda p: {side_bone("lowerarm_l", p.x): 0.8, side_bone("hand_l", p.x): 0.2}
+
+
+def piece_abaya_trim():
+    """Vertical front band of the abaya (collar to hem)."""
+    b = Builder()
+    pts = [(1.50, -0.085), (1.42, -0.145), (1.33, -0.168), (1.22, -0.160), (1.10, -0.140), (1.06, -0.135)]
+    pts += [(z, SKIRT_Y - _at(SKIRT_FLARE, z, 2) - 0.008) for z in (0.95, 0.80, 0.52, 0.25, 0.05)]
+    left, right = [], []
+    for z, y in pts:
+        left.append(b.add_ring([Vector((0.024, y, z))])[0])
+        right.append(b.add_ring([Vector((-0.024, y, z))])[0])
+    for k in range(len(pts) - 1):
+        b.faces.append((right[k + 1], left[k + 1], left[k], right[k]))
+    return b, lambda p: spine_weights(p.z) if p.z > 1.06 else leg_weights(p, _at(SKIRT_FLARE, p.z, 1), ry=_at(SKIRT_FLARE, p.z, 2))
+
+
+def piece_logo():
+    """Logo patch on the vest's left chest (uv 0..1 -> the brand logo texture)."""
+    b = Builder()
+    y = -0.19
+    x0, x1, z0, z1 = 0.035, 0.115, 1.318, 1.350
+    ids = b.add_ring([Vector((x0, y, z0)), Vector((x1, y + 0.014, z0)), Vector((x1, y + 0.014, z1)), Vector((x0, y, z1))])
+    b.uvs[ids[0]], b.uvs[ids[1]], b.uvs[ids[2]], b.uvs[ids[3]] = (0, 0), (1, 0), (1, 1), (0, 1)
+    b.faces.append((ids[0], ids[1], ids[2], ids[3]))
+    return b, lambda p: {"spine_03": 0.6, "spine_02": 0.4}
+
+
+def piece_hijab_band():
+    """Thin band along the face opening (the hijab's accent colour)."""
+    b = Builder()
+    c = Vector((0.0, 0.0, 1.655))
+    r = Vector((0.100, 0.118, 0.125))
+
+    def on_head(a, k):
+        # Point on the (enlarged) head ellipsoid at the face-opening edge, k scales the opening.
+        x = math.cos(a) * 0.080 * k
+        z = 1.655 + math.sin(a) * 0.084 * k
+        ex = (x / r.x) ** 2 + ((z - c.z) / r.z) ** 2
+        y = -r.y * math.sqrt(max(0.0, 1 - ex)) + 0.016
+        return Vector((x, y, z))
+
+    n = 28
+    rings = [[on_head(-math.pi / 2 + 2 * math.pi * i / n, k) for i in range(n)] for k in (0.98, 1.10)]
+    ids = [b.add_ring(rg) for rg in rings]
+    for i in range(n):
+        j = (i + 1) % n
+        b.faces.append((ids[0][i], ids[0][j], ids[1][j], ids[1][i]))
+    return b, lambda p: {"Head": 1.0}
+
+
+def drape(b, long):
+    """Chin wrap + drape over the shoulders, hanging longer at the front and back than over the arms."""
+    z_front, z_side = (0.98, 1.18) if long else (1.22, 1.32)
+    n = 32
+
+    def profile(z):
+        if z >= 1.50:
+            t = smooth(1.50, 1.575, z)
+            return lerp(0.094, 0.112, t), lerp(0.094, 0.126, t), lerp(0.03, 0.0, t)
+        if z >= 1.38:
+            t = (1.50 - z) / 0.12
+            k = math.sin(t * math.pi / 2)
+            return lerp(0.094, 0.215, k), lerp(0.094, 0.165, k), lerp(0.03, 0.035, t)
+        t = smooth(1.38, 1.15, z)
+        return lerp(0.215, 0.205, t), lerp(0.165, 0.160, t), 0.035
+
+    def hem(a):
+        return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
+
+    zs = [1.578 - i * 0.025 for i in range(int((1.578 - z_front) / 0.025) + 2)][::-1]
+    rings = []
+    for z in zs:
+        rx, ry, y0 = profile(max(z, z_front - 0.03))
+        rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, n, -math.pi / 2))
+    ids = b.loft(rings)
+    snapped = set()
+    for ring in ids:
+        for i, vi in enumerate(ring):
+            a = -math.pi / 2 + 2 * math.pi * i / n
+            hz = hem(a)
+            if b.verts[vi].z < hz:
+                rx, ry, y0 = profile(hz)
+                b.verts[vi] = Vector((math.cos(a) * rx, y0 + math.sin(a) * ry, hz))
+                snapped.add(vi)
+    b.faces = [f for f in b.faces if not all(i in snapped for i in f)]
+
+
+def drape_weights(p):
+    if p.z > 1.54:
+        return {"Head": 1.0}
+    if p.z > 1.46:
+        t = smooth(1.46, 1.54, p.z)
+        return {"Head": 0.5 * t, "neck_01": 0.5, "spine_03": 0.5 * (1 - t)}
+    out = spine_weights(min(p.z, 1.40)) if p.z < 1.30 else {"spine_03": 1.0}
+    sd = "l" if p.x >= 0 else "r"
+    k = smooth(0.12, 0.21, abs(p.x)) * 0.45
+    if k > 0:
+        out = {bn: wt * (1 - k) for bn, wt in out.items()}
+        out["clavicle_" + sd] = out.get("clavicle_" + sd, 0) + k * 0.5
+        out["upperarm_" + sd] = out.get("upperarm_" + sd, 0) + k * 0.5
+    return out
+
+
+# ---------------------------------------------------------------- build
+
+
+def join(a, b):
+    """Join object b into a (keeps both vertex groups), returns a."""
+    bpy.ops.object.select_all(action="DESELECT")
+    a.select_set(True)
+    b.select_set(True)
+    bpy.context.view_layer.objects.active = a
+    bpy.ops.object.join()
+    return a
+
+
+def open_front(ob):
+    """Open-front vest: drop the faces down the chest centre line."""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    dead = [f for f in bm.faces if all(v.co.y < -0.09 and abs(v.co.x) < 0.028 for v in f.verts)]
+    bmesh.ops.delete(bm, geom=dead, context="FACES")
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
+    bm.to_mesh(ob.data)
+    bm.free()
 
 
 def build():
     arm, clips = load_skeleton()
+    body_objs = adopt(import_gltf(BODY), arm)
+    body = next(o for o in body_objs if o.name.startswith("Superhero"))
+    eyes = next(o for o in body_objs if o.name.startswith("Eyes"))
+    brows = next(o for o in body_objs if o.name.startswith("Eyebrows"))
+    for o in body_objs:
+        if o not in (body, eyes, brows):
+            bpy.data.objects.remove(o, do_unlink=True)
+    for o in (body, eyes, brows):
+        clean_mesh(o)
     objs = {}
-    tris = {}
-    for name, (fn, part) in PIECES.items():
-        b, w = fn()
-        objs[name] = make_object(name, b, w, arm, part)
-        tris[name] = sum(len(p.vertices) - 2 for p in objs[name].data.polygons)
-    print("TRIS", tris)
+
+    # Head + neck and the hands keep the body's UVs (skin atlas).
+    objs["head"] = cut(body, lambda v, d: is_head(d), "head", "face")
+    objs["hands"] = cut(body, lambda v, d: is_hand(d), "hands", "skin")
+    eyes.name, brows.name = "eyes", "brows"
+    eyes["part"], brows["part"] = "eyes", "brows"
+    objs["eyes"], objs["brows"] = eyes, brows
+
+    # Garments: offset shells of the body (fit + skin weights for free).
+    chin_front = lambda p: p.y < -0.03 and p.z > 1.552
+    torso = lambda v, d: (not is_hand(d)) and (not is_foot(d)) and HIP_Z - 0.02 <= v.co.z <= COLLAR_Z and not chin_front(v.co)
+    edges = lambda p: p.z < HIP_Z + 0.01 or abs(p.x) > 0.62  # hem and cuffs stay put
+    objs["upper"] = cut(body, torso, "upper", "top")
+    relax(objs["upper"], 8, pin=edges)
+    loosen_chest(objs["upper"], 0.025)
+    offset(objs["upper"], 0.02)
+    objs["upper_abaya"] = cut(body, torso, "upper_abaya", "top")
+    relax(objs["upper_abaya"], 12, pin=edges)
+    loosen_chest(objs["upper_abaya"], 0.04)
+    offset(objs["upper_abaya"], lambda p: 0.03 + 0.025 * smooth(0.25, 0.6, abs(p.x)))
+    objs["vest"] = cut(body, lambda v, d: (not is_hand(d)) and abs(v.co.x) < 0.185 and HIP_Z + 0.02 <= v.co.z <= 1.47, "vest", "vest")
+    relax(objs["vest"], 8)
+    loosen_chest(objs["vest"], 0.03)
+    offset(objs["vest"], 0.032)
+    open_front(objs["vest"])
+    objs["tunic"] = cut(body, lambda v, d: (not is_hand(d)) and 0.66 <= v.co.z <= 1.06 and abs(v.co.x) < 0.24, "tunic", "top")
+    relax(objs["tunic"], 8)
+    offset(objs["tunic"], lambda p: 0.026 + 0.05 * smooth(1.06, 0.66, p.z))
+    legs = lambda v, d: (is_leg(d) or d == "pelvis") and v.co.z <= 1.03
+    objs["leggings"] = cut(body, legs, "leggings", "bottom")
+    relax(objs["leggings"], 4)
+    offset(objs["leggings"], 0.006)
+    objs["trousers"] = cut(body, legs, "trousers", "bottom")
+    relax(objs["trousers"], 10)
+    offset(objs["trousers"], lambda p: 0.022 + 0.05 * smooth(0.75, 0.12, p.z))
+    objs["shoes"] = cut(body, lambda v, d: is_foot(d) or (is_leg(d) and v.co.z < 0.1), "shoes", "shoes")
+    relax(objs["shoes"], 10)
+    offset(objs["shoes"], 0.012)
+
+    # Hijab: head shell with the face open, then the chin wrap and drape.
+    for name, long in (("hijab_classic", False), ("hijab_long", True)):
+        shell = cut(body, lambda v, d: d == "Head" and v.co.z >= 1.555 and not face_zone(v.co), name, "hijab")
+        offset(shell, 0.013)
+        scale_head(shell)
+        b = Builder()
+        drape(b, long)
+        d = make_object(name + "_drape", b, drape_weights, arm, "hijab")
+        objs[name] = join(shell, d)
+    objs["hijab_band"] = make_object("hijab_band", *piece_hijab_band(), arm, "accent")
+
+    # Hair: Quaternius styles, rigged to the Head bone.
+    for name, src in (("hair_long", "Hair_Long"), ("hair_bun", "Hair_Buns"), ("hair_ponytail", "Hair_Long"), ("hair_bob", "Hair_Buns")):
+        h = adopt(import_gltf(os.path.join(HAIR_DIR, src + ".gltf")), arm)
+        hair = next(o for o in h if o.type == "MESH")
+        for o in h:
+            if o is not hair:
+                bpy.data.objects.remove(o, do_unlink=True)
+        hair.name = name
+        hair["part"] = "hair"
+        clean_mesh(hair)
+        objs[name] = hair
+
+    # Lofted pieces.
+    objs["skirt_flare"] = make_object("skirt_flare", *piece_skirt(SKIRT_FLARE), arm, "bottom")
+    objs["skirt_straight"] = make_object("skirt_straight", *piece_skirt(SKIRT_STRAIGHT), arm, "bottom")
+    objs["belt"] = make_object("belt", *piece_belt(), arm, "trim")
+    objs["cuffs"] = make_object("cuffs", *piece_cuffs(), arm, "trim")
+    objs["abaya_trim"] = make_object("abaya_trim", *piece_abaya_trim(), arm, "trim")
+    objs["logo"] = make_object("logo", *piece_logo(), arm, "logo")
+
+    # Stylised head: everything attached to it grows about the neck.
+    for n in ("head", "eyes", "brows", "hair_long", "hair_bun", "hair_ponytail", "hair_bob", "hijab_band"):
+        scale_head(objs[n])
+    for o in objs.values():
+        for p in o.data.polygons:
+            p.use_smooth = True
+    # The body itself is never exported.
+    bpy.data.objects.remove(body, do_unlink=True)
+    tris = {n: sum(len(p.vertices) - 2 for p in o.data.polygons) for n, o in objs.items()}
+    print("TRIS", tris, "total", sum(tris.values()))
     return arm, clips, objs
 
 
+# ---------------------------------------------------------------- textures
+
+
+def save_image(img, path, size):
+    im = img.copy()
+    im.scale(size, size)
+    im.filepath_raw = path
+    im.file_format = "PNG"
+    im.save()
+    bpy.data.images.remove(im)
+
+
+def export_textures(objs):
+    os.makedirs(OUT_DIR, exist_ok=True)
+    imgs = {i.name.split(".png")[0]: i for i in bpy.data.images if i.size[0] > 0}
+    for key, out, size in (
+        ("T_Superhero_Female_Dark_BaseColor", "skin.png", 1024),
+        ("T_Superhero_Female_Normal", "skin_n.png", 1024),
+        ("T_Hair_2_BaseColor", "hair.png", 1024),
+        ("T_Hair_2_Normal", "hair_n.png", 1024),
+        ("T_Eye_Brown", "eyes.png", 256),
+    ):
+        img = imgs.get(key)
+        if img is None:
+            raise RuntimeError(f"texture missing: {key} (have {sorted(imgs)})")
+        save_image(img, os.path.join(OUT_DIR, out), size)
+    # Reference skin colour (the runtime tints the atlas by palette / reference): the cheeks' average.
+    img = imgs["T_Superhero_Female_Dark_BaseColor"]
+    head = objs["head"]
+    uv = head.data.uv_layers.active.data
+    w, h = img.size
+    px = img.pixels[:]
+    acc, n = [0.0, 0.0, 0.0], 0
+    for poly in head.data.polygons:
+        for li in poly.loop_indices:
+            v = head.data.vertices[head.data.loops[li].vertex_index].co
+            if v.y < -0.07 and 1.60 < v.z < 1.70 and 0.03 < abs(v.x) < 0.07:
+                u, vv = uv[li].uv
+                i = (int(vv * h) % h) * w + (int(u * w) % w)
+                acc[0] += px[i * 4]
+                acc[1] += px[i * 4 + 1]
+                acc[2] += px[i * 4 + 2]
+                n += 1
+    ref = [c / max(n, 1) for c in acc]
+    print("SKIN_REF", "#" + "".join(f"{int(c ** (1 / 2.2) * 255 + 0.5):02x}" for c in ref), n)
+
+
+# ---------------------------------------------------------------- export
+
+
 def export(arm, objs, clips):
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    # One NLA track per clip: the exporter writes each track as a glTF animation.
+    os.makedirs(OUT_DIR, exist_ok=True)
     ad = arm.animation_data or arm.animation_data_create()
     ad.action = None
     for t in list(ad.nla_tracks):
@@ -848,32 +752,71 @@ def export(arm, objs, clips):
         export_frame_step=2,
         export_apply=False,
         export_yup=True,
+        export_normals=True,
+        export_texcoords=True,
     )
     print("EXPORTED", OUT, os.path.getsize(OUT))
 
 
+# ---------------------------------------------------------------- preview
+
 LOOKS = {
-    "abaya_hijab": ["head", "hands", "upper_abaya", "skirt_flare", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
-    "skirt_long_hijab": ["head", "hands", "upper", "tunic", "skirt_straight", "leggings", "shoes", "hijab_long"],
-    "trousers_hair": ["head", "hands", "upper", "tunic", "trousers", "shoes", "hair_long"],
-    "staff_bun": ["head", "hands", "upper", "skirt_straight", "leggings", "shoes", "hair_bun", "vest", "logo"],
+    "abaya_hijab": ["head", "hands", "eyes", "brows", "upper_abaya", "skirt_flare", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
+    "skirt_long_hijab": ["head", "hands", "eyes", "brows", "upper", "tunic", "skirt_straight", "leggings", "shoes", "hijab_long"],
+    "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "tunic", "trousers", "shoes", "hair_long"],
+    "staff_bun": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hair_bun", "vest", "logo"],
 }
+PART_COLORS = {"skin": (0.91, 0.73, 0.58), "face": (0.91, 0.73, 0.58), "top": (0.93, 0.90, 0.86), "bottom": (0.36, 0.30, 0.38), "shoes": (0.22, 0.18, 0.2), "hijab": (0.79, 0.6, 0.68), "accent": (1, 1, 1), "hair": (0.2, 0.13, 0.1), "brows": (0.2, 0.13, 0.1), "eyes": (1, 1, 1), "vest": (0.36, 0.17, 0.51), "logo": (1, 1, 1), "trim": (0.78, 0.64, 0.43)}
+
+
+PREVIEW_TEX = {"face": "T_Superhero_Female_Dark_BaseColor", "skin": "T_Superhero_Female_Dark_BaseColor", "hair": "T_Hair_2_BaseColor", "brows": "T_Hair_2_BaseColor", "eyes": "T_Eye_Brown"}
+
+
+def preview_materials(objs):
+    """Garments get flat colours; the textured parts get a plain image material on the exported UVs."""
+    imgs = {i.name.split(".png")[0].split(".0")[0]: i for i in bpy.data.images if i.size[0] > 0}
+    for n, o in objs.items():
+        part = o["part"]
+        mat = bpy.data.materials.new(n + "_m")
+        mat.use_nodes = True
+        nt = mat.node_tree
+        bsdf = nt.nodes.get("Principled BSDF")
+        bsdf.inputs["Roughness"].default_value = 0.85
+        tex = PREVIEW_TEX.get(part)
+        if tex and tex in imgs:
+            node = nt.nodes.new("ShaderNodeTexImage")
+            node.image = imgs[tex]
+            nt.links.new(node.outputs["Color"], bsdf.inputs["Base Color"])
+        else:
+            bsdf.inputs["Base Color"].default_value = (*PART_COLORS[part], 1)
+        o.data.materials.clear()
+        o.data.materials.append(mat)
 
 
 def preview(arm, objs, out_dir, clips):
-    import bpy as _b
-    sc = _b.context.scene
-    sc.render.engine = "BLENDER_WORKBENCH"
-    sc.display.shading.light = "STUDIO"
-    sc.display.shading.color_type = "MATERIAL"
-    sc.display.shading.show_backface_culling = True
-    sc.render.resolution_x, sc.render.resolution_y = 520, 720
+    sc = bpy.context.scene
+    engines = {i.identifier for i in bpy.types.RenderSettings.bl_rna.properties["engine"].enum_items}
+    sc.render.engine = "BLENDER_EEVEE_NEXT" if "BLENDER_EEVEE_NEXT" in engines else "BLENDER_EEVEE"
+    sc.eevee.taa_render_samples = 24
+    sc.render.resolution_x, sc.render.resolution_y = 560, 760
     sc.render.film_transparent = False
-    cam = _b.data.objects.new("cam", _b.data.cameras.new("cam"))
+    world = bpy.data.worlds.new("w")
+    sc.world = world
+    world.use_nodes = True
+    bg = world.node_tree.nodes.get("Background")
+    bg.inputs[0].default_value = (0.92, 0.89, 0.86, 1)
+    bg.inputs[1].default_value = 1.0
+    sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN"))
+    sun.data.energy = 3.0
+    sun.rotation_euler = (math.radians(55), 0, math.radians(-35))
+    sc.collection.objects.link(sun)
+    cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
     sc.collection.objects.link(cam)
     sc.camera = cam
     cam.data.lens = 60
+    preview_materials(objs)
     arm.animation_data_create()
+    os.makedirs(out_dir, exist_ok=True)
     for look, pieces in LOOKS.items():
         for n, o in objs.items():
             o.hide_render = n not in pieces
@@ -881,77 +824,23 @@ def preview(arm, objs, out_dir, clips):
             arm.animation_data.action = clips[clip]
             sc.frame_set(frame)
             if view == "front":
-                cam.location, cam.rotation_euler = (0, -4.6, 1.0), (math.radians(90), 0, 0)
+                cam.location, cam.rotation_euler = (0, -4.4, 0.95), (math.radians(90), 0, 0)
             elif view == "side":
-                cam.location, cam.rotation_euler = (4.6, 0, 1.0), (math.radians(90), 0, math.radians(90))
+                cam.location, cam.rotation_euler = (4.4, 0, 0.95), (math.radians(90), 0, math.radians(90))
             elif view == "back":
-                cam.location, cam.rotation_euler = (-1.6, 2.6, 1.55), (math.radians(82), 0, math.radians(212))
+                cam.location, cam.rotation_euler = (-1.6, 2.6, 1.45), (math.radians(82), 0, math.radians(212))
             elif view == "face":
-                cam.location, cam.rotation_euler = (0.35, -1.25, 1.85), (math.radians(88), 0, math.radians(16))
+                cam.location, cam.rotation_euler = (0.3, -1.05, 1.68), (math.radians(88), 0, math.radians(16))
             else:
-                cam.location, cam.rotation_euler = (2.6, -3.8, 1.25), (math.radians(84), 0, math.radians(34))
+                cam.location, cam.rotation_euler = (2.6, -3.6, 1.15), (math.radians(84), 0, math.radians(34))
             sc.render.filepath = os.path.join(out_dir, f"{look}_{clip}_{view}.png")
-            _b.ops.render.render(write_still=True)
-
-
-WALK_SHEET = "--walksheet" in argv
-
-
-def walk_sheet(arm, objs, out_dir, clips):
-    """Side views across the walk cycle (legs vs skirt clipping check)."""
-    sc = bpy.context.scene
-    sc.render.engine = "BLENDER_WORKBENCH"
-    sc.display.shading.light = "STUDIO"
-    sc.display.shading.color_type = "MATERIAL"
-    sc.display.shading.show_backface_culling = True
-    sc.render.resolution_x, sc.render.resolution_y = 300, 520
-    cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
-    sc.collection.objects.link(cam)
-    sc.camera = cam
-    cam.data.lens = 60
-    arm.animation_data_create()
-    for look in ("abaya_hijab", "skirt_long_hijab", "trousers_hair"):
-        for n, o in objs.items():
-            o.hide_render = n not in LOOKS[look]
-        clip = "Walk_Loop" if look == "trousers_hair" else "Walk_Modest"
-        ac = clips[clip]
-        arm.animation_data.action = ac
-        f0, f1 = ac.frame_range
-        for k in range(4):
-            sc.frame_set(int(f0 + (f1 - f0) * k / 4))
-            drive_skirt(arm)
-            for view in ("side", "front"):
-                if view == "side":
-                    cam.location, cam.rotation_euler = (3.6, 0, 0.8), (math.radians(90), 0, math.radians(90))
-                else:
-                    cam.location, cam.rotation_euler = (1.2, -3.4, 0.7), (math.radians(90), 0, math.radians(19))
-                sc.render.filepath = os.path.join(out_dir, f"{look}_{k}_{view}.png")
-                bpy.ops.render.render(write_still=True)
-
-
-def drive_skirt(arm, front=0.85, back=0.75):
-    """Same rule as the runtime (Character.driveSkirt): panels follow the leading / trailing thigh."""
-    from mathutils import Matrix
-    bpy.context.view_layer.update()
-    pb = arm.pose.bones
-    ang = []
-    for sd in ("l", "r"):
-        d = pb["calf_" + sd].head - pb["thigh_" + sd].head
-        ang.append(math.atan2(-d.y, -d.z))  # forward is -Y, down is -Z
-    pivot = Vector((0.0, 0.012, SKIRT_PIVOT_Z))
-    for name, a in (("skirt_f", max(0.0, *ang) * front), ("skirt_b", min(0.0, *ang) * back)):
-        rest = arm.data.bones[name].matrix_local
-        rot = Matrix.Translation(pivot) @ Matrix.Rotation(a, 4, Vector((-1, 0, 0))) @ Matrix.Translation(-pivot)
-        pb[name].matrix = rot @ rest
-    bpy.context.view_layer.update()
+            bpy.ops.render.render(write_still=True)
 
 
 arm, clips, objs = build()
+export_textures(objs)
 export(arm, objs, clips)
 if PREVIEW:
     for t in list(arm.animation_data.nla_tracks):
         arm.animation_data.nla_tracks.remove(t)
-    if WALK_SHEET:
-        walk_sheet(arm, objs, PREVIEW, clips)
-    else:
-        preview(arm, objs, PREVIEW, clips)
+    preview(arm, objs, PREVIEW, clips)
