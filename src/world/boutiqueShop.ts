@@ -180,16 +180,18 @@ function walls(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan): void {
 }
 
 /**
- * Cream gypsum perimeter soffit (0.7 m wide, underside 0.3 m under the ceiling) along the
+ * Cream gypsum perimeter soffit (0.9 m wide, underside 0.3 m under the ceiling) along the
  * side and back walls, following the plan's light strips; a warm slot light on its inner
  * lower edge and bronze spot cans every ~2.2 m (same pattern as the corridor cans).
  */
 function slotLights(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan, SH: number): void {
   const h = o.front / 2
-  const SW = 0.7
+  const SW = 0.9
   const sb = SH - 0.3
   const wallX = h - 0.16
   const wallZ = -o.depth + 0.16
+  // Cream interior ceiling 5 mm under the mall slab (soffit tops stop 1 cm below it).
+  f.box(tintMat('#f1e9dc', 1, 0.95), 0, SH - 0.015, (-0.35 + wallZ) / 2, o.front - 0.32, 0.02, -0.35 - wallZ)
   for (const l of plan.lights) {
     const alongZ = Math.abs(l.z1 - l.z0) > Math.abs(l.x1 - l.x0)
     if (alongZ) {
@@ -200,7 +202,7 @@ function slotLights(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan, SH: numb
       if (zb < wallZ + 1) zb = wallZ
       const len = za - zb
       const zc = (za + zb) / 2
-      f.box(GYPSUM_SOFFIT, cx, SH - 0.15, zc, SW, 0.3, len)
+      f.box(GYPSUM_SOFFIT, cx, SH - 0.165, zc, SW, 0.27, len)
       f.box(MAT.lightWarm, sx * (wallX - SW) + -sx * 0.03, sb - 0.005, zc, 0.06, 0.02, len - 0.1)
       for (let z = za - 1.1; z > zb + 0.5; z -= 2.2) can(f, cx, sb, z)
     } else {
@@ -211,7 +213,7 @@ function slotLights(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan, SH: numb
       const len = xb - xa2
       const xc = (xa2 + xb) / 2
       const cz = wallZ + SW / 2
-      f.box(GYPSUM_SOFFIT, xc, SH - 0.15, cz, len, 0.3, SW)
+      f.box(GYPSUM_SOFFIT, xc, SH - 0.165, cz, len, 0.27, SW)
       f.box(MAT.lightWarm, xc, sb - 0.005, wallZ + SW + 0.03, len - 0.1, 0.02, 0.06)
       for (let x = xa2 + 1.1; x < xb - 0.5; x += 2.2) can(f, x, sb, cz)
     }
