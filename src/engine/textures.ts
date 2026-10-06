@@ -25,11 +25,17 @@ export function setMaxAnisotropy(renderer: WebGLRenderer, cap: number): void {
  * pixels are read back (getImageData) or that only hold a decoded photo: reading a
  * GPU-backed canvas waits for the GPU and stalled frames by 20–550 ms.
  */
-export function makeCanvas(w: number, h: number, readable = false): [HTMLCanvasElement, CanvasRenderingContext2D] {
+/**
+ * 2D canvas for texture content. CPU-backed by default (willReadFrequently): these
+ * canvases are drawn once and then uploaded, and uploading a GPU-backed canvas makes
+ * Chrome read it back first — measured at ~240 ms for one 576×1024 standee on the
+ * first shop visit. Pass `cpu = false` for canvases that are redrawn every frame.
+ */
+export function makeCanvas(w: number, h: number, cpu = true): [HTMLCanvasElement, CanvasRenderingContext2D] {
   const c = document.createElement('canvas')
   c.width = w
   c.height = h
-  return [c, c.getContext('2d', readable ? { willReadFrequently: true } : undefined)!]
+  return [c, c.getContext('2d', cpu ? { willReadFrequently: true } : undefined)!]
 }
 
 export function canvasTexture(c: HTMLCanvasElement, repeat?: [number, number]): CanvasTexture {

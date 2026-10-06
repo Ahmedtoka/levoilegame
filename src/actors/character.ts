@@ -447,65 +447,95 @@ export class Character implements Persona {
     this.root.updateMatrixWorld(true)
 
     const pos = kitGeo.attributes.position
+    const nrm = kitGeo.attributes.normal
     const part = kitGeo.attributes.part
     const skinIndex = kitGeo.attributes.skinIndex
     const skinWeight = kitGeo.attributes.skinWeight
     const n = pos.count
     const out = new Float32Array(n * 3)
+    const outN = new Float32Array(n * 3)
     const col = new Float32Array(n * 3)
     const swing = new Float32Array(n * 4)
-    const toRoot = _m.copy(this.root.matrixWorld).invert().multiply(mesh.matrixWorld)
     const pal = this.mat.userData.palette
-    const bones = mesh.skeleton.bones
+    const skeleton = mesh.skeleton
+    const bones = skeleton.bones
+    // Bone matrices of THIS pose (the renderer refreshes them only when it draws).
+    skeleton.update()
+    const bm = skeleton.boneMatrices
+    if (!bm) return null
+    // Per bone: vertex (bind space) -> root space, all in one matrix.
+    const toRoot = new Matrix4().copy(this.root.matrixWorld).invert().multiply(mesh.matrixWorld).multiply(mesh.bindMatrixInverse)
+    const boneM = bones.map((_, j) => new Matrix4().fromArray(bm, j * 16).premultiply(toRoot).multiply(mesh.bindMatrix).elements)
+    // Limb of each bone (for the LOD walk swing).
     const rootInv = new Matrix4().copy(this.root.matrixWorld).invert()
     const pivot = (name: string) => {
       const b = this.bones.get(name)
       return b ? b.getWorldPosition(new Vector3()).applyMatrix4(rootInv) : new Vector3()
     }
-    const hipL = pivot('thigh_l')
-    const hipR = pivot('thigh_r')
-    const shL = pivot('upperarm_l')
-    const shR = pivot('upperarm_r')
     const modest = this.look.outfit !== 'pants'
+    const limbs: { re: RegExp; p: Vector3; amp: number }[] = [
+      { re: /^(thigh|calf|foot|ball)_l/, p: pivot('thigh_l'), amp: modest ? 0.32 : 0.55 },
+      { re: /^(thigh|calf|foot|ball)_r/, p: pivot('thigh_r'), amp: modest ? -0.32 : -0.55 },
+      { re: /^(upperarm|lowerarm|hand)_l/, p: pivot('upperarm_l'), amp: -0.4 },
+      { re: /^(upperarm|lowerarm|hand)_r/, p: pivot('upperarm_r'), amp: 0.4 },
+    ]
+    const boneLimb = bones.map((b) => limbs.find((l) => l.re.test(b.name)) ?? null)
     for (let i = 0; i < n; i++) {
-      mesh.getVertexPosition(i, _v).applyMatrix4(toRoot)
-      out[i * 3] = _v.x
-      out[i * 3 + 1] = _v.y
-      out[i * 3 + 2] = _v.z
+      const x = pos.getX(i)
+      const y = pos.getY(i)
+      const z = pos.getZ(i)
+      const nx = nrm.getX(i)
+      const ny = nrm.getY(i)
+      const nz = nrm.getZ(i)
+      let px = 0
+      let py = 0
+      let pz = 0
+      let qx = 0
+      let qy = 0
+      let qz = 0
+      let best = 0
+      let bw = -1
+      for (let k = 0; k < 4; k++) {
+        const w = skinWeight.getComponent(i, k)
+        if (w <= 0) continue
+        const j = skinIndex.getComponent(i, k)
+        const e = boneM[j]
+        px += w * (e[0] * x + e[4] * y + e[8] * z + e[12])
+        py += w * (e[1] * x + e[5] * y + e[9] * z + e[13])
+        pz += w * (e[2] * x + e[6] * y + e[10] * z + e[14])
+        qx += w * (e[0] * nx + e[4] * ny + e[8] * nz)
+        qy += w * (e[1] * nx + e[5] * ny + e[9] * nz)
+        qz += w * (e[2] * nx + e[6] * ny + e[10] * nz)
+        if (w > bw) {
+          bw = w
+          best = j
+        }
+      }
+      out[i * 3] = px
+      out[i * 3 + 1] = py
+      out[i * 3 + 2] = pz
+      const ql = Math.hypot(qx, qy, qz) || 1
+      outN[i * 3] = qx / ql
+      outN[i * 3 + 1] = qy / ql
+      outN[i * 3 + 2] = qz / ql
       const c = pal[Math.round(part.getX(i))]
       col[i * 3] = c.r
       col[i * 3 + 1] = c.g
       col[i * 3 + 2] = c.b
-      // Dominant bone decides the limb.
-      let best = 0
-      let bw = -1
-      for (let k = 0; k < 4; k++) {
-        const wk = skinWeight.getComponent(i, k)
-        if (wk > bw) {
-          bw = wk
-          best = skinIndex.getComponent(i, k)
-        }
-      }
-      const name = bones[best]?.name ?? ''
-      let p: Vector3 | null = null
-      let amp = 0
-      if (/^(thigh|calf|foot|ball)_l/.test(name)) [p, amp] = [hipL, modest ? 0.32 : 0.55]
-      else if (/^(thigh|calf|foot|ball)_r/.test(name)) [p, amp] = [hipR, modest ? -0.32 : -0.55]
-      else if (/^(upperarm|lowerarm|hand)_l/.test(name)) [p, amp] = [shL, -0.4]
-      else if (/^(upperarm|lowerarm|hand)_r/.test(name)) [p, amp] = [shR, 0.4]
-      if (p) {
-        swing[i * 4] = p.x
-        swing[i * 4 + 1] = p.y
-        swing[i * 4 + 2] = p.z
-        swing[i * 4 + 3] = amp
+      const limb = boneLimb[best]
+      if (limb) {
+        swing[i * 4] = limb.p.x
+        swing[i * 4 + 1] = limb.p.y
+        swing[i * 4 + 2] = limb.p.z
+        swing[i * 4 + 3] = limb.amp
       }
     }
     const g = new BufferGeometry()
     g.setAttribute('position', new BufferAttribute(out, 3))
     g.setAttribute('color', new BufferAttribute(col, 3))
+    g.setAttribute('normal', new BufferAttribute(outN, 3))
     g.setAttribute('aSwing', new BufferAttribute(swing, 4))
     if (kitGeo.index) g.setIndex(kitGeo.index.clone())
-    g.computeVertexNormals()
     return g
   }
 

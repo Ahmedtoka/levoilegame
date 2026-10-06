@@ -489,9 +489,10 @@ export class Crowd {
         // taking over continues the same stride.
         this.blendWalk(a, dt)
         a.c.lookTarget = d < 4 ? _head.set(P.x, 1.6, P.z) : null
-        // Distant rigs animate at a third of the rate (but always on the frame they appear).
+        // Every drawn rig animates every frame: the skinned characters are cheap, and a
+        // third-rate update read as stutter. Rigs past 14 m update every other frame.
         a.animAcc += dt
-        if (fresh || d < 8 || this.frame % 3 === a.idx % 3) {
+        if (fresh || d < 14 || this.frame % 2 === a.idx % 2) {
           a.c.update(fresh ? dt : a.animAcc, time)
           a.animAcc = 0
         }

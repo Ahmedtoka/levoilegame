@@ -18,7 +18,7 @@ import { store } from '../state/store'
 import type { Interaction } from '../interact/interaction'
 import { BRONZE, CREAM, frameGeometry, HOVER_MAT } from './displays'
 import { imageMat } from './materials'
-import { BOUTIQUE_INK, boutiqueHeader } from './signage'
+import { BOUTIQUE_INK, drawSectionSign, SECTION_SIGN } from './signage'
 import { openProductLabel } from './shop'
 
 export interface PlacedProduct {
@@ -207,29 +207,29 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
   }
 }
 
-/** Section plaques above lightbox groups: one atlas, one mesh. */
+/** Section signs above lightbox groups: one atlas, one mesh (see drawSectionSign). */
 export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques: SectionPlaque[]): void {
   void ctx
-  const RH = 192
+  const RH = SECTION_SIGN.h
   const plaques = allPlaques.slice(0, Math.floor(4096 / RH))
   if (!plaques.length || typeof document === 'undefined') return
   const H = plaques.length * RH
-  const [c, g] = makeCanvas(1024, H)
-  plaques.forEach((pl, i) => {
-    const t = boutiqueHeader(pl.section)
-    g.drawImage(t.image as HTMLCanvasElement, 0, i * RH)
-    t.dispose()
-  })
+  const [c, g] = makeCanvas(SECTION_SIGN.w, H)
+  plaques.forEach((pl, i) => drawSectionSign(g, pl.section, i * RH))
   const tex = canvasTexture(c)
+  // Fixed size and the texture's own aspect (no stretched text), centred on the group.
+  const h = 0.42
+  const w = (h * SECTION_SIGN.w) / RH
   const quads = plaques.map((pl, i) => {
-    const h = 0.3
-    const q = new PlaneGeometry(pl.w, h)
+    // Narrow groups get a smaller sign, never a squeezed one.
+    const qw = Math.min(w, pl.w + 0.3)
+    const q = new PlaneGeometry(qw, (qw * RH) / SECTION_SIGN.w)
     const uv = q.getAttribute('uv')
     const v1 = 1 - (i * RH) / H
     const v0 = 1 - ((i + 1) * RH) / H
     for (let k = 0; k < uv.count; k++) uv.setY(k, v0 + uv.getY(k) * (v1 - v0))
     const [x, z] = at(pl, 0, 0.004)
-    return q.rotateY(pl.yaw).translate(x, LIGHTBOX.sectionY, z)
+    return q.rotateY(pl.yaw).translate(x, LIGHTBOX.sectionY + 0.04, z)
   })
   parent.add(new Mesh(mergeGeometries(quads), imageMat(tex)))
 }

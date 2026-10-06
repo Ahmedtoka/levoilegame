@@ -38,7 +38,7 @@ export function faceTexture(style: number, browColor: string, closed = false): T
   if (tex) return tex
   const c = document.createElement('canvas')
   c.width = c.height = SIZE
-  const g = c.getContext('2d')!
+  const g = c.getContext('2d', { willReadFrequently: true })!
   drawFace(g, f, browColor, closed)
   tex = new CanvasTexture(c)
   tex.colorSpace = SRGBColorSpace

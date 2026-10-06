@@ -179,6 +179,11 @@ export class Game implements GameBridge {
 
   // ---------------------------------------------------------- GameBridge
 
+  /** Upload every texture the scene already has (boot, behind the loading screen). */
+  warmTextures(): number {
+    return this.warmer.flush()
+  }
+
   /** Replace the player's character with a new look (the default until she designs hers). */
   setAvatar(data: AvatarData | null): void {
     const old = this.player.avatar

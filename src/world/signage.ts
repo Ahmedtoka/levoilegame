@@ -559,6 +559,35 @@ export function boutiqueHeader(section: Section): CanvasTexture {
 }
 
 /**
+ * Section sign over a group of lightboxes (drawn at `y` in a shared atlas):
+ * espresso panel, thin gold frame, large cream serif title and the Arabic in gold.
+ * High contrast on the cream boutique walls, readable from across the shop.
+ */
+export const SECTION_SIGN = { w: 1024, h: 232 }
+export function drawSectionSign(g: CanvasRenderingContext2D, section: Section, y: number): void {
+  const { w, h } = SECTION_SIGN
+  const grad = g.createLinearGradient(0, y, 0, y + h)
+  grad.addColorStop(0, '#3a2e33')
+  grad.addColorStop(1, '#241c20')
+  g.fillStyle = grad
+  g.fillRect(0, y, w, h)
+  g.strokeStyle = '#c8a46e'
+  g.lineWidth = 4
+  g.strokeRect(14, y + 14, w - 28, h - 28)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  g.fillStyle = '#f4ede3'
+  const title = spaced(section.title)
+  fitText(g, title, (px) => `600 ${px}px ${BRAND.fontLatin}`, 84, 900)
+  g.fillText(title, w / 2, y + 88)
+  g.fillStyle = '#d9b77a'
+  g.direction = 'rtl'
+  fitText(g, section.titleAr, (px) => `700 ${px}px ${BRAND.fontUi}`, 54, 860)
+  g.fillText(section.titleAr, w / 2, y + 166)
+  g.direction = 'ltr'
+}
+
+/**
  * Product card = photo + title + price in one texture (one draw call per card).
  * `image` is the loaded product photo (canvas or img).
  */

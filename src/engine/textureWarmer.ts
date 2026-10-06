@@ -76,6 +76,23 @@ export class TextureWarmer {
     }
   }
 
+  /**
+   * Upload everything uploadable now (boot, behind the loading screen): the mall's
+   * static canvases (section plaques, signage, screens) are big, ~20–40 ms each,
+   * and trickling them in one per frame made the first minutes of play stutter.
+   */
+  flush(): number {
+    for (const o of walkScene(this.root)) this.visit(o)
+    let n = 0
+    while (this.queue.length) {
+      const t = this.queue.shift()!
+      if (this.uploaded(t)) continue
+      this.renderer.initTexture(t)
+      n++
+    }
+    return n
+  }
+
   get pending(): number {
     return this.queue.length
   }

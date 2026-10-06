@@ -154,6 +154,10 @@ async function boot(): Promise<void> {
   // Pre-compile shaders so the first seconds don't hitch.
   game.player.applyCamera(engine.camera, colliders, 0)
   engine.renderer.compile(engine.scene, engine.camera)
+  // Textures too: uploading them here keeps the first minutes of play smooth.
+  progress(0.96)
+  await frame()
+  game.warmTextures()
   progress(1)
   game.start()
   await new Promise((r) => setTimeout(r, 250))
