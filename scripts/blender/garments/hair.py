@@ -60,8 +60,12 @@ class Skull:
     """Ray casts against the body's head so every hair surface fits the sculpt."""
 
     def __init__(self, body):
-        me = body.data
+        # ctx.body is the chibi cartoon body (no head): cast against the exported UBC head cut
+        # (unscaled, it exists before the plug-ins run) so the cap hugs the real skull.
+        head = bpy.data.objects.get("head")
+        me = (head or body).data
         self.bvh = BVHTree.FromPolygons([v.co.copy() for v in me.vertices], [tuple(p.vertices) for p in me.polygons])
+        print("PLUGIN hair.py: skull from", (head or body).name, len(me.vertices), "verts")
 
     def cast(self, origin, d, fallback=0.09):
         loc, _n, _i, dist = self.bvh.ray_cast(Vector(origin), Vector(d).normalized(), 0.6)
@@ -339,7 +343,7 @@ def _at(table, z, k):
 
 # Long hair: (z, rx, ry, cy, y_min) — a half-ellipse behind the head, flattening to a slab
 # behind the back (never through the shoulders).
-LONG_PROFILE = [(1.72, 0.092, 0.098, 0.03, -1), (1.62, 0.104, 0.112, 0.03, -1), (1.55, 0.110, 0.118, 0.032, -1), (1.47, 0.124, 0.122, 0.036, 0.152), (1.30, 0.136, 0.118, 0.04, 0.150), (1.12, 0.142, 0.114, 0.045, 0.138)]
+LONG_PROFILE = [(1.72, 0.092, 0.098, 0.03, -1), (1.62, 0.104, 0.112, 0.03, -1), (1.55, 0.112, 0.118, 0.032, -1), (1.47, 0.150, 0.122, 0.036, 0.152), (1.30, 0.166, 0.118, 0.04, 0.150), (1.20, 0.170, 0.114, 0.045, 0.138)]
 
 
 def long_radius(a, z, sk, t, edge):
@@ -361,7 +365,7 @@ def long_radius(a, z, sk, t, edge):
 def long_hem(a):
     """Long at the back, rising above the shoulders at the sides."""
     s = abs(a - 180.0)
-    return lerp(1.14, 1.50, smooth(38, 72, s))
+    return lerp(1.27, 1.50, smooth(38, 72, s))
 
 
 class BobRadius:
