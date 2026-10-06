@@ -5,6 +5,7 @@
 // framing, portal, wayfinding and the end wall.
 
 import { Group, Matrix4, Mesh, MeshBasicMaterial, PlaneGeometry, type Object3D } from 'three'
+import { frontWallSpans, sideBoundaries } from '../config/layoutMath'
 import { MALL, toWorld, type ShopLayout, type Wing } from '../config/layout'
 import type { Batcher } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
@@ -45,9 +46,9 @@ function toLocalZ(wing: Wing, p: { x: number; z: number }): number {
 export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[]): { feeds: ScreenFeed[] } {
   const B = MALL.corridorHalf
   const BH = MALL.boulevardHeight
-  const L = MALL.shopLen
+  const L = 12 // centre-line rhythm (m)
   const len = wing.len
-  const rows = Math.ceil([...wing.def.left, ...wing.def.right].length / 2)
+  const rows = Math.round(len / L)
   const base = new Matrix4().makeRotationY(wing.yaw).setPosition(wing.origin.x, 0, wing.origin.z)
   const wf = ctx.batcher.frame(base, ctx.colliders)
   const group = new Group()
@@ -120,26 +121,21 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   // wainscot only fills the two visible gaps: jamb → window post, window post → pilaster.
   const WH = 1.1
   const oak = oakVeneerMat()
-  const spans = (windowed: boolean): [number, number][] => (windowed ? [[3.04, 3.21], [5.49, 5.98]] : [[3.04, 5.98]])
-  shops.forEach((s, k) => {
-    const side = k % 2 === 0 ? -1 : 1
-    const z1 = -Math.floor(k / 2) * L
-    const z0 = z1 - L
-    const zc = (z0 + z1) / 2
-    const wx = side * B
+  for (const s of shops) {
+    const sd = s.side === 'L' ? -1 : 1
+    const zc = (s.z0 + s.z1) / 2
+    const wx = sd * B
+    const toZ = (x: number) => (s.side === 'L' ? zc - x : zc + x)
     if (s.kind === 'shop') {
-      for (const [a, b] of spans(!!s.brand))
-        for (const dir of [1, -1]) {
-          const wLen = b - a
-          const pz = zc + dir * (a + wLen / 2)
-          wf.custom(uvBox(0.03, WH, wLen, 1), oak, side * (B - 0.005), WH / 2, pz)
-          wf.box(MAT.brass, side * (B - 0.011), WH + 0.01, pz, 0.042, 0.04, wLen + 0.02)
-          // AO in front of the wainscot face (2 cm off the wall). Its 0.9 m wall band also
-          // takes over the old separate wall-shade quads (one draw call fewer).
-          aoFloorJunction(wx, pz - wLen / 2, wx, pz + wLen / 2, -side, 0, wf.base, 0.9, 0.5, 0.032)
-        }
-    } else if (s.kind === 'soon') aoFloorJunction(wx, z0, wx, z1, -side, 0, wf.base)
-  })
+      for (const [a, b] of frontWallSpans(s.front, s.openings)) {
+        const wLen = b - a
+        const pz = toZ((a + b) / 2)
+        wf.custom(uvBox(0.03, WH, wLen, 1), oak, sd * (B - 0.005), WH / 2, pz)
+        wf.box(MAT.brass, sd * (B - 0.011), WH + 0.01, pz, 0.042, 0.04, wLen + 0.02)
+        aoFloorJunction(wx, pz - wLen / 2, wx, pz + wLen / 2, -sd, 0, wf.base, 0.9, 0.5, 0.032)
+      }
+    } else if (s.kind === 'soon') aoFloorJunction(wx, s.z0, wx, s.z1, -sd, 0, wf.base)
+  }
   aoFloorJunction(-B, -len, B, -len, 0, 1, wf.base)
 
   // Marble-clad pilasters at every row boundary, both sides (0.8 m wide, 8 cm proud of the wall, 1 cm into it).
@@ -147,11 +143,8 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   const PH = BH - 0.15 // top inside the soffit
   const pGeo = uvBox(PD + 0.01, PH, 0.8, 1.6)
   const clad = marbleCladMat()
-  for (let r = 1; r < rows; r++)
-    for (const side of [-1, 1]) {
-      const z = -r * L
-      wf.custom(pGeo, clad, side * (B - PD / 2 + 0.005), PH / 2 - 0.01, z)
-    }
+  for (const side of ['L', 'R'] as const)
+    for (const z of sideBoundaries(wing.packed, side)) wf.custom(pGeo, clad, (side === 'L' ? -1 : 1) * (B - PD / 2 + 0.005), PH / 2 - 0.01, z)
 
   // ------------------------------------------------------- column screens
   // A marble screen totem on each pilaster's corridor face (row boundaries, both sides).
@@ -164,9 +157,9 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   const tx = B - (PD - 0.01 + SD) / 2
   const brandIds = shops.filter((s) => s.kind === 'shop' && s.brand).map((s) => s.brand!.id)
   const feed = new ScreenFeed({ kinds: ['flash', 'brand'], brandIds, portrait: true })
-  for (let r = 1; r < rows; r++)
-    for (const side of [-1, 1]) {
-      const z = -r * L
+  for (const sideId of ['L', 'R'] as const)
+    for (const z of sideBoundaries(wing.packed, sideId).filter((b) => Math.abs(b / L - Math.round(b / L)) < 0.01)) {
+      const side = sideId === 'L' ? -1 : 1
       wf.custom(tGeo, clad, side * tx, TH / 2, z)
       wf.box(MAT.brass, side * tx, 0.065, z, SD - PD + 0.04, 0.13, 0.86)
       wf.box(MAT.brass, side * tx, TH + 0.015, z, SD - PD + 0.04, 0.03, 0.86)
@@ -193,21 +186,22 @@ export function buildCorridor(ctx: CorridorCtx, wing: Wing, shops: ShopLayout[])
   for (const s of shops) {
     if (s.kind !== 'shop') continue
     const sf = ctx.batcher.frame(new Matrix4().makeRotationY(s.yaw).setPosition(s.entrance.x, 0, s.entrance.z), ctx.colliders)
-    // Bronze portal: slim jambs on plinth blocks, a deeper lintel, and a light line above it
-    // (the display windows beside the opening light their own posters).
-    for (const x of [-3.04, 3.04]) {
-      sf.box(MAT.brass, x, 1.95, 0.03, 0.12, 3.92, 0.08)
-      sf.box(MAT.brass, x, 0.11, 0.045, 0.18, 0.23, 0.11)
-    }
-    sf.box(MAT.brass, 0, 3.93, 0.035, 6.26, 0.14, 0.09)
-    sf.box(MAT.lightWarm, 0, 4.11, 0.05, 5.6, 0.05, 0.03)
-    if (s.brand) {
-      const mat = new Mesh(new PlaneGeometry(2.4, 1.2), imageMat(doormatTexture({ initials: s.brand.initials, color: s.brand.color, logo: s.brand.logo })))
-      const p = toWorld(s.entrance, s.yaw, 0, 0.75)
-      // Flat on the floor (X -90deg), then turned with the shop (Y first in YXZ order).
-      mat.rotation.set(-Math.PI / 2, s.yaw, 0, 'YXZ')
-      mat.position.set(p.x, 0.006, p.z)
-      ctx.root.add(mat)
+    for (const o of s.openings) {
+      const jx = o.half + 0.04
+      for (const x of [o.cx - jx, o.cx + jx]) {
+        sf.box(MAT.brass, x, 1.95, 0.03, 0.12, 3.92, 0.08)
+        sf.box(MAT.brass, x, 0.11, 0.045, 0.18, 0.23, 0.11)
+      }
+      sf.box(MAT.brass, o.cx, 3.93, 0.035, 2 * o.half + 0.26, 0.14, 0.09)
+      sf.box(MAT.lightWarm, o.cx, 4.11, 0.05, 2 * o.half - 0.4, 0.05, 0.03)
+      if (s.brand) {
+        const mw = Math.min(2.4, 2 * o.half - 0.6)
+        const mat = new Mesh(new PlaneGeometry(mw, mw / 2), imageMat(doormatTexture({ initials: s.brand.initials, color: s.brand.color, logo: s.brand.logo })))
+        const p = toWorld(s.entrance, s.yaw, o.cx, 0.75)
+        mat.rotation.set(-Math.PI / 2, s.yaw, 0, 'YXZ')
+        mat.position.set(p.x, 0.006, p.z)
+        ctx.root.add(mat)
+      }
     }
   }
 

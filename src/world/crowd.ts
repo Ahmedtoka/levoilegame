@@ -232,15 +232,18 @@ export class Crowd {
 
   private buildSpots(): void {
     for (const s of this.shops) {
-      const inner = this.local(s, 0, -1.6)
+      const { front, depth, openings } = s.layout
       const list: Pose[] = []
-      for (let lz = -2.4; lz >= -11.5; lz -= 1.5)
-        for (let lx = -4.5; lx <= 4.5; lx += 1.5) {
+      const hx = front / 2 - 1.5
+      for (let lz = -2.4; lz >= -(depth - 2.5); lz -= 1.5)
+        for (let lx = -hx; lx <= hx + 1e-6; lx += 1.5) {
           const p = this.local(s, lx, lz)
+          // Walk in through the nearest opening.
+          const door = openings.length ? openings.reduce((a, o) => (Math.abs(o.cx - lx) < Math.abs(a.cx - lx) ? o : a)) : null
+          const inner = this.local(s, door?.cx ?? 0, -1.6)
           if (this.blocked(p.x, p.z, 0.45) || !this.clearLine(inner, p, 0.3)) continue
-          // Face the nearest wall display (back or side walls), in shop-local terms.
-          const toBack = 14 + lz
-          const toSide = 6 - Math.abs(lx)
+          const toBack = depth + lz
+          const toSide = front / 2 - Math.abs(lx)
           const localYaw = toSide < toBack ? (lx < 0 ? -Math.PI / 2 : Math.PI / 2) : Math.PI
           list.push({ ...p, yaw: s.layout.yaw + localYaw })
         }

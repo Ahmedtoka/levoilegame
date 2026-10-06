@@ -16,8 +16,7 @@ import {
 } from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { MALL, rectContains, type MallLayout, type Rect, type Wing } from '../config/layout'
-import { TIERS } from '../config/layoutMath'
-import { brandById } from '../config/mall'
+import { depthAt, frontSolidSpans, NOOK_DEPTH, sideBoundaries } from '../config/layoutMath'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import type { QualitySettings } from '../engine/quality'
@@ -102,7 +101,7 @@ export async function buildShell(
   _kit: Kit | null = null, // kept for callers; the mall shell no longer places kit pieces
 ): Promise<ShellHandles> {
   const f = batcher.frame(new Matrix4(), colliders)
-  const { plazaHalf: W, plazaDepth: A, corridorHalf: B, shopDepth: SD, shopLen: SL, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
+  const { plazaHalf: W, plazaDepth: A, corridorHalf: B, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
   const root = new Group()
   root.name = 'shell'
   scene.add(root)
@@ -168,13 +167,19 @@ export async function buildShell(
 
   // ------------------------------------------------------------ plaza walls
   const D = MALL.doorHalf
+  /** How far a wing's first units reach out from its centre line (corridor half + deeper first unit). */
+  const reachOf = (wing: Wing | undefined) => {
+    if (!wing) return 0
+    const first = (side: 'L' | 'R') => wing.packed.units.find((u) => u.side === side && u.z1 === 0)?.depth ?? 0
+    return B + Math.max(first('L'), first('R'))
+  }
   // Entrance façade (z = 0) with the door opening.
   wall(f, -W - T, 0, -D, T, 0, AH)
   wall(f, D, 0, W + T, T, 0, AH)
   wall(f, -D, 0, D, T, 3.3, AH)
   // Plaza back wall beside the north wing mouth, and the corners the wings don't cover.
   const north = layout.wings.find((w) => w.id === 'north')
-  const northOuter = north ? B + SD : 0
+  const northOuter = reachOf(north)
   if (north) {
     wall(f, -W - T, -A - T, -northOuter, -A, 0, AH)
     wall(f, northOuter, -A - T, W + T, -A, 0, AH)
@@ -184,7 +189,7 @@ export async function buildShell(
     if (wing) {
       // The wing's shops cover the plaza side wall; close what's left above them.
       const zc = wing.origin.z
-      const reach = B + SD
+      const reach = reachOf(wing)
       if (zc + reach < 0) wall(f, side < 0 ? -W - T : W, zc + reach, side < 0 ? -W : W + T, 0, 0, AH)
       if (zc - reach > -A) wall(f, side < 0 ? -W - T : W, -A, side < 0 ? -W : W + T, zc - reach, 0, AH)
     } else wall(f, side < 0 ? -W - T : W, -A, side < 0 ? -W : W + T, 0, 0, AH)
@@ -246,58 +251,55 @@ export async function buildShell(
     // Header over the mouth starts at the top of the corridor ceiling (no coplanar overlap → no flicker).
     wall(wf, -B, -T, B, 0, BH + 0.2, AH)
 
-    // Back wall of each unit (units can be deeper, e.g. anchor stores) and the
-    // separators between units, as long as the deeper neighbour.
-    const depthOf = (k: number) => {
-      const slot = [...wing.def.left, ...wing.def.right][k]
-      return slot ? TIERS[brandById.get(slot)?.tier ?? 'standard'].depth : 0
-    }
-    const rows = Math.ceil([...wing.def.left, ...wing.def.right].length / 2)
-    for (const side of [-1, 1]) {
-      const first = side < 0 ? 0 : 1
-      for (let r = 0; r < rows; r++) {
-        const d = depthOf(first + r * 2)
+    // Back wall of each unit / nook, and the separators between neighbours, as long as
+    // the deeper neighbour (the one at the mouth is plaza height).
+    const units = layout.shops.filter((x) => x.wing === wing.id)
+    const back = (side: 'L' | 'R', z0: number, z1: number, d: number) =>
+      side === 'L' ? wall(wf, -B - d - T, z0, -B - d, z1, 0, SH) : wall(wf, B + d, z0, B + d + T, z1, 0, SH)
+    for (const u of units) back(u.side, u.z0, u.z1, u.depth)
+    for (const n of wing.nooks) back(n.side, n.z0, n.z1, NOOK_DEPTH)
+    for (const side of ['L', 'R'] as const) {
+      for (const z of [0, ...sideBoundaries(wing.packed, side), -len]) {
+        const d = Math.max(depthAt(wing.packed, side, z + 0.05), depthAt(wing.packed, side, z - 0.05))
         if (!d) continue
-        const z1 = -r * SL
-        if (side < 0) wall(wf, -B - d - T, z1 - SL, -B - d, z1, 0, SH)
-        else wall(wf, B + d, z1 - SL, B + d + T, z1, 0, SH)
-      }
-      for (let r = 0; r <= rows; r++) {
-        const d = Math.max(depthOf(first + (r - 1) * 2), depthOf(first + r * 2))
-        if (!d) continue
-        const z = -r * SL
-        // The one at the mouth is plaza height.
-        const h = r === 0 ? AH : SH
-        if (side < 0) wall(wf, -B - d, z - T / 2, -B, z + T / 2, 0, h)
+        const h = z === 0 ? AH : SH
+        if (side === 'L') wall(wf, -B - d, z - T / 2, -B, z + T / 2, 0, h)
         else wall(wf, B, z - T / 2, B + d, z + T / 2, 0, h)
       }
     }
 
-    // Shop fronts: an opening for shops, open for lounges, hoarding for Coming Soon.
-    const wingShops = layout.shops.filter((x) => x.wing === wing.id)
-    wingShops.forEach((s, k) => {
-      const side = k % 2 === 0 ? -1 : 1
-      const row = Math.floor(k / 2)
-      const z1 = -row * SL
-      const z0 = z1 - SL
-      const zc = (z0 + z1) / 2
-      const fx0 = side < 0 ? -B - T : B
-      const fx1 = side < 0 ? -B : B + T
-      if (s.kind === 'shop') {
-        wall(wf, fx0, z0, fx1, zc - 3, 0, BH)
-        wall(wf, fx0, zc + 3, fx1, z1, 0, BH)
-        wall(wf, fx0, zc - 3, fx1, zc + 3, 3.9, BH)
-      } else if (s.kind === 'soon') {
-        wall(wf, fx0, z0, fx1, z1, 0, BH, MAT.wallWarm)
-      } else {
-        for (const cz of [z0 + 0.3, z1 - 0.3]) {
-          column(wf, side * (B + 0.3), cz, BH)
-          const c = toWorldXZ(side * (B + 0.3), cz)
-          addContactShadow(c.x, c.z, 1.6, 1.6)
-        }
-        wall(wf, fx0, z0 + 0.4, fx1, z1 - 0.4, 3.9, BH)
+    // Shop fronts: openings for shops, open for lounges and nooks, closed hoarding for Coming Soon.
+    // Unit-local x on the front maps to wing z: left units run away from the plaza (+x -> -z).
+    const front = (side: 'L' | 'R', zc: number, a: number, b: number, y0: number, y1: number, mat = MAT.wall) => {
+      const [z0, z1] = side === 'L' ? [zc - b, zc - a] : [zc + a, zc + b]
+      wall(wf, side === 'L' ? -B - T : B, z0, side === 'L' ? -B : B + T, z1, y0, y1, mat)
+    }
+    const openFront = (side: 'L' | 'R', z0: number, z1: number) => {
+      const sd = side === 'L' ? -1 : 1
+      for (const cz of [z0 + 0.3, z1 - 0.3]) {
+        column(wf, sd * (B + 0.3), cz, BH)
+        const c = toWorldXZ(sd * (B + 0.3), cz)
+        addContactShadow(c.x, c.z, 1.6, 1.6)
       }
-    })
+      wall(wf, side === 'L' ? -B - T : B, z0 + 0.4, side === 'L' ? -B : B + T, z1 - 0.4, 3.9, BH)
+    }
+    for (const s of units) {
+      const zc = (s.z0 + s.z1) / 2
+      if (s.kind === 'shop') {
+        for (const [a, b] of frontSolidSpans(s.front, s.openings)) front(s.side, zc, a, b, 0, BH)
+        for (const o of s.openings) front(s.side, zc, o.cx - o.half, o.cx + o.half, 3.9, BH)
+      } else if (s.kind === 'soon') front(s.side, zc, -s.front / 2, s.front / 2, 0, BH, MAT.wallWarm)
+      else openFront(s.side, s.z0, s.z1)
+    }
+    for (const n of wing.nooks) {
+      openFront(n.side, n.z0, n.z1)
+      // A bench along the back and a planter at each end.
+      const sd = n.side === 'L' ? -1 : 1
+      const bx = sd * (B + NOOK_DEPTH - 0.55)
+      const zc = (n.z0 + n.z1) / 2
+      bench(wf, bx, zc, Math.min(4.8, n.z1 - n.z0 - 3.2), Math.PI / 2)
+      for (const pz of [n.z1 - 1.1, n.z0 + 1.1]) premiumPlanter(wf, sd * (B + NOOK_DEPTH - 0.9), pz, 70 + Math.round(-pz), 1.05)
+    }
 
     // Corridor ceiling: warm gypsum (the tray soffits, slot lights and cans come from corridor.ts).
     wf.box(GYPSUM, 0, BH + 0.1, -len / 2, 2 * B, 0.2, len)
@@ -387,7 +389,7 @@ export async function buildShell(
   /** Fake AO along the plaza perimeter (wall/floor and wall/ceiling). */
   function plazaAO(): void {
     const sep = T / 2 // the wing mouths' separator walls stand 15 cm proud of the plaza line
-    const nOut = B + SD
+    const nOut = reachOf(layout.wings.find((w) => w.id === 'north'))
     // Entrance façade (inner face z = 0), door opening left clear on the floor.
     aoFloorJunction(-W, 0, -D, 0, 0, -1)
     aoFloorJunction(D, 0, W, 0, 0, -1)
@@ -450,18 +452,27 @@ export async function buildShell(
       SH,
     )
     const along = x1 - x0 > z1 - z0
-    for (let i = 0; i < 3; i++)
-      for (let j = 0; j < 2; j++) {
-        const u = (i + 0.5) / 3
-        const v = (j + 0.5) / 2
-        const x = x0 + (x1 - x0) * (along ? u : v)
-        const z = z0 + (z1 - z0) * (along ? v : u)
-        f.box(MAT.lightPanel, x, SH - 0.02, z, 1.3, 0.04, 1.3)
-      }
+    if (s.kind !== 'shop')
+      for (let i = 0; i < 3; i++)
+        for (let j = 0; j < 2; j++) {
+          const u = (i + 0.5) / 3
+          const v = (j + 0.5) / 2
+          const x = x0 + (x1 - x0) * (along ? u : v)
+          const z = z0 + (z1 - z0) * (along ? v : u)
+          f.box(MAT.lightPanel, x, SH - 0.02, z, 1.3, 0.04, 1.3)
+        }
     const stone = storeTexture('/textures/marble.jpg', [(x1 - x0) / 4, (z1 - z0) / 4])
     const floorColor = s.kind === 'soon' ? '#e6dccd' : '#f6efe4'
     root.add(floorPlane(s.rect, new MeshStandardMaterial({ map: stone, color: floorColor, roughness: 0.35 }), 0.002))
   }
+
+  for (const w of layout.wings)
+    for (const n of w.nooks) {
+      const { x0, x1, z0, z1 } = n.rect
+      slab(x0 - 0.02, z0 - 0.02, x1 + 0.02, z1 + 0.02, SH)
+      const stone = storeTexture('/textures/marble.jpg', [(x1 - x0) / 4, (z1 - z0) / 4])
+      root.add(floorPlane(n.rect, new MeshStandardMaterial({ map: stone, color: '#f6efe4', roughness: 0.35 }), 0.002))
+    }
 
   // ------------------------------------------------------- plaza features
   for (const [x, z] of [[-8, -6], [8, -6], [-8, -28], [8, -28]] as const) {
