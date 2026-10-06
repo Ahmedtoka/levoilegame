@@ -31,3 +31,15 @@ Same machine and viewport for before and after. Absolute ms are pessimistic: `gl
 | medium | axis | 9.3 | 72 | 238 k | 368 |
 
 The shop-interior cost no longer grows with product count. Flagships are at or below the baseline's draw calls, and the compact Axis drops from 163 to ~70 calls.
+
+## Final (after Task 8, commit 921024b): mobile viewport 375×812, quality low
+
+| Target | ms/frame | Draw calls | Triangles | Textures (cumulative) |
+|---|---|---|---|---|
+| pistage (flagship) | 12.9 | 77 | 317 k | 185 |
+| axis (compact) | 14.8 | 57 | 314 k | 189 |
+
+Baseline at low: pistage 15.4 ms / 125 calls, axis 22.0 ms / 163 calls.
+
+- **Acceptance:** met. Frame time is at or below the baseline, and flagship draw calls are well under baseline + 30.
+- **Load time:** interiors take longer to load in the hidden, unthrottled test pane. `imagePacer` falls back to a 100 ms timer when `requestAnimationFrame` doesn't run, so each lightbox atlas draws a few cells per 100 ms. In a visible tab the pacer runs every frame.
