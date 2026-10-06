@@ -384,3 +384,87 @@
 .kb-open .drawer.chat .quick {
   display: none;
 }
+
+/* ------------------------------------- landscape phones: sheets and chat */
+@media (max-height: 520px) {
+  /* Product sheet: photo fills the left column at the sheet's height; only the details scroll. */
+  .touch .veil.sheet .card:has(> .product) {
+    overflow: hidden;
+  }
+
+  .touch .product {
+    grid-template-columns: minmax(220px, 34%) 1fr;
+    height: calc(100vh - 16px);
+  }
+
+  .touch .gallery {
+    height: 100%;
+  }
+
+  .touch .gallery .main {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .touch .gallery .thumbs {
+    position: absolute;
+    inset-inline-start: 10px;
+    bottom: 10px;
+  }
+
+  .touch .product .info {
+    overflow: auto;
+    padding: 14px 20px 16px;
+  }
+
+  .touch .product .info h2.display {
+    font-size: 20px;
+    margin: 2px 0 4px;
+  }
+
+  .touch .product .info h3 {
+    margin: 10px 0 6px;
+  }
+
+  /* Chat: a wider drawer, slim header; with the keyboard up only the messages and the input remain. */
+  .touch .drawer.chat {
+    width: min(520px, 62vw);
+  }
+
+  .touch .drawer header {
+    padding: 10px 16px 8px;
+  }
+
+  .touch .drawer header h2 {
+    font-size: 16px;
+  }
+
+  .touch .drawer.chat .msgs {
+    padding: 10px 14px;
+    gap: 6px;
+  }
+
+  .touch .drawer.chat .compose {
+    padding: 8px 14px 10px;
+  }
+
+  .kb-open .drawer header {
+    display: none;
+  }
+}
+
+@media (max-height: 520px) {
+  /* The add-to-cart row stays pinned at the bottom of the details column. */
+  .touch .product .add-row {
+    position: sticky;
+    bottom: -16px;
+    margin: 10px -20px -16px;
+    padding: 10px 20px 14px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+
+  .touch .product .info > div[style] {
+    display: none;
+  }
+}
