@@ -3,7 +3,7 @@
 // part also lays the canvas-drawn face over the skin, the logo part the brand logo.
 // One shader program for every character (only the uniforms differ).
 
-import { CanvasTexture, Color, MeshStandardMaterial, type Texture } from 'three'
+import { CanvasTexture, Color, DoubleSide, MeshStandardMaterial, type Texture } from 'three'
 import { PARTS, type Part } from './pieces'
 
 export interface AvatarMaterial extends MeshStandardMaterial {
@@ -24,7 +24,8 @@ export function blankTexture(): Texture {
 
 export function avatarMaterial(colors: Record<Part, string>, face: Texture, logo: Texture): AvatarMaterial {
   const palette = PARTS.map((p) => new Color(colors[p]))
-  const mat = new MeshStandardMaterial({ roughness: 0.84, metalness: 0 }) as AvatarMaterial
+  // Double-sided: garments are open shells (hems, sleeves, hijab drape) seen from below too.
+  const mat = new MeshStandardMaterial({ roughness: 0.84, metalness: 0, side: DoubleSide }) as AvatarMaterial
   mat.userData.palette = palette
   mat.defines = { USE_UV: '' }
   mat.onBeforeCompile = (shader) => {

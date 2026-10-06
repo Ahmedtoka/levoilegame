@@ -113,10 +113,12 @@ TORSO = [
     (1.12, 0.124, 0.088, 0.010),
     (1.25, 0.136, 0.094, 0.004),
     (1.35, 0.150, 0.102, 0.000),
-    (1.42, 0.156, 0.094, 0.010),
-    (1.47, 0.112, 0.078, 0.012),
-    (1.505, 0.060, 0.054, 0.012),
-    (1.62, 0.052, 0.050, 0.004),
+    (1.40, 0.156, 0.098, 0.006),
+    (1.44, 0.150, 0.090, 0.010),
+    (1.47, 0.126, 0.080, 0.012),
+    (1.49, 0.096, 0.068, 0.012),
+    (1.505, 0.064, 0.056, 0.012),
+    (1.62, 0.054, 0.051, 0.004),
 ]
 SEG = 16
 
@@ -196,8 +198,16 @@ def piece_hands():
     for s in (1, -1):
         ax = Vector((s, 0, 0))
         u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
-        secs = [(WRIST_X - 0.01, 0.034, 0.027), (WRIST_X + 0.04, 0.048, 0.024), (WRIST_X + 0.095, 0.049, 0.019), (WRIST_X + 0.132, 0.034, 0.014)]
-        rings = [ellipse((s * x, ARM_Y - 0.004, ARM_Z - 0.004), u, v, ry, rz, 10) for x, ry, rz in secs]
+        # Soft mitten: round wrist, broad palm, rounded fingertips.
+        secs = [
+            (WRIST_X - 0.012, 0.033, 0.028),
+            (WRIST_X + 0.025, 0.046, 0.030),
+            (WRIST_X + 0.06, 0.052, 0.028),
+            (WRIST_X + 0.09, 0.050, 0.024),
+            (WRIST_X + 0.112, 0.040, 0.019),
+            (WRIST_X + 0.124, 0.024, 0.012),
+        ]
+        rings = [ellipse((s * x, ARM_Y - 0.004, ARM_Z - 0.004), u, v, ry, rz, 12) for x, ry, rz in secs]
         b.loft(rings, cap_start=True, cap_end=True)
         # Thumb, angled forward (-Y) and down.
         base = Vector((s * (WRIST_X + 0.03), ARM_Y - 0.035, ARM_Z - 0.008))
@@ -206,7 +216,7 @@ def piece_hands():
         vv = d.cross(uu).normalized() * -1
         if uu.cross(vv).dot(d) < 0:
             vv = -vv
-        rings = [ellipse(base + d * t, uu, vv, r, r * 0.85, 8) for t, r in ((0.0, 0.016), (0.03, 0.014), (0.05, 0.010))]
+        rings = [ellipse(base + d * t, uu, vv, r, r * 0.9, 8) for t, r in ((0.0, 0.019), (0.025, 0.017), (0.045, 0.013), (0.055, 0.007))]
         b.loft(rings, cap_end=True)
     return b, lambda p, tag=None: {side_bone("hand_l", p.x): 1.0}
 
@@ -218,7 +228,7 @@ def piece_upper(cuff=0.0):
     for z, rx, ry, y0 in TORSO:
         rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, SEG))
     b.loft(rings)
-    sleeve = [(0.11, 0.064), (0.20, 0.064), (0.32, 0.057), (ELBOW_X, 0.050), (0.60, 0.046), (WRIST_X - 0.04, 0.046 + cuff * 0.5), (WRIST_X + 0.008, 0.050 + cuff)]
+    sleeve = [(0.10, 0.066), (0.20, 0.064), (0.32, 0.057), (ELBOW_X, 0.050), (0.60, 0.046), (WRIST_X - 0.04, 0.046 + cuff * 0.5), (WRIST_X + 0.008, 0.050 + cuff)]
     b.tag = "sleeve"
     for s in (1, -1):
         u, v = Vector((0, 1, 0)), Vector((0, 0, 1)) * s
@@ -280,7 +290,7 @@ def _rx_at(sections, z):
 
 SKIRT_FLARE = [(1.13, 0.130, 0.094), (1.02, 0.160, 0.118), (0.82, 0.196, 0.150), (0.52, 0.240, 0.185), (0.25, 0.276, 0.212), (0.05, 0.300, 0.232)]
 SKIRT_STRAIGHT = [(1.13, 0.130, 0.094), (1.02, 0.156, 0.114), (0.82, 0.184, 0.140), (0.52, 0.214, 0.164), (0.25, 0.232, 0.178), (0.06, 0.246, 0.190)]
-TUNIC = [(0.97, 0.168, 0.124), (0.86, 0.198, 0.148), (0.74, 0.222, 0.168), (0.64, 0.236, 0.178)]
+TUNIC = [(0.97, 0.178, 0.128), (0.86, 0.198, 0.148), (0.74, 0.222, 0.168), (0.64, 0.236, 0.178)]
 
 
 def piece_tunic():
@@ -352,20 +362,44 @@ def piece_hijab(long=False):
     # Face opening: vertices inside the face ellipse are pushed out onto it (a smooth
     # edge), faces left fully on the edge are dropped.
     open_face(b, sc)
-    # Chin wrap + drape: rings from the lower head down over the shoulders.
-    secs = [
-        (1.665, 0.150, 0.140, -0.004),
-        (1.590, 0.122, 0.116, -0.006),
-        (1.505, 0.150, 0.120, 0.004),
-        (1.460, 0.222, 0.148, 0.010),
-        (1.400, 0.246, 0.160, 0.010),
-        (1.320, 0.236, 0.158, 0.008),
-    ]
-    if long:
-        secs += [(1.20, 0.232, 0.150, 0.006), (1.06, 0.236, 0.150, 0.006)]
-    drape = [ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, 26, -math.pi / 2) for z, rx, ry, y0 in sorted(secs)]
-    b.loft(drape)
-    bottom = min(s[0] for s in secs)
+    # Chin wrap + drape: rounded over the shoulders, hanging longer at the front
+    # and back than over the arms (a curved hem, like real cloth).
+    z_front, z_side = (1.02, 1.22) if long else (1.27, 1.37)
+    n = 30
+
+    def profile(z):
+        """rx, ry, y-offset of the drape at height z."""
+        if z >= 1.59:
+            t = smooth(1.59, 1.665, z)
+            return lerp(0.124, 0.150, t), lerp(0.118, 0.140, t), -0.005
+        if z >= 1.44:
+            # Neck -> shoulder: a rounded slope (ease-out), not a step.
+            t = (1.59 - z) / 0.15
+            k = math.sin(t * math.pi / 2)
+            return lerp(0.124, 0.248, k), lerp(0.118, 0.158, k), lerp(-0.005, 0.010, t)
+        t = smooth(1.44, 1.20, z)
+        return lerp(0.248, 0.232, t), lerp(0.158, 0.150, t), 0.010
+
+    def hem(a):
+        return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
+
+    # Bottom to top: rings must progress along +Z for outward-facing normals.
+    zs = [1.665 - i * 0.025 for i in range(int((1.665 - z_front) / 0.025) + 2)][::-1]
+    rings = []
+    for z in zs:
+        rx, ry, y0 = profile(max(z, z_front - 0.03))
+        rings.append(ellipse((0, y0, z), (1, 0, 0), (0, 1, 0), rx, ry, n, -math.pi / 2))
+    ids = b.loft(rings)
+    snapped = set()
+    for k, ring in enumerate(ids):
+        for i, vi in enumerate(ring):
+            a = -math.pi / 2 + 2 * math.pi * i / n
+            hz = hem(a)
+            if b.verts[vi].z < hz:
+                rx, ry, y0 = profile(hz)
+                b.verts[vi] = Vector((math.cos(a) * rx, y0 + math.sin(a) * ry, hz))
+                snapped.add(vi)
+    b.faces = [f for f in b.faces if not all(i in snapped for i in f)]
 
     def w(p, tag=None):
         if p.z > 1.60:
@@ -577,7 +611,7 @@ PIECES = {
     "skirt_straight": (lambda: piece_skirt(SKIRT_STRAIGHT), "bottom"),
     "tunic": (piece_tunic, "top"),
     "leggings": (lambda: piece_legs(0.05, 0.044, z_top=0.36), "bottom"),
-    "trousers": (lambda: piece_legs(0.088, 0.115, z_top=0.97, z_bot=0.05, seg=12), "bottom"),
+    "trousers": (lambda: piece_legs(0.074, 0.112, z_top=0.97, z_bot=0.05, seg=12), "bottom"),
     "shoes": (piece_shoes, "shoes"),
     "hijab_classic": (lambda: piece_hijab(False), "hijab"),
     "hijab_long": (lambda: piece_hijab(True), "hijab"),
