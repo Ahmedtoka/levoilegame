@@ -29,7 +29,7 @@ const SOCIAL: Record<string, BrandSocial> = {
   },
   // The mall itself: the plaza's entrance totem and LED screen.
   [MALL_REELS]: {
-    reels: ['https://www.instagram.com/reel/DWj9FzsjSq7/'],
+    reels: ['https://www.instagram.com/reel/Dd9bQaytHS8/?utm_source=ig_web_copy_link&stkn=NTc4MTIwNjQ2YQ=='],
   },
 }
 
