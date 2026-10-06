@@ -190,6 +190,7 @@ normal = normalize(tbn * lvMapN);`,
 if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) roughnessFactor = 0.55;
 else if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) roughnessFactor = 0.78;
 else if (lvI == ${PARTS.indexOf('eyes')}) roughnessFactor = 0.25;
+else if (lvI == ${PARTS.indexOf('glasses')}) roughnessFactor = 0.3;
 else roughnessFactor = 0.96;`,
       )
       // Bitmoji-like shading: one soft wrapped light (the sun) with a lifted shadow side, blended over

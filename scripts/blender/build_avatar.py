@@ -686,6 +686,50 @@ def piece_logo():
     return b, lambda p: {"spine_03": 0.6, "spine_02": 0.4}
 
 
+def tube(b, path, radius, n=8, closed=False):
+    """Loft a thin tube along a polyline (metres)."""
+    pts = [Vector(p) for p in path]
+    if closed:
+        pts = pts + [pts[0]]
+    rings = []
+    for i, c in enumerate(pts):
+        d = (pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized()
+        u = d.cross(Vector((0, 0, 1)))
+        if u.length < 1e-4:
+            u = d.cross(Vector((1, 0, 0)))
+        u.normalize()
+        v = d.cross(u).normalized()
+        rings.append(ellipse(c, u, v, radius, radius, n))
+    b.loft(rings, cap_start=not closed, cap_end=not closed)
+
+
+def piece_glasses(style):
+    """Glasses in front of the eyes (head space after HEAD_SCALE): two rims, a bridge, two temples to the ears."""
+    b = Builder()
+    cx, cz, y = 0.037, 1.672, -0.108
+    r = 0.0024
+    for sgn in (1, -1):
+        rim = []
+        for i in range(28):
+            a = 2 * math.pi * i / 28
+            if style == "round":
+                rx, rz = 0.027, 0.025
+                rim.append((sgn * cx + math.cos(a) * rx, y, cz + math.sin(a) * rz))
+            else:
+                # Rounded square: superellipse.
+                rx, rz = 0.03, 0.023
+                c, s_ = math.cos(a), math.sin(a)
+                k = 0.6
+                rim.append((sgn * cx + math.copysign(abs(c) ** k, c) * rx, y, cz + math.copysign(abs(s_) ** k, s_) * rz))
+        tube(b, rim, r, closed=True)
+        # Temple: from the rim's outer edge back along the head to above the ear.
+        ox = sgn * (cx + (0.027 if style == "round" else 0.03))
+        tube(b, [(ox, y, cz + 0.004), (sgn * 0.086, -0.07, cz + 0.006), (sgn * 0.098, 0.0, cz + 0.004), (sgn * 0.1, 0.035, cz - 0.004)], r * 0.9)
+    # Bridge.
+    tube(b, [(-(cx - (0.027 if style == "round" else 0.03)), y, cz + 0.006), (0, y - 0.002, cz + 0.01), (cx - (0.027 if style == "round" else 0.03), y, cz + 0.006)], r)
+    return b, lambda p: {"Head": 1.0}
+
+
 def piece_hijab_band():
     """Thin band along the face opening (the hijab's accent colour)."""
     b = Builder()
@@ -837,6 +881,8 @@ def build():
         d = make_object(name + "_drape", b, drape_weights, arm, "hijab")
         objs[name] = join(shell, d)
     objs["hijab_band"] = make_object("hijab_band", *piece_hijab_band(), arm, "accent")
+    objs["glasses_round"] = make_object("glasses_round", *piece_glasses("round"), arm, "glasses")
+    objs["glasses_square"] = make_object("glasses_square", *piece_glasses("square"), arm, "glasses")
 
     # Hair: Quaternius styles, rigged to the Head bone.
     for name, src in (("hair_long", "Hair_Long"), ("hair_bun", "Hair_Buns"), ("hair_ponytail", "Hair_Long"), ("hair_bob", "Hair_Buns")):
@@ -1018,10 +1064,10 @@ def export(arm, objs, clips):
 LOOKS = {
     "abaya_hijab": ["head", "hands", "eyes", "brows", "upper_abaya", "skirt_flare", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
     "skirt_long_hijab": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hijab_long"],
-    "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "trousers", "shoes", "hair_long"],
+    "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "trousers", "shoes", "hair_long", "glasses_round"],
     "staff_bun": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hair_bun", "vest", "logo"],
 }
-PART_COLORS = {"skin": (0.91, 0.73, 0.58), "face": (0.91, 0.73, 0.58), "top": (0.93, 0.90, 0.86), "bottom": (0.36, 0.30, 0.38), "shoes": (0.22, 0.18, 0.2), "hijab": (0.79, 0.6, 0.68), "accent": (1, 1, 1), "hair": (0.2, 0.13, 0.1), "brows": (0.2, 0.13, 0.1), "eyes": (1, 1, 1), "vest": (0.36, 0.17, 0.51), "logo": (1, 1, 1), "trim": (0.78, 0.64, 0.43)}
+PART_COLORS = {"skin": (0.91, 0.73, 0.58), "face": (0.91, 0.73, 0.58), "top": (0.93, 0.90, 0.86), "bottom": (0.36, 0.30, 0.38), "shoes": (0.22, 0.18, 0.2), "hijab": (0.79, 0.6, 0.68), "accent": (1, 1, 1), "hair": (0.2, 0.13, 0.1), "brows": (0.2, 0.13, 0.1), "eyes": (1, 1, 1), "vest": (0.36, 0.17, 0.51), "logo": (1, 1, 1), "trim": (0.78, 0.64, 0.43), "glasses": (0.12, 0.1, 0.1)}
 
 
 PREVIEW_TEX = {"face": "T_Superhero_Female_Dark_BaseColor", "skin": "T_Superhero_Female_Dark_BaseColor", "hair": "T_Hair_2_BaseColor", "brows": "T_Hair_2_BaseColor", "eyes": "T_Eye_Brown"}

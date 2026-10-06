@@ -10,9 +10,10 @@
 export type AvatarOutfit = 'abaya' | 'dress' | 'skirt' | 'pants'
 export type HijabStyle = 'classic' | 'long'
 export type HairStyle = 'long' | 'bun' | 'ponytail' | 'bob'
+export type GlassesStyle = 'round' | 'square'
 
 /** Colour slots of the shared avatar material. */
-export const PARTS = ['face', 'skin', 'top', 'bottom', 'trim', 'shoes', 'hijab', 'accent', 'hair', 'vest', 'logo', 'eyes', 'brows'] as const
+export const PARTS = ['face', 'skin', 'top', 'bottom', 'trim', 'shoes', 'hijab', 'accent', 'hair', 'vest', 'logo', 'eyes', 'brows', 'glasses'] as const
 export type Part = (typeof PARTS)[number]
 
 /** Piece name in the GLB -> colour slot. */
@@ -39,6 +40,8 @@ export const PIECE_PART: Record<string, Part> = {
   vest: 'vest',
   logo: 'logo',
   belt: 'trim',
+  glasses_round: 'glasses',
+  glasses_square: 'glasses',
   cuffs: 'trim',
   abaya_trim: 'trim',
 }
@@ -51,6 +54,7 @@ export interface Garments {
   head: HeadWear
   vest?: boolean
   logo?: boolean
+  glasses?: GlassesStyle
 }
 
 const OUTFIT_PIECES: Record<AvatarOutfit, string[]> = {
@@ -74,6 +78,7 @@ export function piecesFor(g: Garments): string[] {
     out.push('vest')
     if (g.logo) out.push('logo')
   }
+  if (g.glasses) out.push(`glasses_${g.glasses}`)
   const bad = modestyProblems(out)
   if (bad.length) throw new Error(`Immodest look rejected: ${bad.join(', ')}`)
   return out

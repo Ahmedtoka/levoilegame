@@ -25,6 +25,8 @@ export interface SelfieTraits {
   browThick: number
   /** True when the area above the forehead looks like cloth (flat, saturated or light) rather than hair. */
   covered: boolean
+  /** Frames detected around the eyes (edge energy in a ring around each eye vs the cheeks). */
+  glasses: boolean
 }
 
 let landmarker: Promise<FaceLandmarker> | null = null
@@ -131,6 +133,44 @@ export async function analyzeSelfie(image: HTMLImageElement | HTMLCanvasElement)
   const l = lum(above)
   const covered = l > 0.55 || (sat(above) > 0.5 && l > 0.3) || (same && l > 0.4)
 
+  // Glasses: strong edges in a ring around each eye (frames) compared with the smooth cheeks.
+  const gray = g.getImageData(0, 0, w, h).data
+  const lumAt = (xx: number, yy: number) => {
+    const i = (yy * w + xx) << 2
+    return gray[i] * 0.3 + gray[i + 1] * 0.59 + gray[i + 2] * 0.11
+  }
+  const edge = (x0: number, y0: number, x1: number, y1: number, skip?: [number, number, number, number]) => {
+    let e = 0
+    let n = 0
+    for (let y = Math.max(1, y0 | 0); y < Math.min(h - 1, y1 | 0); y += 2)
+      for (let x = Math.max(1, x0 | 0); x < Math.min(w - 1, x1 | 0); x += 2) {
+        if (skip && x > skip[0] && x < skip[2] && y > skip[1] && y < skip[3]) continue
+        e += Math.abs(lumAt(x + 1, y) - lumAt(x - 1, y)) + Math.abs(lumAt(x, y + 1) - lumAt(x, y - 1))
+        n++
+      }
+    return n ? e / n : 0
+  }
+  let ring = 0
+  let cheek = 0
+  for (const [outer, inner, topI, botI, cheekI] of [
+    [33, 133, 159, 145, 50],
+    [263, 362, 386, 374, 280],
+  ] as const) {
+    const a = px(pts[outer])
+    const b = px(pts[inner])
+    const tp = px(pts[topI])
+    const bt = px(pts[botI])
+    const ex0 = Math.min(a.x, b.x)
+    const ex1 = Math.max(a.x, b.x)
+    const ew = ex1 - ex0
+    const eh = Math.max(4, bt.y - tp.y)
+    const eyeBox: [number, number, number, number] = [ex0 - ew * 0.15, tp.y - eh * 0.6, ex1 + ew * 0.15, bt.y + eh * 0.5]
+    ring += edge(ex0 - ew * 0.55, tp.y - eh * 2.6, ex1 + ew * 0.55, bt.y + eh * 2.2, eyeBox)
+    const c = px(pts[cheekI])
+    cheek += edge(c.x - ew * 0.3, c.y - ew * 0.2, c.x + ew * 0.3, c.y + ew * 0.2)
+  }
+  const glasses = ring > cheek * 2.6 && ring > 10
+
   const eyeW = dist(33, 133)
   const eyeH = (dist(159, 145) + dist(386, 374)) / 2
   const browThick = (dist(105, 52) + dist(334, 282)) / 2 / Math.max(1e-4, eyeW)
@@ -146,6 +186,7 @@ export async function analyzeSelfie(image: HTMLImageElement | HTMLCanvasElement)
     eyeOpen: eyeH / Math.max(1e-4, eyeW),
     browThick,
     covered,
+    glasses,
   }
 }
 
@@ -178,5 +219,5 @@ export function applyTraits(t: SelfieTraits, base: AvatarData): AvatarData {
   const browThick = clamp(1 + (t.browThick - 0.25) * 4, 0.7, 1.5)
   // Eye preset by how open the eyes are: soft (narrow) / almond / round (wide).
   const face = t.eyeOpen < 0.24 ? 2 : t.eyeOpen < 0.33 ? 1 : 0
-  return { ...base, skin: t.skin, head, iris: t.iris, lips: t.lips, brows: t.brows, faceWidth, jaw, browThick, face }
+  return { ...base, skin: t.skin, head, iris: t.iris, lips: t.lips, brows: t.brows, faceWidth, jaw, browThick, face, glasses: t.glasses ? (base.glasses ?? 'round') : undefined }
 }

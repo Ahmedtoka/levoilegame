@@ -32,7 +32,7 @@ import { blobShadow } from '../world/props'
 import { avatarKit, clipStride, cloneBones, mergedGeometry, shapeHead } from './avatar/kit'
 import { avatarMaterial, blankTexture, type AvatarMaterial, type FabricPart } from './avatar/material'
 import { twoBoneIK } from './avatar/ik'
-import { PARTS, piecesFor, type AvatarOutfit, type HeadWear, type Part } from './avatar/pieces'
+import { PARTS, piecesFor, type AvatarOutfit, type GlassesStyle, type HeadWear, type Part } from './avatar/pieces'
 
 export type { AvatarOutfit, HeadWear } from './avatar/pieces'
 export type Pose = 'idle' | 'handOnHip' | 'model' | 'clasped' | 'relaxed'
@@ -79,6 +79,8 @@ export interface Look {
   faceWidth?: number
   jaw?: number
   browThick?: number
+  glasses?: GlassesStyle
+  glassesColor?: string
 }
 
 /** The model stands ~1.84 m (head enlarged ×1.15 in the build); scaled to ~1.66 m. */
@@ -138,6 +140,7 @@ export function lookColors(look: Look): Record<Part, string> {
     logo: look.vest?.color ?? look.top,
     eyes: '#ffffff',
     brows: look.brows ?? (look.head.kind === 'hair' ? look.head.color : '#2b1d16'),
+    glasses: look.glassesColor ?? '#231c1c',
   }
 }
 
@@ -178,7 +181,7 @@ export class Character implements Persona {
     const kit = avatarKit()
     if (!kit) return // model unavailable: nothing is ever drawn (never a partial body)
 
-    const pieces = piecesFor({ outfit: look.outfit, head: look.head, vest: !!look.vest, logo: !!look.vest?.logo })
+    const pieces = piecesFor({ outfit: look.outfit, head: look.head, vest: !!look.vest, logo: !!look.vest?.logo, glasses: look.glasses })
     this.mat = avatarMaterial(lookColors(look), kit.tex, look.vest?.logo ?? blankTexture())
     const face = this.mat.userData.face
     if (look.iris) face.iris.set(look.iris)

@@ -3,7 +3,7 @@
 // save can never produce an invalid (or immodest) character.
 
 import { FACE_STYLES } from './face'
-import type { AvatarOutfit, HairStyle, HeadWear, HijabStyle } from './pieces'
+import type { AvatarOutfit, GlassesStyle, HairStyle, HeadWear, HijabStyle } from './pieces'
 
 export interface AvatarData {
   skin: string
@@ -24,7 +24,40 @@ export interface AvatarData {
   jaw?: number
   /** Brow thickness multiplier (0.7–1.5). */
   browThick?: number
+  glasses?: GlassesStyle
+  glassesColor?: string
 }
+
+export const AVATAR_GLASSES: GlassesStyle[] = ['round', 'square']
+export const AVATAR_GLASSES_COLORS = ['#231c1c', '#6b4a2e', '#c8a46e', '#8c3a52']
+
+/** Complete outfits (body only; hijab / hair is chosen separately), like Bitmoji's outfit gallery. */
+export interface OutfitPreset {
+  id: string
+  outfit: AvatarOutfit
+  top: string
+  bottom: string
+  trim: string
+  shoes: string
+}
+export const OUTFIT_PRESETS: OutfitPreset[] = [
+  { id: 'abaya-black', outfit: 'abaya', top: '#2b2528', bottom: '#2b2528', trim: '#c8a46e', shoes: '#2b2528' },
+  { id: 'abaya-cream', outfit: 'abaya', top: '#efe6da', bottom: '#efe6da', trim: '#c8a46e', shoes: '#e9e1dc' },
+  { id: 'abaya-olive', outfit: 'abaya', top: '#7b8a6a', bottom: '#7b8a6a', trim: '#f1ebe4', shoes: '#2b2528' },
+  { id: 'dress-plum', outfit: 'dress', top: '#5b2b82', bottom: '#5b2b82', trim: '#c8a46e', shoes: '#2b2528' },
+  { id: 'dress-rose', outfit: 'dress', top: '#c99aae', bottom: '#c99aae', trim: '#ffffff', shoes: '#e9e1dc' },
+  { id: 'skirt-classic', outfit: 'skirt', top: '#f1ebe4', bottom: '#2f2b33', trim: '#c8a46e', shoes: '#2b2528' },
+  { id: 'skirt-camel', outfit: 'skirt', top: '#c9b29b', bottom: '#3d4250', trim: '#c8a46e', shoes: '#8b6b58' },
+  { id: 'pants-navy', outfit: 'pants', top: '#f1ebe4', bottom: '#2f3b4e', trim: '#c8a46e', shoes: '#2b2528' },
+  { id: 'pants-burgundy', outfit: 'pants', top: '#8c3a52', bottom: '#26232a', trim: '#c8a46e', shoes: '#2b2528' },
+  { id: 'pants-sage', outfit: 'pants', top: '#a7b5a0', bottom: '#3c3a47', trim: '#c8a46e', shoes: '#e9e1dc' },
+]
+
+/** The preset whose body colours the look wears, if any. */
+export function outfitPresetOf(d: AvatarData): OutfitPreset | undefined {
+  return OUTFIT_PRESETS.find((p) => p.outfit === d.outfit && p.top === d.top && p.bottom === d.bottom && p.trim === d.trim && p.shoes === d.shoes)
+}
+
 
 export const AVATAR_IRIS = ['#3b2618', '#5a3a22', '#7a5a3a', '#4a6a4a', '#5a7a9a', '#3a4a6a']
 export const AVATAR_LIPS = ['#c96f7b', '#b65f63', '#d68a8f', '#a85462', '#8c3a52', '#c9a09a']
@@ -112,5 +145,7 @@ export function sanitizeAvatar(raw: unknown): AvatarData | null {
     faceWidth: num(o.faceWidth, 0.86, 1.14),
     jaw: num(o.jaw, 0.84, 1.14),
     browThick: num(o.browThick, 0.7, 1.5),
+    glasses: AVATAR_GLASSES.includes(o.glasses as GlassesStyle) ? (o.glasses as GlassesStyle) : undefined,
+    glassesColor: opt(o.glassesColor),
   }
 }

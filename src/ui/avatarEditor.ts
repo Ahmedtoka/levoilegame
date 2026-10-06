@@ -1,6 +1,8 @@
-// Avatar editor: the visitor designs her character before entering (and any time
-// from the menu). A live 3D preview (its own small renderer, only while open) and
-// a panel of choices; the look is saved on the device (store.avatar).
+// Avatar editor, Bitmoji-style: the character big on the stage, a strip of category icons
+// (skin, hijab & hair, eyes, brows, lips, face shape, glasses, outfits) and one row/grid of
+// big options per category, plus "Take a selfie" on top. Complete outfits come from
+// OUTFIT_PRESETS. The look is saved on the device (store.avatar). A live preview uses its
+// own small renderer (only while the editor is open).
 
 import {
   Color,
@@ -15,44 +17,73 @@ import {
   WebGLRenderer,
   ACESFilmicToneMapping,
 } from 'three'
-import { Character } from '../actors/character'
-import { FACE_STYLES, faceTexture } from '../actors/avatar/face'
 import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera'
+import { Character } from '../actors/character'
 import { analyzeSelfie, applyTraits } from '../actors/avatar/selfie'
 import {
   AVATAR_FABRICS,
+  AVATAR_GLASSES,
+  AVATAR_GLASSES_COLORS,
   AVATAR_HAIR_COLORS,
-  AVATAR_IRIS,
-  AVATAR_LIPS,
   AVATAR_HAIRS,
   AVATAR_HIJABS,
-  AVATAR_OUTFITS,
-  AVATAR_SHOES,
+  AVATAR_IRIS,
+  AVATAR_LIPS,
   AVATAR_SKINS,
-  AVATAR_TRIMS,
   defaultAvatar,
+  OUTFIT_PRESETS,
+  outfitPresetOf,
   randomAvatar,
   type AvatarData,
+  type OutfitPreset,
 } from '../actors/avatar/look'
-import type { AvatarOutfit, HairStyle, HijabStyle } from '../actors/avatar/pieces'
+import type { GlassesStyle, HairStyle, HijabStyle } from '../actors/avatar/pieces'
 import { blobShadowTexture } from '../engine/textures'
 import { t, type Lang, type StringKey } from '../i18n/i18n'
 import { store, watch } from '../state/store'
 import { audio } from '../audio/audio'
 import { esc, el, ICONS, onAction, type GameBridge } from './dom'
 
-type Tab = 'look' | 'head' | 'outfit'
+type Tab = 'skin' | 'hair' | 'eyes' | 'brows' | 'lips' | 'face' | 'glasses' | 'outfit'
 
-const OUTFIT_KEY: Record<AvatarOutfit, StringKey> = { abaya: 'outfitAbaya', dress: 'outfitDress', skirt: 'outfitSkirt', pants: 'outfitPants' }
+const TABS: [Tab, StringKey, string][] = [
+  ['skin', 'tabSkin', '🎨'],
+  ['hair', 'tabHair', '🧕'],
+  ['eyes', 'tabEyes', '👁️'],
+  ['brows', 'tabBrows', '〰️'],
+  ['lips', 'tabLips', '👄'],
+  ['face', 'tabFace', '🙂'],
+  ['glasses', 'tabGlasses', '👓'],
+  ['outfit', 'tabOutfit', '👗'],
+]
 const HIJAB_KEY: Record<HijabStyle, StringKey> = { classic: 'hijabClassic', long: 'hijabLong' }
 const HAIR_KEY: Record<HairStyle, StringKey> = { long: 'hairLong', bun: 'hairBun', ponytail: 'hairPonytail', bob: 'hairBob' }
+const GLASSES_KEY: Record<GlassesStyle, StringKey> = { round: 'glassesRound', square: 'glassesSquare' }
 const ACCENTS = ['#ffffff', '#f1ebe4', '#26232a', '#c8a46e']
+
+/** Outfit card: a flat silhouette in the preset's colours (no renderer needed for thumbnails). */
+function outfitSvg(p: OutfitPreset, skin: string): string {
+  const head = `<circle cx="50" cy="16" r="9" fill="${skin}"/>`
+  const sleeves = (c: string) => `<path d="M30 34 L18 70 L28 72 L36 48 Z M70 34 L82 70 L72 72 L64 48 Z" fill="${c}"/>`
+  let body = ''
+  if (p.outfit === 'abaya') {
+    body = `<path d="M36 28 L64 28 L80 118 L20 118 Z" fill="${p.top}"/><rect x="48" y="30" width="4" height="86" fill="${p.trim}"/>${sleeves(p.top)}`
+  } else if (p.outfit === 'dress') {
+    body = `<path d="M38 28 L62 28 L66 62 L34 62 Z" fill="${p.top}"/><path d="M34 62 L66 62 L80 118 L20 118 Z" fill="${p.top}"/><rect x="33" y="60" width="34" height="4" rx="2" fill="${p.trim}"/>${sleeves(p.top)}`
+  } else if (p.outfit === 'skirt') {
+    body = `<path d="M34 62 L66 62 L76 118 L24 118 Z" fill="${p.bottom}"/><path d="M38 28 L62 28 L68 70 L32 70 Z" fill="${p.top}"/>${sleeves(p.top)}`
+  } else {
+    body = `<path d="M36 62 L49 62 L47 118 L30 118 Z M51 62 L64 62 L70 118 L53 118 Z" fill="${p.bottom}"/><path d="M38 28 L62 28 L68 70 L32 70 Z" fill="${p.top}"/>${sleeves(p.top)}`
+  }
+  const shoes = `<rect x="30" y="116" width="16" height="5" rx="2" fill="${p.shoes}"/><rect x="54" y="116" width="16" height="5" rx="2" fill="${p.shoes}"/>`
+  return `<svg viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg">${head}${body}${shoes}</svg>`
+}
 
 export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
   const veil = el('div', 'screen avatar-editor hidden')
   root.appendChild(veil)
   let draft: AvatarData = defaultAvatar()
-  let tab: Tab = 'look'
+  let tab: Tab = 'skin'
   let stage: PreviewStage | null = null
   let selfieState: 'idle' | 'busy' | 'done' | 'none' = 'idle'
 
@@ -72,26 +103,27 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
       renderPanel()
     },
     skin: (b) => set({ skin: b.dataset.v! }),
-    face: (b) => set({ face: Number(b.dataset.v) }),
     headKind: (b) =>
       set({
         head:
           b.dataset.v === 'hair'
-            ? { kind: 'hair', style: 'long', color: AVATAR_HAIR_COLORS[1] }
-            : { kind: 'hijab', style: 'classic', color: '#c99aae', accent: '#ffffff' },
+            ? { kind: 'hair', style: 'long', color: draft.head.kind === 'hair' ? draft.head.color : AVATAR_HAIR_COLORS[1] }
+            : { kind: 'hijab', style: 'classic', color: draft.head.kind === 'hijab' ? draft.head.color : '#c99aae', accent: '#ffffff' },
       }),
     hijabStyle: (b) => draft.head.kind === 'hijab' && set({ head: { ...draft.head, style: b.dataset.v as HijabStyle } }),
     hairStyle: (b) => draft.head.kind === 'hair' && set({ head: { ...draft.head, style: b.dataset.v as HairStyle } }),
     headColor: (b) => set({ head: { ...draft.head, color: b.dataset.v! } }),
     accent: (b) => draft.head.kind === 'hijab' && set({ head: { ...draft.head, accent: b.dataset.v || undefined } }),
-    outfit: (b) => set({ outfit: b.dataset.v as AvatarOutfit }),
-    top: (b) => set({ top: b.dataset.v! }),
-    bottom: (b) => set({ bottom: b.dataset.v! }),
-    trim: (b) => set({ trim: b.dataset.v! }),
-    shoes: (b) => set({ shoes: b.dataset.v! }),
-    random: () => set(randomAvatar()),
     iris: (b) => set({ iris: b.dataset.v! }),
     lips: (b) => set({ lips: b.dataset.v! }),
+    brows: (b) => set({ brows: b.dataset.v! }),
+    glasses: (b) => set({ glasses: (b.dataset.v || undefined) as GlassesStyle | undefined }),
+    glassesColor: (b) => set({ glassesColor: b.dataset.v! }),
+    preset: (b) => {
+      const p = OUTFIT_PRESETS.find((x) => x.id === b.dataset.v)
+      if (p) set({ outfit: p.outfit, top: p.top, bottom: p.bottom, trim: p.trim, shoes: p.shoes })
+    },
+    random: () => set(randomAvatar()),
     selfie: () => void takeSelfie(),
     close: () => store.getState().set({ overlay: null }),
     save: () => {
@@ -133,6 +165,7 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
         return
       }
       selfieState = 'done'
+      tab = 'hair'
       set(applyTraits(traits, draft))
     } catch (err) {
       // Cancelled or no camera: back to the idle button.
@@ -142,118 +175,88 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
     }
   }
 
-  const swatches = (action: string, colors: readonly string[], current: string | undefined, extra = '') =>
-    `<div class="swatches">${extra}${colors
+  const swatches = (action: string, colors: readonly string[], current: string | undefined, extra = '', big = true) =>
+    `<div class="swatches${big ? ' big' : ''}">${extra}${colors
       .map((c) => `<button class="sw${c === current ? ' on' : ''}" style="--c:${c}" data-action="${action}" data-v="${c}" aria-label="${c}"></button>`)
       .join('')}</div>`
   const chips = (action: string, options: [string, string][], current: string) =>
     `<div class="chips">${options
       .map(([v, label]) => `<button class="chip${v === current ? ' on' : ''}" data-action="${action}" data-v="${esc(v)}">${esc(label)}</button>`)
       .join('')}</div>`
-  const row = (label: string, body: string) => `<div class="ae-row"><h4>${esc(label)}</h4>${body}</div>`
-
-  const faceThumbs = new Map<string, string>()
-  const faceThumb = (i: number, skin: string) => {
-    const key = `${i}|${skin}`
-    let url = faceThumbs.get(key)
-    if (!url) {
-      const c = document.createElement('canvas')
-      c.width = c.height = 96
-      const g = c.getContext('2d')!
-      g.fillStyle = skin
-      g.beginPath()
-      g.arc(48, 48, 46, 0, Math.PI * 2)
-      g.fill()
-      const img = faceTexture(i, '#3a2a22').image as HTMLCanvasElement
-      // The features sit in the middle of the head texture.
-      g.drawImage(img, img.width * 0.22, img.height * 0.3, img.width * 0.56, img.height * 0.56, 4, 4, 88, 88)
-      url = c.toDataURL()
-      faceThumbs.set(key, url)
-    }
-    return url
-  }
+  const row = (label: string, body: string) => `<div class="ae-row">${label ? `<h4>${esc(label)}</h4>` : ''}${body}</div>`
+  const slider = (key: 'faceWidth' | 'jaw' | 'browThick', lo: number, hi: number) =>
+    `<input type="range" data-range="${key}" min="${lo}" max="${hi}" step="0.01" value="${draft[key] ?? 1}" />`
 
   const panelHtml = (L: Lang): string => {
     const d = draft
-    if (tab === 'look') {
-      const slider = (key: 'faceWidth' | 'jaw' | 'browThick', lo: number, hi: number) =>
-        `<input type="range" data-range="${key}" min="${lo}" max="${hi}" step="0.01" value="${d[key] ?? 1}" />`
-      const selfie =
-        selfieState === 'busy'
-          ? `<div class="ae-selfie busy"><span class="spin"></span>${esc(t('analysing', L))}</div>`
-          : `<button class="ae-selfie" data-action="selfie">${ICONS.camera}<span><b>${esc(t('takeSelfie', L))}</b><small>${esc(selfieState === 'none' ? t('noFaceFound', L) : selfieState === 'done' ? t('selfieDone', L) : t('selfieHint', L))}</small></span></button>`
-      return (
-        selfie +
-        row(t('skinTone', L), swatches('skin', AVATAR_SKINS, d.skin)) +
-        row(t('eyeColor', L), swatches('iris', AVATAR_IRIS, d.iris)) +
-        row(t('lipColor', L), swatches('lips', AVATAR_LIPS, d.lips)) +
-        row(t('faceWidth', L), slider('faceWidth', 0.86, 1.14)) +
-        row(t('jawWidth', L), slider('jaw', 0.84, 1.14)) +
-        row(t('browThick', L), slider('browThick', 0.7, 1.5)) +
-        row(
-          t('faceStyle', L),
-          `<div class="faces">${FACE_STYLES.map(
-            (_, i) => `<button class="face${i === d.face ? ' on' : ''}" data-action="face" data-v="${i}"><img src="${faceThumb(i, d.skin)}" alt="" /></button>`,
-          ).join('')}</div>`,
-        )
-      )
-    }
-    if (tab === 'head') {
-      const h = d.head
-      let out = chips('headKind', [['hijab', t('hijab', L)], ['hair', t('hair', L)]], h.kind)
-      if (h.kind === 'hijab') {
-        out += row('', chips('hijabStyle', AVATAR_HIJABS.map((s) => [s, t(HIJAB_KEY[s], L)]), h.style))
-        out += row(t('hijabColor', L), swatches('headColor', AVATAR_FABRICS, h.color))
-        out += row(
-          t('underScarf', L),
-          swatches('accent', ACCENTS, h.accent, `<button class="sw none${h.accent ? '' : ' on'}" data-action="accent" data-v="" aria-label="${esc(t('none', L))}">${ICONS.close}</button>`),
-        )
-      } else {
-        out += row('', chips('hairStyle', AVATAR_HAIRS.map((s) => [s, t(HAIR_KEY[s], L)]), h.style))
-        out += row(t('hairColor', L), swatches('headColor', AVATAR_HAIR_COLORS, h.color))
+    switch (tab) {
+      case 'skin':
+        return row('', swatches('skin', AVATAR_SKINS, d.skin))
+      case 'hair': {
+        const h = d.head
+        let out = chips('headKind', [['hijab', t('hijab', L)], ['hair', t('hair', L)]], h.kind)
+        if (h.kind === 'hijab') {
+          out += row('', chips('hijabStyle', AVATAR_HIJABS.map((s) => [s, t(HIJAB_KEY[s], L)]), h.style))
+          out += row(t('hijabColor', L), swatches('headColor', AVATAR_FABRICS, h.color, '', false))
+          out += row(t('underScarf', L), swatches('accent', ACCENTS, h.accent, `<button class="sw none${h.accent ? '' : ' on'}" data-action="accent" data-v="" aria-label="${esc(t('none', L))}">${ICONS.close}</button>`, false))
+        } else {
+          out += row('', chips('hairStyle', AVATAR_HAIRS.map((s) => [s, t(HAIR_KEY[s], L)]), h.style))
+          out += row(t('hairColor', L), swatches('headColor', AVATAR_HAIR_COLORS, h.color))
+        }
+        return out
       }
-      return out
+      case 'eyes':
+        return row(t('eyeColor', L), swatches('iris', AVATAR_IRIS, d.iris))
+      case 'brows':
+        return row(t('browColor', L), swatches('brows', AVATAR_HAIR_COLORS, d.brows)) + row(t('browThick', L), slider('browThick', 0.7, 1.5))
+      case 'lips':
+        return row('', swatches('lips', AVATAR_LIPS, d.lips))
+      case 'face':
+        return row(t('faceWidth', L), slider('faceWidth', 0.86, 1.14)) + row(t('jawWidth', L), slider('jaw', 0.84, 1.14))
+      case 'glasses':
+        return (
+          row('', chips('glasses', [['', t('none', L)], ...AVATAR_GLASSES.map((g) => [g, t(GLASSES_KEY[g], L)] as [string, string])], d.glasses ?? '')) +
+          (d.glasses ? row(t('glassesColor', L), swatches('glassesColor', AVATAR_GLASSES_COLORS, d.glassesColor ?? AVATAR_GLASSES_COLORS[0])) : '')
+        )
+      case 'outfit': {
+        const cur = outfitPresetOf(d)?.id
+        return `<div class="outfits">${OUTFIT_PRESETS.map(
+          (p) => `<button class="outfit${p.id === cur ? ' on' : ''}" data-action="preset" data-v="${p.id}" aria-label="${p.id}">${outfitSvg(p, d.skin)}</button>`,
+        ).join('')}</div>`
+      }
     }
-    const one = d.outfit === 'abaya' || d.outfit === 'dress'
-    const topLabel: StringKey = d.outfit === 'abaya' ? 'abayaColor' : d.outfit === 'dress' ? 'dressColor' : 'topColor'
-    return (
-      chips('outfit', AVATAR_OUTFITS.map((o) => [o, t(OUTFIT_KEY[o], L)]), d.outfit) +
-      row(t(topLabel, L), swatches('top', AVATAR_FABRICS, d.top)) +
-      (one ? row(t('trimColor', L), swatches('trim', AVATAR_TRIMS, d.trim)) : row(t('bottomColor', L), swatches('bottom', AVATAR_FABRICS, d.bottom))) +
-      row(t('shoesColor', L), swatches('shoes', AVATAR_SHOES, d.shoes))
-    )
   }
 
   const renderPanel = () => {
     const s = store.getState()
     const L = s.lang
-    const body = veil.querySelector<HTMLElement>('.ae-body')
-    const scroll = body?.scrollTop ?? 0
-    const tabs: [Tab, StringKey][] = [
-      ['look', 'avatarLooks'],
-      ['head', 'avatarHead'],
-      ['outfit', 'avatarOutfit'],
-    ]
     const panel = veil.querySelector<HTMLElement>('.ae-panel')
     if (!panel) return
+    const selfie =
+      selfieState === 'busy'
+        ? `<div class="ae-selfie busy"><span class="spin"></span>${esc(t('analysing', L))}</div>`
+        : `<button class="ae-selfie" data-action="selfie">${ICONS.camera}<span><b>${esc(t('takeSelfie', L))}</b><small>${esc(selfieState === 'none' ? t('noFaceFound', L) : selfieState === 'done' ? t('selfieDone', L) : t('selfieHint', L))}</small></span></button>`
     panel.innerHTML = `
-      ${s.avatar || s.phase === 'playing' ? `<button class="close" data-action="close" aria-label="${esc(t('close', L))}">${ICONS.close}</button>` : ''}
-      <h2>${esc(t('avatarTitle', L))}</h2>
-      <p class="ae-sub">${esc(t('avatarSub', L))}</p>
-      <div class="ae-tabs">${tabs.map(([k, key]) => `<button class="${k === tab ? 'on' : ''}" data-action="tab" data-v="${k}">${esc(t(key, L))}</button>`).join('')}</div>
+      <div class="ae-head">
+        <h2>${esc(t('avatarTitle', L))}</h2>
+        <div class="ae-head-actions">
+          <button class="icon-btn" data-action="random" aria-label="${esc(t('surpriseMe', L))}">🎲</button>
+          ${s.avatar || s.phase === 'playing' ? `<button class="icon-btn" data-action="close" aria-label="${esc(t('close', L))}">${ICONS.close}</button>` : ''}
+        </div>
+      </div>
+      ${selfie}
+      <div class="ae-tabs">${TABS.map(([k, key, ico]) => `<button class="${k === tab ? 'on' : ''}" data-action="tab" data-v="${k}" title="${esc(t(key, L))}"><span class="ico">${ico}</span><span class="lbl">${esc(t(key, L))}</span></button>`).join('')}</div>
       <div class="ae-body">${panelHtml(L)}</div>
       <div class="ae-actions">
-        <button class="btn ghost" data-action="random">${esc(t('surpriseMe', L))}</button>
-        <button class="btn" data-action="save">${esc(t(s.phase === 'intro' ? 'enterMall' : 'saveLook', L))}</button>
+        <button class="btn block" data-action="save">${esc(t(s.phase === 'intro' ? 'enterMall' : 'done', L))}</button>
       </div>`
-    const nb = veil.querySelector<HTMLElement>('.ae-body')
-    if (nb) nb.scrollTop = scroll
   }
 
   const open = () => {
     const s = store.getState()
     draft = s.avatar ? structuredClone(s.avatar) : defaultAvatar()
-    tab = 'look'
+    tab = 'skin'
+    selfieState = 'idle'
     veil.innerHTML = `
       <div class="ae">
         <div class="ae-stage"><canvas></canvas><span class="ae-hint">${esc(t('dragToTurn', s.lang))}</span></div>
