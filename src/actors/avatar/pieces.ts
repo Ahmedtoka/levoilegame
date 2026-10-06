@@ -58,7 +58,8 @@ export interface Garments {
 }
 
 const OUTFIT_PIECES: Record<AvatarOutfit, string[]> = {
-  abaya: ['upper_abaya', 'skirt_flare', 'leggings', 'cuffs', 'abaya_trim'],
+  // The abaya is one piece to the floor (upper_abaya reaches the ankles); leggings stay underneath.
+  abaya: ['upper_abaya', 'leggings', 'cuffs', 'abaya_trim'],
   dress: ['upper', 'skirt_flare', 'leggings', 'belt'],
   // The blouse (`upper`) falls over the hips, so skirts and trousers need no tunic.
   skirt: ['upper', 'skirt_straight', 'leggings'],
@@ -90,10 +91,10 @@ export function modestyProblems(pieces: readonly string[]): string[] {
   const problems: string[] = []
   // Torso, neck (high collar) and arms to the wrist.
   if (!has('upper', 'upper_abaya')) problems.push('no long-sleeved top')
-  // Hips to ankles.
-  if (!has('skirt_flare', 'skirt_straight', 'trousers')) problems.push('no long skirt or trousers')
-  // Under a skirt the shins are always covered too (a step never shows a gap).
-  if (has('skirt_flare', 'skirt_straight') && !has('leggings', 'trousers')) problems.push('no leggings under the skirt')
+  // Hips to ankles (the abaya is floor-length on its own).
+  if (!has('skirt_flare', 'skirt_straight', 'trousers', 'upper_abaya')) problems.push('no long skirt or trousers')
+  // Under a skirt or abaya the shins are always covered too (a step never shows a gap).
+  if (has('skirt_flare', 'skirt_straight', 'upper_abaya') && !has('leggings', 'trousers')) problems.push('no leggings under the skirt')
   if (!has('shoes')) problems.push('no shoes')
   if (!pieces.some((p) => p.startsWith('hijab_') || p.startsWith('hair_'))) problems.push('no hijab or hair')
   for (const p of pieces) if (!(p in PIECE_PART)) problems.push(`unknown piece ${p}`)

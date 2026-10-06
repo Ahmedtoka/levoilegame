@@ -31,5 +31,7 @@ describe('avatar pieces (modesty rule)', () => {
     expect(modestyProblems(['head', 'hands', 'shoes', 'skirt_flare', 'leggings', 'hijab_classic'])).toContain('no long-sleeved top')
     expect(modestyProblems(['head', 'hands', 'shoes', 'upper', 'hijab_classic'])).toContain('no long skirt or trousers')
     expect(modestyProblems(['head', 'hands', 'shoes', 'upper', 'skirt_flare', 'hijab_classic'])).toContain('no leggings under the skirt')
+    expect(modestyProblems(['head', 'hands', 'shoes', 'upper_abaya', 'hijab_classic'])).toContain('no leggings under the skirt')
+    expect(modestyProblems(['head', 'hands', 'shoes', 'upper_abaya', 'leggings', 'hijab_classic'])).toEqual([])
   })
 })

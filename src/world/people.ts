@@ -108,7 +108,8 @@ export async function buildPeople(game: Game, shops: ShopHandles[], logo: Textur
   let staffN = 0
   for (const shop of shops) {
     if (!shop.staffSpot) continue
-    const c = createCharacter(staffLook(seed++ * 17, logo, 'clasped'), seed)
+    // Shop staff wear their own brand's colour; the concierge and cashier keep the mall plum.
+    const c = createCharacter(staffLook(seed++ * 17, logo, 'clasped', shop.layout.brand?.color), seed)
     placeCharacter(game, c, shop.staffSpot.x, shop.staffSpot.z, shop.staffSpot.yaw)
     const name = STAFF_NAMES[staffN++ % STAFF_NAMES.length]
     addGreeter(game, c, name, () => shop.interiorVisible, { id: `staff-${shop.layout.section?.id}`, name, role: 'staff', sectionId: shop.layout.section?.id }, () => shop.seenFrom)
