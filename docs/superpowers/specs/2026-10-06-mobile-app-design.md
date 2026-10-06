@@ -59,4 +59,4 @@ The store's default `view` is `third` on coarse-pointer devices; persisted store
 - `tsc`, unit tests (sprint lock, frame cap, resolution step), `npm run build`.
 - Browser at 844 × 390 with `?touch`: HUD layout, sprint lock via synthetic touch events, menu and product sheet.
 - `gradlew assembleDebug`, then install and launch on the emulator.
-- Real-phone frame rates are **not** measured in this round (the connected phone was not authorised for debugging).
+- Measured on a Samsung Galaxy S24 Ultra (Android 16) over the WebView DevTools socket: Auto picks Medium (1.5× pixel ratio, 1336 × 616 canvas), 60 fps with the 60 cap, no frame over 40 ms during an 8 s walk, render scale stayed at 1.0.
