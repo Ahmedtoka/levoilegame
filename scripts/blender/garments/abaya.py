@@ -2,16 +2,18 @@
 
 Replaces three default pieces by name (the runtime needs no change):
 
-  upper_abaya  A loose A-line body hanging straight from the shoulders down to hip
-               height (hem at HIP_Z - 0.02, wide enough for skirt_flare to tuck under
-               it), six soft vertical folds, wide bell sleeves that widen to the wrist,
-               and a rounded collar that closes at the base of the jaw (the neckline
-               dips at the front, under the chin, and rises at the nape).
+  upper_abaya  ONE piece to the floor: a loose A-line body hanging straight from the
+               shoulders, flaring to rx 0.32 / ry 0.26 at the hem (z 0.02, just above
+               the floor; the thighs get 1.5 cm extra room for the knees-forward idle), six soft vertical folds growing to 2 cm at the hem, wide bell
+               sleeves that widen to the wrist, and a rounded collar that closes at the
+               base of the jaw (the neckline dips under the chin, rises at the nape).
+               Below the hips it is skinned like a skirt (ctx.leg_weights): the sides
+               follow the legs, the front / back panels swing with skirt_f / skirt_b.
+               Leggings stay underneath (modesty).
   cuffs        4 cm contrast cuffs worn OUTSIDE the sleeve ends (1.2 cm larger
                radius, skinned exactly like the sleeve end so the gap never changes).
   abaya_trim   2.5 cm contrast band down the centre front, from the collar to
-               z 0.05: 3 mm proud of the abaya, then over the skirt_flare below the hem
-               (that part is skinned with ctx.leg_weights like the skirt itself).
+               z 0.05 on the abaya's own surface, 3 mm proud of the cloth.
 
 The chest, upper back and collar are sized to sit INSIDE hijab_classic's drape and
 chin wrap (6-8 mm), so the hijab lies over the abaya; only the shoulders and sleeve
@@ -22,7 +24,6 @@ only measured, never exported. Coordinates: Z up, the character faces -Y, left i
 """
 
 import math
-import sys
 
 import bpy
 
@@ -30,7 +31,9 @@ import bpy
 N_TORSO = 36            # ring segments: 6 per fold
 N_SLEEVE = 16
 FOLDS = 6
-FOLD_DEPTH = 0.016      # fold amplitude at the hem (m); zero above the bust
+FOLD_HIP = 0.016        # fold amplitude at the hips (zero above the bust) ...
+FOLD_HEM = 0.020        # ... growing to this at the hem
+HEM_Z = 0.02            # 2 cm above the floor
 NECK_EASE = 0.009       # neckline clearance around the (enlarged) neck
 NECK_TILT = 0.028       # the neckline is this much lower at the front than at the back
 SLEEVE_X0 = 0.15        # sleeve root (capped), hidden inside the torso
@@ -40,12 +43,8 @@ SLEEVE_FWD = 0.016      # the sleeve head sits a little forward of the arm axis 
 CUFF_LEN = 0.040
 CUFF_GAP = 0.012        # cuff radius - sleeve radius (>= 1 cm, no z-fighting)
 BAND_HALF = 0.0125      # 2.5 cm band
-BAND_PROUD = (0.0015, 0.0035)   # edges / top of the band over the abaya cloth
-BAND_PROUD_SKIRT = (0.004, 0.0075)
+BAND_PROUD = (0.0015, 0.0035)   # edges / top of the band over the cloth
 TRIM_BOTTOM_Z = 0.05
-
-# Hip ring of skirt_flare (z, rx, ry); the weights use it, the band's path measures the real mesh.
-SKIRT_FLARE = [(1.06, 0.182, 0.136), (0.95, 0.205, 0.150), (0.80, 0.225, 0.165), (0.52, 0.262, 0.195), (0.25, 0.292, 0.222), (0.02, 0.318, 0.246)]
 
 _SPEC = {}
 
@@ -68,19 +67,6 @@ def _table(rows, z):
     return s[-1][1]
 
 
-def _at(sections, z, k):
-    s = sorted(sections, key=lambda r: r[0])
-    for a, b in zip(s, s[1:]):
-        if a[0] <= z <= b[0]:
-            return _lerp(a[k], b[k], (z - a[0]) / (b[0] - a[0]))
-    return s[0][k] if z < s[0][0] else s[-1][k]
-
-
-def _skirt_table():
-    main = sys.modules.get("__main__")
-    return getattr(main, "SKIRT_FLARE", None) or SKIRT_FLARE
-
-
 def _release(name):
     """Free the piece's name: the registry renames our object AFTER creating it, while the
     default piece still holds the name, so without this the GLB would carry '<name>.001'
@@ -95,13 +81,13 @@ def _release(name):
 
 
 def _spec(ctx):
-    """Measured once per build: the neck, the sleeve axis and the skirt's front line,
-    plus the designed silhouette. All three pieces are cut from the same numbers."""
+    """Measured once per build: the neck and the sleeve axis, plus the designed
+    silhouette. All three pieces are cut from the same numbers."""
     key = id(ctx)
     if key in _SPEC:
         return _SPEC[key]
     smooth = ctx.smooth
-    hem = ctx.HIP_Z - 0.02
+    hip = ctx.HIP_Z - 0.02   # above: torso skinning; below: skirt skinning
     pv, hs = ctx.HEAD_PIVOT, ctx.HEAD_SCALE
 
     def head_space(p):
@@ -118,19 +104,21 @@ def _spec(ctx):
     n_r = max((nape - throat) / 2, side) + NECK_EASE
     print(f"ABAYA neck (head space): throat={throat:.4f} nape={nape:.4f} side={side:.4f} -> collar r={n_r:.4f} cy={n_cy:.4f} front={n_cy - n_r:.4f} back={n_cy + n_r:.4f}")
 
-    # Body width as a floor (the sleeves cover the shoulders, so only a little ease is needed).
-    body = ctx.torso_sections(hem, 1.49, ease=0.0)
+    # Body width as a floor over the torso (the sleeves cover the shoulders, so only a little ease is needed).
+    body = ctx.torso_sections(hip, 1.49, ease=0.0)
     b_rx = [(z, rx) for z, rx, ry, cy in body]
 
     # Designed silhouette by nominal height: half-width, centre-front y, centre-back y.
     zn = 1.535  # neckline (nominal; tilted: front at zn - NECK_TILT, back at zn + NECK_TILT)
-    rx_t = [(hem, 0.232), (1.10, 0.214), (1.22, 0.198), (1.30, 0.196), (1.36, 0.210), (1.40, 0.214), (1.46, 0.214), (1.475, 0.205), (1.49, 0.185), (1.50, 0.165), (1.52, 0.115), (zn, n_r)]
-    yf_t = [(hem, -0.134), (1.10, -0.146), (1.20, -0.144), (1.26, -0.142), (1.38, -0.142), (1.40, -0.138), (1.42, -0.129), (1.44, -0.108), (1.46, -0.096), (1.48, -0.078), (1.50, -0.058), (1.52, -0.040), (zn, n_cy - n_r)]
-    yb_t = [(hem, 0.216), (1.06, 0.204), (1.20, 0.182), (1.30, 0.170), (1.42, 0.168), (1.44, 0.163), (1.46, 0.156), (1.48, 0.137), (1.50, 0.116), (1.52, 0.108), (zn, n_cy + n_r)]
+    rx_t = [(HEM_Z, 0.325), (0.25, 0.302), (0.52, 0.284), (0.80, 0.264), (hip, 0.240), (1.10, 0.214), (1.22, 0.198), (1.30, 0.196), (1.36, 0.210), (1.40, 0.214), (1.46, 0.214), (1.475, 0.205), (1.49, 0.185), (1.50, 0.165), (1.52, 0.115), (zn, n_r)]
+    yf_t = [(HEM_Z, -0.220), (0.25, -0.200), (0.52, -0.182), (0.80, -0.162), (hip, -0.140), (1.10, -0.146), (1.20, -0.144), (1.26, -0.142), (1.38, -0.142), (1.40, -0.138), (1.42, -0.129), (1.44, -0.108), (1.46, -0.096), (1.48, -0.078), (1.50, -0.058), (1.52, -0.040), (zn, n_cy - n_r)]
+    yb_t = [(HEM_Z, 0.295), (0.25, 0.274), (0.52, 0.254), (0.80, 0.236), (hip, 0.218), (1.06, 0.204), (1.20, 0.182), (1.30, 0.170), (1.42, 0.168), (1.44, 0.163), (1.46, 0.156), (1.48, 0.137), (1.50, 0.116), (1.52, 0.108), (zn, n_cy + n_r)]
 
     def section(z):
         """(rx, ry, cy) of the abaya ring at nominal height z (before folds and tilt)."""
-        rx = max(_table(rx_t, z), _table(b_rx, z) + 0.016 if z < 1.47 else 0.0)
+        rx = _table(rx_t, z)
+        if hip <= z < 1.47:
+            rx = max(rx, _table(b_rx, z) + 0.016)
         yf, yb = _table(yf_t, z), _table(yb_t, z)
         return rx, (yb - yf) / 2, (yf + yb) / 2
 
@@ -138,7 +126,9 @@ def _spec(ctx):
         return NECK_TILT * smooth(1.45, zn, z)
 
     def fold_depth(z):
-        return FOLD_DEPTH * smooth(1.30, hem, z)
+        if z >= hip:
+            return FOLD_HIP * smooth(1.30, hip, z)
+        return _lerp(FOLD_HIP, FOLD_HEM, (hip - z) / (hip - HEM_Z))
 
     def ring(z, dr=0.0, dz=0.0, n=N_TORSO):
         rx, ry, cy = section(z)
@@ -163,6 +153,13 @@ def _spec(ctx):
         p = min(front, key=lambda p: p.y)
         return p.y, p.z
 
+    def weights(p):
+        """Torso skinning above the hips; skirt skinning (legs + swinging panels) below."""
+        if p.z >= hip:
+            return ctx.top_weights(p)
+        rx, ry, cy = section(p.z)
+        return ctx.leg_weights(p, rx, hip_z=hip, hem_z=HEM_Z + 0.02, ry=ry)
+
     # Sleeve axis: from the arm root to the wrist, measured on the body.
     secs = ctx.limb_sections(lambda p: 0.17 < p.x < 0.66 and p.z > 1.28, "x", 0.19, 0.64, ease=0.0)
     root = next(c for a, c, r in secs if a >= 0.19 - 1e-6)
@@ -179,23 +176,7 @@ def _spec(ctx):
     def sleeve_r(x):
         return _table(SLEEVE_R, abs(x))
 
-    # The skirt's centre-front line (the real mesh, so the band follows its pleats).
-    skirt_rows = []
-    sk = bpy.data.objects.get("skirt_flare")
-    if sk is not None:
-        by_z = {}
-        for v in sk.data.vertices:
-            if abs(v.co.x) < 0.045 and v.co.y < ctx.SKIRT_Y:
-                by_z.setdefault(round(v.co.z, 3), []).append(v.co.y)
-        skirt_rows = sorted((z, min(ys)) for z, ys in by_z.items())
-    if len(skirt_rows) < 4:
-        skirt_rows = [(z, ctx.SKIRT_Y - ry - 0.004) for z, rx, ry in _skirt_table()]
-        print("ABAYA skirt_flare not found: band uses the table")
-
-    def skirt_front(z):
-        return _table(skirt_rows, z)
-
-    spec = dict(hem=hem, zn=zn, neck=(n_r, n_cy), section=section, ring=ring, front_pt=front_pt, axis=axis, sleeve_r=sleeve_r, skirt_front=skirt_front)
+    spec = dict(hip=hip, zn=zn, neck=(n_r, n_cy), section=section, ring=ring, front_pt=front_pt, weights=weights, axis=axis, sleeve_r=sleeve_r)
     _SPEC[key] = spec
     return spec
 
@@ -207,10 +188,10 @@ def build_upper(ctx):
     _release("upper_abaya")
     sp = _spec(ctx)
     b = ctx.Builder()
-    hem, zn = sp["hem"], sp["zn"]
+    hip, zn = sp["hip"], sp["zn"]
 
-    # Body: dense rings where the silhouette turns (hem flare, bust, shoulders, neck).
-    zs = [hem, 1.00, 1.03, 1.06, 1.10, 1.14, 1.18, 1.22, 1.26, 1.30, 1.34, 1.38, 1.41, 1.44, 1.465, 1.48, 1.495, 1.51, 1.523, zn]
+    # Body, hem to neckline: dense rings where the silhouette turns (hips, bust, shoulders, neck).
+    zs = [HEM_Z, 0.12, 0.22, 0.32, 0.42, 0.52, 0.62, 0.72, 0.81, 0.89, 0.95, hip, 1.03, 1.08, 1.14, 1.20, 1.26, 1.30, 1.34, 1.38, 1.41, 1.44, 1.465, 1.48, 1.495, 1.51, 1.523, zn]
     rings = [sp["ring"](z) for z in zs]
     # Rounded collar: a soft roll around the (tilted) neckline, closing back in towards the neck.
     for dz, dr in ((0.005, 0.010), (0.011, 0.014), (0.017, 0.011), (0.021, 0.004), (0.022, -0.001)):
@@ -230,7 +211,7 @@ def build_upper(ctx):
             b.loft(srings, cap_end=True)
         else:
             b.loft(srings, cap_start=True)
-    return ctx.make_object("upper_abaya", b, ctx.top_weights, "top")
+    return ctx.make_object("upper_abaya", b, sp["weights"], "top")
 
 
 # ---------------------------------------------------------------- cuffs
@@ -264,36 +245,25 @@ def build_trim(ctx):
     _release("abaya_trim")
     sp = _spec(ctx)
     b = ctx.Builder()
-    hem, zn = sp["hem"], sp["zn"]
-    table = _skirt_table()
-    # Stations down the centre front: on the abaya (by nominal ring height), then on the skirt.
-    z_top = [zn - 0.004, 1.52, 1.50, 1.48, 1.46, 1.44, 1.42, 1.39, 1.36, 1.32, 1.27, 1.21, 1.15, 1.09, 1.03, hem + 0.004]
-    z_skirt = [hem - 0.01, 0.95, 0.90, 0.84, 0.78, 0.70, 0.62, 0.52, 0.42, 0.32, 0.22, 0.13, TRIM_BOTTOM_Z]
+    zn = sp["zn"]
+    # Stations down the centre front, on the abaya's own surface (by nominal ring height).
+    zs = [zn - 0.004, 1.52, 1.50, 1.48, 1.46, 1.44, 1.42, 1.39, 1.36, 1.32, 1.27, 1.21, 1.15, 1.09, 1.03, 0.97, 0.90, 0.82, 0.73, 0.63, 0.52, 0.42, 0.32, 0.22, 0.13, TRIM_BOTTOM_Z]
     xs = (-BAND_HALF, -BAND_HALF + 0.003, BAND_HALF - 0.003, BAND_HALF)
+    e, t = BAND_PROUD
     rows = []
-    for z in z_top:
-        e, t = BAND_PROUD
+    for z in zs:
         row = []
         for i, x in enumerate(xs):
             y, zz = sp["front_pt"](z, x)
             row.append(ctx.Vector((x, y - (e if i in (0, 3) else t), zz)))
         rows.append(row)
-    for z in z_skirt:
-        e, t = BAND_PROUD_SKIRT
-        y = sp["skirt_front"](z)
-        rows.append([ctx.Vector((x, y - (e if i in (0, 3) else t), z)) for i, x in enumerate(xs)])
     ids = [b.add_ring(r) for r in rows]
     for k in range(len(ids) - 1):
         up, lo = ids[k], ids[k + 1]
         for c in range(3):
             b.faces.append((lo[c], lo[c + 1], up[c + 1], up[c]))   # faces -Y (the front)
-
-    def weights(p):
-        if p.z >= hem - 0.002:
-            return ctx.top_weights(p)
-        return ctx.leg_weights(p, _at(table, p.z, 1), ry=_at(table, p.z, 2))
-
-    return ctx.make_object("abaya_trim", b, weights, "trim")
+    # Same skinning as the cloth under it, so it never lifts off.
+    return ctx.make_object("abaya_trim", b, sp["weights"], "trim")
 
 
 PIECES = {"upper_abaya": (build_upper, "top"), "cuffs": (build_cuffs, "trim"), "abaya_trim": (build_trim, "trim")}
