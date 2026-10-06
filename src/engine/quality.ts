@@ -56,9 +56,18 @@ export function detectQuality(): QualityLevel {
     /* ignore */
   }
   if (/swiftshader|llvmpipe|software|basic render/.test(gpu)) return 'low'
-  if (isTouchDevice()) return cores >= 8 && mem >= 6 ? 'medium' : 'low'
+  if (isTouchDevice()) return touchTier(cores, mem, gpu)
   if (/intel|uhd|iris|mali|adreno/.test(gpu) || cores <= 4) return 'medium'
   return 'high'
+}
+
+/** Flagship phone GPUs that hold 60 fps on High (measured: Galaxy S24 Ultra, Adreno 750, 59 fps with bloom + reflections). */
+const FLAGSHIP_GPU = /adreno \(tm\) (7[3-9]\d|8\d\d)|apple (gpu|a1[5-9]|a2\d|m\d)|immortalis|mali-g7[1-9]\d|xclipse 9[4-9]\d/
+
+/** Auto tier for phones and tablets: High on flagship GPUs with 8 cores and 8 GB, Medium on 8 cores / 6 GB, else Low. */
+export function touchTier(cores: number, mem: number, gpu: string): QualityLevel {
+  if (cores >= 8 && mem >= 8 && FLAGSHIP_GPU.test(gpu)) return 'high'
+  return cores >= 8 && mem >= 6 ? 'medium' : 'low'
 }
 
 export function webglAvailable(): boolean {

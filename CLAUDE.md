@@ -55,6 +55,9 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
 - **`MainActivity`:** immersive full screen, keep-screen-on, draws under the cutout. The manifest locks `sensorLandscape`.
 - **Touch controls:** fixed-home joystick with **sprint lock** (drag up past the rim and release), run and camera buttons (`.pad-btn` in `ui/hud.ts`), look sensitivity and vibration settings. Game pads use physical left/right: they don't mirror in Arabic.
 - **Third person is the default on touch** (store v3 migrates touch users once); desktop stays first person.
+- **Touch HUD** (`src/ui/gameHud.ts`, `src/styles/game.css`, touch only): one icon row top right (coins, map, cart, help, menu); coins and map open panels under the row that close on a second tap (the live chips and the minimap are re-parented into them); the prompt is a card beside the hand button (`Interactable.productId` → photo, brand, title, price). Toasts, the help pill and the desktop top-bar actions are hidden on touch.
+- **Third person:** camera 2.5 m over the shoulder, blocked by every collider (`CollisionWorld.raycastAll`), not only walls.
+- **Auto quality on touch:** `touchTier()` picks High on flagship GPUs (`FLAGSHIP_GPU`, 8 cores, 8 GB; measured on a Galaxy S24 Ultra: 59 fps), Medium on 8 cores / 6 GB, else Low.
 - **Frame rate:** `fpsCap` setting (30 / 60 / Max, `shouldRender`), plus dynamic resolution on touch with Auto quality (`resolutionStep`, floor 0.7); a tier only drops after the scale bottoms out.
 - **Icons / splash:** `npm run app:assets` (`scripts/app-assets.mjs` → `assets/` → `capacitor-assets`).
 - **Fonts are bundled** (`@fontsource`), not loaded from Google Fonts.
