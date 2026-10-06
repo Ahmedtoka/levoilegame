@@ -31,6 +31,7 @@ import { aoCeilJunction, aoFloorJunction } from './aoStrips'
 import { addContactShadow } from './decals'
 import { FloorMirror, setFloorSeeThrough } from './floorMirror'
 import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, marbleCladMat, oakVeneerMat, tintedPlane, tiledPlane } from './finish'
+import { setPbrQuality } from '../engine/pbr'
 import { markMirrored } from '../engine/layers'
 
 export interface ShellHandles {
@@ -100,6 +101,8 @@ export async function buildShell(
   quality: QualitySettings,
   _kit: Kit | null = null, // kept for callers; the mall shell no longer places kit pieces
 ): Promise<ShellHandles> {
+  // The CC0 texture library picks its 512 set on Low; every material below goes through it.
+  setPbrQuality(quality)
   const f = batcher.frame(new Matrix4(), colliders)
   const { plazaHalf: W, plazaDepth: A, corridorHalf: B, atriumHeight: AH, boulevardHeight: BH, shopHeight: SH } = MALL
   const root = new Group()
