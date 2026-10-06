@@ -30,7 +30,7 @@ import { addPool, setGlowsVisible } from './glow'
 import { aoCeilJunction, aoFloorJunction } from './aoStrips'
 import { addContactShadow } from './decals'
 import { FloorMirror, setFloorSeeThrough } from './floorMirror'
-import { atlasPeriod, floorAtlas, corridorFloorMat, GYPSUM, marbleCladMat, oakVeneerMat, tintedPlane, tiledPlane } from './finish'
+import { atlasPeriod, floorAtlas, floorNormal, FLOOR_NORMAL, corridorFloorMat, GYPSUM, marbleCladMat, oakVeneerMat, tintedPlane, tiledPlane } from './finish'
 import { setPbrQuality } from '../engine/pbr'
 import { markMirrored } from '../engine/layers'
 
@@ -116,9 +116,11 @@ export async function buildShell(
     map: floorAtlas(quality.textureMax <= 512 ? 1024 : 2048),
     roughness: 0.18,
     metalness: 0.05,
+    normalMap: floorNormal(),
     transparent: false,
     opacity: 0.8,
   })
+  atriumFloorMat.normalScale.set(FLOOR_NORMAL, FLOOR_NORMAL)
   const plazaFloor = new Mesh(tiledPlane(2 * W, A, atlasPeriod(), 0, A / 2), atriumFloorMat)
   plazaFloor.position.set(0, 0, -A / 2)
   // See-through over its mirror (High), the floor is in the transparent queue: draw it first

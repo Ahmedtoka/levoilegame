@@ -20,12 +20,13 @@ export const THEME = {
   wallShadow: '#5a4a3c',
   /** Dark oak wainscot and shop joinery. */
   oak: '#5b3f2a',
-  /** Dark polished marble (Nero Marquina-like) floor base tone. */
-  floor: '#1a1816',
+  /** Light polished cream marble floor base tone (the night mall's one light surface: the
+   * light pools and halos read on it). */
+  floor: '#e6dfd4',
   /** Floor veins (texture tint target). */
-  floorVein: '#8c8580',
+  floorVein: '#b9ae9f',
   /** Darker border band along the walls and around the medallion. */
-  floorBorder: '#0f0e0d',
+  floorBorder: '#a89c90',
   /** Shop greige walls (slightly lighter than the mall walls, they are lit from closer). */
   shopWall: '#e3d8c8',
 

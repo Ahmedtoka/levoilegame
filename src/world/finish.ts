@@ -7,7 +7,7 @@
 // one material + one texture serves every size without per-mesh clones.
 
 import { BoxGeometry, BufferAttribute, Color, DoubleSide, MeshPhysicalMaterial, MeshStandardMaterial, PlaneGeometry, type BufferGeometry, type Texture } from 'three'
-import { pbrMaterial, pbrSize, pbrUrl } from '../engine/pbr'
+import { pbrMap, pbrMaterial, pbrSize, pbrUrl } from '../engine/pbr'
 import { canvasTexture, makeCanvas, rng, storeTexture } from '../engine/textures'
 import { THEME } from './theme'
 
@@ -57,15 +57,14 @@ export function tiledPlane(w: number, d: number, period: number, ox = 0, oz = 0)
 let atlas: Texture | null = null
 
 /**
- * 4 × 4 large-format dark marble tiles in one texture (2048, or `size` on the first call,
- * e.g. 1024 on Low): every tile is a different crop / rotation of the `marble-dark` map
- * (Nero Marquina style: near-black base, light veins) with a small tint shift, and a dark
- * grout joint. Repeating 4 × 4 tiles hides the texture's period. Until the map arrives the
+ * 4 × 4 large-format cream marble tiles in one texture (2048, or `size` on the first call,
+ * e.g. 1024 on Low): every tile is a different crop / rotation of the `marble-cream` map
+ * (light polished stone, soft grey veins) with a small tint shift, and a grey grout joint. Repeating 4 × 4 tiles hides the texture's period. Until the map arrives the
  * atlas is flat `THEME.floor`.
  */
 export function floorAtlas(size = 2048): Texture {
   if (atlas) return atlas
-  const src = pbrUrl('marble-dark', 'color', size <= 1024 ? 512 : pbrSize())
+  const src = pbrUrl('marble-cream', 'color', size <= 1024 ? 512 : pbrSize())
   if (typeof document === 'undefined') return (atlas = storeTexture(src, [1, 1]))
   const N = size
   const ts = N / ATLAS_TILES
@@ -97,19 +96,19 @@ export function floorAtlas(size = 2048): Texture {
         if (r() < 0.5) g.scale(-1, 1)
         g.drawImage(img, sx, sy, sw, sw, -ts / 2, -ts / 2, ts, ts)
         g.restore()
-        // Per-tile variation: a slight warm/cool cast and ±brightness (subtle: the stone is dark).
+        // Per-tile variation: a slight warm/cool cast and ±brightness (subtle: the stone is light).
         const warm = r() < 0.5
-        g.fillStyle = warm ? `rgba(255,214,170,${0.03 + r() * 0.05})` : `rgba(200,210,232,${0.02 + r() * 0.04})`
+        g.fillStyle = warm ? `rgba(230,190,150,${0.04 + r() * 0.06})` : `rgba(190,200,225,${0.03 + r() * 0.05})`
         g.fillRect(x0, y0, ts, ts)
-        const lift = r() - 0.45
-        g.fillStyle = lift > 0 ? `rgba(255,250,240,${lift * 0.08})` : `rgba(0,0,0,${-lift * 0.3})`
+        const lift = r() - 0.5
+        g.fillStyle = lift > 0 ? `rgba(255,252,246,${lift * 0.16})` : `rgba(60,50,40,${-lift * 0.08})`
         g.fillRect(x0, y0, ts, ts)
         // Grout: dark joint on the top and left edge + a faint bevel highlight
         // (the next tile supplies the other side, so the atlas tiles seamlessly).
-        g.fillStyle = 'rgba(0,0,0,0.6)'
+        g.fillStyle = 'rgba(70,60,52,0.55)'
         g.fillRect(x0, y0, ts, gw)
         g.fillRect(x0, y0, gw, ts)
-        g.fillStyle = 'rgba(255,255,255,0.12)'
+        g.fillStyle = 'rgba(255,255,255,0.35)'
         g.fillRect(x0 + gw, y0 + gw, ts - gw, bw)
         g.fillRect(x0 + gw, y0 + gw, bw, ts - gw)
       }
@@ -128,7 +127,18 @@ export const atlasPeriod = (tile = TILE) => tile * ATLAS_TILES
  * follows its own mirror.
  */
 export function corridorFloorMat(): MeshStandardMaterial {
-  return new MeshStandardMaterial({ map: floorAtlas(), vertexColors: true, roughness: THEME.roughness.floor, metalness: 0.04 })
+  const m = new MeshStandardMaterial({ map: floorAtlas(), vertexColors: true, roughness: THEME.roughness.floor, metalness: 0.04, normalMap: floorNormal() })
+  m.normalScale.set(FLOOR_NORMAL, FLOOR_NORMAL)
+  return m
+}
+
+/** Strength of the stone's normal map on the floors (polished: just the vein relief). */
+export const FLOOR_NORMAL = 0.3
+
+/** The `marble-cream` normal map repeated once per atlas tile (the colour crops differ per tile; the
+ * relief is too faint for the mismatch to read). Shared by the plaza and corridor floors. */
+export function floorNormal(): Texture {
+  return pbrMap('marble-cream', 'normal', [ATLAS_TILES, ATLAS_TILES])
 }
 
 /** `tiledPlane` with a constant vertex colour (sRGB hex), for merging differently tinted floor parts. */

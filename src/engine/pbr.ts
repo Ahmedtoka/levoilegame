@@ -146,6 +146,11 @@ function withRepeat(l: Loaded, repeat: [number, number] | undefined): Texture {
 
 // ----------------------------------------------------------------- materials
 /** Cached MeshStandardMaterial with the library's maps; throws on an unknown name. */
+/** One library map with a repeat (shared, cached): for materials built outside `pbrMaterial`. */
+export function pbrMap(name: PbrName, map: PbrMap, repeat?: [number, number]): Texture {
+  return withRepeat(loadMap(name, map), repeat)
+}
+
 export function pbrMaterial(name: PbrName, opts: PbrOptions = {}): MeshStandardMaterial {
   const def = DEFS[name]
   if (!def) throw new Error(`unknown PBR texture "${name}"`)
