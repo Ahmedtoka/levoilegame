@@ -1140,7 +1140,7 @@ def export(arm, objs, clips):
 # ---------------------------------------------------------------- preview
 
 LOOKS = {
-    "abaya_hijab": ["head", "hands", "eyes", "brows", "upper_abaya", "skirt_flare", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
+    "abaya_hijab": ["head", "hands", "eyes", "brows", "upper_abaya", "leggings", "shoes", "hijab_classic", "hijab_band", "cuffs", "abaya_trim"],
     "skirt_long_hijab": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hijab_long"],
     "trousers_hair": ["head", "hands", "eyes", "brows", "upper", "trousers", "shoes", "hair_long", "glasses_round"],
     "staff_bun": ["head", "hands", "eyes", "brows", "upper", "skirt_straight", "leggings", "shoes", "hair_bun", "vest", "logo"],
