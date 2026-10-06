@@ -29,7 +29,7 @@ import {
   type Texture,
 } from 'three'
 import { blobShadow } from '../world/props'
-import { avatarKit, clipStride, cloneBones, mergedGeometry } from './avatar/kit'
+import { avatarKit, clipStride, cloneBones, mergedGeometry, shapeHead } from './avatar/kit'
 import { avatarMaterial, blankTexture, type AvatarMaterial, type FabricPart } from './avatar/material'
 import { twoBoneIK } from './avatar/ik'
 import { PARTS, piecesFor, type AvatarOutfit, type HeadWear, type Part } from './avatar/pieces'
@@ -72,6 +72,13 @@ export interface Look {
   vest?: { color: string; logo: Texture | null }
   pose: Pose
   height?: number
+  /** Selfie / editor refinements (see avatar/look.ts). */
+  iris?: string
+  lips?: string
+  brows?: string
+  faceWidth?: number
+  jaw?: number
+  browThick?: number
 }
 
 /** The model stands ~1.84 m (head enlarged ×1.15 in the build); scaled to ~1.66 m. */
@@ -130,7 +137,7 @@ export function lookColors(look: Look): Record<Part, string> {
     vest: look.vest?.color ?? look.top,
     logo: look.vest?.color ?? look.top,
     eyes: '#ffffff',
-    brows: look.head.kind === 'hair' ? look.head.color : '#2b1d16',
+    brows: look.brows ?? (look.head.kind === 'hair' ? look.head.color : '#2b1d16'),
   }
 }
 
@@ -173,13 +180,26 @@ export class Character implements Persona {
 
     const pieces = piecesFor({ outfit: look.outfit, head: look.head, vest: !!look.vest, logo: !!look.vest?.logo })
     this.mat = avatarMaterial(lookColors(look), kit.tex, look.vest?.logo ?? blankTexture())
+    const face = this.mat.userData.face
+    if (look.iris) face.iris.set(look.iris)
+    if (look.lips) face.lips.set(look.lips)
+    face.on.set(look.iris ? 1 : 0, look.lips ? 0.75 : 0.5, 0.3)
     const { root: rootBone, bones, byName } = cloneBones(kit)
     this.bones = byName
     for (const n of ['skirt_f', 'skirt_b']) {
       const b = byName.get(n)
       if (b) this.skirtRest.set(b, b.quaternion.clone())
     }
-    const mesh = new SkinnedMesh(mergedGeometry(kit, pieces), this.mat)
+    let geometry = mergedGeometry(kit, pieces)
+    // A shaped head needs its own copy (the merged geometry is shared per piece set).
+    const fw = look.faceWidth ?? 1
+    const jw = look.jaw ?? 1
+    const bt = look.browThick ?? 1
+    if (fw !== 1 || jw !== 1 || bt !== 1) {
+      geometry = geometry.clone()
+      shapeHead(geometry, fw, jw, bt)
+    }
+    const mesh = new SkinnedMesh(geometry, this.mat)
     mesh.add(rootBone)
     mesh.bind(new Skeleton(bones, kit.boneInverses), kit.bindMatrix)
     mesh.boundingSphere = BOUNDS

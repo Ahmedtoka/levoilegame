@@ -14,7 +14,20 @@ export interface AvatarData {
   trim: string
   shoes: string
   head: HeadWear
+  /** Selfie / editor refinements (all optional; defaults are the base character). */
+  iris?: string
+  lips?: string
+  brows?: string
+  /** Head width multiplier (0.86–1.14). */
+  faceWidth?: number
+  /** Lower-face (jaw) width multiplier (0.84–1.14). */
+  jaw?: number
+  /** Brow thickness multiplier (0.7–1.5). */
+  browThick?: number
 }
+
+export const AVATAR_IRIS = ['#3b2618', '#5a3a22', '#7a5a3a', '#4a6a4a', '#5a7a9a', '#3a4a6a']
+export const AVATAR_LIPS = ['#c96f7b', '#b65f63', '#d68a8f', '#a85462', '#8c3a52', '#c9a09a']
 
 /** Editor choices. */
 export const AVATAR_SKINS = ['#f6dccb', '#f3cfb1', '#e8b994', '#d49c74', '#b77a55', '#8a5a3c']
@@ -81,8 +94,11 @@ export function sanitizeAvatar(raw: unknown): AvatarData | null {
     head = { kind: 'hijab', style, color: color(h.color, '#c99aae'), accent: typeof h.accent === 'string' && HEX.test(h.accent) ? h.accent : undefined }
   }
   const face = Number.isInteger(o.face) && (o.face as number) >= 0 && (o.face as number) < FACE_STYLES.length ? (o.face as number) : d.face
+  const num = (v: unknown, lo: number, hi: number) => (typeof v === 'number' && Number.isFinite(v) ? Math.max(lo, Math.min(hi, v)) : undefined)
+  const opt = (v: unknown) => (typeof v === 'string' && HEX.test(v) ? v : undefined)
   return {
-    skin: AVATAR_SKINS.includes(o.skin as string) ? (o.skin as string) : d.skin,
+    // Any skin tone (a selfie samples it); the swatches are only shortcuts.
+    skin: color(o.skin, d.skin),
     face,
     outfit: AVATAR_OUTFITS.includes(o.outfit as AvatarOutfit) ? (o.outfit as AvatarOutfit) : d.outfit,
     top: color(o.top, d.top),
@@ -90,5 +106,11 @@ export function sanitizeAvatar(raw: unknown): AvatarData | null {
     trim: color(o.trim, d.trim),
     shoes: color(o.shoes, d.shoes),
     head,
+    iris: opt(o.iris),
+    lips: opt(o.lips),
+    brows: opt(o.brows),
+    faceWidth: num(o.faceWidth, 0.86, 1.14),
+    jaw: num(o.jaw, 0.84, 1.14),
+    browThick: num(o.browThick, 0.7, 1.5),
   }
 }

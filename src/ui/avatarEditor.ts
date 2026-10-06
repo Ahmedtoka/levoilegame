@@ -17,9 +17,13 @@ import {
 } from 'three'
 import { Character } from '../actors/character'
 import { FACE_STYLES, faceTexture } from '../actors/avatar/face'
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera'
+import { analyzeSelfie, applyTraits } from '../actors/avatar/selfie'
 import {
   AVATAR_FABRICS,
   AVATAR_HAIR_COLORS,
+  AVATAR_IRIS,
+  AVATAR_LIPS,
   AVATAR_HAIRS,
   AVATAR_HIJABS,
   AVATAR_OUTFITS,
@@ -50,6 +54,7 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
   let draft: AvatarData = defaultAvatar()
   let tab: Tab = 'look'
   let stage: PreviewStage | null = null
+  let selfieState: 'idle' | 'busy' | 'done' | 'none' = 'idle'
 
   const set = (patch: Partial<AvatarData>) => {
     draft = { ...draft, ...patch }
@@ -85,6 +90,9 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
     trim: (b) => set({ trim: b.dataset.v! }),
     shoes: (b) => set({ shoes: b.dataset.v! }),
     random: () => set(randomAvatar()),
+    iris: (b) => set({ iris: b.dataset.v! }),
+    lips: (b) => set({ lips: b.dataset.v! }),
+    selfie: () => void takeSelfie(),
     close: () => store.getState().set({ overlay: null }),
     save: () => {
       const s = store.getState()
@@ -95,6 +103,44 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
       else game.resume()
     },
   })
+
+  // Sliders (face width, jaw, brows) update the draft live.
+  veil.addEventListener('input', (e) => {
+    const r = e.target as HTMLInputElement
+    if (!r.dataset.range) return
+    draft = { ...draft, [r.dataset.range]: Number(r.value) }
+    stage?.show(draft)
+  })
+
+  /** Photo -> traits -> draft. Analysis runs on the device (MediaPipe); nothing is uploaded. */
+  const takeSelfie = async () => {
+    if (selfieState === 'busy') return
+    selfieState = 'busy'
+    renderPanel()
+    try {
+      const photo = await Camera.getPhoto({ resultType: CameraResultType.DataUrl, source: CameraSource.Camera, direction: CameraDirection.Front, quality: 85, width: 900, correctOrientation: true })
+      if (!photo.dataUrl) throw new Error('cancelled')
+      const img = new Image()
+      await new Promise<void>((res, rej) => {
+        img.onload = () => res()
+        img.onerror = () => rej(new Error('bad image'))
+        img.src = photo.dataUrl!
+      })
+      const traits = await analyzeSelfie(img)
+      if (!traits) {
+        selfieState = 'none'
+        renderPanel()
+        return
+      }
+      selfieState = 'done'
+      set(applyTraits(traits, draft))
+    } catch (err) {
+      // Cancelled or no camera: back to the idle button.
+      console.info('[selfie]', err)
+      selfieState = 'idle'
+      renderPanel()
+    }
+  }
 
   const swatches = (action: string, colors: readonly string[], current: string | undefined, extra = '') =>
     `<div class="swatches">${extra}${colors
@@ -130,8 +176,20 @@ export function mountAvatarEditor(root: HTMLElement, game: GameBridge): void {
   const panelHtml = (L: Lang): string => {
     const d = draft
     if (tab === 'look') {
+      const slider = (key: 'faceWidth' | 'jaw' | 'browThick', lo: number, hi: number) =>
+        `<input type="range" data-range="${key}" min="${lo}" max="${hi}" step="0.01" value="${d[key] ?? 1}" />`
+      const selfie =
+        selfieState === 'busy'
+          ? `<div class="ae-selfie busy"><span class="spin"></span>${esc(t('analysing', L))}</div>`
+          : `<button class="ae-selfie" data-action="selfie">${ICONS.camera}<span><b>${esc(t('takeSelfie', L))}</b><small>${esc(selfieState === 'none' ? t('noFaceFound', L) : selfieState === 'done' ? t('selfieDone', L) : t('selfieHint', L))}</small></span></button>`
       return (
+        selfie +
         row(t('skinTone', L), swatches('skin', AVATAR_SKINS, d.skin)) +
+        row(t('eyeColor', L), swatches('iris', AVATAR_IRIS, d.iris)) +
+        row(t('lipColor', L), swatches('lips', AVATAR_LIPS, d.lips)) +
+        row(t('faceWidth', L), slider('faceWidth', 0.86, 1.14)) +
+        row(t('jawWidth', L), slider('jaw', 0.84, 1.14)) +
+        row(t('browThick', L), slider('browThick', 0.7, 1.5)) +
         row(
           t('faceStyle', L),
           `<div class="faces">${FACE_STYLES.map(

@@ -918,6 +918,61 @@ def export_textures(objs):
     print("SKIN_REF", "#" + "".join(f"{int(c ** (1 / 2.2) * 255 + 0.5):02x}" for c in ref), n)
 
 
+def export_face_mask(objs, size=512):
+    """face_mask.png in the head's UV space: R = lips, G = cheeks (blush), B = eyelids. The runtime
+    tints these regions (selfie / editor colours) over the skin atlas."""
+    import numpy as np
+
+    head = objs["head"]
+    me = head.data
+    uv = me.uv_layers.active.data
+    img = np.zeros((size, size, 3), dtype=np.float32)
+
+    def weight(p):
+        # Regions in head space (after HEAD_SCALE), front of the face only.
+        if p.y > -0.03:
+            return (0.0, 0.0, 0.0)
+        lips = smooth(0.034, 0.012, abs(p.x)) * smooth(0.022, 0.008, abs(p.z - 1.627))
+        cheek = smooth(0.022, 0.048, abs(p.x)) * (1 - smooth(0.085, 0.11, abs(p.x))) * smooth(0.03, 0.012, abs(p.z - 1.66))
+        lid = smooth(0.012, 0.03, abs(p.x)) * (1 - smooth(0.07, 0.085, abs(p.x))) * smooth(0.012, 0.004, abs(p.z - 1.70))
+        return (min(1.0, lips), min(1.0, cheek * 0.9), min(1.0, lid))
+
+    vw = {v.index: weight(v.co) for v in me.vertices}
+    for poly in me.polygons:
+        li = list(poly.loop_indices)
+        if len(li) < 3:
+            continue
+        pts = [(uv[l].uv.x * size, (1 - uv[l].uv.y) * size) for l in li]
+        ws = [vw[me.loops[l].vertex_index] for l in li]
+        if max(max(w) for w in ws) < 0.01:
+            continue
+        # Fan-triangulate, rasterise with barycentric weights.
+        for k in range(1, len(li) - 1):
+            (x0, y0), (x1, y1), (x2, y2) = pts[0], pts[k], pts[k + 1]
+            w0, w1, w2 = ws[0], ws[k], ws[k + 1]
+            xs = range(max(0, int(min(x0, x1, x2)) - 1), min(size - 1, int(max(x0, x1, x2)) + 1) + 1)
+            ys = range(max(0, int(min(y0, y1, y2)) - 1), min(size - 1, int(max(y0, y1, y2)) + 1) + 1)
+            det = (y1 - y2) * (x0 - x2) + (x2 - x1) * (y0 - y2)
+            if abs(det) < 1e-9:
+                continue
+            for py in ys:
+                for px in xs:
+                    l0 = ((y1 - y2) * (px + 0.5 - x2) + (x2 - x1) * (py + 0.5 - y2)) / det
+                    l1 = ((y2 - y0) * (px + 0.5 - x2) + (x0 - x2) * (py + 0.5 - y2)) / det
+                    l2 = 1 - l0 - l1
+                    if l0 < -0.02 or l1 < -0.02 or l2 < -0.02:
+                        continue
+                    for c in range(3):
+                        img[py, px, c] = max(img[py, px, c], l0 * w0[c] + l1 * w1[c] + l2 * w2[c])
+    out = bpy.data.images.new("face_mask", size, size, alpha=True)
+    rgba = np.concatenate([img, np.ones((size, size, 1), dtype=np.float32)], axis=2)
+    out.pixels = rgba[::-1].ravel().tolist()
+    out.filepath_raw = os.path.join(OUT_DIR, "face_mask.png")
+    out.file_format = "PNG"
+    out.save()
+    print("FACE_MASK", os.path.join(OUT_DIR, "face_mask.png"), "lips px", int((img[:, :, 0] > 0.3).sum()), "cheek px", int((img[:, :, 1] > 0.3).sum()))
+
+
 # ---------------------------------------------------------------- export
 
 
@@ -1039,6 +1094,7 @@ def preview(arm, objs, out_dir, clips):
 
 arm, clips, objs = build()
 export_textures(objs)
+export_face_mask(objs)
 export(arm, objs, clips)
 if PREVIEW:
     for t in list(arm.animation_data.nla_tracks):

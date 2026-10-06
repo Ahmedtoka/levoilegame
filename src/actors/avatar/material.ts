@@ -19,7 +19,12 @@ export interface AvatarTextures {
   hair: Texture
   hairNormal: Texture
   eyes: Texture
+  /** Head UV mask: R lips, G cheeks, B eyelids (tinted per character). */
+  faceMask: Texture
 }
+
+/** Iris colour of the eye texture (the runtime tints it towards the character's). */
+export const IRIS_REF = '#5a3a22'
 
 /** Average cheek colour of the skin atlas (printed by build_avatar.py as SKIN_REF): the tint reference. */
 export const SKIN_REF = '#c8ab94'
@@ -29,7 +34,14 @@ export interface AvatarMaterial extends MeshStandardMaterial {
    * palette: colour per part; blink: 0 open … 1 eyes closed; fabrics: a texture
    * per garment part, shown where fabricOn (x top, y bottom, z hijab) is 1.
    */
-  userData: { palette: Color[]; blink: { value: number }; fabrics: Record<FabricPart, { value: Texture }>; fabricOn: { value: Vector3 } }
+  userData: {
+    palette: Color[]
+    blink: { value: number }
+    fabrics: Record<FabricPart, { value: Texture }>
+    fabricOn: { value: Vector3 }
+    /** Face tints: iris, lips, blush colour and (in .w of lvFaceOn) their strengths. */
+    face: { iris: Color; lips: Color; blush: Color; on: Vector3 }
+  }
 }
 
 let blankTex: Texture | null = null
@@ -56,6 +68,8 @@ export function avatarMaterial(colors: Record<Part, string>, tex: AvatarTextures
   const fabricOn = { value: new Vector3() }
   mat.userData.fabrics = fabrics
   mat.userData.fabricOn = fabricOn
+  const face = { iris: new Color(IRIS_REF), lips: new Color('#c96f7b'), blush: new Color('#e9a0a8'), on: new Vector3(0, 0.55, 0.3) }
+  mat.userData.face = face
   mat.defines = { USE_UV: '' }
   const skinRef = new Color(SKIN_REF)
   mat.onBeforeCompile = (shader) => {
@@ -65,6 +79,12 @@ export function avatarMaterial(colors: Record<Part, string>, tex: AvatarTextures
     shader.uniforms.lvHair = { value: tex.hair }
     shader.uniforms.lvHairN = { value: tex.hairNormal }
     shader.uniforms.lvEyes = { value: tex.eyes }
+    shader.uniforms.lvFaceMask = { value: tex.faceMask }
+    shader.uniforms.lvIris = { value: face.iris }
+    shader.uniforms.lvIrisRef = { value: new Color(IRIS_REF) }
+    shader.uniforms.lvLips = { value: face.lips }
+    shader.uniforms.lvBlush = { value: face.blush }
+    shader.uniforms.lvFaceOn = { value: face.on }
     shader.uniforms.lvBlink = blink
     shader.uniforms.lvLogo = { value: logo }
     shader.uniforms.lvFabTop = fabrics.top
@@ -85,6 +105,12 @@ uniform sampler2D lvSkin;
 uniform sampler2D lvHair;
 uniform sampler2D lvHairN;
 uniform sampler2D lvEyes;
+uniform sampler2D lvFaceMask;
+uniform vec3 lvIris;
+uniform vec3 lvIrisRef;
+uniform vec3 lvLips;
+uniform vec3 lvBlush;
+uniform vec3 lvFaceOn;
 uniform float lvBlink;
 uniform sampler2D lvLogo;
 uniform sampler2D lvFabTop;
@@ -119,12 +145,20 @@ vec3 lvC = lvPal[lvI];
 if (lvI == ${PARTS.indexOf('face')} || lvI == ${PARTS.indexOf('skin')}) {
   // The atlas is one skin tone: shift it towards this character's (ratio in linear light).
   lvC = texture2D(lvSkin, vUv).rgb * (lvPal[${PARTS.indexOf('skin')}] / max(lvSkinRef, vec3(0.02)));
+  if (lvI == ${PARTS.indexOf('face')}) {
+    vec3 m = texture2D(lvFaceMask, vUv).rgb;
+    lvC = mix(lvC, lvBlush * lvC * 1.6, m.g * lvFaceOn.z);
+    lvC = mix(lvC, lvLips, m.r * lvFaceOn.y);
+  }
 } else if (lvI == ${PARTS.indexOf('hair')} || lvI == ${PARTS.indexOf('brows')}) {
   // Strands read on any hair colour: dark hair keeps lighter highlights, light hair keeps shadow between locks.
   float lvHl = dot(texture2D(lvHair, vUv).rgb, vec3(0.3, 0.59, 0.11));
   lvC = lvC * (0.45 + 1.5 * lvHl) + vec3(0.05) * lvHl * lvHl;
 } else if (lvI == ${PARTS.indexOf('eyes')}) {
-  lvC = texture2D(lvEyes, vUv).rgb;
+  vec3 lvE = texture2D(lvEyes, vUv).rgb;
+  // The iris is the darker, saturated part of the eye texture: tint only that.
+  float lvIrisMask = smoothstep(0.75, 0.35, dot(lvE, vec3(0.33)));
+  lvC = mix(lvE, lvE * (lvIris / max(lvIrisRef, vec3(0.02))), lvIrisMask * lvFaceOn.x);
 } else if (lvI == ${PARTS.indexOf('logo')}) {
   // The logo texture is shared (flipY on) while glTF UVs run top-down: flip v.
   vec4 l = texture2D(lvLogo, vec2(vUv.x, 1.0 - vUv.y));

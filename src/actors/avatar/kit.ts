@@ -79,11 +79,47 @@ function loadTextures(): AvatarTextures {
     t.anisotropy = 4
     return t
   }
-  return { skin: load('skin.png', true), skinNormal: load('skin_n.png', false), hair: load('hair.png', true), hairNormal: load('hair_n.png', false), eyes: load('eyes.png', true) }
+  return { skin: load('skin.png', true), skinNormal: load('skin_n.png', false), hair: load('hair.png', true), hairNormal: load('hair_n.png', false), eyes: load('eyes.png', true), faceMask: load('face_mask.png', false) }
 }
 
 export function avatarKit(): AvatarKit | null {
   return kit
+}
+
+/**
+ * Head shape for one character (the player's selfie / editor sliders): widens or narrows the
+ * head (everything above the neck), the jaw band, and thickens the brows. Works on a clone of the
+ * merged geometry (bind pose, Y up, skeleton metres).
+ */
+export function shapeHead(geo: BufferGeometry, faceWidth = 1, jaw = 1, browThick = 1): void {
+  const pos = geo.attributes.position as BufferAttribute
+  const part = geo.attributes.part as BufferAttribute
+  const top = PARTS.indexOf('top')
+  const vest = PARTS.indexOf('vest')
+  const brows = PARTS.indexOf('brows')
+  const smooth = (a: number, b: number, x: number) => {
+    const t = Math.max(0, Math.min(1, (x - a) / (b - a)))
+    return t * t * (3 - 2 * t)
+  }
+  // Brow band centre (bind pose) for the thickness scale.
+  let by = 0
+  let bn = 0
+  for (let i = 0; i < pos.count; i++) if (part.getX(i) === brows) (by += pos.getY(i)), bn++
+  by = bn ? by / bn : 1.69
+  for (let i = 0; i < pos.count; i++) {
+    const p = part.getX(i)
+    if (p === top || p === vest) continue
+    const y = pos.getY(i)
+    if (y < 1.5) continue
+    const k = smooth(1.5, 1.58, y)
+    // Jaw: the lower face band (chin up to the cheekbones).
+    const jk = k * (1 - smooth(1.62, 1.7, y))
+    const sx = (1 + (faceWidth - 1) * k) * (1 + (jaw - 1) * jk)
+    pos.setX(i, pos.getX(i) * sx)
+    if (p === brows) pos.setY(i, by + (y - by) * browThick)
+  }
+  pos.needsUpdate = true
+  geo.computeBoundingSphere()
 }
 
 /** Merged geometry of a piece list (cached by the list). */

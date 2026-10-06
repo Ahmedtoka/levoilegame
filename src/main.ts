@@ -20,6 +20,7 @@ import { Batcher } from './engine/batcher'
 import { canvasTexture, loadImage, makeCanvas } from './engine/textures'
 import { Game } from './game'
 import { hideSplash, watchKeyboard } from './platform/native'
+import { analyzeSelfie, applyTraits } from './actors/avatar/selfie'
 import { t } from './i18n/i18n'
 import { setCatalog, store, watch } from './state/store'
 import { createCheckoutService } from './services/CheckoutService'
@@ -185,7 +186,7 @@ async function boot(): Promise<void> {
   hideSplash()
 
   if (import.meta.env.DEV || new URLSearchParams(location.search).has('debug')) {
-    Object.assign(window, { lv: { game, store, engine, layout, catalog, social: social() } })
+    Object.assign(window, { lv: { game, store, engine, layout, catalog, social: social(), selfie: { analyzeSelfie, applyTraits } } })
   }
 }
 
