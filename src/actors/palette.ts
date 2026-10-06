@@ -44,8 +44,46 @@ export function modelLook(seed: number, outfit: OutfitStyle, pose: Pose): Look {
   }
 }
 
-/** Staff uniform: white top, dark bottoms, magenta vest with the logo. */
-export function staffLook(seed: number, logo: Texture | null, pose: Pose = 'clasped'): Look {
+/** Relative luminance (0..1) of a `#rrggbb` colour. */
+export function luminance(hex: string): number {
+  const n = parseInt(hex.slice(1), 16)
+  const lin = (c: number) => {
+    const s = c / 255
+    return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
+  }
+  return 0.2126 * lin((n >> 16) & 255) + 0.7152 * lin((n >> 8) & 255) + 0.0722 * lin(n & 255)
+}
+
+/** Vest colours lighter than this get darkened so the white logo and text stay readable. */
+const VEST_MAX_LUMINANCE = 0.7
+const VEST_DARK_LUMINANCE = 0.3
+
+/**
+ * The vest colour of a shop's staff: the brand colour (darkened to a mid tone when it is
+ * very light), or the mall plum for the concierge, cashier and anyone without a brand.
+ */
+export function staffVestColor(brandColor?: string | null): string {
+  if (!brandColor || !/^#[0-9a-f]{6}$/i.test(brandColor)) return BRAND.magenta
+  const L = luminance(brandColor)
+  if (L <= VEST_MAX_LUMINANCE) return brandColor
+  // Scale in linear light so the hue stays, then re-encode to sRGB.
+  const k = VEST_DARK_LUMINANCE / L
+  const n = parseInt(brandColor.slice(1), 16)
+  const ch = (c: number) => {
+    const s = c / 255
+    const lin = (s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4) * k
+    const out = lin <= 0.0031308 ? lin * 12.92 : 1.055 * lin ** (1 / 2.4) - 0.055
+    return Math.round(Math.max(0, Math.min(1, out)) * 255)
+  }
+  const hex = (v: number) => v.toString(16).padStart(2, '0')
+  return `#${hex(ch((n >> 16) & 255))}${hex(ch((n >> 8) & 255))}${hex(ch(n & 255))}`
+}
+
+/**
+ * Staff uniform: white top, dark bottoms, a waistcoat with the logo. The waistcoat is in
+ * the shop's brand colour (`brandColor`, see `staffVestColor`); without one it is the mall plum.
+ */
+export function staffLook(seed: number, logo: Texture | null, pose: Pose = 'clasped', brandColor?: string | null): Look {
   const r = rng(seed * 104729 + 7)
   const hijabi = r() < 0.85
   const outfit: AvatarOutfit = r() < 0.5 ? 'pants' : 'skirt'
@@ -60,7 +98,7 @@ export function staffLook(seed: number, logo: Texture | null, pose: Pose = 'clas
     head: hijabi
       ? { kind: 'hijab', color: pick(r, ['#2f2b33', '#ece7e2', '#d9b8c6', '#3c3a47', '#5d4b60']), style: 'classic' }
       : { kind: 'hair', color: pick(r, HAIR), style: pick(r, ['bun', 'ponytail'] as const) },
-    vest: { color: BRAND.magenta, logo },
+    vest: { color: staffVestColor(brandColor), logo },
     pose,
     height: 0.98 + r() * 0.05,
   }
