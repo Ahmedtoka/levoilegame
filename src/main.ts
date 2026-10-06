@@ -36,6 +36,7 @@ import { levoileInterior } from './world/bespoke/levoile'
 import { createSocial, crowdSize, social } from './social'
 import { startSession } from './social/session'
 import { mountLookCard, mountSocial } from './ui/social'
+import { mountBrandCatalog } from './ui/brandCatalog'
 import { buildLiveMall } from './world/liveMall'
 import { loadAvatarKit } from './actors/avatar/kit'
 import { buildPlaza } from './world/plaza'
@@ -122,6 +123,7 @@ async function boot(): Promise<void> {
   mountCart(uiRoot, game)
   mountCheckout(uiRoot, game, createCheckoutService(provider, catalog))
   mountSocial(uiRoot, game)
+  mountBrandCatalog(uiRoot, game)
   mountAvatarEditor(uiRoot, game)
   mountMinimap(uiRoot, game, () => {
     const s = store.getState()
