@@ -511,9 +511,10 @@ def drape(b, long):
         if z >= 1.38:
             t = (1.50 - z) / 0.12
             k = math.sin(t * math.pi / 2)
-            return lerp(0.094, 0.215, k), lerp(0.094, 0.165, k), lerp(0.03, 0.035, t)
+            # Wide enough to clear the loosened tops underneath (they hang ~3 cm proud of the chest).
+            return lerp(0.094, 0.235, k), lerp(0.094, 0.205, k), lerp(0.03, 0.02, t)
         t = smooth(1.38, 1.15, z)
-        return lerp(0.215, 0.205, t), lerp(0.165, 0.160, t), 0.035
+        return lerp(0.235, 0.225, t), lerp(0.205, 0.200, t), 0.02
 
     def hem(a):
         return z_side + (z_front - z_side) * abs(math.sin(a)) ** 1.6
@@ -601,15 +602,15 @@ def build():
     torso = lambda v, d: (not is_hand(d)) and (not is_foot(d)) and HIP_Z - 0.02 <= v.co.z <= COLLAR_Z and not chin_front(v.co)
     edges = lambda p: p.z < HIP_Z + 0.01 or abs(p.x) > 0.62  # hem and cuffs stay put
     objs["upper"] = cut(body, torso, "upper", "top")
-    relax(objs["upper"], 8, pin=edges)
-    loosen_chest(objs["upper"], 0.025)
-    offset(objs["upper"], 0.02)
+    relax(objs["upper"], 18, pin=edges)
+    loosen_chest(objs["upper"], 0.03)
+    offset(objs["upper"], 0.024)
     objs["upper_abaya"] = cut(body, torso, "upper_abaya", "top")
-    relax(objs["upper_abaya"], 12, pin=edges)
-    loosen_chest(objs["upper_abaya"], 0.04)
+    relax(objs["upper_abaya"], 22, pin=edges)
+    loosen_chest(objs["upper_abaya"], 0.045)
     offset(objs["upper_abaya"], lambda p: 0.03 + 0.025 * smooth(0.25, 0.6, abs(p.x)))
     objs["vest"] = cut(body, lambda v, d: (not is_hand(d)) and abs(v.co.x) < 0.185 and HIP_Z + 0.02 <= v.co.z <= 1.47, "vest", "vest")
-    relax(objs["vest"], 8)
+    relax(objs["vest"], 16)
     loosen_chest(objs["vest"], 0.03)
     offset(objs["vest"], 0.032)
     open_front(objs["vest"])
@@ -621,7 +622,7 @@ def build():
     relax(objs["leggings"], 4)
     offset(objs["leggings"], 0.006)
     objs["trousers"] = cut(body, legs, "trousers", "bottom")
-    relax(objs["trousers"], 10)
+    relax(objs["trousers"], 16)
     offset(objs["trousers"], lambda p: 0.022 + 0.05 * smooth(0.75, 0.12, p.z))
     objs["shoes"] = cut(body, lambda v, d: is_foot(d) or (is_leg(d) and v.co.z < 0.1), "shoes", "shoes")
     relax(objs["shoes"], 10)
