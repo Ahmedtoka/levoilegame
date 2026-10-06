@@ -25,6 +25,7 @@ import { labelSign } from './signage'
 import { buildLightboxes, buildSectionPlaques, type PlacedProduct, type SectionPlaque } from './lightbox'
 import { showcaseMesh, type ShowcaseItem } from './showcase'
 import { storyScreen } from './storyScreen'
+import { brandReels } from '../config/brandSocial'
 import { rewardsCounter, type ShopContext, type ShopHandles } from './shop'
 import { BRONZE, OAK, OAK_DARK } from './displays'
 
@@ -347,8 +348,12 @@ function screen(ctx: ShopContext, f: BatchFrame, g: Group, s: Spot, o: BoutiqueO
   ctx.interaction.add({
     object: plane,
     kind: 'catalog',
-    label: () => t('browseAll', store.getState().lang),
-    onInteract: () => store.getState().set({ overlay: 'brandCatalog', catalogBrand: o.brand.id }),
+    // With Instagram reels the screen opens them (the viewer links to all products too).
+    label: () => t(brandReels(o.brand.id).length ? 'watchReels' : 'browseAll', store.getState().lang),
+    onInteract: () =>
+      brandReels(o.brand.id).length
+        ? store.getState().set({ overlay: 'reels', reelsBrand: o.brand.id })
+        : store.getState().set({ overlay: 'brandCatalog', catalogBrand: o.brand.id }),
     maxDist: 3.6,
   })
   // Stories: the brand's vertical videos, or a moving reel of its products.

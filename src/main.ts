@@ -39,7 +39,9 @@ import { mountLookCard, mountSocial } from './ui/social'
 import { mountBrandCatalog } from './ui/brandCatalog'
 import { mountSectionSlider } from './ui/sectionSlider'
 import { mountTryOnMirror } from './ui/tryOnMirror'
+import { mountReelsOverlay } from './ui/reelsOverlay'
 import './styles/slider.css'
+import './styles/reels.css'
 import { buildLiveMall } from './world/liveMall'
 import { loadAvatarKit } from './actors/avatar/kit'
 import { buildPlaza } from './world/plaza'
@@ -129,6 +131,7 @@ async function boot(): Promise<void> {
   mountBrandCatalog(uiRoot, game)
   mountSectionSlider(uiRoot, game)
   mountTryOnMirror(uiRoot, game)
+  mountReelsOverlay(uiRoot, game)
   mountAvatarEditor(uiRoot, game)
   mountMinimap(uiRoot, game, () => {
     const s = store.getState()

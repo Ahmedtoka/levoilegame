@@ -8,6 +8,7 @@
 import { MeshBasicMaterial, SRGBColorSpace, VideoTexture, type Mesh, type Texture } from 'three'
 import { BRAND } from '../config/brand'
 import { brandVideos } from '../config/brandVideos'
+import { brandReels, brandSocial } from '../config/brandSocial'
 import type { BrandDef } from '../config/mall'
 import type { Product } from '../data/types'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
@@ -115,6 +116,39 @@ function catalogCard(g: CanvasRenderingContext2D, count: number, x: number, y: n
   g.fillText('TAP TO BROWSE', x + w / 2, y + h * 0.625)
 }
 
+/** "Watch our reels" card (Instagram gradient) for brands with reels. */
+function reelsCard(g: CanvasRenderingContext2D, handle: string, x: number, y: number, w: number, h: number): void {
+  const grad = g.createLinearGradient(x, y + h, x + w, y)
+  grad.addColorStop(0, '#feda75')
+  grad.addColorStop(0.3, '#fa7e1e')
+  grad.addColorStop(0.6, '#d62976')
+  grad.addColorStop(1, '#4f5bd5')
+  g.fillStyle = grad
+  g.fillRect(x, y, w, h)
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  // Play button
+  g.beginPath()
+  g.arc(x + w / 2, y + h * 0.38, w * 0.14, 0, Math.PI * 2)
+  g.fillStyle = 'rgba(255,255,255,0.25)'
+  g.fill()
+  g.fillStyle = '#ffffff'
+  g.beginPath()
+  g.moveTo(x + w * 0.46, y + h * 0.38 - w * 0.07)
+  g.lineTo(x + w * 0.46, y + h * 0.38 + w * 0.07)
+  g.lineTo(x + w * 0.57, y + h * 0.38)
+  g.closePath()
+  g.fill()
+  g.font = `700 ${Math.round(w * 0.075)}px ${BRAND.fontUi}`
+  g.fillText('WATCH OUR REELS', x + w / 2, y + h * 0.52)
+  g.direction = 'rtl'
+  g.font = `700 ${Math.round(w * 0.07)}px ${BRAND.fontUi}`
+  g.fillText('شوفي الريلز', x + w / 2, y + h * 0.585)
+  g.direction = 'ltr'
+  g.font = `600 ${Math.round(w * 0.06)}px ${BRAND.fontUi}`
+  g.fillText(`@${handle.replace(/^@/, '')}`, x + w / 2, y + h * 0.66)
+}
+
 /** Fill `plane` with the brand's videos, or the product reel. Returns the loader to queue. */
 export function storyScreen(plane: Mesh, brand: BrandDef, products: Product[], textureMax: number, onMaterial: (m: MeshBasicMaterial) => void): () => Promise<void> {
   // Shared clock for every reel; also marks the screen as seen (videos pause when not).
@@ -165,7 +199,9 @@ export function storyScreen(plane: Mesh, brand: BrandDef, products: Product[], t
       if (img) drawCover(g, img, (cell % cols) * cw, Math.floor(cell / cols) * ch, cw, ch)
     }
     const last = n - 1
-    catalogCard(g, products.length, (last % cols) * cw, Math.floor(last / cols) * ch, cw, ch)
+    const handle = brandSocial(brand.id).instagram ?? brand.name
+    if (brandReels(brand.id).length) reelsCard(g, handle, (last % cols) * cw, Math.floor(last / cols) * ch, cw, ch)
+    else catalogCard(g, products.length, (last % cols) * cw, Math.floor(last / cols) * ch, cw, ch)
     onMaterial(reelMaterial(canvasTexture(c), n, cols, rows))
   }
 }

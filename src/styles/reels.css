@@ -1,0 +1,155 @@
+/* Instagram reels viewer (src/ui/reelsOverlay.ts) */
+
+.reels-veil {
+  background: radial-gradient(90% 80% at 50% 40%, rgba(46, 30, 40, 0.8), rgba(20, 12, 18, 0.94));
+}
+
+.reels {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: min(440px, 100%);
+  max-height: calc(100dvh - 24px);
+  color: #fff;
+}
+
+.reels .close {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: -4px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.reels .close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rl-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+}
+
+.rl-head svg {
+  width: 34px;
+  height: 34px;
+  color: #fff;
+  padding: 6px;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+}
+
+.rl-head div {
+  display: flex;
+  flex-direction: column;
+}
+
+.rl-head small {
+  opacity: 0.7;
+}
+
+.rl-phone {
+  position: relative;
+  width: min(400px, 92vw, calc((100dvh - 210px) * 0.5625));
+  aspect-ratio: 9 / 16;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.7), 0 0 0 6px #1c1418, 0 0 0 7px rgba(255, 255, 255, 0.12);
+}
+
+.rl-phone iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+.rl-empty {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.rl-nav {
+  position: absolute;
+  inset-block-start: 50%;
+  width: 42px;
+  height: 42px;
+  margin-block-start: -21px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
+}
+
+.rl-nav svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rl-nav.prev {
+  inset-inline-start: 8px;
+}
+
+.rl-nav.next {
+  inset-inline-end: 8px;
+}
+
+/* The arrow icon points right: flip it for "previous" (and mirror both in RTL). */
+.rl-nav.prev svg,
+[dir='rtl'] .rl-nav.next svg {
+  transform: scaleX(-1);
+}
+
+[dir='rtl'] .rl-nav.prev svg {
+  transform: none;
+}
+
+.rl-nav:disabled {
+  opacity: 0.3;
+}
+
+.rl-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.rl-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.rl-dot.on {
+  background: #fff;
+}
+
+.rl-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn.ig {
+  background: linear-gradient(45deg, #fa7e1e, #d62976, #962fbf);
+}
+
+.btn.ghost.light {
+  color: #fff;
+}

@@ -237,6 +237,9 @@ const STRINGS = {
   wearInMall: { ar: 'البسيه في المول', en: 'Wear it in the mall' },
   takeOff: { ar: 'اقلعيه', en: 'Take it off' },
   wearing: { ar: 'لابسة', en: 'Wearing' },
+  followIg: { ar: 'تابعينا على Instagram', en: 'Follow on Instagram' },
+  noReels: { ar: 'الريلز جاية قريب', en: 'Reels coming soon' },
+  watchReels: { ar: 'شوفي الريلز', en: 'Watch our reels' },
   browseSection: { ar: 'قلّبي في القسم كله', en: 'Browse the whole section' },
   hiddenLogosHint: { ar: 'دوري على ٥ لوجوهات منورة مستخبية في المول', en: 'Find 5 glowing logos hidden around the mall' },
 } satisfies Record<string, Record<Lang, string>>
