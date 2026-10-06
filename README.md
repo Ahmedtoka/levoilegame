@@ -211,7 +211,7 @@ Useful variants:
 
 Where things are configured:
 
-- **Furnishing per section** (which pieces go where, by display type): `furnishWithKit` in `src/world/shop.ts`.
+- **Shop interiors:** brand shops are campaign boutiques (`src/world/boutiqueShop.ts`, plan in `src/config/boutiquePlan.ts`). The old per-section kit furnishing (`furnishWithKit`) is legacy.
 - **Kit cut-out boxes:** `kit_pieces()` in `scripts/blender/export_store.py`.
 - **Turning the kit off:** without `kit.glb`, or with `?nokit`, shops fall back to the procedural props.
 

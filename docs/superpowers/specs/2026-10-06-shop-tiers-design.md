@@ -181,3 +181,10 @@ The old `furnishWithKit` and the `rack/shelf/gallery/boxes` displays are no long
   - "All products" opens and a product opens from it;
   - mobile preset screenshots of a Flagship and a Compact;
   - FPS and draw-call numbers before and after (§5).
+
+## 8. Changes during implementation
+
+1. Compact fronts use glass sidelights flush with the wall, and the compact standee stands inside behind one. A projecting window does not fit: a 6 m front can't hold a 3.2 m opening plus windows.
+2. Brand shop interiors get a cream ceiling with a 0.9 m soffit, slot lights and spot cans. The dark mall slab read as a black void inside shops.
+3. Islands show tall apparel cut-outs as mounted prints instead of tiny figures.
+4. Corridor screen totems stand only at unit boundaries on the 12 m grid.
