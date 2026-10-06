@@ -609,3 +609,8 @@
     border-radius: 7px;
   }
 }
+
+/* Bench (?bench=<spot>, src/bench/run.ts): the scene alone, no HUD, no veils, no touch pads. */
+body.bench #ui {
+  display: none !important;
+}
