@@ -130,8 +130,9 @@ class Mesh:
                 uj = (uj[0] + 1.0, uj[1])
             self.face((centre, ring[i], ring[j]), (((uvs[i][0] + uj[0]) / 2, uv_c[1]), uvs[i], uj))
 
-    def tube(self, pts, outs, width, thick, taper, n=LOCK_N, u_range=(0.0, 1.0), v_range=(0.0, 1.0), tip=0.01):
-        """A tapered lock along a centreline: flat ellipses (width along the surface, thick outward)."""
+    def tube(self, pts, outs, width, thick, taper, n=LOCK_N, u_range=(0.0, 1.0), v_range=(0.0, 1.0), tip=0.01, ridges=0, ridge_amp=0.4):
+        """A tapered lock along a centreline: flat ellipses (width along the surface, thick outward).
+        `ridges` > 0 bumps the outer face into that many soft lock ridges across the width."""
         N = len(pts)
         rings, ruvs = [], []
         for i, c in enumerate(pts):
@@ -144,7 +145,11 @@ class Mesh:
             ring, ruv = [], []
             for s in range(n):
                 t = 2 * math.pi * s / n
-                ring.append(self.vert(c + u * (math.cos(t) * width * k) + o * (math.sin(t) * thick * k)))
+                bump = 1.0
+                if ridges and math.sin(t) > 0:
+                    x = 0.5 + 0.5 * math.cos(t)  # 0..1 across the width
+                    bump = 1 + ridge_amp * (0.5 - 0.5 * math.cos(2 * math.pi * ridges * x)) * math.sin(t)
+                ring.append(self.vert(c + u * (math.cos(t) * width * k) + o * (math.sin(t) * thick * k * bump)))
                 ruv.append((lerp(u_range[0], u_range[1], s / n), lerp(v_range[0], v_range[1], f)))
             rings.append(ring)
             ruvs.append(ruv)
@@ -379,13 +384,6 @@ class BobRadius:
 
 
 def _finish(ctx, m, name):
-    # The default (Quaternius) piece still holds this name while the plug-in runs and build()
-    # renames ours before dropping it, which would leave "hair_long.001" in the GLB (the runtime
-    # looks pieces up by node name): move the old one out of the way first.
-    for coll, suffix in ((bpy.data.objects, "_default"), (bpy.data.meshes, "_default")):
-        old = coll.get(name)
-        if old is not None:
-            old.name = name + suffix
     me = bpy.data.meshes.new(name)
     me.from_pydata([tuple(v) for v in m.v], [], m.f)
     me.validate()
@@ -418,15 +416,17 @@ def build_long(ctx):
     build_cap(m, sk, lambda a: hem_tucked(a, nape=1.615))
     fringe(m, sk)
     curtain(m, sk, 104, 256, 1.705, long_hem, long_radius, cols=30, rows=9, n_locks=5, ridge_amp=0.014, scallop=0.02)
-    # Front locks: from behind each ear, down in front of the shoulder, over the blouse.
+    # Front hair: one wide flat sheet per side falling from behind the ear, lying against the
+    # collarbone and upper chest (in front of the blouse), ending at z 1.30 with a rounded tip.
+    sheet = [(0.098, 0.062, 1.65), (0.112, 0.012, 1.605), (0.114, -0.05, 1.55), (0.108, -0.108, 1.49), (0.098, -0.155, 1.43), (0.09, -0.19, 1.37), (0.085, -0.206, 1.33), (0.082, -0.212, 1.30)]
+
+    def sheet_taper(f):
+        return lerp(0.55, 1.0, smooth(0.0, 0.3, f)) * lerp(1.0, 0.5, smooth(0.7, 1.0, f))
+
     for s in (1, -1):
-        for path, width, thick in (
-            ([(0.094, 0.062, 1.648), (0.108, 0.02, 1.612), (0.114, -0.034, 1.566), (0.114, -0.084, 1.508), (0.11, -0.13, 1.448), (0.102, -0.168, 1.385), (0.094, -0.194, 1.315), (0.088, -0.206, 1.245)], 0.034, 0.019),
-            ([(0.088, 0.07, 1.64), (0.1, 0.038, 1.6), (0.1, -0.012, 1.55), (0.096, -0.064, 1.49), (0.088, -0.11, 1.432), (0.08, -0.15, 1.37), (0.072, -0.172, 1.31)], 0.028, 0.016),
-        ):
-            pts = [Vector((s * x, y, z)) for x, y, z in path]
-            outs = [Vector((p.x, p.y - AX.y, 0.0)).normalized() for p in pts]
-            m.tube(pts, outs, width, thick, tail_taper, u_range=(0.5, 0.75) if width > 0.03 else (0.75, 1.0))
+        pts = [Vector((s * x, y, z)) for x, y, z in sheet]
+        outs = [Vector((p.x, p.y - AX.y, 0.0)).normalized() for p in pts]
+        m.tube(pts, outs, 0.066, 0.015, sheet_taper, n=12, u_range=(0.5, 1.0), tip=0.02, ridges=2)
     return _finish(ctx, m, "hair_long")
 
 
