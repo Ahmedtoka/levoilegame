@@ -75,7 +75,8 @@ export function buildBoutique(ctx: ShopContext, f: BatchFrame, handles: ShopHand
   const used = new Set(placed.map((x) => x.product.id))
   const rank = (p: Product) => (hasCutout(p) ? (p.modelOutfit ? 0 : 1) : 2)
   const standeeProducts = [...o.products].sort((a, b) => rank(a) - rank(b))
-  const standees: ShowcaseItem[] = plan.standees.map((s, i) => {
+  const hasProducts = o.products.length > 0
+  const standees: ShowcaseItem[] = (hasProducts ? plan.standees : []).map((s, i) => {
     plinth(gf, s.x, s.z, ctx)
     const w = f.toWorld(s.x + ox, 0, s.z)
     addCone(w.x, SH - 0.05, w.z, SH - 2.0, 0.5, 0, 0)
@@ -86,7 +87,7 @@ export function buildBoutique(ctx: ShopContext, f: BatchFrame, handles: ShopHand
   })
   const islandPool = [...o.products.filter((p) => hasCutout(p) && !used.has(p.id)), ...o.products.filter((p) => hasCutout(p))]
   const islandItems: ShowcaseItem[] = []
-  plan.islands.forEach((is, k) => {
+  ;(hasProducts ? plan.islands : []).forEach((is, k) => {
     island(gf, is, o.brand.color)
     const n = Math.max(2, Math.min(4, Math.floor(is.w / 0.55)))
     for (let j = 0; j < n && islandPool.length; j++) {
@@ -256,13 +257,20 @@ function hero(ctx: ShopContext, f: BatchFrame, g: Group, plan: BoutiquePlan, bra
     maxDist: 6,
   })
   loaders.push(async () => {
-    const W = 1024
+    const tm = ctx.textureMax()
+    const W = tm >= 1024 ? 1024 : 512
     const Hh = Math.round((W * H.h) / H.w)
     const [c, cg] = makeCanvas(W, Hh)
-    const { image } = await loadProductTexture(p.images[1] ?? p.images[0], 1024)
-    const im = image as HTMLCanvasElement
-    const s = Math.max(W / im.width, Hh / im.height)
-    cg.drawImage(im, (W - im.width * s) / 2, (Hh - im.height * s) * 0.3, im.width * s, im.height * s)
+    const src = p.images[1] ?? p.images[0]
+    if (src) {
+      const { image } = await loadProductTexture(src, tm)
+      const im = image as HTMLCanvasElement
+      const s = Math.max(W / im.width, Hh / im.height)
+      cg.drawImage(im, (W - im.width * s) / 2, (Hh - im.height * s) * 0.3, im.width * s, im.height * s)
+    } else {
+      cg.fillStyle = '#f3ead9'
+      cg.fillRect(0, 0, W, Hh)
+    }
     // Brand band along the bottom.
     const bh = Math.round(Hh * 0.18)
     cg.fillStyle = brand.color
@@ -341,10 +349,14 @@ function screen(ctx: ShopContext, f: BatchFrame, g: Group, s: Spot, o: BoutiqueO
       cg.restore()
     })
     cg.fillStyle = BRAND.magenta
-    cg.fillRect(96, 830, 320, 56)
+    cg.fillRect(96, 804, 320, 92)
     cg.fillStyle = '#fff'
-    cg.font = `700 26px ${BRAND.fontUi}`
-    cg.fillText('TAP TO BROWSE', 256, 858)
+    cg.font = `700 24px ${BRAND.fontUi}`
+    cg.fillText('TAP TO BROWSE', 256, 830)
+    cg.direction = 'rtl'
+    cg.font = `700 24px ${BRAND.fontUi}`
+    cg.fillText('اضغط عشان تتفرج', 256, 868)
+    cg.direction = 'ltr'
     const mat = imageMat(canvasTexture(cv))
     registerBloom(mat, BLOOM_WEIGHT.screen)
     plane.material = mat

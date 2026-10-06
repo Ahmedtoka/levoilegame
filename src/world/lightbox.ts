@@ -208,11 +208,12 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
 }
 
 /** Section plaques above lightbox groups: one atlas, one mesh. */
-export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, plaques: SectionPlaque[]): void {
+export function buildSectionPlaques(ctx: LightboxCtx, parent: Group, allPlaques: SectionPlaque[]): void {
   void ctx
-  if (!plaques.length || typeof document === 'undefined') return
   const RH = 192
-  const H = Math.min(4096, plaques.length * RH)
+  const plaques = allPlaques.slice(0, Math.floor(4096 / RH))
+  if (!plaques.length || typeof document === 'undefined') return
+  const H = plaques.length * RH
   const [c, g] = makeCanvas(1024, H)
   plaques.forEach((pl, i) => {
     const t = boutiqueHeader(pl.section)

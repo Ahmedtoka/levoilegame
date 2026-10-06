@@ -188,3 +188,4 @@ The old `furnishWithKit` and the `rack/shelf/gallery/boxes` displays are no long
 2. Brand shop interiors get a cream ceiling with a 0.9 m soffit, slot lights and spot cans. The dark mall slab read as a black void inside shops.
 3. Islands show tall apparel cut-outs as mounted prints instead of tiny figures.
 4. Corridor screen totems stand only at unit boundaries on the 12 m grid.
+5. `furnishWithKit` and the rack / shelf / gallery / boxes displays were removed (tsc flagged them unused), contrary to §6's "kept until a cleanup pass". `DisplayKind` / `SectionStyle.display` and the kit's rack / bay pieces are now unused and are left for the cleanup pass.

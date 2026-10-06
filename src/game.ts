@@ -154,7 +154,8 @@ export class Game implements GameBridge {
     if (s.phase !== 'playing') return
     switch (a) {
       case 'escape':
-        if (s.overlay) this.resume()
+        if (s.overlay === 'product' && s.productFrom === 'brandCatalog' && s.catalogBrand) s.set({ overlay: 'brandCatalog', productId: null, productFrom: null })
+        else if (s.overlay) this.resume()
         break
       case 'interact':
         if (!s.overlay) this.interact()
@@ -203,7 +204,7 @@ export class Game implements GameBridge {
 
   resume(): void {
     const s = store.getState()
-    if (s.overlay) s.set({ overlay: null, productId: null })
+    if (s.overlay) s.set({ overlay: null, productId: null, productFrom: null })
     else this.relock()
     this.syncControl()
   }
@@ -225,7 +226,7 @@ export class Game implements GameBridge {
       this.player.teleport(dest.x, dest.z, dest.yaw)
       this.fade.style.opacity = '0'
     }, 230)
-    store.getState().set({ overlay: null, productId: null })
+    store.getState().set({ overlay: null, productId: null, productFrom: null })
   }
 
   restart(): void {

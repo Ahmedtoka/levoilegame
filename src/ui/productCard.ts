@@ -121,12 +121,19 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
       </div>`)
   }
 
+  /** Back to the catalogue when the sheet was opened from it; otherwise back to the world. */
+  const closeSheet = () => {
+    const s = store.getState()
+    if (s.productFrom === 'brandCatalog' && s.catalogBrand) s.set({ overlay: 'brandCatalog', productId: null, productFrom: null })
+    else game.resume()
+  }
+
   onAction(veil, {
     join: () => {
       social().deals?.joinGroupDeal()
       audio.addToCart()
     },
-    close: () => game.resume(),
+    close: () => closeSheet(),
     img: (b) => {
       imgIndex = Number(b.dataset.i)
       render()
@@ -166,7 +173,7 @@ export function mountProductCard(root: HTMLElement, game: GameBridge): void {
     },
   })
   veil.addEventListener('click', (e) => {
-    if (e.target === veil) game.resume()
+    if (e.target === veil) closeSheet()
   })
 
   watch((s) => s.overlay, render)

@@ -45,6 +45,8 @@ export interface AppState {
   phase: Phase
   overlay: Overlay
   productId: string | null
+  /** Where the open product sheet came from (not persisted): closing returns there. */
+  productFrom: 'brandCatalog' | null
   /** Pointer released while playing (desktop) — shows the pause veil. */
   paused: boolean
   loadProgress: number
@@ -108,6 +110,7 @@ export const store = createStore<AppState>()(
       phase: 'loading',
       overlay: null,
       productId: null,
+      productFrom: null,
       paused: false,
       loadProgress: 0,
       loadLabel: '',
@@ -143,8 +146,8 @@ export const store = createStore<AppState>()(
       flash: null,
 
       set: (patch) => set(patch),
-      openProduct: (id) => set({ overlay: 'product', productId: id }),
-      closeOverlay: () => set({ overlay: null, productId: null }),
+      openProduct: (id) => set({ overlay: 'product', productId: id, productFrom: null }),
+      closeOverlay: () => set({ overlay: null, productId: null, productFrom: null }),
       addToCart: (line) => {
         const key = `${line.productId}|${line.size}|${line.color}`
         const cart = get().cart

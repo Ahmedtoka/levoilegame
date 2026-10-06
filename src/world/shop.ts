@@ -15,7 +15,7 @@ import {
   type Material,
   type Object3D,
 } from 'three'
-import { MALL, type ShopLayout } from '../config/layout'
+import type { ShopLayout } from '../config/layout'
 import type { Batcher, BatchFrame } from '../engine/batcher'
 import type { CollisionWorld } from '../engine/colliders'
 import { loadProductTexture } from '../engine/textures'
@@ -123,7 +123,7 @@ export function buildShop(ctx: ShopContext, shop: ShopLayout): ShopHandles {
   const load = () => {
     if (loaded) return
     loaded = true
-    for (const l of loaders) l().catch((e) => console.warn(e))
+    for (const l of loaders) Promise.resolve().then(l).catch((e) => console.warn(e))
   }
   const depth = shop.depth
   const half = shop.front / 2
@@ -399,7 +399,7 @@ function buildLounge(f: BatchFrame, group: Group, loaders: (() => Promise<unknow
 }
 
 /** Small counter where 122 Coins are swapped for this brand's discount (shop-local position). */
-export function rewardsCounter(ctx: ShopContext, f: BatchFrame, interior: Group, brandId: string, color: string, x = -MALL.shopLen / 2 + 1.6, z = -2.0): void {
+export function rewardsCounter(ctx: ShopContext, f: BatchFrame, interior: Group, brandId: string, color: string, x: number, z: number): void {
   f.block(MAT.brass, x, 0, z, 1.1, 0.06, 0.55, { collide: true })
   f.block(tintMat(color, 1, 0.5), x, 0.06, z, 1.0, 0.98, 0.5)
   f.block(MAT.marbleTop, x, 1.04, z, 1.14, 0.05, 0.6)

@@ -211,7 +211,7 @@ Useful variants:
 
 Where things are configured:
 
-- **Shop interiors:** brand shops are campaign boutiques (`src/world/boutiqueShop.ts`, plan in `src/config/boutiquePlan.ts`). The old per-section kit furnishing (`furnishWithKit`) is legacy.
+- **Shop interiors:** brand shops are campaign boutiques (`src/world/boutiqueShop.ts`, plan in `src/config/boutiquePlan.ts`). The old per-section kit furnishing (`furnishWithKit`) and the rack / shelf / gallery / boxes displays were removed; `cardPanel`, `easelRow` and `lookbookStand` remain, used by Le Voile's baked half (`src/world/bespoke/levoile.ts`) and `?boutique` (`src/world/boutique.ts`).
 - **Kit cut-out boxes:** `kit_pieces()` in `scripts/blender/export_store.py`.
 - **Turning the kit off:** without `kit.glb`, or with `?nokit`, shops fall back to the procedural props.
 

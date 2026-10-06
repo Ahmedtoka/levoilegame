@@ -64,13 +64,13 @@ export function mountBrandCatalog(root: HTMLElement, game: GameBridge): void {
       tab = Number(b.dataset.i) || 0
       render()
     },
-    open: (b) => store.getState().openProduct(b.dataset.id!),
+    open: (b) => store.getState().set({ overlay: 'product', productId: b.dataset.id!, productFrom: 'brandCatalog' }),
   })
   veil.addEventListener('click', (e) => {
     if (e.target === veil) game.resume()
   })
   watch((s) => s.overlay, (o, prev) => {
-    if (o === 'brandCatalog' && prev !== 'brandCatalog') tab = 0
+    if (o === 'brandCatalog' && prev !== 'brandCatalog' && prev !== 'product') tab = 0
     render()
   })
   watch((s) => s.lang, render)

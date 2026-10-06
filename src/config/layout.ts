@@ -33,9 +33,6 @@ export const MALL = {
   plazaDepth: 34,
   /** Wing corridor half width. */
   corridorHalf: 6,
-  /** @deprecated legacy furnishing (?nokit / lounge); tiers use ShopLayout.front/depth. */
-  shopLen: 12,
-  shopDepth: 14,
   doorHalf: 3,
   atriumHeight: 9,
   boulevardHeight: 6,

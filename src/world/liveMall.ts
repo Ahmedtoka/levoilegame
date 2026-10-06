@@ -270,7 +270,7 @@ function buildTreasures(game: Game, shops: ShopHandles[]): void {
   ]
   const sc = byId('scarfest') ?? shops.find((s) => s.layout.section)
   if (sc) {
-    const w = toWorld(sc, 5.3, -13.3)
+    const w = toWorld(sc, -11.2, -15.2)
     spots.push({ pos: [w.x, 2.7, w.z], shop: sc })
   }
   if (lounge) {

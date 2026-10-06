@@ -40,7 +40,7 @@ A walkable 3D **community mall** with 20 units: 16 client brands, 4 "Coming Soon
   - The cream ceiling has a soffit, slot lights and spot cans. Flagships get a fitting room. Each shop has the 122 Coins counter.
   - An "All products" screen opens `src/ui/brandCatalog.ts` (overlay `brandCatalog`, `catalogBrand`).
   - Storefronts follow `shop.openings`: flagship long windows with 4 figures, standard 2 windows, compact glass sidelights.
-  - The old kit / rack furnishing (`furnishWithKit`, lookbook stand, `cardPanel` racks) is legacy for brand shops and no longer used.
+  - The old kit / rack furnishing (`furnishWithKit` and the rack / shelf / gallery / boxes displays) was removed in this branch. `cardPanel`, `easelRow` and `lookbookStand` remain, used by Le Voile's baked half (`src/world/bespoke/levoile.ts`) and `?boutique` (`src/world/boutique.ts`).
   - Design: `docs/superpowers/specs/2026-10-06-shop-tiers-design.md`. Perf notes: `docs/superpowers/notes/2026-10-06-shop-tiers-perf.md`. Earlier design: `docs/superpowers/specs/2026-10-05-product-display-design.md`.
 - **Controls:** `src/player/controlsMath.ts` holds the pure maths (look smoothing, tap-to-walk, product focus, touch tuning), unit-tested. Design: `docs/superpowers/specs/2026-10-05-controls-design.md`.
 - **WebP images:** `scripts/optimize-images.py` writes `.webp` next to each product photo/cutout; `src/data/webImage.ts` picks them at runtime (failed cutouts have none); a Vite plugin in `vite.config.ts` prunes the jpg/png sources from `dist/`.
@@ -142,7 +142,7 @@ node scripts/fetch-assets.mjs              # validate + download images and logo
   - Denoising is OIDN through the compositor; the 8-bit save applies the AgX look.
 - **`kit.glb` / `kit.json`:** 22 baked pieces cut by bounding boxes (shared atlases). Use them via `Kit.place()` (`src/world/kit.ts`). The material is unlit `MeshBasicMaterial` (baked).
 - **Furnishing:**
-  - Shops: legacy. Brand shops now use the campaign boutique (see Product display); `furnishWithKit` in `src/world/shop.ts` is no longer used for them.
+  - Shops: brand shops use the campaign boutique (see Product display). `furnishWithKit` and the rack / shelf / gallery / boxes displays were removed; the kit's lookbook stand, `cardPanel` and `easelRow` remain for Le Voile's baked half and `?boutique`.
   - Atrium cashier: the kit counter, brand panel and plants (`src/world/cashier.ts`).
   - Atrium and shop corners use the kit plant.
 - **Palette restyle:** cream walls, dark ceilings, bronze trims, the store's marble (`public/textures/marble.jpg`), and cream/bronze signage (`shopFascia`, `bladeSign`, directory).
