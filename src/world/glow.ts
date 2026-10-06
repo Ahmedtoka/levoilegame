@@ -1,15 +1,21 @@
-// Additive warm glows (pendant halos, stage light cones, light pools on the
-// floor). Medium/High only: toggled with quality.fancyDecor via setGlowsVisible().
+// Additive warm glows (pendant halos, stage light cones, light pools on the floor,
+// rectangular wall halos). Halos, cones and rect halos are Medium/High only (toggled with
+// quality.fancyDecor via setGlowsVisible()); the floor pools are one instanced call and
+// stay on every tier, Low included: at night they are what makes the floor read as lit.
+// For point-light glows that must show on Low too, use world/halo.ts (sprite halos).
 
 import { AdditiveBlending, Color, ConeGeometry, InstancedMesh, Matrix4, MeshBasicMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type Object3D } from 'three'
 import { canvasTexture, makeCanvas } from '../engine/textures'
 import { FLOOR_FX_LAYER } from '../engine/layers'
+import { THEME } from './theme'
 
 const halos: Matrix4[] = []
 const cones: Matrix4[] = []
 const pools: Matrix4[] = []
 const rects: { m: Matrix4; c: Color }[] = []
 let built: InstancedMesh[] = []
+/** Floor pools: built once, never toggled (visible on Low too). */
+const poolMeshes: InstancedMesh[] = []
 const _y = new Vector3(0, 1, 0)
 const _x = new Vector3(1, 0, 0)
 
@@ -62,9 +68,10 @@ function rectHaloTexture() {
 function poolTexture() {
   const [c, g] = makeCanvas(128, 128)
   const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64)
+  // A warmer, softer pool for the night floor: a wide bright core, then a long tail.
   grad.addColorStop(0, 'rgba(255,255,255,1)')
-  grad.addColorStop(0.35, 'rgba(255,255,255,0.6)')
-  grad.addColorStop(0.7, 'rgba(255,255,255,0.18)')
+  grad.addColorStop(0.3, 'rgba(255,255,255,0.7)')
+  grad.addColorStop(0.65, 'rgba(255,255,255,0.22)')
   grad.addColorStop(1, 'rgba(255,255,255,0)')
   g.fillStyle = grad
   g.fillRect(0, 0, 128, 128)
@@ -72,7 +79,7 @@ function poolTexture() {
 }
 
 function layer(geo: SphereGeometry | ConeGeometry | PlaneGeometry, opacity: number, list: Matrix4[], parent: Object3D, visible: boolean, pool = false): InstancedMesh {
-  const mat = new MeshBasicMaterial({ color: '#ffd9a0', transparent: true, opacity, depthWrite: false, blending: AdditiveBlending })
+  const mat = new MeshBasicMaterial({ color: pool ? THEME.poolWarm : THEME.warmLight, transparent: true, opacity, depthWrite: false, blending: AdditiveBlending })
   if (pool) {
     mat.map = typeof document === 'undefined' ? null : poolTexture()
     mat.polygonOffset = true
@@ -94,13 +101,20 @@ export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] 
   // Unit cone: ConeGeometry's apex is at +0.5; translating by −0.5 puts the apex
   // at the origin and the base at y = −1, so it opens downwards by `length`.
   if (cones.length) out.push(layer(new ConeGeometry(1, 1, 24, 1, true).translate(0, -0.5, 0), 0.06, cones, parent, visible))
-  // Light pools: flat unit quads on the floor, drawn after the floor decals.
+  // Light pools: flat unit quads on the floor, drawn after the floor decals. One call,
+  // on every tier (not part of `built`, so setGlowsVisible leaves them on).
   if (pools.length) {
-    const m = layer(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), 0.45, pools, parent, visible, true)
+    const m = layer(new PlaneGeometry(1, 1).rotateX(-Math.PI / 2), 0.5, pools, parent, true, true)
     m.renderOrder = 2
     m.layers.set(FLOOR_FX_LAYER)
-    out.push(m)
+    poolMeshes.push(m)
+    pools.length = 0
+    return buildFancy(parent, visible, out, [m])
   }
+  return buildFancy(parent, visible, out, [])
+}
+
+function buildFancy(parent: Object3D, visible: boolean, fancy: InstancedMesh[], always: InstancedMesh[]): InstancedMesh[] {
   if (rects.length && typeof document !== 'undefined') {
     const mat = new MeshBasicMaterial({ map: rectHaloTexture(), transparent: true, opacity: 0.55, depthWrite: false, blending: AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -2 })
     const mesh = new InstancedMesh(new PlaneGeometry(1, 1), mat, rects.length)
@@ -113,16 +127,21 @@ export function buildGlows(parent: Object3D, visible: boolean): InstancedMesh[] 
     mesh.visible = visible
     mesh.renderOrder = 1
     parent.add(mesh)
-    out.push(mesh)
+    fancy.push(mesh)
   }
   rects.length = 0
   halos.length = 0
   cones.length = 0
-  pools.length = 0
-  built.push(...out)
-  return out
+  built.push(...fancy)
+  return [...always, ...fancy]
 }
 
+/** Shows or hides the Medium/High glows (halos, cones, rect halos); floor pools stay. */
 export function setGlowsVisible(v: boolean): void {
   for (const m of built) m.visible = v
+}
+
+/** Instanced floor-pool meshes built so far (for budget reports). */
+export function poolLayers(): readonly InstancedMesh[] {
+  return poolMeshes
 }

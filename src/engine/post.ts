@@ -5,11 +5,14 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js'
 
 /**
- * Subtle bloom on the light sources only. The threshold is on sRGB-encoded luminance and
- * applies only to masked sources (bloom.ts). The warm lights sit at about 0.86. A lightbox's
- * cream lettering crosses it, its brand-colour field mostly does not.
+ * Bloom on the light sources only (night mall: the lightboxes, slot lights, globes and halos
+ * are the brightest things in the frame, so they carry a visible glow). The threshold is on
+ * sRGB-encoded luminance and applies only to masked sources (bloom.ts). The warm lights sit
+ * at about 0.86; a halo sprite alone peaks near 0.5 and only crosses it where it adds onto
+ * a light source (which is where halos sit). A lightbox's cream lettering crosses it, its
+ * darker brand-colour field mostly does not.
  */
-export const BLOOM = { strength: 0.35, radius: 0.4, threshold: 0.6, smoothWidth: 0.25 }
+export const BLOOM = { strength: 0.55, radius: 0.5, threshold: 0.55, smoothWidth: 0.25 }
 
 /**
  * The composer's scene targets are flagged like an XR target, so three.js renders into

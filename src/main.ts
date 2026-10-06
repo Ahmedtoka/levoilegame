@@ -59,6 +59,7 @@ import { buildDecals } from './world/decals'
 import { buildCorridor } from './world/corridor'
 import { updateBanners } from './world/banners'
 import { buildGlows } from './world/glow'
+import { buildHalos } from './world/halo'
 import { buildAOStrips } from './world/aoStrips'
 import type { ScreenFeed, ScreenActions } from './world/screens'
 
@@ -262,6 +263,8 @@ async function buildMall(game: Game, batcher: Batcher, catalog: Catalog, vestLog
   buildDecals(engine.scene)
   buildAOStrips(engine.scene)
   buildGlows(engine.scene, engine.quality.fancyDecor)
+  // Sprite halos from every area (world/halo.ts): one instanced call, on every tier.
+  buildHalos(engine.scene)
   game.updaters.push((dt) => {
     for (const fd of feeds) fd.update(dt, engine.camera)
     updateBanners(dt, engine.camera)

@@ -8,18 +8,30 @@ import {
 } from 'three'
 import { BRAND } from '../config/brand'
 import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
+import { THEME } from './theme'
 
 const std = (color: string, roughness = 0.8, metalness = 0, extra: Partial<MeshStandardMaterial> = {}) =>
   Object.assign(new MeshStandardMaterial({ color, roughness, metalness }), extra)
 
+// Night-mall palette: every role colour comes from THEME (world/theme.ts).
 export const MAT = {
-  wall: std('#ebe3d7', 0.92),
-  wallWarm: std('#e4d9c9', 0.9),
-  ceiling: std('#3a332d', 0.92, 0, { emissive: new Color('#1c1814'), emissiveIntensity: 0.6 }),
-  trim: std('#f1e9dd', 0.5),
-  brass: std('#b08a5c', 0.35, 0.75),
+  /** Cream mall walls, lit by the warm washes. */
+  wall: std(THEME.wall, THEME.roughness.wall),
+  /** Shop greige walls (a touch lighter: lit from closer). */
+  wallWarm: std(THEME.shopWall, THEME.roughness.wall),
+  /** Matte charcoal ceilings that vanish into the dark: no emissive lift. */
+  ceiling: std(THEME.ceiling, THEME.roughness.ceiling),
+  /** Painted trim (skirtings, cornices) in the wall cream, a little smoother. */
+  trim: std(THEME.wall, 0.5),
+  /** Bronze, the only metal: frames, rails, bezels. */
+  brass: std(THEME.bronze, THEME.roughness.bronze, 0.75),
+  /** Bronze highlight: cap rails, nosings, inlays. */
+  bronzeLight: std(THEME.bronzeLight, THEME.roughness.bronze, 0.7),
   chrome: std('#e6e6ea', 0.18, 1),
-  black: std('#2b2528', 0.55, 0.1),
+  /** Near-black joinery, screen bezels, stands. */
+  black: std(THEME.ceilingCoffer, 0.55, 0.1),
+  /** 122 plum accent (LED lines, seating, directory). */
+  plumAccent: std(THEME.plum, 0.45, 0.05),
   magenta: std(BRAND.magenta, 0.45, 0.05),
   magentaDark: std(BRAND.magentaDark, 0.5),
   blush: std('#e9ddcc', 0.85),
@@ -40,8 +52,10 @@ export const MAT = {
     depthWrite: false,
     side: DoubleSide,
   }),
-  lightPanel: new MeshBasicMaterial({ color: '#fff1d6' }),
-  lightWarm: new MeshBasicMaterial({ color: '#fff3dc' }),
+  /** Emissive light panels (warm). */
+  lightPanel: new MeshBasicMaterial({ color: THEME.warmLight }),
+  /** Slot lights, pendant globes, can lenses (a touch paler). */
+  lightWarm: new MeshBasicMaterial({ color: THEME.slotLight }),
   neon: new MeshBasicMaterial({ color: '#ff8fd8' }),
 }
 // Light panels, slot lights, globes and can lenses glow on High (bloom.ts).
