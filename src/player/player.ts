@@ -7,6 +7,10 @@ import { LOOK_SENS, angleDelta, ease, focusAngles, measuredVelocity, smoothLook,
 
 const WALK = 3.3
 const RUN = 6.2
+// Third person: her character walks at a natural pace (the walk clip keeps step
+// with no foot sliding) and Shift breaks into a jog.
+const WALK_3P = 1.5
+const RUN_3P = 3.4
 const EYE = 1.6
 const BOB = 0.015
 const FOCUS_TIME = 0.35
@@ -112,7 +116,8 @@ export class Player {
 
     const s = Math.sin(this.yaw)
     const c = Math.cos(this.yaw)
-    const speed = run ? RUN : WALK
+    const walkSpeed = this.view === 'third' ? WALK_3P : WALK
+    const speed = run ? (this.view === 'third' ? RUN_3P : RUN) : walkSpeed
     // forward = (-sin, -cos), right = (cos, -sin)
     let tx = (-s * y + c * x) * speed
     let tz = (-c * y - s * x) * speed
@@ -124,8 +129,8 @@ export class Player {
       if (r.status !== 'walking') this.endWalk(r.status)
       else {
         w.stall = r.stall
-        tx = r.dirX * r.gain * WALK
-        tz = r.dirZ * r.gain * WALK
+        tx = r.dirX * r.gain * walkSpeed
+        tz = r.dirZ * r.gain * walkSpeed
         moving = true
         // Turn to face the walking direction (unless the user is looking around).
         if (!looking && !this.focus) {
@@ -207,7 +212,7 @@ export class Player {
       // Face the walking direction, or the camera direction when standing.
       const target = this.speed > 0.3 ? Math.atan2(this.vel.x, this.vel.z) : this.yaw + Math.PI
       this.avatar.root.rotation.y = lerpAngle(this.avatar.root.rotation.y, target, Math.min(1, dt * 10))
-      this.avatar.walk = Math.min(1, this.speed / WALK)
+      this.avatar.walk = Math.min(1, this.speed / WALK_3P)
       this.avatar.walkRate = this.speed
     }
   }

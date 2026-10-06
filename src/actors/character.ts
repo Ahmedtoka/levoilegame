@@ -28,7 +28,7 @@ import {
   type Texture,
 } from 'three'
 import { blobShadow } from '../world/props'
-import { avatarKit, cloneBones, mergedGeometry } from './avatar/kit'
+import { avatarKit, clipStride, cloneBones, mergedGeometry } from './avatar/kit'
 import { avatarMaterial, blankTexture, type AvatarMaterial } from './avatar/material'
 import { faceTexture } from './avatar/face'
 import { twoBoneIK } from './avatar/ik'
@@ -43,6 +43,7 @@ export interface Persona {
   readonly hitbox: Object3D
   lookTarget: Vector3 | null
   walk: number
+  /** Ground speed while walking (m/s); the walk/jog clips play to match it (no foot sliding). */
   walkRate: number
   update(dt: number, t: number): void
   wave(): void
@@ -89,6 +90,9 @@ const POSE_HANDS: Partial<Record<Pose, { l?: [Vector3, Vector3]; r?: [Vector3, V
   handOnHip: { l: [new Vector3(0.2, 1.02, 0.03), new Vector3(0.7, 1.3, -0.25)] },
   model: { r: [new Vector3(-0.2, 1.02, 0.03), new Vector3(-0.7, 1.3, -0.25)] },
 }
+/** Skirt hinge bones (skirt_f / skirt_b) follow the leading / trailing thigh by these gains. */
+const SKIRT_FRONT = 0.85
+const SKIRT_BACK = 0.75
 /** The library clips hold the arms a little wide for a bulkier body: tuck them in. */
 const ARM_TUCK = 0.14
 const WAVE_TARGET = new Vector3(-0.32, 1.78, 0.1)
@@ -98,6 +102,11 @@ const _v = new Vector3()
 const _v2 = new Vector3()
 const _q = new Quaternion()
 const _q2 = new Quaternion()
+const _q3 = new Quaternion()
+const _q4 = new Quaternion()
+const _fwd = new Vector3()
+const _down = new Vector3()
+const _axis = new Vector3()
 const _m = new Matrix4()
 const _up = new Vector3(0, 1, 0)
 
@@ -136,8 +145,13 @@ export class Character implements Persona {
   private readonly mixer: AnimationMixer | null = null
   private readonly idle: AnimationAction | null = null
   private readonly walkAction: AnimationAction | null = null
+  private readonly jogAction: AnimationAction | null = null
+  /** Ground distance per loop of the walk / jog clip at skeleton scale. */
+  private walkStride = 1.4
+  private jogStride = 2.2
   private readonly bones = new Map<string, Bone>()
   private readonly phase: number
+  private readonly skirtRest = new Map<Bone, Quaternion>()
   private headYaw = 0
   private waving = 0
   private time = 0
@@ -158,6 +172,10 @@ export class Character implements Persona {
     this.mat = avatarMaterial(lookColors(look), faceTexture(look.face, browColor), look.vest?.logo ?? blankTexture())
     const { root: rootBone, bones, byName } = cloneBones(kit)
     this.bones = byName
+    for (const n of ['skirt_f', 'skirt_b']) {
+      const b = byName.get(n)
+      if (b) this.skirtRest.set(b, b.quaternion.clone())
+    }
     const mesh = new SkinnedMesh(mergedGeometry(kit, pieces), this.mat)
     mesh.add(rootBone)
     mesh.bind(new Skeleton(bones, kit.boneInverses), kit.bindMatrix)
@@ -168,7 +186,9 @@ export class Character implements Persona {
 
     this.mixer = new AnimationMixer(mesh)
     const idleClip = kit.clips.get('Idle_Loop')
-    const walkClip = kit.clips.get(look.outfit === 'pants' ? 'Walk_Loop' : 'Walk_Modest') ?? kit.clips.get('Walk_Loop')
+    const skirt = look.outfit !== 'pants'
+    const walkClip = kit.clips.get(skirt ? 'Walk_Modest' : 'Walk_Loop') ?? kit.clips.get('Walk_Loop')
+    const jogClip = kit.clips.get(skirt ? 'Jog_Modest' : 'Jog_Fwd_Loop') ?? kit.clips.get('Jog_Fwd_Loop')
     if (idleClip) {
       this.idle = this.mixer.clipAction(idleClip)
       this.idle.play()
@@ -179,6 +199,13 @@ export class Character implements Persona {
       this.walkAction.play()
       this.walkAction.setEffectiveWeight(0)
       this.walkAction.time = (seed * 0.61) % walkClip.duration
+      this.walkStride = clipStride(kit, walkClip)
+    }
+    if (jogClip) {
+      this.jogAction = this.mixer.clipAction(jogClip)
+      this.jogAction.play()
+      this.jogAction.setEffectiveWeight(0)
+      this.jogStride = clipStride(kit, jogClip)
     }
     this.pose(0, 0)
     // Fully built and dressed.
@@ -193,10 +220,23 @@ export class Character implements Persona {
   }
 
   /** Walk clip speed: the old procedural cadence (4 + 1.6·rate rad/s) mapped onto the clip. */
-  private walkTimeScale(): number {
-    const a = this.walkAction
+  /** Clip speed so one loop covers its stride at the current ground speed. */
+  private timeScaleFor(a: AnimationAction | null, stride: number): number {
     if (!a) return 1
-    return ((4 + this.walkRate * 1.6) / TWO_PI) * a.getClip().duration
+    const scale = BASE_SCALE * this.root.scale.x
+    const speed = Math.max(0.35, this.walkRate)
+    return (speed / (stride * scale)) * a.getClip().duration
+  }
+
+  private walkTimeScale(): number {
+    return this.timeScaleFor(this.walkAction, this.walkStride)
+  }
+
+  /** Walk -> jog blend by ground speed (the player's normal pace is brisk). */
+  private jogBlend(): number {
+    const v = this.walkRate
+    const t = Math.min(1, Math.max(0, (v - 2.2) / 0.9))
+    return t * t * (3 - 2 * t)
   }
 
   stepWalk(dt: number): void {
@@ -215,13 +255,24 @@ export class Character implements Persona {
     if (!this.mixer || !this.mesh) return
     const w = Math.min(1, Math.max(0, this.walk))
     this.idle?.setEffectiveWeight(1 - w)
+    const j = this.jogAction ? this.jogBlend() : 0
     if (this.walkAction) {
-      this.walkAction.setEffectiveWeight(w)
+      this.walkAction.setEffectiveWeight(w * (1 - j))
       this.walkAction.timeScale = w > 0.01 ? this.walkTimeScale() : 0
+    }
+    if (this.jogAction) {
+      this.jogAction.setEffectiveWeight(w * j)
+      this.jogAction.timeScale = w > 0.01 ? this.timeScaleFor(this.jogAction, this.jogStride) : 0
+      // Keep the two cycles in step so the blend never crosses its legs.
+      if (this.walkAction && j > 0 && j < 1) {
+        const wa = this.walkAction
+        this.jogAction.time = (wa.time / wa.getClip().duration) * this.jogAction.getClip().duration
+      }
     }
     this.mixer.update(dt)
     this.mesh.updateMatrixWorld(true)
     this.tuckArms()
+    this.driveSkirt()
 
     // Pose: hands placed by IK while standing (fades out as she walks).
     const still = 1 - w
@@ -259,6 +310,46 @@ export class Character implements Persona {
         head.quaternion.copy(_q2.invert().multiply(_q))
         head.updateMatrixWorld(true)
       }
+    }
+  }
+
+  /**
+   * Long skirts: the front / back panels hinge at the hips with the leg that is
+   * furthest forward / back, so a striding shin never pokes through the cloth.
+   * (Same rule as drive_skirt in scripts/blender/build_avatar.py.)
+   */
+  private driveSkirt(): void {
+    const sf = this.bones.get('skirt_f')
+    const sb = this.bones.get('skirt_b')
+    if (!sf || !sb) return
+    this.root.getWorldQuaternion(_q2)
+    const fwd = _fwd.set(0, 0, 1).applyQuaternion(_q2)
+    const down = _down.set(0, -1, 0).applyQuaternion(_q2)
+    let front = 0
+    let back = 0
+    for (const sd of ['l', 'r']) {
+      const th = this.bones.get(`thigh_${sd}`)
+      const ca = this.bones.get(`calf_${sd}`)
+      if (!th || !ca) continue
+      ca.getWorldPosition(_v).sub(th.getWorldPosition(_v2))
+      const a = Math.atan2(_v.dot(fwd), _v.dot(down))
+      front = Math.max(front, a)
+      back = Math.min(back, a)
+    }
+    // Rotating "down" towards "forward" is a turn about down × forward.
+    const axis = _axis.crossVectors(down, fwd).normalize()
+    for (const [bone, angle] of [
+      [sf, front * SKIRT_FRONT],
+      [sb, back * SKIRT_BACK],
+    ] as const) {
+      // No clip animates them: start from the rest pose, then swing in world space.
+      bone.quaternion.copy(this.skirtRest.get(bone)!)
+      bone.updateMatrixWorld(true)
+      bone.getWorldQuaternion(_q)
+      _q.premultiply(_q3.setFromAxisAngle(axis, angle))
+      bone.parent!.getWorldQuaternion(_q4)
+      bone.quaternion.copy(_q4.invert().multiply(_q))
+      bone.updateMatrixWorld(true)
     }
   }
 

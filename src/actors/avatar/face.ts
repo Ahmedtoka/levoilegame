@@ -39,6 +39,8 @@ export function faceTexture(style: number, browColor: string): Texture {
   drawFace(g, f, browColor)
   tex = new CanvasTexture(c)
   tex.colorSpace = SRGBColorSpace
+  // glTF UVs have their origin at the top-left (v flipped vs Blender): don't flip again.
+  tex.flipY = false
   tex.anisotropy = 4
   cache.set(key, tex)
   return tex

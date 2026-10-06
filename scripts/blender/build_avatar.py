@@ -141,17 +141,27 @@ def spine_weights(z):
     return {"Head": 1.0}
 
 
-def leg_weights(p, rx, hip_z=1.0, hem_z=0.06, strength=0.78):
-    """Skirt/tunic: centre front/back stay on the pelvis, the sides follow the legs."""
+def leg_weights(p, rx, hip_z=1.0, hem_z=0.06, strength=0.9, ry=None, panels=True):
+    """Skirt/tunic: the sides follow the legs; the front and back panels follow the
+    skirt_f / skirt_b hinge bones (driven at runtime by the leading / trailing leg)."""
     s = max(-1.0, min(1.0, p.x / max(rx, 1e-4)))
     t = max(0.0, min(1.0, (hip_z - p.z) / (hip_z - hem_z)))
-    w = abs(s) ** 1.4 * min(1.0, t * 1.4) * strength
-    calf = smooth(0.5, 1.0, t) * 0.55
+    sideness = abs(s) ** 1.4
+    w = sideness * min(1.0, t * 1.4) * strength
+    calf = smooth(0.45, 1.0, t) * 0.7
     side = "l" if s >= 0 else "r"
-    out = {"pelvis": 1.0 - w}
+    out = {}
     if w > 0:
         out["thigh_" + side] = w * (1 - calf)
         out["calf_" + side] = w * calf
+    if panels:
+        cy = max(-1.0, min(1.0, (p.y - 0.012) / max(ry or rx * 0.75, 1e-4)))
+        k = (1 - sideness) * smooth(0.0, 0.5, t) * 0.95
+        if cy < 0:
+            out["skirt_f"] = k * (-cy) ** 0.8
+        else:
+            out["skirt_b"] = k * cy ** 0.8
+    out["pelvis"] = max(0.0, 1.0 - sum(out.values()))
     return out
 
 
@@ -255,7 +265,7 @@ def piece_skirt(sections, hem_z=0.06):
     rings = [ellipse((0, 0.012, z), (1, 0, 0), (0, 1, 0), _rx_at(sections, z), _ry_at(sections, z), 24) for z in zs]
     b.loft(rings)
     def w(p, tag=None):
-        return leg_weights(p, _rx_at(sections, p.z), hem_z=hem_z)
+        return leg_weights(p, _rx_at(sections, p.z), hem_z=hem_z, ry=_ry_at(sections, p.z))
 
     return b, w
 
@@ -270,18 +280,19 @@ def _rx_at(sections, z):
 
 SKIRT_FLARE = [(1.13, 0.130, 0.094), (1.02, 0.160, 0.118), (0.82, 0.196, 0.150), (0.52, 0.240, 0.185), (0.25, 0.276, 0.212), (0.05, 0.300, 0.232)]
 SKIRT_STRAIGHT = [(1.13, 0.130, 0.094), (1.02, 0.156, 0.114), (0.82, 0.184, 0.140), (0.52, 0.214, 0.164), (0.25, 0.232, 0.178), (0.06, 0.246, 0.190)]
-TUNIC = [(0.97, 0.168, 0.124), (0.86, 0.200, 0.150), (0.70, 0.226, 0.172)]
+TUNIC = [(0.97, 0.168, 0.124), (0.86, 0.198, 0.148), (0.74, 0.222, 0.168), (0.64, 0.236, 0.178)]
 
 
 def piece_tunic():
     b, _ = piece_skirt(TUNIC)
-    return b, lambda p, tag=None: leg_weights(p, _rx_at(TUNIC, p.z), hip_z=0.98, hem_z=0.70, strength=0.55)
+    return b, lambda p, tag=None: leg_weights(p, _rx_at(TUNIC, p.z), hip_z=0.98, hem_z=0.64, strength=0.7, ry=_ry_at(TUNIC, p.z))
 
 
 def piece_legs(r_top, r_bot, z_top=0.96, z_bot=0.06, seg=10, hip_block=False):
     """Leg tubes (leggings under skirts, or wide trousers)."""
     b = Builder()
     for s in (1, -1):
+        b.tag = "l" if s > 0 else "r"  # each tube follows its own leg, even where it flares past the centre
         secs = [(z_top, r_top), (KNEE_Z + 0.06, lerp(r_top, r_bot, 0.5)), (KNEE_Z - 0.06, lerp(r_top, r_bot, 0.6)), (z_bot, r_bot)]
         secs = [q for q in secs if q[0] <= z_top]
         rings = [ellipse((s * HIP_X, 0.006 + (0.02 if z < 0.3 else 0.0) * (0.3 - z) / 0.3, z), (1, 0, 0), (0, 1, 0), r, r * 0.95, seg) for z, r in sorted(secs)]
@@ -294,7 +305,7 @@ def piece_legs(r_top, r_bot, z_top=0.96, z_bot=0.06, seg=10, hip_block=False):
     def w(p, tag=None):
         if tag == "hip":
             return leg_weights(p, 0.16, hip_z=1.0, hem_z=0.6, strength=0.6)
-        sd = "l" if p.x >= 0 else "r"
+        sd = tag if tag in ("l", "r") else ("l" if p.x >= 0 else "r")
         if p.z > 0.86:
             t = smooth(0.86, 0.98, p.z)
             return {"thigh_" + sd: 1 - t * 0.5, "pelvis": t * 0.5}
@@ -545,7 +556,7 @@ def piece_abaya_trim():
         right.append(b.add_ring([Vector((-0.022, y, z))])[0])
     for k in range(len(zs) - 1):
         b.faces.append((right[k + 1], left[k + 1], left[k], right[k]))
-    return b, lambda p, tag=None: spine_weights(p.z) if p.z > 1.12 else leg_weights(p, 0.3)
+    return b, lambda p, tag=None: spine_weights(p.z) if p.z > 1.12 else leg_weights(p, _rx_at(SKIRT_FLARE, p.z), ry=_ry_at(SKIRT_FLARE, p.z))
 
 
 def _ry_at(sections, z):
@@ -565,8 +576,8 @@ PIECES = {
     "skirt_flare": (lambda: piece_skirt(SKIRT_FLARE), "bottom"),
     "skirt_straight": (lambda: piece_skirt(SKIRT_STRAIGHT), "bottom"),
     "tunic": (piece_tunic, "top"),
-    "leggings": (lambda: piece_legs(0.054, 0.046, z_top=0.50), "bottom"),
-    "trousers": (lambda: piece_legs(0.092, 0.118, z_top=0.97, z_bot=0.05, seg=12, hip_block=True), "bottom"),
+    "leggings": (lambda: piece_legs(0.05, 0.044, z_top=0.36), "bottom"),
+    "trousers": (lambda: piece_legs(0.088, 0.115, z_top=0.97, z_bot=0.05, seg=12), "bottom"),
     "shoes": (piece_shoes, "shoes"),
     "hijab_classic": (lambda: piece_hijab(False), "hijab"),
     "hijab_long": (lambda: piece_hijab(True), "hijab"),
@@ -612,17 +623,38 @@ def load_skeleton():
             prop = dp.rsplit(".", 1)[-1]
             if prop == "scale" or any(f in bone for f in FINGERS) or (prop == "location" and bone not in ("root", "pelvis")):
                 ac.fcurves.remove(fc)
-    keep["Walk_Modest"] = modest_walk(keep["Walk_Loop"])
+    add_skirt_bones(arm)
+    keep["Walk_Modest"] = modest_walk(keep["Walk_Loop"], "Walk_Modest")
+    keep["Jog_Modest"] = modest_walk(keep["Jog_Fwd_Loop"], "Jog_Modest")
     return arm, keep
 
 
-# Shorter stride for long skirts: leg rotations pulled towards the rest pose.
-MODEST_DAMP = {"thigh": 0.55, "calf": 0.6, "foot": 0.7, "ball": 0.7, "pelvis": 0.7, "upperarm": 0.75, "neck": 0.35, "Head": 0.35, "spine": 0.6}
+SKIRT_PIVOT_Z = 0.93
 
 
-def modest_walk(src):
+def add_skirt_bones(arm):
+    """Front and back skirt panels hinge at the hips. No clip animates them: the
+    runtime swings them with whichever leg is furthest forward / back, so a
+    striding shin never pokes through a long skirt."""
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode="EDIT")
+    eb = arm.data.edit_bones
+    for name, y in (("skirt_f", -0.10), ("skirt_b", 0.12)):
+        b = eb.new(name)
+        b.head = (0.0, 0.012, SKIRT_PIVOT_Z)
+        b.tail = (0.0, y, 0.45)
+        b.parent = eb["pelvis"]
+        b.use_deform = True
+    bpy.ops.object.mode_set(mode="OBJECT")
+
+
+# Calmer gait for long skirts: a slightly shorter stride, steadier hips, arms and head.
+MODEST_DAMP = {"thigh": 0.85, "calf": 0.85, "foot": 0.85, "ball": 0.85, "pelvis": 0.7, "upperarm": 0.75, "neck": 0.35, "Head": 0.35, "spine": 0.6}
+
+
+def modest_walk(src, name):
     ac = src.copy()
-    ac.name = "Walk_Modest"
+    ac.name = name
     ac.use_fake_user = True
     for fc in ac.fcurves:
         dp = fc.data_path
@@ -761,9 +793,64 @@ def preview(arm, objs, out_dir, clips):
             _b.ops.render.render(write_still=True)
 
 
+WALK_SHEET = "--walksheet" in argv
+
+
+def walk_sheet(arm, objs, out_dir, clips):
+    """Side views across the walk cycle (legs vs skirt clipping check)."""
+    sc = bpy.context.scene
+    sc.render.engine = "BLENDER_WORKBENCH"
+    sc.display.shading.light = "STUDIO"
+    sc.display.shading.color_type = "MATERIAL"
+    sc.display.shading.show_backface_culling = True
+    sc.render.resolution_x, sc.render.resolution_y = 300, 520
+    cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam"))
+    sc.collection.objects.link(cam)
+    sc.camera = cam
+    cam.data.lens = 60
+    arm.animation_data_create()
+    for look in ("abaya_hijab", "skirt_long_hijab", "trousers_hair"):
+        for n, o in objs.items():
+            o.hide_render = n not in LOOKS[look]
+        clip = "Walk_Loop" if look == "trousers_hair" else "Walk_Modest"
+        ac = clips[clip]
+        arm.animation_data.action = ac
+        f0, f1 = ac.frame_range
+        for k in range(4):
+            sc.frame_set(int(f0 + (f1 - f0) * k / 4))
+            drive_skirt(arm)
+            for view in ("side", "front"):
+                if view == "side":
+                    cam.location, cam.rotation_euler = (3.6, 0, 0.8), (math.radians(90), 0, math.radians(90))
+                else:
+                    cam.location, cam.rotation_euler = (1.2, -3.4, 0.7), (math.radians(90), 0, math.radians(19))
+                sc.render.filepath = os.path.join(out_dir, f"{look}_{k}_{view}.png")
+                bpy.ops.render.render(write_still=True)
+
+
+def drive_skirt(arm, front=0.85, back=0.75):
+    """Same rule as the runtime (Character.driveSkirt): panels follow the leading / trailing thigh."""
+    from mathutils import Matrix
+    bpy.context.view_layer.update()
+    pb = arm.pose.bones
+    ang = []
+    for sd in ("l", "r"):
+        d = pb["calf_" + sd].head - pb["thigh_" + sd].head
+        ang.append(math.atan2(-d.y, -d.z))  # forward is -Y, down is -Z
+    pivot = Vector((0.0, 0.012, SKIRT_PIVOT_Z))
+    for name, a in (("skirt_f", max(0.0, *ang) * front), ("skirt_b", min(0.0, *ang) * back)):
+        rest = arm.data.bones[name].matrix_local
+        rot = Matrix.Translation(pivot) @ Matrix.Rotation(a, 4, Vector((-1, 0, 0))) @ Matrix.Translation(-pivot)
+        pb[name].matrix = rot @ rest
+    bpy.context.view_layer.update()
+
+
 arm, clips, objs = build()
 export(arm, objs, clips)
 if PREVIEW:
     for t in list(arm.animation_data.nla_tracks):
         arm.animation_data.nla_tracks.remove(t)
-    preview(arm, objs, PREVIEW, clips)
+    if WALK_SHEET:
+        walk_sheet(arm, objs, PREVIEW, clips)
+    else:
+        preview(arm, objs, PREVIEW, clips)

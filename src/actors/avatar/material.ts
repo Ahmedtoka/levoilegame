@@ -52,7 +52,8 @@ if (lvI == ${PARTS.indexOf('face')}) {
   vec4 f = texture2D(lvFace, vUv);
   lvC = mix(lvC, f.rgb, f.a);
 } else if (lvI == ${PARTS.indexOf('logo')}) {
-  vec4 l = texture2D(lvLogo, vUv);
+  // The logo texture is shared (flipY on) while glTF UVs run top-down: flip v.
+  vec4 l = texture2D(lvLogo, vec2(vUv.x, 1.0 - vUv.y));
   lvC = mix(lvC, l.rgb, l.a);
 }
 diffuseColor.rgb *= lvC;`,

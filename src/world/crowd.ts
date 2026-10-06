@@ -524,7 +524,8 @@ export class Crowd {
   private blendWalk(a: Agent, dt: number): void {
     const walking = a.path.length ? 1 : 0
     a.c.walk += (walking - a.c.walk) * Math.min(1, dt * 6)
-    a.c.walkRate = a.m.rushing ? 2.5 : 0.6
+    // Ground speed (matches simulate()), so the walk clip keeps pace with no foot sliding.
+    a.c.walkRate = (a.m.rushing ? 2.6 : 1.15) * (0.9 + (a.idx % 5) * 0.05)
   }
 
   private simulate(a: Agent, dt: number): void {

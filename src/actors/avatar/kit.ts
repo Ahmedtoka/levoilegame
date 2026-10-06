@@ -3,7 +3,7 @@
 // skeleton copies. One merged geometry per distinct set of pieces is cached and
 // shared by every character wearing that set.
 
-import { BufferAttribute, type AnimationClip, type Bone, type BufferGeometry, type Matrix4, type SkinnedMesh } from 'three'
+import { AnimationMixer, BufferAttribute, Group, Vector3, type AnimationClip, type Bone, type BufferGeometry, type Matrix4, type SkinnedMesh } from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { PARTS, PIECE_PART } from './pieces'
@@ -98,4 +98,39 @@ export function cloneBones(k: AvatarKit): { root: Bone; bones: Bone[]; byName: M
     return b
   })
   return { root, bones, byName }
+}
+
+const strides = new Map<string, number>()
+
+/**
+ * Ground distance one loop of a locomotion clip covers (metres, skeleton scale),
+ * measured from how far a foot travels back and forth (a loop is ~2.2× that range:
+ * two steps, each a little longer than the foot's sweep under the body).
+ */
+export function clipStride(k: AvatarKit, clip: AnimationClip): number {
+  let d = strides.get(clip.name)
+  if (d === undefined) {
+    const holder = new Group()
+    const { root, byName } = cloneBones(k)
+    holder.add(root)
+    const mixer = new AnimationMixer(holder)
+    const action = mixer.clipAction(clip)
+    action.play()
+    const foot = byName.get('foot_l')
+    let lo = Infinity
+    let hi = -Infinity
+    const v = new Vector3()
+    for (let i = 0; i <= 32; i++) {
+      action.time = (clip.duration * i) / 32
+      mixer.update(0)
+      holder.updateMatrixWorld(true)
+      foot?.getWorldPosition(v)
+      lo = Math.min(lo, v.z)
+      hi = Math.max(hi, v.z)
+    }
+    mixer.stopAllAction()
+    d = Math.max(0.3, (hi - lo) * 2.2)
+    strides.set(clip.name, d)
+  }
+  return d
 }
