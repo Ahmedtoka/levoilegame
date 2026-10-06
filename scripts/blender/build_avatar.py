@@ -854,6 +854,48 @@ def join(a, b):
     return a
 
 
+class PluginCtx:
+    """What a garment plug-in gets (see scripts/blender/garments/__init__.py)."""
+
+    def __init__(self, arm, body):
+        self.arm, self.body = arm, body
+        self.bones = arm.data.bones
+        self.make_object = lambda name, b, w, part: make_object(name, b, w, arm, part)
+        self.cut = lambda keep, name, part: cut(body, keep, name, part)
+        self.offset, self.relax, self.Builder, self.ellipse = offset, relax, Builder, ellipse
+        self.smooth, self.lerp, self.Vector, self.scale_head = smooth, lerp, Vector, scale_head
+        self.HEAD_PIVOT, self.HEAD_SCALE, self.COLLAR_Z, self.HIP_Z, self.SKIRT_Y = HEAD_PIVOT, HEAD_SCALE, COLLAR_Z, HIP_Z, SKIRT_Y
+        self.spine_weights, self.leg_weights, self.top_weights, self.leg_tube_weights, self.drape_weights = spine_weights, leg_weights, top_weights, leg_tube_weights, drape_weights
+        self.torso_sections = lambda z0, z1, **kw: torso_sections(body, z0, z1, **kw)
+        self.limb_sections = lambda pred, axis, a0, a1, **kw: limb_sections(body, pred, axis, a0, a1, **kw)
+        self.loft_torso, self.loft_limb = loft_torso, loft_limb
+        self.face_zone, self.is_hand, self.is_head, self.is_leg, self.is_foot = face_zone, is_hand, is_head, is_leg, is_foot
+        self.join = join
+
+
+def apply_plugins(objs, arm, body):
+    import glob
+    import importlib.util
+
+    ctx = PluginCtx(arm, body)
+    folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "garments")
+    for path in sorted(glob.glob(os.path.join(folder, "*.py"))):
+        if os.path.basename(path).startswith("_"):
+            continue
+        spec = importlib.util.spec_from_file_location("garment_" + os.path.basename(path)[:-3], path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        for name, (factory, part) in getattr(mod, "PIECES", {}).items():
+            old = objs.get(name)
+            ob = factory(ctx)
+            ob.name = name
+            ob["part"] = part
+            if old is not None and old is not ob:
+                bpy.data.objects.remove(old, do_unlink=True)
+            objs[name] = ob
+            print("PLUGIN", os.path.basename(path), "->", name)
+
+
 def open_front(ob):
     """Open-front vest: drop the faces down the chest centre line."""
     bm = bmesh.new()
@@ -928,6 +970,9 @@ def build():
     objs["cuffs"] = make_object("cuffs", *piece_cuffs(), arm, "trim")
     objs["abaya_trim"] = make_object("abaya_trim", *piece_abaya_trim(), arm, "trim")
     objs["logo"] = make_object("logo", *piece_logo(), arm, "logo")
+
+    # Garment plug-ins (scripts/blender/garments/*.py) replace default pieces by name.
+    apply_plugins(objs, arm, body)
 
     # Stylised head: everything attached to it grows about the neck.
     for n in ("head", "eyes", "brows", "hair_long", "hair_bun", "hair_ponytail", "hair_bob", "hijab_band"):
