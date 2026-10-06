@@ -24,6 +24,7 @@ import { blobShadow } from './props'
 import { labelSign } from './signage'
 import { buildLightboxes, buildSectionPlaques, type PlacedProduct, type SectionPlaque } from './lightbox'
 import { showcaseMesh, type ShowcaseItem } from './showcase'
+import { storyScreen } from './storyScreen'
 import { rewardsCounter, type ShopContext, type ShopHandles } from './shop'
 import { BRONZE, OAK, OAK_DARK } from './displays'
 
@@ -350,50 +351,13 @@ function screen(ctx: ShopContext, f: BatchFrame, g: Group, s: Spot, o: BoutiqueO
     onInteract: () => store.getState().set({ overlay: 'brandCatalog', catalogBrand: o.brand.id }),
     maxDist: 3.6,
   })
-  loaders.push(async () => {
-    const [cv, cg] = makeCanvas(512, 910)
-    cg.fillStyle = '#1f1a17'
-    cg.fillRect(0, 0, 512, 910)
-    cg.textAlign = 'center'
-    cg.textBaseline = 'middle'
-    cg.fillStyle = '#f4ede3'
-    cg.font = `600 40px ${BRAND.fontLatin}`
-    cg.fillText(o.brand.name.toUpperCase(), 256, 70)
-    cg.fillStyle = '#e8c27a'
-    cg.font = `500 26px ${BRAND.fontLatin}`
-    cg.fillText(`ALL ${o.products.length} PRODUCTS`, 256, 118)
-    cg.direction = 'rtl'
-    cg.font = `700 30px ${BRAND.fontUi}`
-    cg.fillText('كل المنتجات', 256, 160)
-    cg.direction = 'ltr'
-    const thumbs = o.products.slice(0, 9)
-    const imgs = await Promise.all(thumbs.map((p) => loadProductTexture(p.images[0], 256).then((r) => r.image as HTMLCanvasElement).catch(() => null)))
-    imgs.forEach((im, i) => {
-      if (!im) return
-      const cw = 150
-      const x = 31 + (i % 3) * (cw + 10)
-      const yy = 200 + Math.floor(i / 3) * (cw * 1.2 + 10)
-      const sc = Math.max(cw / im.width, (cw * 1.2) / im.height)
-      cg.save()
-      cg.beginPath()
-      cg.rect(x, yy, cw, cw * 1.2)
-      cg.clip()
-      cg.drawImage(im, x + (cw - im.width * sc) / 2, yy + (cw * 1.2 - im.height * sc) / 2, im.width * sc, im.height * sc)
-      cg.restore()
-    })
-    cg.fillStyle = BRAND.magenta
-    cg.fillRect(96, 804, 320, 92)
-    cg.fillStyle = '#fff'
-    cg.font = `700 24px ${BRAND.fontUi}`
-    cg.fillText('TAP TO BROWSE', 256, 830)
-    cg.direction = 'rtl'
-    cg.font = `700 24px ${BRAND.fontUi}`
-    cg.fillText('اضغط عشان تتفرج', 256, 868)
-    cg.direction = 'ltr'
-    const mat = imageMat(canvasTexture(cv))
-    registerBloom(mat, BLOOM_WEIGHT.screen)
-    plane.material = mat
-  })
+  // Stories: the brand's vertical videos, or a moving reel of its products.
+  loaders.push(
+    storyScreen(plane, o.brand, o.products, ctx.textureMax(), (mat) => {
+      registerBloom(mat, BLOOM_WEIGHT.screen)
+      plane.material = mat
+    }),
+  )
 }
 
 function fitting(f: BatchFrame, g: Group, r: { x0: number; z0: number; x1: number; z1: number }): void {
