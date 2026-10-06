@@ -9,7 +9,6 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { atlasGrid, LIGHTBOX } from '../config/boutiquePlan'
 import { BRAND } from '../config/brand'
 import type { BatchFrame } from '../engine/batcher'
-import { BLOOM_WEIGHT, registerBloom } from '../engine/bloom'
 import { imagePacer } from '../engine/pace'
 import { canvasTexture, loadProductTexture, makeCanvas } from '../engine/textures'
 import { discountPercent, type Product, type Section } from '../data/types'
@@ -201,9 +200,8 @@ export function buildLightboxes(ctx: LightboxCtx, f: BatchFrame, parent: Group, 
         if (i % 4 === 0) await imagePacer.slot()
         drawCell(g, imgs[i], batch[i].product, (i % grid.cols) * grid.cw, Math.floor(i / grid.cols) * grid.ch, grid.cw, grid.ch, grid.ph)
       }
-      const mat = imageMat(canvasTexture(c))
-      registerBloom(mat, BLOOM_WEIGHT.lightbox)
-      mesh.material = mat
+      // Plain image: a bloom source here washed the photos out on High (the housing and frame carry the glow).
+      mesh.material = imageMat(canvasTexture(c))
     })
   }
 }

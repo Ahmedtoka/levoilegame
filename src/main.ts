@@ -19,7 +19,7 @@ import { CollisionWorld } from './engine/colliders'
 import { Batcher } from './engine/batcher'
 import { canvasTexture, loadImage, makeCanvas } from './engine/textures'
 import { Game } from './game'
-import { hideSplash } from './platform/native'
+import { hideSplash, watchKeyboard } from './platform/native'
 import { t } from './i18n/i18n'
 import { setCatalog, store, watch } from './state/store'
 import { createCheckoutService } from './services/CheckoutService'
@@ -142,6 +142,7 @@ async function boot(): Promise<void> {
   })
   // Touch: the quiet game HUD adopts the chips and the minimap, so it mounts after them.
   if (isTouch) mountGameHud(uiRoot, game)
+  watchKeyboard()
   progress(0.08)
 
   await fontsReady()

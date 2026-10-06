@@ -294,3 +294,93 @@
 .touch .toast {
   top: calc(64px + env(safe-area-inset-top, 0px));
 }
+
+/* ---------------------------------------------- right side: look only */
+/* The right half is for looking around: no pads there. Sprint is the joystick lock, the camera
+   view is in the settings, and the interaction card (bottom right) is the action itself. */
+.touch .interact-btn,
+.touch .sprint-btn,
+.touch .view-btn {
+  display: none !important;
+}
+
+.ghud-card {
+  right: calc(22px + env(safe-area-inset-right, 0px));
+  bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  max-width: min(340px, 48vw);
+  padding: 7px 14px 7px 7px;
+  border-radius: 18px;
+}
+
+.ghud-card img {
+  width: 50px;
+  height: 60px;
+}
+
+.ghud-card b,
+.ghud-card em {
+  font-size: 14px;
+}
+
+.ghud-card .go {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--magenta);
+  color: #fff;
+}
+
+/* ------------------------------------------ small notices on touch */
+/* Flash sale: a slim pill under the icon row instead of a banner across the screen. */
+.touch .flash-banner {
+  top: calc(64px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  width: auto;
+  max-width: calc(100vw - 200px);
+  padding: 6px 8px 6px 14px;
+  gap: 10px;
+  border-radius: 999px;
+}
+
+.touch .flash-banner .bolt {
+  font-size: 18px;
+}
+
+.touch .flash-banner .t {
+  display: none;
+}
+
+.touch .flash-banner .s {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.touch .flash-banner .btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  min-height: 0;
+}
+
+/* Staff greetings: a small speech chip under the icon row, not a box over the scene. */
+.touch .bubble {
+  top: calc(64px + env(safe-area-inset-top, 0px));
+  max-width: min(340px, 50vw);
+  padding: 8px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* ------------------------------------------------- chat + keyboard */
+.touch .drawer {
+  height: calc(100% - var(--kb, 0px));
+}
+
+.kb-open .drawer.chat .note,
+.kb-open .drawer.chat .quick {
+  display: none;
+}

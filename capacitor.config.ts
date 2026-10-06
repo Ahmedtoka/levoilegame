@@ -8,6 +8,8 @@ const config: CapacitorConfig = {
   backgroundColor: '#fbf6f8',
   android: { backgroundColor: '#fbf6f8' },
   plugins: {
+    // The WebView draws edge to edge, so the keyboard height reaches the page as a CSS variable (native.ts).
+    Keyboard: { resize: 'none' },
     SplashScreen: {
       launchShowDuration: 1500,
       launchAutoHide: true,

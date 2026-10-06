@@ -5,6 +5,7 @@ import { Capacitor } from '@capacitor/core'
 import { App } from '@capacitor/app'
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics'
 import { SplashScreen } from '@capacitor/splash-screen'
+import { Keyboard } from '@capacitor/keyboard'
 
 export const isNative = Capacitor.isNativePlatform()
 
@@ -35,6 +36,21 @@ export function haptic(kind: HapticKind): void {
 /** Hides the native splash once the first screen is painted. */
 export function hideSplash(): void {
   if (isNative) SplashScreen.hide().catch(() => {})
+}
+
+/** Keyboard height as `--kb` on <html> (plus `kb-open`), so the chat drawer shrinks above it. */
+export function watchKeyboard(): void {
+  const root = document.documentElement
+  const set = (h: number): void => {
+    root.style.setProperty('--kb', `${Math.max(0, Math.round(h))}px`)
+    root.classList.toggle('kb-open', h > 80)
+  }
+  // Browsers (and WebViews that resize): the visual viewport shrinks by the keyboard height.
+  const vv = window.visualViewport
+  vv?.addEventListener('resize', () => set(window.innerHeight - vv.height))
+  if (!isNative) return
+  Keyboard.addListener('keyboardWillShow', (e) => set(e.keyboardHeight)).catch(() => {})
+  Keyboard.addListener('keyboardWillHide', () => set(0)).catch(() => {})
 }
 
 /** Android back button: `onBack` returns false when there is nothing left to close, which backgrounds the app. */

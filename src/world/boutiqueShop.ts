@@ -175,7 +175,7 @@ function walls(f: BatchFrame, o: BoutiqueOpts, plan: BoutiquePlan): void {
   // Free-standing lightbox walls (flagships): oak plinth, cream body, bronze cap.
   for (const w of plan.freeWalls) {
     f.block(OAK_DARK, w.x, 0, w.z, 0.24, 0.12, w.len + 0.1, { collide: true })
-    f.block(tintMat('#f3ece4', 1, 0.85), w.x, 0.12, w.z, 0.12, 2.42, w.len)
+    f.block(tintMat('#f3ece4', 1, 0.85), w.x, 0.12, w.z, 0.12, 2.42, w.len, { collide: true })
     f.box(BRONZE, w.x, 2.56, w.z, 0.16, 0.04, w.len + 0.04)
   }
 }
@@ -235,7 +235,7 @@ function plinth(f: BatchFrame, x: number, z: number, ctx: ShopContext): void {
 
 function island(f: BatchFrame, is: { x: number; z: number; w: number; d: number }, color: string): void {
   f.block(OAK_DARK, is.x, 0, is.z, is.w - 0.1, 0.06, is.d - 0.1, { collide: true })
-  f.block(OAK, is.x, 0.06, is.z, is.w, 0.68, is.d)
+  f.block(OAK, is.x, 0.06, is.z, is.w, 0.68, is.d, { collide: true })
   f.block(MAT.marbleTop, is.x, 0.74, is.z, is.w + 0.04, 0.05, is.d + 0.04)
   f.box(BRONZE, is.x, 0.765, is.z + is.d / 2 + 0.021, is.w + 0.04, 0.05, 0.004)
   // Brand-colour inlay strip on the front face.
@@ -294,9 +294,8 @@ function hero(ctx: ShopContext, f: BatchFrame, g: Group, plan: BoutiquePlan, bra
       cg.font = `600 ${Math.round(bh * 0.5)}px ${BRAND.fontLatin}`
       cg.fillText(brand.name.toUpperCase(), W / 2, Hh - bh / 2)
     }
-    const mat = imageMat(canvasTexture(c))
-    registerBloom(mat, BLOOM_WEIGHT.lightbox)
-    plane.material = mat
+    // No bloom on the campaign photo (it washed out on High).
+    plane.material = imageMat(canvasTexture(c))
   })
 }
 
