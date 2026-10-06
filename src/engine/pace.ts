@@ -56,6 +56,11 @@ export class Semaphore {
     this.limit = limit
   }
 
+  /** No job running and nobody waiting (the bench waits for this before sampling). */
+  get idle(): boolean {
+    return this.active === 0 && this.waiters.length === 0
+  }
+
   async run<T>(job: () => Promise<T>): Promise<T> {
     if (this.active >= this.limit) await new Promise<void>((r) => this.waiters.push(r))
     else this.active++

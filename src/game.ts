@@ -50,6 +50,8 @@ export class Game implements GameBridge {
   private actorLods: ActorLods | null = null
   readonly updaters: ((dt: number, t: number) => void)[] = []
   shell!: ShellHandles
+  /** Bench (src/bench/run.ts): called after each frame with the CPU ms of tick + render and the rAF timestamp. */
+  frameHook: ((cpuMs: number, ts: number) => void) | null = null
 
   private readonly timer = new Timer()
   private time = 0
@@ -391,7 +393,9 @@ export class Game implements GameBridge {
       if (!shouldRender(ts, last, store.getState().fpsCap)) return
       last = ts
       this.timer.update(ts)
+      const t0 = this.frameHook ? performance.now() : 0
       this.tick()
+      this.frameHook?.(performance.now() - t0, ts)
     }
     requestAnimationFrame(loop)
   }

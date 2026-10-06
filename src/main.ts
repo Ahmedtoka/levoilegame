@@ -62,6 +62,7 @@ import { buildGlows } from './world/glow'
 import { buildHalos } from './world/halo'
 import { buildAOStrips } from './world/aoStrips'
 import type { ScreenFeed, ScreenActions } from './world/screens'
+import { benchFail, benchParams, benchRedirect, runBench } from './bench/run'
 
 const uiRoot = document.getElementById('ui')!
 const appRoot = document.getElementById('app')!
@@ -84,6 +85,10 @@ const frame = () =>
   })
 
 async function boot(): Promise<void> {
+  // ?bench=<spot>&q=<tier>: automated measurement (scripts/bench.mjs). The tier is forced
+  // here, before the engine exists, and "auto" is off so the governor never steps it down.
+  const bench = benchParams()
+  if (bench?.q) store.getState().set({ quality: bench.q })
   installImageFallback()
   // Characters are built from this model; fetched alongside the catalogue.
   const avatarKit = loadAvatarKit()
@@ -185,6 +190,7 @@ async function boot(): Promise<void> {
   await new Promise((r) => setTimeout(r, 250))
   store.getState().set({ phase: 'intro' })
   hideSplash()
+  if (bench) void runBench(game, bench)
 
   if (import.meta.env.DEV || new URLSearchParams(location.search).has('debug')) {
     Object.assign(window, { lv: { game, store, engine, layout, catalog, social: social(), selfie: { analyzeSelfie, applyTraits } } })
@@ -285,7 +291,11 @@ async function whiteLogoTexture(): Promise<Texture | null> {
   }
 }
 
-boot().catch((err) => {
-  console.error(err)
-  store.getState().set({ phase: 'error' })
-})
+// ?bench reloads once with nodemo + nolock (both are read at module load).
+if (!benchRedirect())
+  boot().catch((err) => {
+    console.error(err)
+    store.getState().set({ phase: 'error' })
+    const bench = benchParams()
+    if (bench) benchFail(bench, err)
+  })
