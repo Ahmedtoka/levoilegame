@@ -16,7 +16,7 @@ import bpy
 HEM_Z = 1.06
 TAIL_Z = 0.96
 SHOULDER_Z = 1.48  # last measured torso ring; above it the trapezius bevel and the collar
-COLLAR = (0.080, 0.082, 0.030)  # rx, ry, cy of the polo neck (inside the hijab chin wrap)
+COLLAR = (0.070, 0.072, 0.038)  # rx, ry, cy of the turtleneck: neck radius + 6 mm (inside the hijab chin wrap)
 TORSO_N = 28
 SLEEVE_N = 14
 EASE = 0.025
@@ -53,14 +53,14 @@ def _torso_rings(ctx):
     secs = [(z, rx, ry, cy) for z, rx, ry, cy in ctx.torso_sections(HEM_Z, SHOULDER_Z, ease=EASE) if z <= SHOULDER_Z + 1e-6]
     z_sh, rx_sh, ry_sh, cy_sh = secs[-1]
     crx, cry, ccy = COLLAR
-    # Trapezius bevel: shoulder -> neck over 4 cm, then the turtleneck with a rolled top edge.
+    # Short trapezius bevel (3 cm) so the snug turtleneck rises straight from the shoulders.
     secs += [
-        (1.495, lerp(rx_sh, crx, 0.40), lerp(ry_sh, cry, 0.3), lerp(cy_sh, ccy, 0.3)),
-        (1.508, lerp(rx_sh, crx, 0.82), lerp(ry_sh, cry, 0.7), lerp(cy_sh, ccy, 0.7)),
-        (1.518, crx, cry, ccy),
+        (1.492, lerp(rx_sh, crx, 0.55), lerp(ry_sh, cry, 0.5), lerp(cy_sh, ccy, 0.5)),
+        (1.502, lerp(rx_sh, crx, 0.95), lerp(ry_sh, cry, 0.95), lerp(cy_sh, ccy, 0.95)),
+        (1.510, crx, cry, ccy),
         (1.545, crx, cry, ccy),
-        (1.572, crx + 0.006, cry + 0.006, ccy),  # fold bulge
-        (1.592, crx + 0.002, cry + 0.002, ccy),  # top edge
+        (1.568, crx + 0.004, cry + 0.004, ccy),  # 4 mm fold
+        (1.585, crx + 0.001, cry + 0.001, ccy),  # top edge
     ]
     return secs
 
@@ -91,8 +91,8 @@ def _sleeve(ctx, b, sgn):
     # Balloon radius by station (abs x): fit + ease on the upper arm, then the puff and the gather.
     stations = [0.19, 0.22, 0.26, 0.30, 0.34, 0.38, 0.42, 0.45, 0.48, 0.51, 0.54, 0.57, 0.59, 0.605, 0.617, 0.622, 0.626, 0.657]
     # Balloon: fullness by station, peaking on the forearm and still full where it is gathered.
-    puff = [(0.42, 0.0), (0.45, 0.008), (0.48, 0.018), (0.51, 0.027), (0.54, 0.033), (0.57, 0.034), (0.59, 0.033), (0.605, 0.031), (0.617, 0.029)]
-    cuff_r = 0.069
+    puff = [(0.42, 0.0), (0.45, 0.005), (0.48, 0.011), (0.51, 0.016), (0.54, 0.020), (0.57, 0.020), (0.59, 0.020), (0.605, 0.019), (0.617, 0.017)]
+    cuff_r = 0.067
     rings = []
     for x in stations:
         cy, cz, r0 = fit(x)
